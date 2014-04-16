@@ -35,8 +35,8 @@ should you have any questions.</p>
 // Yii::app()->ldap->setAdminUsername("ermercado");
 // Yii::app()->ldap->setAdminPassword("chikka12345");
 
-// Yii::app()->ldap->options['admin_username'] = "ermercado";
-// Yii::app()->ldap->options['admin_password'] = "chikka12345";
+Yii::app()->ldap->options['admin_username'] = "ermercado";
+Yii::app()->ldap->options['admin_password'] = "chikka12345";
 echo '<pre>';
 var_dump(Yii::app()->ldap);
 exit();
