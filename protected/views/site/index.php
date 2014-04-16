@@ -37,12 +37,13 @@ should you have any questions.</p>
 
 // Yii::app()->ldap->options['admin_username'] = "ermercado";
 // Yii::app()->ldap->options['admin_password'] = "chikka12345";
+echo '<pre>';
+var_dump(Yii::app()->ldap);
+exit();
 
 echo Yii::app()->ldap->options['admin_username'];
 echo Yii::app()->ldap->options['admin_password'];
 
-echo '<pre>';
-var_dump(Yii::app()->ldap);
 
 
 if (($x = Yii::app()->ldap->user()->all(false, "*")) == false) {
