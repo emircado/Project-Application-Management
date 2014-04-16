@@ -56,28 +56,47 @@ class SiteController extends Controller
 	/**
 	 * Displays the users page
 	 */
-	public function actionUsers()
+	public function actionUsers($username = NULL)
 	{
 		if (Yii::app()->user->isGuest) {
 			$this->redirect('index');
 		} else {
-			$model = new LDAPModel;
-			$model->get_users();
-			$this->render('users', array('model'=>$model));
+			try {
+				$model = new LDAPModel;
+				if ($username == NULL) {
+					$model->get_users();
+				} else {
+					$model->get_userinfo($username);
+				}
+				$this->render('users', array('model'=>$model));
+
+			} catch (LDAPModelException $e) {
+				//raise an error here
+				$this->redirect('index');
+			}
 		}
 	}
 
 	/**
 	 * Displays the groups page
 	 */
-	public function actionGroups()
+	public function actionGroups($groupname = NULL)
 	{
 		if (Yii::app()->user->isGuest) {
 			$this->redirect('index');
 		} else {
-			$model = new LDAPModel;
-			$model->get_groups();
-			$this->render('groups', array('model'=>$model));
+			try {
+				$model = new LDAPModel;
+				if ($groupname == NULL) {
+					$model->get_groups();
+				} else {
+					$model->get_groupinfo($groupname);
+				}
+				$this->render('groups', array('model'=>$model));
+			} catch (LDAPModelException $e) {
+				//raise an error here
+				$this->redirect('index');
+			}
 		}
 	}
 
@@ -106,8 +125,6 @@ class SiteController extends Controller
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
-
-
 
 	/**
 	 * Logs out the current user and redirect to homepage.

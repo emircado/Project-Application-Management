@@ -558,14 +558,14 @@ class adLDAPUsers {
 
         $usersArray = array();
         for ($i=0; $i<$entries["count"]; $i++){
-            // array_push($usersArray, $entries[$i]);
-            if ($includeDescription && strlen($entries[$i]["dn"])>0){
-                $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["dn"];
-            } elseif ($includeDescription){
-                $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
-            } else {
-                array_push($usersArray, $entries[$i]["samaccountname"][0]);
-            }
+            array_push($usersArray, $entries[$i]);
+            // if ($includeDescription && strlen($entries[$i]["dn"])>0){
+            //     $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["dn"];
+            // } elseif ($includeDescription){
+            //     $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
+            // } else {
+            //     array_push($usersArray, $entries[$i]["samaccountname"][0]);
+            // }
         }
         if ($sorted) { 
             asort($usersArray); 

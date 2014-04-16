@@ -9,15 +9,29 @@ class LDAPModel extends CFormModel {
 
 	public $entries;
 
+	public function __construct() {
+		if (!Yii::app()->ldap->authenticate($_SESSION['username'], $_SESSION['password'])) {
+			throw new LDAPModelException('Invalid LDAP authentication');
+		}
+	}
+
 	public function get_users() {
-		//authenticate user first
-		if (Yii::app()->ldap->authenticate($_SESSION['username'], $_SESSION['password'])) {
-			//may still return false
-			$this->entries = Yii::app()->ldap->user()->all();
+		//may still return false
+		$list = Yii::app()->ldap->user()->all();
+	
+		//clean entries here
+		if ($list != false) {
+			$this->entries = array();
 
-			//clean entries here
-			if ($this->entries != false) {
-
+			foreach ($list as $l) {
+				$name = explode(',', $l['dn']);
+				array_push($this->entries,
+					array(
+						'samaccountname' => $l['samaccountname'][0],
+						'displayname' => substr($name[0],3),
+						'dn' => $l['dn'],
+					)
+				);
 			}
 
 		} else {
@@ -25,30 +39,24 @@ class LDAPModel extends CFormModel {
 		}
 	}
 
-	// public function get_userinfo($username) {
-	// 	//DISPLAY USER INFORMATION
-	// 	// echo Yii::app()->ldap->user()->info("ermercado");
-	// 	// $x = Yii::app()->ldap->user()->info('ermercado');
-	// 	// foreach ($x[0] as $s => $b) {
-	// 	// // foreach ($x[0] as $s) {
-	// 	// 	// echo '<br/>'.$s[0];
-	// 	// 	echo '<br/>'.$s.' '.$b;
-	// 	// }
-	// }
+	public function get_userinfo($username) {
+		//may still return false
+		$this->entries = Yii::app()->ldap->user()->info($username);
+		$this->entries = $this->entries[0];
+
+		//clean entries here
+		if ($this->entries != false) {
+
+		}
+	}
 
 	public function get_groups() {
-		//authenticate user first
-		if (Yii::app()->ldap->authenticate($_SESSION['username'], $_SESSION['password'])) {
-			//may still return false
-			$this->entries = Yii::app()->ldap->group()->all();
-		
-			//clean entries here
-			if ($this->entries != false) {
-				
-			}
+		//may still return false
+		$this->entries = Yii::app()->ldap->group()->all();
+	
+		//clean entries here
+		if ($this->entries != false) {
 
-		} else {
-			$this->entries = false;
 		}
 	}
 
@@ -63,3 +71,5 @@ class LDAPModel extends CFormModel {
 	// 	// }
 	// }
 }
+
+class LDAPModelException extends Exception {}
