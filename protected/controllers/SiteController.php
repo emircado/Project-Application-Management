@@ -63,12 +63,15 @@ class SiteController extends Controller
 		} else {
 			try {
 				$model = new LDAPModel;
+				$is_individual = False;
+
 				if ($username == NULL) {
 					$model->get_users();
 				} else {
 					$model->get_userinfo($username);
+					$is_individual = True;
 				}
-				$this->render('users', array('model'=>$model));
+				$this->render('users', array('model'=>$model, 'is_individual'=>$is_individual));
 
 			} catch (LDAPModelException $e) {
 				//raise an error here
@@ -87,12 +90,15 @@ class SiteController extends Controller
 		} else {
 			try {
 				$model = new LDAPModel;
+				$is_individual = False;
+
 				if ($groupname == NULL) {
 					$model->get_groups();
 				} else {
 					$model->get_groupinfo($groupname);
+					$is_individual = True;
 				}
-				$this->render('groups', array('model'=>$model));
+				$this->render('groups', array('model'=>$model, 'is_individual'=>$is_individual));
 			} catch (LDAPModelException $e) {
 				//raise an error here
 				$this->redirect('index');

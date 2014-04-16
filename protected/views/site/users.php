@@ -9,7 +9,7 @@ $this->pageTitle=Yii::app()->name . ' - Users';
 <?php
 	if ($model->entries == false) {
 		echo 'Fail';
-	} else {
+	} else if (!$is_individual) {
 		foreach ($model->entries as $user) {
 			foreach ($user as $key => $value) {
 				echo '<br/>'.$key.' <b>'.$value.'</b>';
@@ -18,12 +18,16 @@ $this->pageTitle=Yii::app()->name . ' - Users';
 				'username'=>$user['samaccountname']));
 			echo '<br/>';
 		}
+
+
+	} else {
+		foreach ($model->entries as $key => $userinfo) {
+			echo '<br/>'.$key.' <b>'.$userinfo.'</b>';
+		}
+		echo "<br/><br/><b>GROUPS</b>";
+		//print groups user belongs to
+		foreach ($model->entries['groups'] as $grp) {
+			echo '<br/>'.$grp;
+		}
 	}
-
-
-	// foreach ($x[0] as $s => $b) {
-		// foreach ($x[0] as $s) {
-			// echo '<br/>'.$s[0];
-			// echo '<br/>'.$s.' '.$b;
-		// }
 ?>
