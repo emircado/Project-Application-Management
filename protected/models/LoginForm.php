@@ -95,16 +95,11 @@ class LoginForm extends CFormModel
 			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
 			Yii::app()->user->login($this->_identity,$duration);
 
-			// Yii::app()->ldap['options']['admin_username'] = $this->username;
-			// Yii::app()->ldap['options']['admin_password'] = $this->password;
-			Yii::app()->ldap->options['admin_username'] = $this->username;
-			Yii::app()->ldap->options['admin_password'] = $this->password;
-			// echo '<pre>';
+			//SESSION HERE
+			// session_start();
+			$_SESSION['username'] = $this->username;
+			$_SESSION['password'] = $this->password;
 
-			// Yii::app()->ldap->setAdminUsername($this->username);
-			// Yii::app()->ldap->setAdminPassword($this->password);
-			// var_dump(Yii::app()->ldap->options['admin_username']);
-			// exit();
 			return true;
 
 		} else return false;

@@ -513,16 +513,16 @@ class adLDAPGroups {
 
         $groupsArray = array();        
         for ($i=0; $i<$entries["count"]; $i++){
-            array_push($groupsArray, $entries[$i]);
-            // if ($includeDescription && strlen($entries[$i]["description"][0]) > 0 ) {
-            //     $groupsArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["description"][0];
-            // }
-            // else if ($includeDescription){
-            //     $groupsArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
-            // }
-            // else {
-            //     array_push($groupsArray, $entries[$i]["samaccountname"][0]);
-            // }
+            // array_push($groupsArray, $entries[$i]);
+            if ($includeDescription && strlen($entries[$i]["description"][0]) > 0 ) {
+                $groupsArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["description"][0];
+            }
+            else if ($includeDescription){
+                $groupsArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
+            }
+            else {
+                array_push($groupsArray, $entries[$i]["samaccountname"][0]);
+            }
         }
         if ($sorted) { 
             asort($groupsArray); 

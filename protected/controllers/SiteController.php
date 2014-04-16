@@ -61,8 +61,9 @@ class SiteController extends Controller
 		if (Yii::app()->user->isGuest) {
 			$this->redirect('index');
 		} else {
-			// $model => new LDAPModel;
-			$this->render('users');//,array('model'=>$model));
+			$model = new LDAPModel;
+			$model->get_users();
+			$this->render('users', array('model'=>$model));
 		}
 	}
 
@@ -74,8 +75,9 @@ class SiteController extends Controller
 		if (Yii::app()->user->isGuest) {
 			$this->redirect('index');
 		} else {
-			// $model => new LDAPModel;
-			$this->render('groups');//,array('model'=>$model));
+			$model = new LDAPModel;
+			$model->get_groups();
+			$this->render('groups', array('model'=>$model));
 		}
 	}
 
@@ -114,6 +116,12 @@ class SiteController extends Controller
 	{
 		//close LDAP connection here
 		Yii::app()->ldap->close();
+
+		//destroy session
+		if (isset($_SESSION['username'])) {
+			unset($_SESSION['username']);
+			unset($_SESSION['password']);
+		}
 
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);

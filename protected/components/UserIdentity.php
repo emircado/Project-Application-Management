@@ -17,7 +17,6 @@ class UserIdentity extends CUserIdentity
 	{
 		try {
 			if (Yii::app()->ldap->authenticate($this->username, $this->password)) {
-				// Yii::app()->session['bind'] = Yii::app()->ldap->getLdapBind();
 				$this->errorCode = self::ERROR_NONE;
 			} else {
 				$this->errorCode = self::ERROR_PASSWORD_INVALID;
