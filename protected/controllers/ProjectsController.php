@@ -36,7 +36,7 @@ class ProjectsController extends Controller
     {
         if (!Yii::app()->user->isGuest) {
             $this->scripts = array(
-                '/myjs/projects_index.js',
+                '/js/projects_index.js',
             );
             $this->render('index');
         } else {
@@ -48,28 +48,38 @@ class ProjectsController extends Controller
     public function actionIndexData() {
         // get list of projects
         $criteria = new CDbCriteria();
+
+        // search here
+        $count = Projects::model()->count($criteria);
+
+        $page = $_GET['page'];
+        $criteria->limit = 20;
+        $criteria->offset = ($page-1)*$criteria->limit;
         // if (isset($_GET['fields'])) {
         //     $criteria->select = $_GET['fields'];
         // }
 
-        $resultData = Projects::model()->findAll($criteria);
-        foreach ($resultData as $proj) {
-            // foreach ($proj as $key => $value) {
+        $projects = Projects::model()->findAll($criteria);
+        foreach ($projects as $p) {
+            // foreach ($p as $key => $value) {
             //     if (is_array($criteria->select) && !in_array($key, $criteria->select)) {
-            //         unset($proj[$key]);
+            //         unset($p[$key]);
             //     } else {
             //     }
             // }
-                    if ($proj['production_date'] != NULL) {
-                        $proj['production_date'] = date("M j, Y", strtotime($proj['production_date']));
-                    }
+            if ($p['production_date'] != NULL) {
+                $p['production_date'] = date("M j, Y", strtotime($p['production_date']));
+            }
         }
 
-        $returnArray = array(
-            'count' => count($resultData),
-            'resultData' => $resultData,
+        $return_data = array(
+            'page' => $page,
+            'totalPage' => ceil($count/$criteria->limit),
+            'totalData' => $count,
+            'resultData' => $projects,
+            'limit' => $criteria->limit,
         );
 
-        echo CJSON::encode($returnArray);
+        echo CJSON::encode($return_data);
     }
 }
