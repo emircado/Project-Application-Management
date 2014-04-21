@@ -16,6 +16,22 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<script>
+        var baseURL = '<?= Yii::app()->request->baseUrl; ?>';
+    </script>
+
+	<!-- mootools scripts here -->
+	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-core-1.4.5.js"></script>
+	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-more-1.4.0.1.js"></script>
+
+	<!-- extra scripts here -->
+	<?php 
+		if (isset($this->scripts)) {
+			foreach($this->scripts as $s) {
+				echo '<script src="'.Yii::app()->request->baseUrl.$s.'"></script>';
+			}
+		}
+	?>
 </head>
 
 <body>
@@ -29,8 +45,8 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				// array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>'Home', 'url'=>array('/site')),
+				array('label'=>'Projects', 'url'=>array('/projects'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/site/users'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Groups', 'url'=>array('/site/groups'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),

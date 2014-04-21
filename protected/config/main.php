@@ -97,15 +97,5 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-
-		// 'ldap'=>array(
-		// 	'host'=>"10.11.6.200",
-		// 	'port'=>389,
-		// 	'ou-people'=>'people',
-		// 	'ou-groups'=>'groups',
-		// 	'basedn'=>'DC=chikka,DC=org',
-		// 	// 'dc'=>array('chikka', 'org')
-		// )
-
 	),
 );
