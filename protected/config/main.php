@@ -20,18 +20,21 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
+		/*
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'emir',
+			'password'=>'password',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1', '10.11.3.28'),
 		),
-		
+		*/
 	),
 
 	// application components
 	'components'=>array(
+		'request'=>array(
+			'enableCsrfValidation'=>true,	
+		),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -97,5 +100,8 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'dateformat_display'=>'M j, Y',
+		'dateformat_log'=>'M j, Y',
+		'projects_per_page'=>20,
 	),
 );

@@ -2,10 +2,10 @@ var ProjectsList = function()
 {
     var self = this;
     
-    self.getDataURL = baseURL + '/index.php/projects/indexdata';
+    self.getDataURL = baseURL + '/projects/list';
     
     //for data gathering
-    self.tableContainerID 		= 'projects-list';
+    self.tableContainerID 		= 'data-result';
     self._request               = null;
     self.totalPage        = 1;
     self.currentPage      = 1;
@@ -21,6 +21,7 @@ var ProjectsList = function()
 
     //events
     // self.CreateUserID     = 'create-user';
+    self.backToMainId       = 'back-to-view';
 
     //parts of the table
     self.checkBoxClass    = 'data-checkbox';
@@ -28,30 +29,16 @@ var ProjectsList = function()
     // self.overlayID          = 'overlay';
     // self.dialogWrapperID    = 'dialog-wrapper';
     // self.createUserModalID  = 'create-user-modal';
-    
-    // self.userModalCloseID   = 'close-modal';
-    // self.buttonCancelID     = 'button-cancel-modal';
-    // self.buttonCreateUserID = 'button-create-user';
-    
-    //details for creating users
-    // self.modalUserNameID        = 'modal-username';
-    // self.modalNameID            = 'modal-name';
-    // self.modalUserRoleID        = 'user-role';
-    // self.modalUserEmailID       = 'modal-email';
-    // self.modalUserMobileID      = 'modal-mobile';
-    // self.modalUserPasswordID    = 'modal-password';
-    // self.modalUserRePasswordID  = 'modal-re-password';
-    
-    //required fields
-    // self.requiredFields = {
-    //     'modal-username' : 'modal-username-error'
-    // };
-    
+
+    //view for modals
+    self.projectModalId        = 'projects-modal';
+
     //for view part
-    // self.userListId = 'user-lists';
-    // self.editViewId = 'edit-view';
+    self.projectListId = 'project-lists';
+    self.editProjectViewId = 'edit-project-view';
     
-    // self.editId = 'a[id^=edit_]';
+    self.editId = 'a[id^=edit_]';
+    self.viewId = 'a[id^=view_]';
     
     self.init = function()
     {
@@ -75,15 +62,13 @@ var ProjectsList = function()
             callbacks.push(self.paginationChecker);
             
             var params = {
-                // 'fields'    : ['name', 'code', 'description', 'status', 'production_date']
-
                 'page'      : page,
-                // 'name'      : '',
-                // 'username'  : '',
-                // 'user_level'    : '',
-                // 'email'         : '',
-                // 'msisdn'        : '',
-                // 'status'        : ''
+                'name'      : '',
+                'username'  : '',
+                'user_level'    : '',
+                'email'         : '',
+                'msisdn'        : '',
+                'status'        : ''
             };
             
             self._request = new Request.JSON(
@@ -176,30 +161,14 @@ var ProjectsList = function()
         // $(self.tableContainerID).set('html', '');
         Array.each(data, function(val, idx)
         {
-            // var contentHTML = '<td class="checkbox-col"><input id="checkbox_'+ val['user_id'] +'" class="id-checkbox" type="checkbox"></td>'
-            //                 + '<td>' + val['name'] + '</td>'
-            //                 + '<td>' + val['username'] + '</td>'
-            //                 + '<td>' + val['user_level'] + '</td>'
-            //                 + '<td>' + val['email'] + '</td>'
-            //                 + '<td>' + val['msisdn'] + '</td>'
-            //                 + '<td>' + val['status'] + '</td>'
-            //                 + '<td class="actions-col three-column">'
-            //                 + '<a id="edit_' + val['user_id'] + '" href="#" title="Edit User"><span class="">Edit</span></a>&nbsp'
-            //                 + '</td>';
-            
-            // contentHTML = '';
-            // Hash.each(val, function(value, field){
-            //     contentHTML = contentHTML+'<td>'+value+'</td>';
-            // });
-
             contentHTML = '<td>'+val['name']+'</td>'
                         + '<td>'+val['code']+'</td>'                        
                         + '<td>'+val['description']+'</td>'
                         + '<td>'+val['status']+'</td>'
                         + '<td>'+val['production_date']+'</td>'
                         + '<td class="actions-col three-column">'
-                        + '<a id="view_' + val['user_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
-                        + '<a id="edit_' + val['user_id'] + '" href="#" title="Edit Project"><span class="">Edit</span></a>&nbsp'
+                        + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
+                        + '<a id="edit_' + val['project_id'] + '" href="#" title="Edit Project"><span class="">Edit</span></a>&nbsp'
                         + '</td>';
 
             contentElem = new Element('<tr />',
@@ -252,33 +221,34 @@ var ProjectsList = function()
             }
         });
         
-    //     $(self.CreateUserID).removeEvents();
-    //     $(self.CreateUserID).addEvent('click', function(e)
-    //     {
-    //         e.preventDefault();
+        $$(self.editId).removeEvents();
+        $$(self.editId).addEvent('click', function(e)
+        {
+            e.preventDefault();
             
-    //         $(self.overlayID).setStyle('display','block');
-    //         $(self.dialogWrapperID).setStyle('display','block');
-    //         $(self.createUserModalID).setStyle('display', 'block');
-    //     });
-        
-    //     $(self.buttonCreateUserID).removeEvents();
-    //     $(self.buttonCreateUserID).addEvent('click', function(e)
-    //     {
-    //         e.preventDefault();
-            
-    //         if(!Utils.showRequiredFieldErrors(UsersList, Utils.checkForm(self.requiredFields)))
-    //             return false;
-    //     });
-        
-    //     $$(self.editId).removeEvents();
-    //     $$(self.editId).addEvent('click', function(e)
-    //     {
-    //         e.preventDefault();
-            
-    //         $(self.userListId).setStyle('display','none');
-    //         console.log('here');
-    //     });
+            id = $(this).get('id').split('_')[1];
+            $(self.projectListId).setStyle('display', 'none');
+            $(self.editProjectViewId).setStyle('display', 'block');
+
+        });
+
+        $$(self.viewID).removeEvents();
+        $$(self.viewId).addEvent('click',function(e)
+        {
+            e.preventDefault();
+
+            console.log($(self.projectModalId));//.setStyle('display','block');
+        });
+
+        $(self.backToMainId).removeEvents();
+        $(self.backToMainId).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            $(self.projectListId).setStyle('display', 'block');
+            $(self.editProjectViewId).setStyle('display', 'none');
+            // clear search input
+        });
     };
     
     // self.closeModal = function()

@@ -8812,3 +8812,1250 @@ Stack trace:
 REQUEST_URI=/projmgmt/index.php/projects/indexdata
 HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
 ---
+2014/04/22 09:06:26 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "projects/indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 09:12:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "view1".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('view1')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('view1')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/view1')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/view1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 09:24:16 [error] [php] Undefined variable: search_roles (/home/httpd/vhosts/projmgmt/protected/views/projects/index.php:33)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(53): ProjectsController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (33)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (53)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 09:24:44 [error] [php] Undefined variable: search_roles (/home/httpd/vhosts/projmgmt/protected/views/projects/index.php:33)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(53): ProjectsController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (33)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (53)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 09:27:18 [error] [php] Undefined variable: search_status (/home/httpd/vhosts/projmgmt/protected/views/projects/index.php:33)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(53): ProjectsController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (33)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (53)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 10:07:02 [error] [php] Undefined index: page (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:68)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects/indexdata
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (68)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 10:07:02 [error] [php] Undefined index: page (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:68)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects/indexdata
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (68)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 10:17:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:17:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:17:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:17:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:17:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:18:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:19:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 10:21:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "indexdata".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('indexdata')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('indexdata')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/indexd...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/projmgmt/index.php/projects/indexdata?page=1
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 11:22:37 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php(2): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): ProjectsController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): CContentDecorator->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): ProjectsController->endWidget()
+#12 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): ProjectsController->endContent()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): ProjectsController->renderFile()
+#16 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): ProjectsController->render()
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#20 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#21 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#22 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#23 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#24 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php (2)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php (74)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php (6)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (65)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 11:23:48 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php(2): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): ProjectsController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): CContentDecorator->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): ProjectsController->endWidget()
+#12 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): ProjectsController->endContent()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): ProjectsController->renderFile()
+#16 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): ProjectsController->render()
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#20 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#21 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#22 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#23 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#24 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php (2)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php (74)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php (6)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (65)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 11:26:20 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php(2): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): ProjectsController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): CContentDecorator->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): ProjectsController->endWidget()
+#12 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): ProjectsController->endContent()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): ProjectsController->renderFile()
+#16 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): ProjectsController->render()
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#20 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#21 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#22 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#23 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#24 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php (2)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php (74)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php (6)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (65)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 11:26:43 [error] [php] Undefined variable: roles (/home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php:37)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): ProjectsController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): CContentDecorator->run()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): ProjectsController->endWidget()
+#9 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): ProjectsController->endContent()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): ProjectsController->renderFile()
+#13 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): ProjectsController->render()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#20 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#21 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/modals/projects-modal.php (37)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php (74)
+in /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php (6)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (65)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 11:38:49 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "../modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): CController->renderPartial('../modals/proje...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): CController->render('index', Array)
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/projmgmt/index.php/projects
+HTTP_REFERER=http://10.11.7.11/projmgmt/projects
+---
+2014/04/22 11:41:01 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(74): CController->renderPartial('/modals/project...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(65): CController->render('index', Array)
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/projmgmt/index.php/projects
+HTTP_REFERER=http://10.11.7.11/projmgmt/projects
+---
+2014/04/22 11:59:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "js/common.js".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('js/common.js')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/projmgmt/js/common.js
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 12:07:00 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(39): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (39)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:49 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:50 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:50 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:50 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:51 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:51 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:07:51 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:29 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:29 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:29 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:30 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:30 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:30 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:09:30 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:10:18 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:10:18 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:10:19 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:10:19 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 12:12:23 [error] [exception.CException] exception 'CException' with message 'Property "SiteController.extraJS" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/layouts/main.php(29): CComponent->__get('extraJS')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/projmgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/projmgmt/protected/controllers/SiteController.php(38): CController->render('index')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/projmgmt/index.php/site
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 12:16:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "users".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('users')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/projmgmt/users
+---
+2014/04/22 12:17:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "return false;".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('return false;')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/projmgmt/index.php/return%20false;
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/22 13:17:31 [error] [php] include(ZHtml.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/views/projects/index.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#5 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(33): ProjectsController->render()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/index.php (3)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (33)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:25 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:26 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:27 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:27 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:28 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:28 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:29 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:29 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/22 13:45:51 [error] [php] include(Users.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(106): spl_autoload_call()
+#1 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(72): ProjectsController->get_data()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects/list
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (106)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (72)
+in /home/httpd/vhosts/projmgmt/index.php (15)

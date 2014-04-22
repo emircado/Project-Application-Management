@@ -16,22 +16,19 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
-	<script>
+    <script>
         var baseURL = '<?= Yii::app()->request->baseUrl; ?>';
     </script>
-
-	<!-- mootools scripts here -->
-	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-core-1.4.5.js"></script>
+    
+    <!--add mootools lib here-->
+    <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-core-1.4.5.js"></script>
 	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-more-1.4.0.1.js"></script>
-
-	<!-- extra scripts here -->
-	<?php 
-		if (isset($this->scripts)) {
-			foreach($this->scripts as $s) {
-				echo '<script src="'.Yii::app()->request->baseUrl.$s.'"></script>';
-			}
-		}
-	?>
+	<script src="<?= Yii::app()->request->baseUrl; ?>/js/common.js"></script>
+    <!--add here the extra JS-->
+    <?php
+        if(isset($this->extraJS))
+            echo $this->extraJS;
+    ?>
 </head>
 
 <body>
@@ -63,6 +60,17 @@
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
+
+	<!-- UI DIALOG BOX -->
+    <div id="overlay" class="dialog-box-overlay" style="height: 100%;"></div>
+    <div id="dialog-wrapper">
+        <?php
+            $data = array();
+            
+            if(isset($this->modals))
+                    echo $this->renderPartial('//layouts/modals/' . $this->modals, $data);
+        ?>
+    </div>
 
 </div><!-- page -->
 
