@@ -14,12 +14,12 @@
                         <div class="header-block-title">
                             <h2 class="content-title">Projects</h2><br><hr>
                         </div>
-                        <div id="user-lists" class="table-main">
+                        <div id="projects-lists" class="table-main">
                             <?php echo CHtml::form('', 'post', array('id'=>'export-form', 'enctype'=>'multipart/form-data')); ?>
                             <fieldset>
                                 <div class="table-header-block">
                                     <div class="header-block-button">
-                                        <a id="create-user" class="button round blue image-right ic-add text-upper" href="#">Add Project</a>
+                                        <a id="create-project" class="button round blue image-right ic-add text-upper" href="#">Add Project</a>
                                     </div><!-- End Header Block Button -->
 
                                     <div class="header-block-side">
@@ -79,15 +79,113 @@
                             </div><!-- End Table main -->
                         </div><!--END View User List-->
                         
-                        <!--edit part view-->
-                        <div id="edit-project-view" style="display:none;" class="contact-info plain-list">
+                        <!-- edit part view -->
+                        <div id="edit-projects-view" style="display:none;" class="contact-info plain-list">
                             <div class="header-block-button">
                                 <div class="pseudo-field back-button">
-                                    <a id="back-to-view" href="#" title="Back to main" class="with-tool-tip"><span class="icon"></span><span class="tooltip">Back<span class="arrow icon"></span></span></a>
+                                    <a id="edit-to-main" href="#" title="Back to main" class="with-tool-tip"><span class="icon"></span><span class="tooltip">Back<span class="arrow icon"></span></span></a>
                                 </div>
                             </div><br /><br />
-                        </div>
-                        
+
+                            <!-- FORM HERE -->
+                            <form>
+                                <div class="contact-info-details">
+                                    <div class="section primary-info expanded">
+                                        <div id="expand-primary" class="header"><h3><b>Project Details</b></h3></div>
+                                    </div>
+                                    <!--CONTENT for EDIT USER-->
+                                    <div id="edit-primary-content" class="content">
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Name</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field">
+                                                <input type="text" id="edit-name" class="text"></input>
+                                                <span id="input-name-error" class="field-input-name-error error-message" style="display: none;"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Code</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field">
+                                                <input type="text" id="edit-code" class="text"></input>
+                                                <span id="input-name-error" class="field-input-name-error error-message" style="display: none;"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Description</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field">
+                                                <textarea rows="4" id="edit-description" class="text"></textarea>
+                                                <span id="input-name-error" class="field-input-name-error error-message" style="display: none;"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div id="status-div" class="field field-status">
+                                            <div class="field-secondary"><span class="label">Status</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field pseudo-field-select" style="width: 100px;">
+                                                    <?php echo ZHtml::enumDropDownList(Projects::model(), 'status', array(
+                                                        'id'=>'edit-status',
+                                                        'name'=>'edit-status',
+                                                        'class' => 'select'
+                                                    )); ?>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Production Date</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field">
+                                                <input type="date" id="edit-production" class="text"></input>
+                                                <span id="input-name-error" class="field-input-name-error error-message" style="display: none;"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Termination Date</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field">
+                                                <input type="date" id="edit-termination" class="text"></input>
+                                                <span id="input-name-error" class="field-input-name-error error-message" style="display: none;"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div id="date-div" class="field">
+                                            <div class="field-secondary"><span class="label">Date Created</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="edit-created"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div id="date-div" class="field">
+                                            <div class="field-secondary"><span class="label">Date Updated</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="edit-updated"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                    </div>
+                                    <!--END EDIT CONTENT USER-->
+                                </div>
+                            </form>
+                        </div><!--END edit user-->
+
+                        <!-- view part view -->
+                        <div id="view-projects-view" style="display:none;" class="contact-info plain-list">
+                            <div class="header-block-button">
+                                <div class="pseudo-field back-button">
+                                    <a id="view-to-main" href="#" title="Back to main" class="with-tool-tip"><span class="icon"></span><span class="tooltip">Back<span class="arrow icon"></span></span></a>
+                                </div>
+                            </div><br /><br />
+
+                            <!-- CONTENT HERE -->
+                            VIEWING HERE
+                            <div id="view-content"></div>
+                        </div><!--END view user-->
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <?php
-    $roles  = [];
+    $roles  = array();
 ?>
 <div id="projects-modal" class="dialog-box module" style="display: none;">
     <div class="dialog-container">

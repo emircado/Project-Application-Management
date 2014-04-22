@@ -18,9 +18,17 @@ class ProjectsController extends Controller
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
         $filter = array();
-        
+        $view = 'table';
+
+        if (isset($_GET['project_id']) && !empty($_GET['project_id']))
+        {
+            $request = explode('_', $_GET['project_id']);
+            $view = $request[0];
+            $filter['project_id'] = (int) $request[1];
+        }
+
         if (isset($_GET['name']) && !empty($_GET['name']))
-                $filter['name'] = (string) $_GET['name'];
+            $filter['name'] = (string) $_GET['name'];
 
         if (isset($_GET['code']) && !empty($_GET['code']))
             $filter['code'] = (string) $_GET['code'];
@@ -30,7 +38,15 @@ class ProjectsController extends Controller
 
         $projects = $this->get_data($filter, $limit, $offset);
 
+        // if ($view == 'table') {
+        //     foreach ($projects['data'] as $p) {
+        //         $p['production_date'] = date(Yii::app()->params['dateformat_display'], strtotime($p['production_date']));
+        //     }
+        // }
+        // echo CJSON::encode($projects['data']);
+
         $return_data = array(
+            'view'=>$view,
             'page'=>$page,
             'totalPage'=>ceil($projects['total_count']/$limit),
             'totalData'=>$projects['total_count'],
@@ -49,8 +65,11 @@ class ProjectsController extends Controller
 
         if(is_array($filter))
         {
+            if(isset($filter['project_id']))
+                $criteria->compare('project_id', $filter['project_id']);
+
             if(isset($filter['name']))
-                $criteria->compare('name', $filter['name']);
+                $criteria->compare('name', $filter['name'], true);
 
             if(isset($filter['code']))
                 $criteria->compare('code', $filter['code']);
@@ -75,10 +94,10 @@ class ProjectsController extends Controller
                 'code'              => $row->code,
                 'description'       => $row->description,
                 'status'            => $row->status,
-                'production_date'   => date(Yii::app()->params['dateformat_display'], strtotime($row->production_date)),
-                'termination_date'  => date(Yii::app()->params['dateformat_display'], strtotime($row->termination_date)),
-                'date_created'      => date(Yii::app()->params['dateformat_display'], strtotime($row->date_created)),
-                'date_updated'      => date(Yii::app()->params['dateformat_display'], strtotime($row->date_updated))
+                'production_date'   => $row->production_date,
+                'termination_date'  => $row->termination_date,
+                'date_created'      => $row->date_created,
+                'date_updated'      => $row->date_updated
             );
         }
 

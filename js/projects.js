@@ -18,7 +18,8 @@ var ProjectsList = function()
     self.totalDataID      = 'total-main-data';
     self.totalPartID      = 'total-main-part';
 
-    //table elements
+    //for table
+    self.projectListID    = 'projects-lists';
     self.tableRowClass    = 'data-row';
 
     //for search
@@ -28,15 +29,35 @@ var ProjectsList = function()
     self.searchSubmitID   = 'search-submit';
     self.searchClearID    = 'a[id^=clear-search]';
     self.searchParams     = {
+        'project_id': '',
         'name'      : '',
         'code'      : '',
         'status'    : ''
     };
     
     //actions
-    self.editId = 'a[id^=edit_]';
-    self.viewId = 'a[id^=view_]';
+    self.editID = 'a[id^=edit_]';
+    self.viewID = 'a[id^=view_]';
     
+    //for edit project
+    self.editProjectViewID = 'edit-projects-view';
+    self.editToMainID  = 'edit-to-main';
+    self.editContentID = 'edit-content';
+
+    self.editNameID = 'edit-name';
+    self.editCodeID = 'edit-code';
+    self.editDescriptionID = 'edit-description';
+    self.editStatusID = 'edit-status';
+    self.editProductionID = 'edit-production';
+    self.editTerminationID = 'edit-termination';
+    self.editCreatedID = 'edit-created';
+    self.editUpdatedID = 'edit-updated';
+
+    //for view project
+    self.viewProjectViewID = 'view-projects-view';
+    self.viewToMainID  = 'view-to-main';
+    self.viewContentID = 'view-content';
+
     self.init = function()
     {
         $$('.'+self.tableRowClass).dispose();
@@ -45,7 +66,7 @@ var ProjectsList = function()
             self.currentPage,
             //callbacks array
             [
-                self.renderData,
+                // self.renderData,
                 self.addEvents
             ]
         );
@@ -60,6 +81,7 @@ var ProjectsList = function()
 
             var params = {
                 'page'      : page,
+                'project_id': self.searchParams['project_id'],
                 'name'      : self.searchParams['name'],
                 'code'      : self.searchParams['code'],
                 'status'    : self.searchParams['status'],
@@ -72,25 +94,35 @@ var ProjectsList = function()
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    if(data.resultData.length)
+                    //FOR THE TABLE
+                    if (data.view == 'table')
                     {
-                        self.currentPage  = data.page;
-                        self.totalPage    = data.totalPage;
-                        self.resultData = data.resultData;
-                        self.pageLimit    = data.limit;
-                        $$('#' + self.totalDataID).set('html', ' of '+data.totalData);
-                        
-                        self.renderData(self.resultData);
-                    }
-                    else
-                       $$('#' + self.totalDataID).set('html', '');
-
-                    if(callbacks)
-                    {
-                        Array.each(callbacks, function(callback)
+                        if(data.resultData.length)
                         {
-                            callback();
-                        });
+                            self.currentPage  = data.page;
+                            self.totalPage    = data.totalPage;
+                            self.resultData = data.resultData;
+                            self.pageLimit    = data.limit;
+                            $$('#' + self.totalDataID).set('html', ' of '+data.totalData);
+                            
+                            self.renderData(self.resultData, data.view);
+                        }
+                        else
+                           $$('#' + self.totalDataID).set('html', '');
+
+                        if(callbacks)
+                        {
+                            Array.each(callbacks, function(callback)
+                            {
+                                callback();
+                            });
+                        }
+                    }
+                    //FOR INDIVIDUAL
+                    else
+                    {
+                        self.resultData = data.resultData[0];
+                        self.renderData(self.resultData, data.view);
                     }
                 },
                 'onError' : function(data)
@@ -150,29 +182,62 @@ var ProjectsList = function()
         }
     };
     
-    self.renderData = function(data)
+    self.renderData = function(data, view)
     {
-        Array.each(data, function(val, idx)
+        if (view == 'table')
         {
-            contentHTML = '<td>'+val['name']+'</td>'
-                        + '<td>'+val['code']+'</td>'                        
-                        + '<td>'+val['description']+'</td>'
-                        + '<td>'+val['status']+'</td>'
-                        + '<td>'+val['production_date']+'</td>'
-                        + '<td class="actions-col three-column">'
-                        + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
-                        + '<a id="edit_' + val['project_id'] + '" href="#" title="Edit Project"><span class="">Edit</span></a>&nbsp'
-                        + '</td>';
-
-            contentElem = new Element('<tr />',
+            // console.log('in table');
+            Array.each(data, function(val, idx)
             {
-                'class' : self.tableRowClass,
-                'html' : contentHTML
+                contentHTML = '<td>'+val['name']+'</td>'
+                            + '<td>'+val['code']+'</td>'                        
+                            + '<td>'+val['description']+'</td>'
+                            + '<td>'+val['status']+'</td>'
+                            + '<td>'+val['production_date']+'</td>'
+                            + '<td class="actions-col three-column">'
+                            + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
+                            + '<a id="edit_' + val['project_id'] + '" href="#" title="Edit Project"><span class="">Edit</span></a>&nbsp'
+                            + '</td>';
+
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass,
+                    'html' : contentHTML
+                });
+                
+                contentElem.inject($(self.tableContainerID), 'bottom');
             });
-            
-            contentElem.inject($(self.tableContainerID), 'bottom');
-        });
+        }
+        else if (view == 'edit')
+        {
+            $(self.editNameID).value = data['name'];
+            $(self.editCodeID).value = data['code'];
+            $(self.editDescriptionID).value = data['description'];
+            $(self.editStatusID).value = data['status'];
+            $(self.editProductionID).value = data['production_date'];
+            $(self.editTerminationID).value = data['termination_date'];
+            $(self.editCreatedID).set('html', data['date_created']);
+            $(self.editUpdatedID).set('html', data['date_updated']);
+            // console.log($(self.editStatusID));
+        }
+        else if (view == 'view')
+        {
+            console.log('ho');
+        }
     };
+
+    self.clearSearch = function()
+    {
+        self.currentPage = 1;
+        self.searchParams['project_id'] = '';
+        self.searchParams['name'] = '';
+        self.searchParams['code'] = '';
+        self.searchParams['status'] = '';
+
+        $(self.searchNameID).value = '';
+        $(self.searchCodeID).value = '';
+        $(self.searchStatusID).value = '';    
+    }
 
     self.addEvents = function()
     {   
@@ -206,6 +271,7 @@ var ProjectsList = function()
         {
             e.preventDefault();
 
+            self.currentPage = 1;
             self.searchParams['name'] = $(self.searchNameID).value;
             self.searchParams['code'] = $(self.searchCodeID).value;
             self.searchParams['status'] = $(self.searchStatusID).value;
@@ -214,22 +280,66 @@ var ProjectsList = function()
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
-        // console.log($$(self.searchCleariD));
         $$(self.searchClearID).removeEvents();
         $$(self.searchClearID).addEvent('click', function(e)
         {
             e.preventDefault();
-            console.log('ya');
+            self.clearSearch();
+        });
 
-            self.searchParams['name'] = '';
-            $(self.searchNameID).value = '';
-
-            self.searchParams['code'] = '';
-            $(self.searchCodeID).value = '';
+        //EVENT FOR EDITING A PROJECT
+        $$(self.editID).removeEvents();
+        $$(self.editID).addEvent('click', function(e)
+        {
+            e.preventDefault();
             
-            self.searchParams['status'] = '';
-            $(self.searchStatusID).value = '';
+            self.clearSearch();
+            self.searchParams['project_id'] = 'edit_'+$(this).get('id').split('_')[1];
 
+            $(self.projectListID).setStyle('display', 'none');
+            $(self.editProjectViewID).setStyle('display', 'block');
+            self.init();
+
+        });
+
+        //EVENT FOR VIEWING A PROJECT
+        $$(self.viewID).removeEvents();
+        $$(self.viewID).addEvent('click',function(e)
+        {
+            e.preventDefault();
+
+            self.clearSearch();
+            self.searchParams['project_id'] = 'view_'+$(this).get('id').split('_')[1];
+
+            $(self.projectListID).setStyle('display', 'none');
+            $(self.viewProjectViewID).setStyle('display', 'block');
+            self.init();
+        });
+
+        //EVENT FOR GOING BACK TO MAIN FROM EDIT
+        $(self.editToMainID).removeEvents();
+        $(self.editToMainID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            $(self.editProjectViewID).setStyle('display', 'none');
+            $(self.projectListID).setStyle('display', 'block');
+            
+            self.clearSearch();
+            self.init();
+        });
+
+        //EVENT FOR GOING BACK TO MAIN FROM VIEW
+        $(self.viewToMainID).removeEvents();
+        $(self.viewToMainID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            $(self.viewProjectViewID).setStyle('display', 'none');
+            $(self.projectListID).setStyle('display', 'block');
+            
+            self.clearSearch();
+            self.init();
         });
 
     };

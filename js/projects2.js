@@ -158,7 +158,6 @@ var ProjectsList = function()
     
     self.renderData = function(data)
     {
-        // $(self.tableContainerID).set('html', '');
         Array.each(data, function(val, idx)
         {
             contentHTML = '<td>'+val['name']+'</td>'
