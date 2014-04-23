@@ -41,8 +41,9 @@ var ProjectsList = function()
     
     //for edit project
     self.editProjectViewID = 'edit-projects-view';
-    self.editToMainID  = 'edit-to-main';
     self.editContentID = 'edit-content';
+    self.editSaveButtonID = 'edit-button-create-project';
+    self.editCancelButtonID = 'edit-button-cancel';
 
     self.editNameID = 'edit-name';
     self.editCodeID = 'edit-code';
@@ -57,6 +58,15 @@ var ProjectsList = function()
     self.viewProjectViewID = 'view-projects-view';
     self.viewToMainID  = 'view-to-main';
     self.viewContentID = 'view-content';
+
+    self.viewNameID = 'view-name';
+    self.viewCodeID = 'view-code';
+    self.viewDescriptionID = 'view-description';
+    self.viewStatusID = 'view-status';
+    self.viewProductionID = 'view-production';
+    self.viewTerminationID = 'view-termination';
+    self.viewCreatedID = 'view-created';
+    self.viewUpdatedID = 'view-updated';
 
     self.init = function()
     {
@@ -76,9 +86,6 @@ var ProjectsList = function()
     {
         if(!self._request || !self._request.isRunning())
         {
-            //check pagination
-            callbacks.push(self.paginationChecker);
-
             var params = {
                 'page'      : page,
                 'project_id': self.searchParams['project_id'],
@@ -97,6 +104,9 @@ var ProjectsList = function()
                     //FOR THE TABLE
                     if (data.view == 'table')
                     {
+                        //check pagination
+                        callbacks.push(self.paginationChecker);
+
                         if(data.resultData.length)
                         {
                             self.currentPage  = data.page;
@@ -123,6 +133,9 @@ var ProjectsList = function()
                     {
                         self.resultData = data.resultData[0];
                         self.renderData(self.resultData, data.view);
+                    
+                        //callback
+                        self.addEvents();
                     }
                 },
                 'onError' : function(data)
@@ -196,7 +209,6 @@ var ProjectsList = function()
                             + '<td>'+val['production_date']+'</td>'
                             + '<td class="actions-col three-column">'
                             + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
-                            + '<a id="edit_' + val['project_id'] + '" href="#" title="Edit Project"><span class="">Edit</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -218,11 +230,27 @@ var ProjectsList = function()
             $(self.editTerminationID).value = data['termination_date'];
             $(self.editCreatedID).set('html', data['date_created']);
             $(self.editUpdatedID).set('html', data['date_updated']);
-            // console.log($(self.editStatusID));
         }
         else if (view == 'view')
         {
-            console.log('ho');
+            contentHTML = '<a id="edit_' + data['project_id'] + '" href="#" title="Edit Project"><span class="">[Edit]</span></a>&nbsp';
+            
+            // contentElem = new Element('<span />', 
+            // {
+            //     'html' : contentHTML
+            // })
+
+            $(self.viewContentID).set('html', contentHTML);
+            // contentElem.inject($(self.viewContentID), 'bottom');
+
+            $(self.viewNameID).set('html', data['name']);
+            $(self.viewCodeID).set('html', data['code']);
+            $(self.viewDescriptionID).set('html', data['description']);
+            $(self.viewStatusID).set('html', data['status']);
+            $(self.viewProductionID).set('html', data['production_date']);
+            $(self.viewTerminationID).set('html', data['termination_date']);
+            $(self.viewCreatedID).set('html', data['date_created']);
+            $(self.viewUpdatedID).set('html', data['date_updated']);
         }
     };
 
@@ -291,15 +319,13 @@ var ProjectsList = function()
         $$(self.editID).removeEvents();
         $$(self.editID).addEvent('click', function(e)
         {
-            e.preventDefault();
-            
+            e.preventDefault();            
             self.clearSearch();
             self.searchParams['project_id'] = 'edit_'+$(this).get('id').split('_')[1];
 
-            $(self.projectListID).setStyle('display', 'none');
+            $(self.viewProjectViewID).setStyle('display', 'none');
             $(self.editProjectViewID).setStyle('display', 'block');
             self.init();
-
         });
 
         //EVENT FOR VIEWING A PROJECT
@@ -307,7 +333,6 @@ var ProjectsList = function()
         $$(self.viewID).addEvent('click',function(e)
         {
             e.preventDefault();
-
             self.clearSearch();
             self.searchParams['project_id'] = 'view_'+$(this).get('id').split('_')[1];
 
@@ -316,32 +341,40 @@ var ProjectsList = function()
             self.init();
         });
 
-        //EVENT FOR GOING BACK TO MAIN FROM EDIT
-        $(self.editToMainID).removeEvents();
-        $(self.editToMainID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-
-            $(self.editProjectViewID).setStyle('display', 'none');
-            $(self.projectListID).setStyle('display', 'block');
-            
-            self.clearSearch();
-            self.init();
-        });
-
         //EVENT FOR GOING BACK TO MAIN FROM VIEW
         $(self.viewToMainID).removeEvents();
         $(self.viewToMainID).addEvent('click', function(e)
         {
             e.preventDefault();
+            self.clearSearch();
 
             $(self.viewProjectViewID).setStyle('display', 'none');
             $(self.projectListID).setStyle('display', 'block');
-            
-            self.clearSearch();
             self.init();
         });
 
+        //EVENT FOR SAVING CHANGES BUTTON IN EDIT PROJECT
+        $(self.editSaveButtonID).removeEvents();
+        $(self.editSaveButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            console.log('yo');
+        })
+
+        //EVENT FOR CANCEL BUTTON IN EDIT PROJECT
+        $(self.editCancelButtonID).removeEvents();
+        $(self.editCancelButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            var id = self.searchParams['project_id'].split('_')[1];
+            self.clearSearch();
+            self.searchParams['project_id'] = 'view_'+id;
+
+            $(self.editProjectViewID).setStyle('display', 'none');
+            $(self.viewProjectViewID).setStyle('display', 'block');
+            self.init();
+        })
     };
     
 };

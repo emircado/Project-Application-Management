@@ -81,12 +81,6 @@
                         
                         <!-- edit part view -->
                         <div id="edit-projects-view" style="display:none;" class="contact-info plain-list">
-                            <div class="header-block-button">
-                                <div class="pseudo-field back-button">
-                                    <a id="edit-to-main" href="#" title="Back to main" class="with-tool-tip"><span class="icon"></span><span class="tooltip">Back<span class="arrow icon"></span></span></a>
-                                </div>
-                            </div><br /><br />
-
                             <!-- FORM HERE -->
                             <form>
                                 <div class="contact-info-details">
@@ -168,6 +162,18 @@
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
+                                        <div class="dialog-footer-block">
+                                            <div class="field field-text">
+                                                <div class="field-action-content">
+                                                    <div class="pseudo-field pseudo-button">
+                                                        <a id="edit-button-cancel" class="cancel" href="#">Cancel</a>
+                                                    </div>
+                                                    <div class="pseudo-field pseudo-button primary-button">
+                                                        <button id="edit-button-create-project">Create</button>
+                                                    </div>
+                                                </div><!-- End Field Action Content -->
+                                            </div><!-- End Field Action -->
+                                        </div><!-- End UI Dialog Footer Block -->
                                     </div>
                                     <!--END EDIT CONTENT USER-->
                                 </div>
@@ -183,8 +189,80 @@
                             </div><br /><br />
 
                             <!-- CONTENT HERE -->
-                            VIEWING HERE
-                            <div id="view-content"></div>
+                            <form>
+                                <div class="contact-info-details">
+                                    <div class="section primary-info expanded">
+                                        <div id="expand-primary" class="header"><h3><b>Project Details</b></h3>&nbsp&nbsp<span id="view-content"></span></div>
+                                    </div>
+                                    <!-- <div id="view-content"></div> -->
+                                    <div id="edit-primary-content" class="content">
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Name</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-name"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Code</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-code"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Description</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-description"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Status</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-status"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Production Date</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-production"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Termination Date</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-termination"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Date Created</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-created"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field -->
+                                        <div class="field field-input-name">
+                                            <div class="field-secondary"><span class="label">Date Updated</span></div>
+                                            <div class="field-primary">
+                                                <div class="pseudo-field no-border">
+                                                    <span class="value" id="view-updated"></span>
+                                                </div>
+                                            </div><!-- End Field Primary -->
+                                        </div><!-- End Field --> 
+                                    </div>
+                                </div>
+                            </form>
                         </div><!--END view user-->
                     </div>
                 </div>

@@ -38,12 +38,12 @@ class ProjectsController extends Controller
 
         $projects = $this->get_data($filter, $limit, $offset);
 
-        // if ($view == 'table') {
-        //     foreach ($projects['data'] as $p) {
-        //         $p['production_date'] = date(Yii::app()->params['dateformat_display'], strtotime($p['production_date']));
-        //     }
-        // }
-        // echo CJSON::encode($projects['data']);
+        if ($view == 'table' || $view == 'view') {
+            for ($i = 0; $i < $projects['data_count']; $i++) {
+                $projects['data'][$i]['production_date'] = date(Yii::app()->params['dateformat_display'], strtotime($projects['data'][$i]['production_date']));
+                $projects['data'][$i]['termination_date'] = date(Yii::app()->params['dateformat_display'], strtotime($projects['data'][$i]['termination_date']));
+            }
+        }
 
         $return_data = array(
             'view'=>$view,
@@ -69,10 +69,10 @@ class ProjectsController extends Controller
                 $criteria->compare('project_id', $filter['project_id']);
 
             if(isset($filter['name']))
-                $criteria->compare('name', $filter['name'], true);
+                $criteria->compare('name', $filter['name'], true, 'AND', true);
 
             if(isset($filter['code']))
-                $criteria->compare('code', $filter['code']);
+                $criteria->compare('code', $filter['code'], true, 'AND', true);
 
             if(isset($filter['status']))
                 $criteria->compare('status', $filter['status']);

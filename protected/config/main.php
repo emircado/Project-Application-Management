@@ -49,12 +49,7 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		
-		/*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		*/
+
 		// uncomment the following to use a MySQL database
 		'db'=>array(
 			'connectionString' => 'mysql:host=10.11.7.10;dbname=projects',
@@ -86,9 +81,9 @@ return array(
 			'class'=>'application.extensions.adLDAP.YiiLDAP',
 			'options'=> array(
 				'ad_port' => 389,
-				'domain_controllers' => array('10.11.6.200'),
-				'account_suffix' => '@chikka.org',
-				'base_dn' => "DC=chikka,DC=org",
+				'domain_controllers' => array('10.11.6.202'),
+				'account_suffix' => '@chikkaanson.org',
+				'base_dn' => "DC=chikkaanson,DC=org",
 				'admin_username' => NULL,
 				'admin_password' => NULL,
 			),
