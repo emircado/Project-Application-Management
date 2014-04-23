@@ -19,7 +19,7 @@
                             <fieldset>
                                 <div class="table-header-block">
                                     <div class="header-block-button">
-                                        <a id="create-project" class="button round blue image-right ic-add text-upper" href="#">Add Project</a>
+                                        <a id="create-project" class="button round blue image-right ic-add text-upper" href="#">Create Project</a>
                                     </div><!-- End Header Block Button -->
 
                                     <div class="header-block-side">
@@ -146,22 +146,6 @@
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
-                                        <div id="date-div" class="field">
-                                            <div class="field-secondary"><span class="label">Date Created</span></div>
-                                            <div class="field-primary">
-                                                <div class="pseudo-field no-border">
-                                                    <span class="value" id="edit-created"></span>
-                                                </div>
-                                            </div><!-- End Field Primary -->
-                                        </div><!-- End Field -->
-                                        <div id="date-div" class="field">
-                                            <div class="field-secondary"><span class="label">Date Updated</span></div>
-                                            <div class="field-primary">
-                                                <div class="pseudo-field no-border">
-                                                    <span class="value" id="edit-updated"></span>
-                                                </div>
-                                            </div><!-- End Field Primary -->
-                                        </div><!-- End Field -->
                                         <div class="dialog-footer-block">
                                             <div class="field field-text">
                                                 <div class="field-action-content">
@@ -169,7 +153,7 @@
                                                         <a id="edit-button-cancel" class="cancel" href="#">Cancel</a>
                                                     </div>
                                                     <div class="pseudo-field pseudo-button primary-button">
-                                                        <button id="edit-button-create-project">Create</button>
+                                                        <button id="edit-button-create-project">Save Changes</button>
                                                     </div>
                                                 </div><!-- End Field Action Content -->
                                             </div><!-- End Field Action -->
@@ -264,6 +248,8 @@
                                 </div>
                             </form>
                         </div><!--END view user-->
+
+
                     </div>
                 </div>
             </div>

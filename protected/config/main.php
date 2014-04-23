@@ -95,8 +95,10 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-		'dateformat_display'=>'M j, Y',
-		'dateformat_log'=>'M j, Y',
+		'date_display'=>'M j, Y',
+		'date_log'=>'M j, Y',
+		'datetime_display'=>'D, M j, Y g:i A',
+		'datetime_log'=>'M j, Y H:i:s',
 		'projects_per_page'=>20,
 	),
 );

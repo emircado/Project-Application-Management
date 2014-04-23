@@ -40,8 +40,10 @@ class ProjectsController extends Controller
 
         if ($view == 'table' || $view == 'view') {
             for ($i = 0; $i < $projects['data_count']; $i++) {
-                $projects['data'][$i]['production_date'] = date(Yii::app()->params['dateformat_display'], strtotime($projects['data'][$i]['production_date']));
-                $projects['data'][$i]['termination_date'] = date(Yii::app()->params['dateformat_display'], strtotime($projects['data'][$i]['termination_date']));
+                $projects['data'][$i]['production_date'] = date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['production_date']));
+                $projects['data'][$i]['termination_date'] = date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
+                $projects['data'][$i]['date_created'] = date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
+                $projects['data'][$i]['date_updated'] = date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_updated']));
             }
         }
 
@@ -106,5 +108,31 @@ class ProjectsController extends Controller
             'data_count'=>count($data),
             'total_count'=>$count,          
         );
+    }
+
+    public function actionUpdate()
+    {
+        $data = $_GET;
+        
+        //for creating a project
+        if (empty($data['project_id'])) {
+            $project = new Projects;
+            $project->name = $data['name'];
+            $project->code = $data['code'];
+            $project->description = $data['description'];
+            $project->status = $data['status'];
+            $project->production_date = $data['production_date'];
+            $project->termination_date = $data['termination_date'];
+            $project->date_created = date("Y-m-d H:i:s");
+            $project->date_updated = '0000-00-00 00:00:00';
+            $project->save();
+
+        //for updating a project
+        } else {
+            $data['date_updated'] = date("Y-m-d H:i:s");
+            Projects::model()->updateByPk((int) $_GET['project_id'], $data);
+        }
+
+        echo CJSON::encode('good'); //success
     }
 }

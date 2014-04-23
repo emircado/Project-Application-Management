@@ -3,6 +3,7 @@ var ProjectsList = function()
     var self = this;
     
     self.getDataURL = baseURL + '/projects/list';
+    self.postDataURL = baseURL + '/projects/update';
     
     //for data gathering
     self.tableContainerID       = 'data-result';
@@ -36,6 +37,7 @@ var ProjectsList = function()
     };
     
     //actions
+    self.createButtonID = 'create-project';
     self.editID = 'a[id^=edit_]';
     self.viewID = 'a[id^=view_]';
     
@@ -51,8 +53,6 @@ var ProjectsList = function()
     self.editStatusID = 'edit-status';
     self.editProductionID = 'edit-production';
     self.editTerminationID = 'edit-termination';
-    self.editCreatedID = 'edit-created';
-    self.editUpdatedID = 'edit-updated';
 
     //for view project
     self.viewProjectViewID = 'view-projects-view';
@@ -67,6 +67,8 @@ var ProjectsList = function()
     self.viewTerminationID = 'view-termination';
     self.viewCreatedID = 'view-created';
     self.viewUpdatedID = 'view-updated';
+
+    //for create project
 
     self.init = function()
     {
@@ -84,7 +86,7 @@ var ProjectsList = function()
     
     self.getAjaxData = function(page, callbacks)
     {
-        if(!self._request || !self._request.isRunning())
+    	if(!self._request || !self._request.isRunning())
         {
             var params = {
                 'page'      : page,
@@ -118,25 +120,23 @@ var ProjectsList = function()
                             self.renderData(self.resultData, data.view);
                         }
                         else
-                           $$('#' + self.totalDataID).set('html', '');
-
-                        if(callbacks)
-                        {
-                            Array.each(callbacks, function(callback)
-                            {
-                                callback();
-                            });
-                        }
+                           $$('#' + self.totalDataID).set('html', 'No projects');
                     }
                     //FOR INDIVIDUAL
                     else
                     {
                         self.resultData = data.resultData[0];
                         self.renderData(self.resultData, data.view);
-                    
-                        //callback
-                        self.addEvents();
                     }
+
+                    if(callbacks)
+                    {
+                        Array.each(callbacks, function(callback)
+                        {
+                            callback();
+                        });
+                    }
+
                 },
                 'onError' : function(data)
                 {
@@ -145,8 +145,49 @@ var ProjectsList = function()
                 }
             }).send();
         }
+    }
+
+    self.postAjaxData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            var params = {
+                'project_id'		: '',
+                'name'				: $(self.editNameID).value,
+                'code'      		: $(self.editCodeID).value,
+                'description'		: $(self.editDescriptionID).value, 
+                'status'    		: $(self.editStatusID).value,
+                'production_date'	: $(self.editProductionID).value,
+                'termination_date'	: $(self.editTerminationID).value
+            };
+
+            if (self.searchParams['project_id'] != '')
+            {
+            	params['project_id'] = parseInt(self.searchParams['project_id'].split('_')[1]);
+            }
+
+            self._request = new Request.JSON(
+            {
+                'url' : self.postDataURL,
+                'method' : 'get',
+                'data' : params,
+                'onSuccess' : function(data)
+                {
+                	console.log('success');
+                },
+                'onError' : function(data)
+                {
+                    self._request.stop;
+                    console.log('Something went wrong!');
+                },
+                'onComplete': function(data)
+                {
+                	$(self.editCancelButtonID).click();
+                }
+            }).send();
+        }
     };
-    
+
     self.paginationChecker = function()
     {
         //display the NEXT and PREV
@@ -228,20 +269,12 @@ var ProjectsList = function()
             $(self.editStatusID).value = data['status'];
             $(self.editProductionID).value = data['production_date'];
             $(self.editTerminationID).value = data['termination_date'];
-            $(self.editCreatedID).set('html', data['date_created']);
-            $(self.editUpdatedID).set('html', data['date_updated']);
         }
         else if (view == 'view')
         {
             contentHTML = '<a id="edit_' + data['project_id'] + '" href="#" title="Edit Project"><span class="">[Edit]</span></a>&nbsp';
-            
-            // contentElem = new Element('<span />', 
-            // {
-            //     'html' : contentHTML
-            // })
 
             $(self.viewContentID).set('html', contentHTML);
-            // contentElem.inject($(self.viewContentID), 'bottom');
 
             $(self.viewNameID).set('html', data['name']);
             $(self.viewCodeID).set('html', data['code']);
@@ -353,28 +386,57 @@ var ProjectsList = function()
             self.init();
         });
 
-        //EVENT FOR SAVING CHANGES BUTTON IN EDIT PROJECT
+        //EVENT FOR SAVING CHANGES BUTTON IN EDIT/CREATE PROJECT
         $(self.editSaveButtonID).removeEvents();
         $(self.editSaveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
 
-            console.log('yo');
-        })
+            self.postAjaxData();
+        });
 
-        //EVENT FOR CANCEL BUTTON IN EDIT PROJECT
+        //EVENT FOR CANCEL BUTTON IN EDIT/CREATE PROJECT
         $(self.editCancelButtonID).removeEvents();
         $(self.editCancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            var id = self.searchParams['project_id'].split('_')[1];
-            self.clearSearch();
-            self.searchParams['project_id'] = 'view_'+id;
 
-            $(self.editProjectViewID).setStyle('display', 'none');
-            $(self.viewProjectViewID).setStyle('display', 'block');
-            self.init();
-        })
+            //if create
+            if (self.searchParams['project_id'] == '') {
+            	self.clearSearch();
+            	$(self.editProjectViewID).setStyle('display', 'none');
+            	$(self.projectListID).setStyle('display', 'block');
+            	self.init();
+
+            //if edit
+            } else {
+	            var id = self.searchParams['project_id'].split('_')[1];
+	            self.clearSearch();
+	            self.searchParams['project_id'] = 'view_'+id;
+
+	            $(self.editProjectViewID).setStyle('display', 'none');
+	            $(self.viewProjectViewID).setStyle('display', 'block');
+	            self.init();
+            }
+
+            //clear form
+            $(self.editNameID).value = '';
+            $(self.editCodeID).value = '';
+            $(self.editDescriptionID).value = '';
+            $(self.editStatusID).value = 'ACTIVE';
+            $(self.editProductionID).value = '0000-00-00';
+            $(self.editTerminationID).value = '0000-00-00';
+        });
+
+        //EVENT FOR CREATING A NEW PROJECT
+        $(self.createButtonID).removeEvents();
+        $(self.createButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            $(self.projectListID).setStyle('display', 'none');
+            $(self.editProjectViewID).setStyle('display', 'block');
+        });
     };
     
 };
