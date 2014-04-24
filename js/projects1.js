@@ -231,6 +231,7 @@ var ProjectsList = function()
 
             $(self.projectListID).setStyle('display', 'none');
             var proj_id = $(this).get('id').split('_')[1];
+
             ProjectsSite.initView(self.resultData[self.lookupData.indexOf(proj_id)]);
         });
 
@@ -253,26 +254,29 @@ var ProjectsCreate = function()
     self._request = null;
 
     //display
-    self.createProjectViewID = 'edit-projects-view';
+    self.createProjectViewID = 'create-projects-view';
 
     //buttons
-    self.createSaveButtonID = 'edit-button-create-project';
-    self.createCancelButtonID = 'edit-button-cancel';
+    self.createSaveButtonID = 'create-button-create-project';
+    self.createCancelButtonID = 'create-button-cancel';
 
     //fields
-    self.createNameID = 'edit-name';
-    self.createCodeID = 'edit-code';
-    self.createDescriptionID = 'edit-description';
-    self.createStatusID = 'edit-status';
-    self.createProductionID = 'edit-production';
-    self.createTerminationID = 'edit-termination';
+    self.createNameID = 'create-name';
+    self.createCodeID = 'create-code';
+    self.createDescriptionID = 'create-description';
+    self.createProductionID = 'create-production';
+    self.createTerminationID = 'create-termination';
+
+    //error displays
+    self.createNameErrorID = 'create-name-error';
+    self.createCodeErrorID = 'create-code-error';
+    self.createDescriptionErrorID = 'create-description-error';
+    self.createProductionErrorID = 'create-production-error';
+    self.createTerminationErrorID = 'create-termination-error';
 
     self.init = function()
     {
         $(self.createProjectViewID).setStyle('display', 'block');
-        //hide status input
-        $('status-div').setStyle('display', 'none');
-
         self.addEvents();
     }
 
@@ -284,8 +288,7 @@ var ProjectsCreate = function()
                 'project_id'        : '',
                 'name'              : $(self.createNameID).value,
                 'code'              : $(self.createCodeID).value,
-                'description'       : $(self.createDescriptionID).value, 
-                'status'            : $(self.createStatusID).value,
+                'description'       : $(self.createDescriptionID).value,
                 'production_date'   : $(self.createProductionID).value,
                 'termination_date'  : $(self.createTerminationID).value
             };
@@ -295,11 +298,17 @@ var ProjectsCreate = function()
                 'url' : self.postDataURL,
                 'method' : 'get',
                 'data' : params,
-                'onError' : function(data)
+                'onError' : function(errors)
                 {
                     self._request.stop;
-                    console.log(data);
-                    console.log('Something went wrong!');
+                    Array.each(errors.split(','), function(error, idx)
+                    {
+                        var data = error.split(': ');
+                        if (data[0] == 'CODE_ERROR') {
+                            $(self.createCodeErrorID).set('html', data[1]);
+                            $(self.createCodeErrorID).setStyle('display', 'block');
+                        }
+                    });
                 },
                 'onComplete': function(data)
                 {
@@ -316,6 +325,9 @@ var ProjectsCreate = function()
         $(self.createSaveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+
+            //hide error messages
+            $(self.createNameErrorID).setStyle('display', 'none');
 
             self.postAjaxData();
         });
@@ -334,7 +346,6 @@ var ProjectsCreate = function()
             $(self.createNameID).value = '';
             $(self.createCodeID).value = '';
             $(self.createDescriptionID).value = '';
-            $(self.createStatusID).value = 'ACTIVE';
             $(self.createProductionID).value = '0000-00-00';
             $(self.createTerminationID).value = '0000-00-00';
         });
@@ -379,7 +390,7 @@ var ProjectsView = function(data)
     {
         $(self.viewProjectViewID).setStyle('display', 'block');
 
-        self.renderData(data);
+        self.renderData();
         self.addEvents();
     }
 
@@ -417,7 +428,6 @@ var ProjectsView = function(data)
         $$(self.editID).addEvent('click', function(e)
         {
             e.preventDefault();            
-            ProjectsSite.mainObj.clearSearch();
 
             $(self.viewProjectViewID).setStyle('display', 'none');
             ProjectsSite.initEdit(data);
@@ -433,7 +443,7 @@ var ProjectsEdit = function(data)
     //for edit project
     self.editProjectViewID = 'edit-projects-view';
     self.editContentID = 'edit-content';
-    self.editSaveButtonID = 'edit-button-create-project';
+    self.editSaveButtonID = 'edit-button-update-project';
     self.editCancelButtonID = 'edit-button-cancel';
 
     self.editNameID = 'edit-name';
@@ -443,11 +453,15 @@ var ProjectsEdit = function(data)
     self.editProductionID = 'edit-production';
     self.editTerminationID = 'edit-termination';
 
+    self.editNameErrorID = 'edit-name-error';
+    self.editCodeErrorID = 'edit-code-error';
+    self.editDescriptionErrorID = 'edit-description-error';
+    self.editProductionErrorID = 'edit-production-error';
+    self.editTerminationErrorID = 'edit-termination-error';
+
     self.init = function()
     {
         $(self.editProjectViewID).setStyle('display', 'block');
-        $('status-div').setStyle('display', 'block');
-
         self.renderData();
         self.addEvents();
     }
@@ -473,10 +487,17 @@ var ProjectsEdit = function(data)
                 'url' : self.postDataURL,
                 'method' : 'get',
                 'data' : params,
-                'onError' : function(d)
+                'onError' : function(errors)
                 {
                     self._request.stop;
-                    console.log('Something went wrong!');
+                    Array.each(errors.split(','), function(error, idx)
+                    {
+                        var data = error.split(': ');
+                        if (data[0] == 'CODE_ERROR') {
+                            $(self.editCodeErrorID).set('html', data[1]);
+                            $(self.editCodeErrorID).setStyle('display', 'block');
+                        }
+                    });
                 },
                 'onComplete': function(d)
                 {
@@ -529,8 +550,8 @@ var ProjectsEdit = function(data)
 var ProjectsSite = {
     mainObj         : null,
     createObj       : null,
-    editObj         : null,
-    viewObj         : null,
+    // editObj         : null,
+    // viewObj         : null,
 
     init: function()
     {
@@ -563,23 +584,17 @@ var ProjectsSite = {
     initEdit: function(data)
     {
         var self = this;
-
-        if (self.editObj == null)
-        {
-            self.editObj = new ProjectsEdit(data);
-        }
-        self.editObj.init();
+        // self.editObj = new ProjectsEdit(data);
+        // self.editObj.init();
+        new ProjectsEdit(data).init();
     },
 
     initView: function(data)
     {
         var self = this;
-
-        if (self.viewOjb == null)
-        {
-            self.viewObj = new ProjectsView(data);
-        }
-        self.viewObj.init();
+        // self.viewObj = new ProjectsView(data);
+        // self.viewObj.init();
+        new ProjectsView(data).init();
     }
 }
 

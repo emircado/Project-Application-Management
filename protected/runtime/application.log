@@ -296,3 +296,80 @@ Stack trace:
 #11 {main}
 REQUEST_URI=/projmgmt/projects/update?project_id=&name=df&code=ASD&description=asdfasdf&status=ACTIVE&production_date=0111-01-01&termination_date=0011-01-11
 ---
+2014/04/24 13:33:25 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (136)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 13:33:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(136): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=dfasdf&code=ASDFA&description=asdfasdfasdfasdf&production_date=22222-02-22&termination_date=22222-02-22
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 13:33:35 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (136)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 13:33:35 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(136): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=dfasdf&code=ASDFA&description=asdfasdfasdfasdf&production_date=22222-02-22&termination_date=22222-02-22
+---
+2014/04/24 13:33:49 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (136)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 13:33:49 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(136): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=dfasdf&code=ASDFA&description=asdfasdfasdfasdf&production_date=22222-02-22&termination_date=22222-02-22
+---
+2014/04/24 13:34:17 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (136)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 13:34:17 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASDFA' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(136): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=dfasdf&code=ASDFA&description=asdfasdfasdfasdf&production_date=22222-02-22&termination_date=22222-02-22
+---

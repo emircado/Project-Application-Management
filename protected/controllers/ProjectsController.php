@@ -104,48 +104,69 @@ class ProjectsController extends Controller
         $data = $_GET;
         //for creating a project
         if (empty($data['project_id'])) {
-            //check restrictions here
-            if (strlen($data['code']) != 5) {
-                echo 'Project code must be 5 characters';
-                exit();
-            }
-            //check required fields
+            $errors = array();
+            //code is required
             if (strlen($data['code']) == 0) {
-                echo 'Code is required';
-                exit();
-            }
+                array_push($errors, 'CODE_ERROR: Code is required');
+            //code must be at least 5 characters long
+            } else if (strlen($data['code']) != 5) {
+                array_push($errors, 'CODE_ERROR: Project code must be 5 characters');
             //check if code is alphanumeric
-            if (!ctype_alnum($data['code'])) {
-                echo 'Code must be alphanumeric';
-                exit();
+            } else if (!ctype_alnum($data['code'])) {
+                array_push($errors, 'CODE_ERROR: Code must be alphanumeric');
+            //check if project code already exists
+            } else if (Projects::model()->exists('code = :code', array(":code"=>$data['code']))) {
+                array_push($errors, 'CODE_ERROR: Code already taken');
             }
 
-
-
-            //dates have to make sense too
-            
-            $project = new Projects;
-            $project->name = $data['name'];
-            $project->code = strtoupper($data['code']);
-            $project->description = $data['description'];
-            $project->status = 'ACTIVE';
-            $project->production_date = $data['production_date'];
-            $project->termination_date = $data['termination_date'];
-            $project->date_created = date("Y-m-d H:i:s");
-            $project->date_updated = '0000-00-00 00:00:00';
-            $project->save();
+            if (count($errors) == 0) {
+                $project = new Projects;
+                $project->name = $data['name'];
+                $project->code = strtoupper($data['code']);
+                $project->description = $data['description'];
+                $project->status = 'ACTIVE';
+                $project->production_date = $data['production_date'];
+                $project->termination_date = $data['termination_date'];
+                $project->date_created = date("Y-m-d H:i:s");
+                $project->date_updated = '0000-00-00 00:00:00';
+                $project->save();
+            } else {
+                echo implode(',', $errors);
+            }
 
         //for updating a project
         } else {
-            $data['date_updated'] = date("Y-m-d H:i:s");
-            Projects::model()->updateByPk((int) $_GET['project_id'], $data);
+            $errors = array();
+            //code is required
+            if (strlen($data['code']) == 0) {
+                array_push($errors, 'CODE_ERROR: Code is required');
+            //code must be at least 5 characters long
+            } else if (strlen($data['code']) != 5) {
+                array_push($errors, 'CODE_ERROR: Project code must be 5 characters');
+            //check if code is alphanumeric
+            } else if (!ctype_alnum($data['code'])) {
+                array_push($errors, 'CODE_ERROR: Code must be alphanumeric');
+            } else {
+                //check if project code already exists
+                $existing = Projects::model()->find('code = :code', array(":code"=>$data['code']));
+                if ($existing != NULL && $existing->project_id != $data['project_id']) {
+                    array_push($errors, 'CODE_ERROR: Code already taken');
+                }
+            }
 
-            $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
-            $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
-            $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
-            $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+            if (count($errors) == 0) {
+                $data['date_updated'] = date("Y-m-d H:i:s");
+                Projects::model()->updateByPk((int) $_GET['project_id'], $data);
 
-            echo CJSON::encode($data);
+                $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
+                $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
+                $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
+                $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+
+                echo CJSON::encode($data);   
+            } else {
+                echo implode(',', $errors);
+            }
         }
     }
 }
