@@ -71,3 +71,228 @@ Stack trace:
 #9 {main}
 REQUEST_URI=/projmgmt/projects/update?project_id=&name=sample&code=SMPLE&description=Sample%20description&status=ACTIVE&production_date=1994-03-03&termination_date=1995-03-03
 ---
+2014/04/23 17:36:43 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/23 17:37:39 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/23 18:37:47 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/23 18:41:23 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/23 18:58:08 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 10:33:54 [error] [php] Undefined variable: view (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1&name=&code=&status=
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 10:34:35 [error] [php] Undefined variable: view (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1&name=&code=&status=
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 10:35:05 [error] [php] Undefined variable: view (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1&name=&code=&status=
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 10:36:09 [error] [php] Undefined variable: view (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/list?page=1&name=&code=&status=
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 10:42:48 [error] [php] Undefined index: date_created (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:142)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/update?project_id=101&name=Sample%20Project%2001&code=PRO01&description=Description%20for%20project01&status=ACTIVE&production_date=2014-11-01&termination_date=2014-11-02
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (142)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 10:44:54 [error] [php] Undefined index: date_created (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:142)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/update?project_id=101&name=Sample%20Project%2001&code=PRO01&description=Description%20for%20project01&status=ACTIVE&production_date=2014-11-01&termination_date=2014-11-02
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (142)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 11:54:21 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'SSS' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (122)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 11:54:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'SSS' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(122): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=asdfasdfasd&code=SSS&description=asdf&status=ACTIVE&production_date=0011-11-01&termination_date=0011-01-01
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 11:55:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'SSS' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (125)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 11:55:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'SSS' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(125): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=asdfasdfasd&code=SSS&description=asdf&status=ACTIVE&production_date=0011-11-01&termination_date=0011-01-01
+---
+2014/04/24 11:58:40 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'S' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (125)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 11:58:40 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'S' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(125): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=asdfasdfas&code=S&description=sdfawef&status=ACTIVE&production_date=1111-01-01&termination_date=1111-01-01
+HTTP_REFERER=http://10.11.7.11/projmgmt/projects
+---
+2014/04/24 11:59:40 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:108)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=asdfasdfas&code%E2%80%A6fawef&status=ACTIVE&production_date=1111-01-01&termination_date=1111-01-01
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (108)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 12:00:35 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASD' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (125)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 12:00:35 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASD' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(125): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=df&code=ASD&description=asdfasdf&status=ACTIVE&production_date=0111-01-01&termination_date=0011-01-11
+HTTP_REFERER=http://10.11.7.11/projmgmt/projects
+---
+2014/04/24 12:00:41 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASD' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (125)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 12:00:41 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'ASD' for key 'code'. The SQL statement executed was: INSERT INTO `projects` (`name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(125): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionUpdate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/update')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/projmgmt/projects/update?project_id=&name=df&code=ASD&description=asdfasdf&status=ACTIVE&production_date=0111-01-01&termination_date=0011-01-11
+---

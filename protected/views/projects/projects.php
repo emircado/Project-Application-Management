@@ -153,7 +153,7 @@
                                                         <a id="edit-button-cancel" class="cancel" href="#">Cancel</a>
                                                     </div>
                                                     <div class="pseudo-field pseudo-button primary-button">
-                                                        <button id="edit-button-create-project">Save Changes</button>
+                                                        <button id="edit-button-create-project">Save</button>
                                                     </div>
                                                 </div><!-- End Field Action Content -->
                                             </div><!-- End Field Action -->
@@ -248,7 +248,6 @@
                                 </div>
                             </form>
                         </div><!--END view user-->
-
 
                     </div>
                 </div>

@@ -151,6 +151,7 @@ var ProjectsList = function()
     {
         if(!self._request || !self._request.isRunning())
         {
+        	console.log('at post');
             var params = {
                 'project_id'		: '',
                 'name'				: $(self.editNameID).value,
@@ -169,7 +170,7 @@ var ProjectsList = function()
             self._request = new Request.JSON(
             {
                 'url' : self.postDataURL,
-                'method' : 'get',
+                'method' : 'post',
                 'data' : params,
                 'onSuccess' : function(data)
                 {
@@ -333,8 +334,8 @@ var ProjectsList = function()
             e.preventDefault();
 
             self.currentPage = 1;
-            self.searchParams['name'] = $(self.searchNameID).value;
-            self.searchParams['code'] = $(self.searchCodeID).value;
+            self.searchParams['name'] = $(self.searchNameID).value.trim();
+            self.searchParams['code'] = $(self.searchCodeID).value.trim();
             self.searchParams['status'] = $(self.searchStatusID).value;
 
             self.init();
@@ -358,6 +359,7 @@ var ProjectsList = function()
 
             $(self.viewProjectViewID).setStyle('display', 'none');
             $(self.editProjectViewID).setStyle('display', 'block');
+            $('status-div').setStyle('display', 'block');
             self.init();
         });
 
@@ -436,9 +438,11 @@ var ProjectsList = function()
 
             $(self.projectListID).setStyle('display', 'none');
             $(self.editProjectViewID).setStyle('display', 'block');
+
+            //hide status input
+            $('status-div').setStyle('display', 'none');
         });
     };
-    
 };
 
 window.addEvent('domready', function()

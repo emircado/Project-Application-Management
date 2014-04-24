@@ -8,7 +8,7 @@ class ProjectsController extends Controller
     public function actionIndex()
     {
         $this->modals = 'projects-modal';
-        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>';
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects1.js"></script>';
         $this->render('projects');
     }
 
@@ -18,19 +18,11 @@ class ProjectsController extends Controller
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
         $filter = array();
-        $view = 'table';
 
-        if (isset($_GET['project_id']) && !empty($_GET['project_id']))
-        {
-            $request = explode('_', $_GET['project_id']);
-            $view = $request[0];
-            $filter['project_id'] = (int) $request[1];
-        }
-
-        if (isset($_GET['name']) && !empty($_GET['name']))
+        if (isset($_GET['name']) && (!empty($_GET['name']) || $_GET['name'] == '0'))
             $filter['name'] = (string) $_GET['name'];
 
-        if (isset($_GET['code']) && !empty($_GET['code']))
+        if (isset($_GET['code']) && (!empty($_GET['code']) || $_GET['code'] == '0'))
             $filter['code'] = (string) $_GET['code'];
 
         if (isset($_GET['status']) && !empty($_GET['status']))
@@ -38,17 +30,14 @@ class ProjectsController extends Controller
 
         $projects = $this->get_data($filter, $limit, $offset);
 
-        if ($view == 'table' || $view == 'view') {
-            for ($i = 0; $i < $projects['data_count']; $i++) {
-                $projects['data'][$i]['production_date'] = date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['production_date']));
-                $projects['data'][$i]['termination_date'] = date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
-                $projects['data'][$i]['date_created'] = date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
-                $projects['data'][$i]['date_updated'] = date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_updated']));
-            }
+        for ($i = 0; $i < $projects['data_count']; $i++) {
+            $projects['data'][$i]['production_date_formatted'] = ($projects['data'][$i]['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['production_date']));
+            $projects['data'][$i]['termination_date_formatted'] = ($projects['data'][$i]['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
+            $projects['data'][$i]['date_created_formatted'] = ($projects['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
+            $projects['data'][$i]['date_updated_formatted'] = ($projects['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_updated']));
         }
 
         $return_data = array(
-            'view'=>$view,
             'page'=>$page,
             'totalPage'=>ceil($projects['total_count']/$limit),
             'totalData'=>$projects['total_count'],
@@ -113,14 +102,33 @@ class ProjectsController extends Controller
     public function actionUpdate()
     {
         $data = $_GET;
-        
         //for creating a project
         if (empty($data['project_id'])) {
+            //check restrictions here
+            if (strlen($data['code']) != 5) {
+                echo 'Project code must be 5 characters';
+                exit();
+            }
+            //check required fields
+            if (strlen($data['code']) == 0) {
+                echo 'Code is required';
+                exit();
+            }
+            //check if code is alphanumeric
+            if (!ctype_alnum($data['code'])) {
+                echo 'Code must be alphanumeric';
+                exit();
+            }
+
+
+
+            //dates have to make sense too
+            
             $project = new Projects;
             $project->name = $data['name'];
-            $project->code = $data['code'];
+            $project->code = strtoupper($data['code']);
             $project->description = $data['description'];
-            $project->status = $data['status'];
+            $project->status = 'ACTIVE';
             $project->production_date = $data['production_date'];
             $project->termination_date = $data['termination_date'];
             $project->date_created = date("Y-m-d H:i:s");
@@ -131,8 +139,13 @@ class ProjectsController extends Controller
         } else {
             $data['date_updated'] = date("Y-m-d H:i:s");
             Projects::model()->updateByPk((int) $_GET['project_id'], $data);
-        }
 
-        echo CJSON::encode('good'); //success
+            $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
+            $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
+            $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
+            $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+
+            echo CJSON::encode($data);
+        }
     }
 }
