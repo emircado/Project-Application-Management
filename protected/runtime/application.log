@@ -373,3 +373,210 @@ Stack trace:
 #11 {main}
 REQUEST_URI=/projmgmt/projects/update?project_id=&name=dfasdf&code=ASDFA&description=asdfasdfasdfasdf&production_date=22222-02-22&termination_date=22222-02-22
 ---
+2014/04/24 16:50:41 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:51:18 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:51:35 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:55:19 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:57:16 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:57:31 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 16:58:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 16:58:31 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:154)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (154)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 17:42:06 [error] [php] Undefined variable: _SESSION (/home/httpd/vhosts/projmgmt/protected/views/projects/projects.php:257)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php(12): ProjectsController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects
+in /home/httpd/vhosts/projmgmt/protected/views/projects/projects.php (257)
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (12)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 17:50:07 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 17:51:04 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 17:51:23 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 17:51:57 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 17:52:13 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:157)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/index.php/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (157)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 17:55:06 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 18:18:43 [error] [php] Undefined index: project_id (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:135)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/update
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (135)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 18:27:44 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---
+2014/04/24 18:27:56 [error] [php] Undefined index: code (/home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php:155)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/projmgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/projmgmt/projects/create
+in /home/httpd/vhosts/projmgmt/protected/controllers/ProjectsController.php (155)
+in /home/httpd/vhosts/projmgmt/index.php (15)
+2014/04/24 18:35:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/projmgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/projmgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/projmgmt/index.php/projects
+---

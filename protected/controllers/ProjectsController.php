@@ -8,7 +8,7 @@ class ProjectsController extends Controller
     public function actionIndex()
     {
         $this->modals = 'projects-modal';
-        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects1.js"></script>';
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>';
         $this->render('projects');
     }
 
@@ -31,6 +31,7 @@ class ProjectsController extends Controller
         $projects = $this->get_data($filter, $limit, $offset);
 
         for ($i = 0; $i < $projects['data_count']; $i++) {
+            //date conversion
             $projects['data'][$i]['production_date_formatted'] = ($projects['data'][$i]['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['production_date']));
             $projects['data'][$i]['termination_date_formatted'] = ($projects['data'][$i]['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
             $projects['data'][$i]['date_created_formatted'] = ($projects['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
@@ -77,18 +78,25 @@ class ProjectsController extends Controller
         $model = Projects::model()->findAll($criteria);
         $data  = array();
 
+        //XSS Purifier here
+        $p = new CHtmlPurifier();
+        $p->options = array('URI.AllowedSchemes'=>array(
+            'http' => true,
+            'https' => true,
+        ));
+
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'        => $row->project_id,
+                'project_id'        => $p->purify($row->project_id),
                 'name'              => $row->name,
-                'code'              => $row->code,
-                'description'       => $row->description,
-                'status'            => $row->status,
-                'production_date'   => $row->production_date,
-                'termination_date'  => $row->termination_date,
-                'date_created'      => $row->date_created,
-                'date_updated'      => $row->date_updated
+                'code'              => $p->purify($row->code),
+                'description'       => $p->purify($row->description),
+                'status'            => $p->purify($row->status),
+                'production_date'   => $p->purify($row->production_date),
+                'termination_date'  => $p->purify($row->termination_date),
+                'date_created'      => $p->purify($row->date_created),
+                'date_updated'      => $p->purify($row->date_updated)
             );
         }
 
@@ -101,41 +109,11 @@ class ProjectsController extends Controller
 
     public function actionUpdate()
     {
-        $data = $_GET;
-        //for creating a project
-        if (empty($data['project_id'])) {
-            $errors = array();
-            //code is required
-            if (strlen($data['code']) == 0) {
-                array_push($errors, 'CODE_ERROR: Code is required');
-            //code must be at least 5 characters long
-            } else if (strlen($data['code']) != 5) {
-                array_push($errors, 'CODE_ERROR: Project code must be 5 characters');
-            //check if code is alphanumeric
-            } else if (!ctype_alnum($data['code'])) {
-                array_push($errors, 'CODE_ERROR: Code must be alphanumeric');
-            //check if project code already exists
-            } else if (Projects::model()->exists('code = :code', array(":code"=>$data['code']))) {
-                array_push($errors, 'CODE_ERROR: Code already taken');
-            }
+        $data = $_POST;
 
-            if (count($errors) == 0) {
-                $project = new Projects;
-                $project->name = $data['name'];
-                $project->code = strtoupper($data['code']);
-                $project->description = $data['description'];
-                $project->status = 'ACTIVE';
-                $project->production_date = $data['production_date'];
-                $project->termination_date = $data['termination_date'];
-                $project->date_created = date("Y-m-d H:i:s");
-                $project->date_updated = '0000-00-00 00:00:00';
-                $project->save();
-            } else {
-                echo implode(',', $errors);
-            }
-
-        //for updating a project
-        } else {
+        //will be empty if CSRF authentication fails
+        if (!empty($data)) {
+            //FORM VALIDATION HERE
             $errors = array();
             //code is required
             if (strlen($data['code']) == 0) {
@@ -154,9 +132,10 @@ class ProjectsController extends Controller
                 }
             }
 
+            //data is good
             if (count($errors) == 0) {
                 $data['date_updated'] = date("Y-m-d H:i:s");
-                Projects::model()->updateByPk((int) $_GET['project_id'], $data);
+                Projects::model()->updateByPk((int) $data['project_id'], $data);
 
                 $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
                 $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
@@ -167,6 +146,52 @@ class ProjectsController extends Controller
             } else {
                 echo implode(',', $errors);
             }
+        } else {
+            echo 'CSRF_ERROR: Hacker!';
+        }
+    }
+
+    public function actionCreate()
+    {
+        $data = $_POST;
+
+        //will be empty if CSRF authentication fails
+        if (!empty($data)) {
+            //FORM VALIDATION HERE
+            $errors = array();
+            //code is required
+            if (strlen($data['code']) == 0) {
+                array_push($errors, 'CODE_ERROR: Code is required');
+            //code must be at least 5 characters long
+            } else if (strlen($data['code']) != 5) {
+                array_push($errors, 'CODE_ERROR: Project code must be 5 characters');
+            //check if code is alphanumeric
+            } else if (!ctype_alnum($data['code'])) {
+                array_push($errors, 'CODE_ERROR: Code must be alphanumeric');
+            //check if project code already exists
+            } else if (Projects::model()->exists('code = :code', array(":code"=>$data['code']))) {
+                array_push($errors, 'CODE_ERROR: Code already taken');
+            }
+
+            //data is good
+            if (count($errors) == 0) {
+                $project = new Projects;
+                $project->name = $data['name'];
+                $project->code = strtoupper($data['code']);
+                $project->description = $data['description'];
+                $project->status = 'ACTIVE';
+                $project->production_date = $data['production_date'];
+                $project->termination_date = $data['termination_date'];
+                $project->date_created = date("Y-m-d H:i:s");
+                $project->date_updated = '0000-00-00 00:00:00';
+                $project->save();
+
+                echo CJSON::encode('good');
+            } else {
+                echo implode(',', $errors);
+            }
+        } else {
+            echo 'CSRF_ERROR: Hacker!';
         }
     }
 }

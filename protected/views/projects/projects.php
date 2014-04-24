@@ -83,6 +83,7 @@
                         <div id="edit-projects-view" style="display:none;" class="contact-info plain-list">
                             <!-- FORM HERE -->
                             <form>
+                                <input type="hidden" id="edit-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                                 <div class="contact-info-details">
                                     <div class="section primary-info expanded">
                                         <div id="expand-primary" class="header"><h3><b>Project Details</b></h3></div>
@@ -253,6 +254,8 @@
                         <div id="create-projects-view" style="display:none;" class="contact-info plain-list">
                             <!-- FORM HERE -->
                             <form>
+                                <!-- CSRF TOKEN HERE -->
+                                <input type="hidden" id="create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                                 <div class="contact-info-details">
                                     <div class="section primary-info expanded">
                                         <div id="expand-primary" class="header"><h3><b>Project Details</b></h3></div>
