@@ -147,7 +147,7 @@ class ProjectsController extends Controller
                 echo implode(',', $errors);
             }
         } else {
-            echo 'CSRF_ERROR: Hacker!';
+            echo 'CSRF_ERROR: CSRF Token did not match';
         }
     }
 
@@ -181,7 +181,7 @@ class ProjectsController extends Controller
                 $project->description = $data['description'];
                 $project->status = 'ACTIVE';
                 $project->production_date = $data['production_date'];
-                $project->termination_date = $data['termination_date'];
+                $project->termination_date = '0000-00-00';
                 $project->date_created = date("Y-m-d H:i:s");
                 $project->date_updated = '0000-00-00 00:00:00';
                 $project->save();
@@ -191,7 +191,26 @@ class ProjectsController extends Controller
                 echo implode(',', $errors);
             }
         } else {
-            echo 'CSRF_ERROR: Hacker!';
+            echo 'CSRF_ERROR: CSRF Token did not match';
+        }
+    }
+
+    public function actionChangeStatus()
+    {
+        $data = $_POST;
+
+        //will be empty if CSRF authentication fails
+        if (!empty($data)) {    
+            $data['status'] = ($data['status'] == 'TERMINATED') ? 'ACTIVE' : 'TERMINATED';
+            $data['termination_date'] = ($data['status'] == 'TERMINATED') ? date("Y-m-d") : '0000-00-00';
+            $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
+            $data['date_updated'] = date("Y-m-d H:i:s");
+            $data['date_updated_formatted'] = date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+            Projects::model()->updateByPk((int) $data['project_id'], $data);
+
+            echo CJSON::encode($data);
+        } else {
+            echo 'CSRF_ERROR: CSRF Token did not match';
         }
     }
 }

@@ -64,18 +64,11 @@ var ProjectsList = function()
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    if(data.resultData.length)
-                    {
-                        self.currentPage  = data.page;
-                        self.totalPage    = data.totalPage;
-                        self.resultData = data.resultData;
-                        self.pageLimit    = data.limit;
-                        $$('#' + self.totalDataID).set('html', ' of '+data.totalData);
-                        
-                        self.renderData(self.resultData, data.view);
-                    }
-                    else
-                       $$('#' + self.totalDataID).set('html', 'No projects');
+                    self.currentPage  = data.page;
+                    self.totalPage    = data.totalPage;
+                    self.resultData = data.resultData;
+                    self.pageLimit    = data.limit;
+                    self.renderData(self.resultData, data.totalData);
 
                     //callbacks
                     self.paginationChecker();
@@ -138,29 +131,47 @@ var ProjectsList = function()
         }
     };
     
-    self.renderData = function(data, view)
+    self.renderData = function(data, count)
     {
-        self.lookupData = [];
-        Array.each(data, function(val, idx)
+        if(count != 0)
         {
-           	self.lookupData.push(val['project_id']);
-            contentHTML = '<td>'+val['name']+'</td>'
-                        + '<td>'+val['code']+'</td>'                        
-                        + '<td>'+val['description']+'</td>'
-                        + '<td>'+val['status']+'</td>'
-                        + '<td>'+val['production_date_formatted']+'</td>'
-                        + '<td class="actions-col three-column">'
-                        + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
-                        + '</td>';
+            $$('#' + self.totalDataID).set('html', ' of '+count);
 
+            self.lookupData = [];
+            Array.each(data, function(val, idx)
+            {
+               	self.lookupData.push(val['project_id']);
+                contentHTML = '<td>'+val['name']+'</td>'
+                            + '<td>'+val['code']+'</td>'                        
+                            + '<td>'+val['description']+'</td>'
+                            + '<td>'+val['status']+'</td>'
+                            + '<td>'+val['production_date_formatted']+'</td>'
+                            + '<td class="actions-col three-column">'
+                            + '<a id="view_' + val['project_id'] + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
+                            + '</td>';
+
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass,
+                    'html' : contentHTML
+                });
+                
+                contentElem.inject($(self.tableContainerID), 'bottom');
+            });
+        }
+        else
+        {
+            $$('#' + self.totalDataID).set('html', '');
+            
+            contentHTML = '<td>No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
                 'html' : contentHTML
             });
-            
+
             contentElem.inject($(self.tableContainerID), 'bottom');
-        });
+        }
     };
 
     self.clearSearch = function()
@@ -215,6 +226,20 @@ var ProjectsList = function()
             self.init();
         });
 
+        //EVENT FOR SEARCH CODE FIELD KEYPRESS
+        $(self.searchCodeID).removeEvents();
+        $(self.searchCodeID).addEvent('keypress', function(e)
+        {
+            e.preventDefault();
+            if ($(this).value.length < 5)
+            {   
+                var c = String.fromCharCode(e.event.charCode);
+                if (/[a-zA-Z0-9]/.test(c)) {
+                    $(this).value+=c.toUpperCase();
+                }
+            }
+        });
+
         //EVENT FOR CLEAR SEARCH FIELDS
         $$(self.searchClearID).removeEvents();
         $$(self.searchClearID).addEvent('click', function(e)
@@ -265,14 +290,12 @@ var ProjectsCreate = function()
     self.createCodeID = 'create-code';
     self.createDescriptionID = 'create-description';
     self.createProductionID = 'create-production';
-    self.createTerminationID = 'create-termination';
 
     //error displays
     self.createNameErrorID = 'create-name-error';
     self.createCodeErrorID = 'create-code-error';
     self.createDescriptionErrorID = 'create-description-error';
     self.createProductionErrorID = 'create-production-error';
-    self.createTerminationErrorID = 'create-termination-error';
 
     //csrf
     self.createCSRFID = 'create-csrf';
@@ -293,8 +316,7 @@ var ProjectsCreate = function()
                 'name'              : $(self.createNameID).value,
                 'code'              : $(self.createCodeID).value,
                 'description'       : $(self.createDescriptionID).value,
-                'production_date'   : $(self.createProductionID).value,
-                'termination_date'  : $(self.createTerminationID).value
+                'production_date'   : $(self.createProductionID).value
             };
 
             self._request = new Request.JSON(
@@ -304,7 +326,6 @@ var ProjectsCreate = function()
                 'data' : params,
                 'onError' : function(errors)
                 {
-                    // console.log('error');
                     self._request.stop;
                     Array.each(errors.split(','), function(error, idx)
                     {
@@ -354,21 +375,20 @@ var ProjectsCreate = function()
             $(self.createCodeID).value = '';
             $(self.createDescriptionID).value = '';
             $(self.createProductionID).value = '0000-00-00';
-            $(self.createTerminationID).value = '0000-00-00';
         });
 
         //EVENT FOR CODE INPUT FIELD - UPPERCASE INPUTS ONLY, 5 CHARS
         $(self.createCodeID).removeEvents();
         $(self.createCodeID).addEvent('keypress', function(e)
         {
-        	e.preventDefault();
-        	if ($(this).value.length < 5)
-        	{
-	        	var c = String.fromCharCode(e.event.charCode);
-	        	if (/[a-zA-Z0-9]/.test(c)) {
-	        		$(this).value+=c.toUpperCase();
-	        	}
-        	}
+            e.preventDefault();
+            if ($(this).value.length < 5)
+            {   
+                var c = String.fromCharCode(e.event.charCode);
+                if (/[a-zA-Z0-9]/.test(c)) {
+                    $(this).value+=c.toUpperCase();
+                }
+            }
         });
     }
 }
@@ -376,22 +396,32 @@ var ProjectsCreate = function()
 var ProjectsView = function(data)
 {
     var self = this;
+    self.postDataURL = baseURL + '/projects/changestatus';
+    self._request = null;
+
 
     //for view project
     self.viewProjectViewID = 'view-projects-view';
     self.viewToMainID  = 'view-to-main';
     self.viewContentID = 'view-content';
 
+    //fields
     self.viewNameID = 'view-name';
     self.viewCodeID = 'view-code';
     self.viewDescriptionID = 'view-description';
-    self.viewStatusID = 'view-status';
     self.viewProductionID = 'view-production';
-    self.viewTerminationID = 'view-termination';
     self.viewCreatedID = 'view-created';
     self.viewUpdatedID = 'view-updated';
+    self.viewStatusID = 'view-status';
+    self.viewTerminationID = 'view-termination';
+    self.viewTerminationFieldID = 'view-termination-field';
 
+    //for edit
     self.editID = 'a[id^=edit_]';
+
+    //for change status
+    self.viewChangeStatusID = 'a[id^=view-button-change-status]';
+    self.viewCSRFID = 'view-csrf';
 
     self.init = function()
     {
@@ -400,6 +430,49 @@ var ProjectsView = function(data)
         self.renderData();
         self.addEvents();
     }
+
+    self.postAjaxData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            var params = {
+                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'project_id'        : data['project_id'],
+                'status'            : data['status']
+            };
+
+            self._request = new Request.JSON(
+            {
+                'url' : self.postDataURL,
+                'method' : 'post',
+                'data' : params,
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('error');
+                },
+                'onComplete': function(d)
+                {
+                    data['status'] = d['status'];
+                    data['termination_date'] = d['termination_date'];
+                    data['termination_date_formatted'] = d['termination_date_formatted'];
+                    data['date_updated'] = d['date_updated'];
+                    data['date_updated_formatted'] = d['date_updated_formatted'];
+
+                    self.init();
+                    // $(self.viewStatusID).set('html', data['status']);
+                    // $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
+                    // $(self.viewTerminationID).set('html', data['termination_date_formatted']);
+                    
+                    // if (data['status'] == 'TERMINATED') {
+                    //     $(self.viewTerminationFieldID).setStyle('display', 'block');
+                    // } else {
+                    //     $(self.viewTerminationFieldID).setStyle('display', 'none');
+                    // }
+                }
+            }).send();
+        }
+    };
 
     self.renderData = function()
     {
@@ -410,11 +483,22 @@ var ProjectsView = function(data)
         $(self.viewNameID).set('html', data['name']);
         $(self.viewCodeID).set('html', data['code']);
         $(self.viewDescriptionID).set('html', data['description']);
-        $(self.viewStatusID).set('html', data['status']);
         $(self.viewProductionID).set('html', data['production_date_formatted']);
-        $(self.viewTerminationID).set('html', data['termination_date_formatted']);
         $(self.viewCreatedID).set('html', data['date_created_formatted']);
-        $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
+        $(self.viewStatusID).set('html', data['status']);
+        $(self.viewTerminationID).set('html', data['termination_date_formatted']);
+        
+        if (data['status'] == 'TERMINATED') {
+            $(self.viewTerminationFieldID).setStyle('display', 'block');
+        } else {
+            $(self.viewTerminationFieldID).setStyle('display', 'none');
+        }
+
+        if (data['date_updated_formatted'] == 'N/A') {
+            $(self.viewUpdatedID).set('html', '');
+        } else {
+            $(self.viewUpdatedID).set('html', 'last updated <b>'+data['date_updated_formatted']+'</b>');
+        }
     }
 
     self.addEvents = function()
@@ -439,6 +523,17 @@ var ProjectsView = function(data)
             $(self.viewProjectViewID).setStyle('display', 'none');
             ProjectsSite.initEdit(data);
         });
+
+        //EVENT FOR CHANGING PROJECT STATUS
+        $$(self.viewChangeStatusID).removeEvents();
+        $$(self.viewChangeStatusID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (confirm('Are you sure you want to change the project\'s status?'))
+            {
+                self.postAjaxData();
+            }
+        });
     }
 }
 
@@ -457,16 +552,13 @@ var ProjectsEdit = function(data)
     self.editNameID = 'edit-name';
     self.editCodeID = 'edit-code';
     self.editDescriptionID = 'edit-description';
-    self.editStatusID = 'edit-status';
     self.editProductionID = 'edit-production';
-    self.editTerminationID = 'edit-termination';
 
     //error messages
     self.editNameErrorID = 'edit-name-error';
     self.editCodeErrorID = 'edit-code-error';
     self.editDescriptionErrorID = 'edit-description-error';
     self.editProductionErrorID = 'edit-production-error';
-    self.editTerminationErrorID = 'edit-termination-error';
 
     //for csrf
     self.editCSRFID = 'edit-csrf';
@@ -487,10 +579,10 @@ var ProjectsEdit = function(data)
                 'project_id'        : data['project_id'],
                 'name'              : $(self.editNameID).value,
                 'code'              : $(self.editCodeID).value,
-                'description'       : $(self.editDescriptionID).value, 
-                'status'            : $(self.editStatusID).value,
+                'description'       : $(self.editDescriptionID).value,
+                'status'            : data['status'],
                 'production_date'   : $(self.editProductionID).value,
-                'termination_date'  : $(self.editTerminationID).value,
+                'termination_date'  : data['termination_date'],
                 'date_created'		: data['date_created'],
                 'date_updated'		: data['date_updated']
             };
@@ -528,9 +620,7 @@ var ProjectsEdit = function(data)
         $(self.editNameID).value = data['name'];
         $(self.editCodeID).value = data['code'];
         $(self.editDescriptionID).value = data['description'];
-        $(self.editStatusID).value = data['status'];
         $(self.editProductionID).value = data['production_date'];
-        $(self.editTerminationID).value = data['termination_date'];
     }
 
     self.addEvents = function()
@@ -555,9 +645,7 @@ var ProjectsEdit = function(data)
             $(self.editNameID).value = '';
             $(self.editCodeID).value = '';
             $(self.editDescriptionID).value = '';
-            $(self.editStatusID).value = 'ACTIVE';
             $(self.editProductionID).value = '0000-00-00';
-            $(self.editTerminationID).value = '0000-00-00';
         });
     }
 }

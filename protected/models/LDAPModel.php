@@ -31,14 +31,14 @@ class LDAPModel extends CFormModel {
 
             foreach ($list as $l) {
                 //check if user is a member of any group of interest
-                if (count(array_intersect(Yii::app()->ldap->user()->groups($l['samaccountname'][0]), $this->group_filter)) != 0) {
+                // if (count(array_intersect(Yii::app()->ldap->user()->groups($l['samaccountname'][0]), $this->group_filter)) != 0) {
                     $name = explode(',', $l['dn']);
                     array_push($this->entries, array(
                         'samaccountname' => $l['samaccountname'][0],
                         'displayname' => substr($name[0],3),
                         'dn' => $l['dn'],
                     ));
-                }
+                // }
             }
         }
     }
@@ -50,9 +50,10 @@ class LDAPModel extends CFormModel {
 
         //clean info here
         if ($info != false) {
-            $groups = array_intersect(Yii::app()->ldap->user()->groups($username), $this->group_filter);
+            // $groups = array_intersect(Yii::app()->ldap->user()->groups($username), $this->group_filter);
+            $groups = Yii::app()->ldap->user()->groups($username);
 
-            if (count($groups) != 0) {
+            // if (count($groups) != 0) {
                 $info = $info[0];
 
                 //CLEANING OPTION #1: EXHAUST ALL POSSIBLE ATTRIBUTE, CATCH UNKNOWN ATTRIBUTE
@@ -96,7 +97,7 @@ class LDAPModel extends CFormModel {
                 //     $name = explode(',', $info['dn']);
                 //     $this->entries['displayname'] = substr($name[0],3);
                 // }
-            }
+            // }
         }
     }
 
@@ -110,14 +111,14 @@ class LDAPModel extends CFormModel {
             $this->entries = array();
 
             foreach ($list as $l) {
-                if (in_array($l['samaccountname'][0], $this->group_filter)) {
+                // if (in_array($l['samaccountname'][0], $this->group_filter)) {
                     $name = explode(',', $l['dn']);
                     array_push($this->entries, array(
                         'samaccountname' => $l['samaccountname'][0],
                         'displayname' => substr($name[0],3),
                         'dn' => $l['dn'],
                     ));
-                }
+                // }
             }
         }
     }
@@ -129,7 +130,7 @@ class LDAPModel extends CFormModel {
         $info = Yii::app()->ldap->group()->info($groupname);
 
         //clean info here, cannot access groups not in filter
-        if ($info != false && in_array($groupname, $this->group_filter)) {
+        // if ($info != false && in_array($groupname, $this->group_filter)) {
             $info = $info[0];
 
             $this->entries = array();
@@ -143,27 +144,35 @@ class LDAPModel extends CFormModel {
                     case 'memberof':
                         $name = explode(',', $info['memberof'][0]);
                         $this->entries['memberof'] = substr($name[0], 3); break;
-                    case 'member':
-                        $members = array();
-                        foreach ($info['member'] as $key => $mem) {
-                            if ($key != 'count') {
-                                $name = explode(',', $mem);
-                                array_push($members, array(
-                                    'dn' => $mem, 
-                                    'displayname' => substr($name[0], 3),
-                                ));
-                            }
-                        }
-                        $this->entries['member'] = $members;
+                    // case 'member':
+                        // $members = array();
+                        // for ($i = 0; $i < $info['member']['count']; $i++) {
+
+                        // }
+                        // foreach($info['member'] as $key => $mem) {
+                        //     echo '<br/>'.$key.' '.$mem;
+                        // }
+                        // exit();
+                        // foreach ($info['member'] as $key => $mem) {
+                        //     if ($key != 'count') {
+                        //         $name = explode(',', $mem);
+                        //         array_push($members, array(
+                        //             'dn' => $mem, 
+                        //             'displayname' => substr($name[0], 3),
+                        //         ));
+                        //     }
+                        // }
+                        // $this->entries['member'] = $members;
                         break;
                     //unknown attribute
                     default:
-                        if ($key != 'count' && !is_int($key)) {
+                        if ($key != 'count' && !is_int($key) && $key != 'member') {
                             $this->entries[$key] = $info[$key];
                         }
                 }
+                $this->entries['member'] = Yii::app()->ldap->group()->members($groupname, true);; 
             }
-        }
+        // }
     }
 }
 

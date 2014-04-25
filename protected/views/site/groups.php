@@ -27,12 +27,14 @@ $this->pageTitle=Yii::app()->name . ' - Groups';
 			}
 		}
 
-		if (array_key_exists('member', $model->entries)) {
+		if (array_key_exists('member', $model->entries) && $model->entries['member'] != false) {
 			echo "<br/><br/><b>MEMBERS</b>";
 			//print members of group
-			foreach ($model->entries['member'] as $member) {
-				echo '<br/>'.$member['displayname'];
-				echo '<br/>'.$member['dn'].'<br/>';
+			// echo $model->entries['member'];
+			foreach ($model->entries['member'] as $mem) {
+				echo '<br/>'.$mem;
+				// echo '<br/>'.$key['displayname'];
+				// echo '<br/>'.$key['dn'].'<br/>';
 			}
 		} else {
 			echo '<br/><br/>This group has no members.';

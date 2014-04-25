@@ -360,7 +360,11 @@ class adLDAPGroups {
         if ($recursive === NULL){ $recursive = $this->adldap->getRecursiveGroups(); } // Use the default option if they haven't set it 
         // Search the directory for the members of a group
         $info = $this->info($group, array("member","cn"));
-        $users = $info[0]["member"];
+        if (!isset($info[0]['member'])) {
+            return false;
+        }
+        $users = $info[0]['member'];
+
         if (!is_array($users)) {
             return false;   
         }

@@ -1,27 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "projects".
+ * This is the model class for table "project_contact_persons".
  *
- * The followings are the available columns in table 'projects':
+ * The followings are the available columns in table 'project_contact_persons':
  * @property integer $project_id
  * @property string $name
- * @property string $code
- * @property string $description
- * @property string $status
- * @property string $production_date
- * @property string $termination_date
+ * @property string $company
+ * @property string $position
+ * @property string $contact_numbers
+ * @property string $email
+ * @property string $address
+ * @property string $notes
  * @property string $date_created
  * @property string $date_updated
  */
-class Projects extends CActiveRecord
+class ProjectContactPersons extends CActiveRecord
 {
     /**
      * @return string the associated database table name
      */
     public function tableName()
     {
-        return 'projects';
+        return 'project_contact_persons';
     }
 
     /**
@@ -32,13 +33,12 @@ class Projects extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('code, status, date_created, date_updated', 'required'),
-            array('name', 'length', 'max'=>255),
-            array('code, status', 'length', 'max'=>10),
-            array('description, production_date, termination_date', 'safe'),
+            array('project_id, date_created, date_updated', 'required'),
+            array('project_id', 'numerical', 'integerOnly'=>true),
+            array('name, company, position, contact_numbers, email, address, notes', 'length', 'max'=>255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('project_id, name, code, description, status, production_date, termination_date, date_created, date_updated', 'safe', 'on'=>'search'),
+            array('project_id, name, company, position, contact_numbers, email, address, notes, date_created, date_updated', 'safe', 'on'=>'search'),
         );
     }
 
@@ -61,11 +61,12 @@ class Projects extends CActiveRecord
         return array(
             'project_id' => 'Project',
             'name' => 'Name',
-            'code' => 'Code',
-            'description' => 'Description',
-            'status' => 'Status',
-            'production_date' => 'Production Date',
-            'termination_date' => 'Date Terminated',
+            'company' => 'Company',
+            'position' => 'Position',
+            'contact_numbers' => 'Contact Numbers',
+            'email' => 'Email',
+            'address' => 'Address',
+            'notes' => 'Notes',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
         );
@@ -91,11 +92,12 @@ class Projects extends CActiveRecord
 
         $criteria->compare('project_id',$this->project_id);
         $criteria->compare('name',$this->name,true);
-        $criteria->compare('code',$this->code,true);
-        $criteria->compare('description',$this->description,true);
-        $criteria->compare('status',$this->status,true);
-        $criteria->compare('production_date',$this->production_date,true);
-        $criteria->compare('termination_date',$this->termination_date,true);
+        $criteria->compare('company',$this->company,true);
+        $criteria->compare('position',$this->position,true);
+        $criteria->compare('contact_numbers',$this->contact_numbers,true);
+        $criteria->compare('email',$this->email,true);
+        $criteria->compare('address',$this->address,true);
+        $criteria->compare('notes',$this->notes,true);
         $criteria->compare('date_created',$this->date_created,true);
         $criteria->compare('date_updated',$this->date_updated,true);
 
@@ -108,7 +110,7 @@ class Projects extends CActiveRecord
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return Projects the static model class
+     * @return ProjectContactPersons the static model class
      */
     public static function model($className=__CLASS__)
     {
