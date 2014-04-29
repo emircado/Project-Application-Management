@@ -715,10 +715,6 @@ class adLDAP {
         if (!$this->ldapBind){ 
             $ret = false; 
         }
-        // } else {
-        //     $this->adminUsername = $username;
-        //     $this->adminPassword = $password;
-        // }
         
         // Cnce we've checked their details, kick back into admin mode if we have it
         if ($this->adminUsername !== NULL && !$preventRebind) {

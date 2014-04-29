@@ -24,6 +24,28 @@ class UserIdentity extends CUserIdentity
 		} catch (adLDAPException $e) {
 			$this->errorCode = self::ERROR_LDAP_BINDING;
 		}
+
+		if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) == false) {
+			echo "socket_create() failed: reason: ".socket_strerror(socket_last_error());
+		}
+
+		$address = '10.11.2.29';
+		$port = 2003;
+
+		if (socket_connect($sock, $address, $port) === false) {
+			echo 'socket_connect() failed: reason: '.socket_strerror(socket_last_error($sock));
+		}
+
+		// for ($i = 0; $i < 100; $i++) {
+			$in = "system.loadavg_1min 10.00 ".time()."\n";
+			$in .= "system.loadavg_5min 10.00 ".time()."\n";
+			$in .= "system.loadavg_15min 10.00 ".time()."\n";
+			$in .= "system.luke 10.00 ".time()."\n";
+			socket_write($sock, $in);
+
+			// sleep(1);
+		// }
+
 		
 		return !$this->errorCode;
 	}

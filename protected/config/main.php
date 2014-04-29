@@ -43,6 +43,7 @@ return array(
 		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+			'showScriptName'=>false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -100,5 +101,7 @@ return array(
 		'datetime_display'=>'D, M j, Y g:i A',
 		'datetime_log'=>'M j, Y H:i:s',
 		'projects_per_page'=>20,
+		'contact_persons_per_page'=>5,
+		'point_persons_per_page'=>5,
 	),
 );

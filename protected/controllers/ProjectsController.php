@@ -8,7 +8,8 @@ class ProjectsController extends Controller
     public function actionIndex()
     {
         $this->modals = 'projects-modal';
-        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>';
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>';
         $this->render('projects');
     }
 
@@ -40,7 +41,7 @@ class ProjectsController extends Controller
 
         $return_data = array(
             'page'=>$page,
-            'totalPage'=>ceil($projects['total_count']/$limit),
+            'totalPage'=> ($projects['total_count'] == 0) ? 1 : ceil($projects['total_count']/$limit),
             'totalData'=>$projects['total_count'],
             'limit'=>$limit,
             'resultData'=>$projects['data'],
@@ -79,24 +80,24 @@ class ProjectsController extends Controller
         $data  = array();
 
         //XSS Purifier here
-        $p = new CHtmlPurifier();
-        $p->options = array('URI.AllowedSchemes'=>array(
-            'http' => true,
-            'https' => true,
-        ));
+        // $p = new CHtmlPurifier();
+        // $p->options = array('URI.AllowedSchemes'=>array(
+        //     'http' => true,
+        //     'https' => true,
+        // ));
 
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'        => $p->purify($row->project_id),
-                'name'              => $row->name,
-                'code'              => $p->purify($row->code),
-                'description'       => $p->purify($row->description),
-                'status'            => $p->purify($row->status),
-                'production_date'   => $p->purify($row->production_date),
-                'termination_date'  => $p->purify($row->termination_date),
-                'date_created'      => $p->purify($row->date_created),
-                'date_updated'      => $p->purify($row->date_updated)
+                'project_id'        => $row->project_id/*$p->purify($row->project_id)*/,
+                'name'              => $row->name/*$p->purify($row->name)*/,
+                'code'              => $row->code/*$p->purify($row->code)*/,
+                'description'       => $row->description/*$p->purify($row->description)*/,
+                'status'            => $row->status/*$p->purify($row->status)*/,
+                'production_date'   => $row->production_date/*$p->purify($row->production_date)*/,
+                'termination_date'  => $row->termination_date/*$p->purify($row->termination_date)*/,
+                'date_created'      => $row->date_created/*$p->purify($row->date_created)*/,
+                'date_updated'      => $row->date_updated/*$p->purify($row->date_updated)*/
             );
         }
 
@@ -142,12 +143,21 @@ class ProjectsController extends Controller
                 $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
                 $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
 
-                echo CJSON::encode($data);   
+                echo CJSON::encode(array(
+                    'type' => 'success',
+                    'data' => $data,
+                ));
             } else {
-                echo implode(',', $errors);
+                echo CJSON::encode(array(
+                    'type' => 'error',
+                    'data' => implode(',', $errors),
+                ));
             }
         } else {
-            echo 'CSRF_ERROR: CSRF Token did not match';
+            echo CJSON::encode(array(
+                'type' => 'error',
+                'data' => 'CSRF_ERROR: CSRF Token did not match',
+            ));
         }
     }
 
@@ -186,12 +196,21 @@ class ProjectsController extends Controller
                 $project->date_updated = '0000-00-00 00:00:00';
                 $project->save();
 
-                echo CJSON::encode('good');
+                echo CJSON::encode(array(
+                    'type' => 'success',
+                    'data' => '',
+                ));
             } else {
-                echo implode(',', $errors);
+                echo CJSON::encode(array(
+                    'type' => 'error',
+                    'data' => implode(',', $errors),
+                ));
             }
         } else {
-            echo 'CSRF_ERROR: CSRF Token did not match';
+            echo CJSON::encode(array(
+                'type' => 'error',
+                'data' => 'CSRF_ERROR: CSRF Token did not match',
+            ));
         }
     }
 
@@ -208,9 +227,15 @@ class ProjectsController extends Controller
             $data['date_updated_formatted'] = date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
             Projects::model()->updateByPk((int) $data['project_id'], $data);
 
-            echo CJSON::encode($data);
+            echo CJSON::encode(array(
+                'type' => 'success',
+                'data' => $data,
+            ));
         } else {
-            echo 'CSRF_ERROR: CSRF Token did not match';
+            echo CJSON::encode(array(
+                'type' => 'error',
+                'data' => 'CSRF_ERROR: CSRF Token did not match',
+            ));
         }
     }
 }

@@ -33,7 +33,6 @@
                                             <div class="field-primary">
                                                 <div class="pseudo-field">
                                                 <textarea rows="4" id="create-description" class="text"></textarea>
-                                                <span id="create-description-error" class="field-input-name-error error-message" style="display: none;"></span>
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
