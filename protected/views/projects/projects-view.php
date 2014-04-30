@@ -13,7 +13,7 @@
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
                     <h3><b>Project Details</b></h3>&nbsp&nbsp
-                    <span id="view-content"></span>
+                    <a id="edit" href="#">[Edit]</a>
                 </div>
             </div>
             <div id="edit-primary-content" class="content">
@@ -88,15 +88,18 @@
 
     <!-- CONTACT PERSONS HERE -->
     <?php 
-        $this->renderPartial('//projects/contact_persons/contact-persons-create'); 
         $this->renderPartial('//projects/contact_persons/contact-persons-list');
+        $this->renderPartial('//projects/contact_persons/contact-persons-create'); 
         $this->renderPartial('//projects/contact_persons/contact-persons-view');
         $this->renderPartial('//projects/contact_persons/contact-persons-edit');
     ?>
 
     <!-- POINT PERSONS HERE -->
     <?php
-        $this->renderPartial('//projects/point-persons-list');
+        $this->renderPartial('//projects/point_persons/point-persons-list');
+        $this->renderPartial('//projects/point_persons/point-persons-create');
+        $this->renderPartial('//projects/point_persons/point-persons-view');
+        $this->renderPartial('//projects/point_persons/point-persons-edit');
     ?>
 <!--END view user-->
 

@@ -63,6 +63,7 @@ class SiteController extends Controller
         } else {
             try {
                 $model = new LDAPModel;
+
                 $is_individual = False;
 
                 if ($username == NULL) {

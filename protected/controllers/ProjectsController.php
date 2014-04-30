@@ -9,7 +9,8 @@ class ProjectsController extends Controller
     {
         $this->modals = 'projects-modal';
         $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>';
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/point-persons.js"></script>';
         $this->render('projects');
     }
 

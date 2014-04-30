@@ -1,18 +1,12 @@
 var ContactPersonsList = function(project_id)
 {
     var self = this;
-    self._request = null;
     self.getDataURL = baseURL + '/contactpersons/list';
+    self._request = null;
 
-    //navigation buttons
-    self.nextContactID = 'contact-next';
-    self.prevContactID = 'contact-prev';
-
-    //for creating a new contact person
-    self.createContactButtonID = 'contact-button-add';
-
-    //actions
+    //buttons
     self.viewContactPersonID = 'a[id^=contact-persons-view_]';
+    self.createContactButtonID = 'contact-button-add';
 
     //container
     self.contactPersonsListID = 'contact-persons-list';
@@ -25,7 +19,7 @@ var ContactPersonsList = function(project_id)
     self.totalDataID = 'contact-persons-total';
     self.totalPartID = 'contact-persons-part';
     self.contactPersonsTableID = 'contact-persons-table';
-    self.tableRowClass = 'data-row';
+    self.tableRowClass = 'contact-person-row';
 
     self.init = function()
     {
@@ -73,7 +67,7 @@ var ContactPersonsList = function(project_id)
     {
         if(count != 0)
         {
-            $$('#' + self.totalDataID).set('html', ' of '+count);
+            $(self.totalDataID).set('html', ' of '+count);
 
             Array.each(self.resultData, function(val, idx)
             {
@@ -96,7 +90,7 @@ var ContactPersonsList = function(project_id)
         }
         else
         {
-            $$('#' + self.totalDataID).set('html', '');
+            $(self.totalDataID).set('html', '');
             
             contentHTML = '<td>No contact persons found</td><td></td><td></td>';
             contentElem = new Element('<tr />',
@@ -240,7 +234,7 @@ var ContactPersonsCreate = function(project_id)
                 'name'              : $(self.createContactPersonsNameID).value.trim(),
                 'company'           : $(self.createContactPersonsCompanyID).value.trim(),
                 'position'          : $(self.createContactPersonsPositionID).value.trim(),
-                'contacts'          : $(self.createContactPersonsContactsID).value.trim(),
+                'contacts_numbers'  : $(self.createContactPersonsContactsID).value.trim(),
                 'email'             : $(self.createContactPersonsEmailID).value.trim(),
                 'address'           : $(self.createContactPersonsAddressID).value.trim(),
                 'notes'             : $(self.createContactPersonsNotesID).value.trim()
@@ -392,7 +386,7 @@ var ContactPersonsView = function(data)
         $(self.viewContactPersonsNameID).set('html', data['name']);
         $(self.viewContactPersonsCompanyID).set('html', data['company']);
         $(self.viewContactPersonsPositionID).set('html', data['position']);
-        $(self.viewContactPersonsContactsID).set('html', data['contacts']);
+        $(self.viewContactPersonsContactsID).set('html', data['contact_numbers']);
         $(self.viewContactPersonsEmailID).set('html', data['email']);
         $(self.viewContactPersonsAddressID).set('html', data['address']);
         $(self.viewContactPersonsNotesID).set('html', data['notes']);
@@ -479,7 +473,7 @@ var ContactPersonsEdit = function(data)
                 'name'              : $(self.editContactPersonsNameID).value.trim(),
                 'company'           : $(self.editContactPersonsCompanyID).value.trim(),
                 'position'          : $(self.editContactPersonsPositionID).value.trim(),
-                'contacts'          : $(self.editContactPersonsContactsID).value.trim(),
+                'contact_numbers'   : $(self.editContactPersonsContactsID).value.trim(),
                 'email'             : data['email'],
                 'new_email'         : $(self.editContactPersonsEmailID).value.trim(),
                 'address'           : $(self.editContactPersonsAddressID).value.trim(),
@@ -532,7 +526,7 @@ var ContactPersonsEdit = function(data)
         $(self.editContactPersonsCompanyID).value = data['company'];
         $(self.editContactPersonsPositionID).value = data['position'];
         $(self.editContactPersonsEmailID).value = data['email'];
-        $(self.editContactPersonsContactsID).value = data['contacts'];
+        $(self.editContactPersonsContactsID).value = data['contact_numbers'];
         $(self.editContactPersonsAddressID).value = data['address'];
         $(self.editContactPersonsNotesID).value = data['notes'];
     }

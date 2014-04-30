@@ -27,7 +27,7 @@ var ProjectsList = function()
     self.searchCodeID     = 'search-code';
     self.searchStatusID   = 'search-status';
     self.searchSubmitID   = 'search-submit';
-    self.searchClearID    = 'a[id^=clear-search]';
+    self.searchClearID    = 'clear-search';
     self.searchParams     = {
         'name'      : '',
         'code'      : '',
@@ -134,7 +134,7 @@ var ProjectsList = function()
     {
         if(count != 0)
         {
-            $$('#' + self.totalDataID).set('html', ' of '+count);
+            $(self.totalDataID).set('html', ' of '+count);
 
             Array.each(self.resultData, function(val, idx)
             {
@@ -158,7 +158,7 @@ var ProjectsList = function()
         }
         else
         {
-            $$('#' + self.totalDataID).set('html', '');
+            $(self.totalDataID).set('html', '');
             
             contentHTML = '<td>No results found</td>';
             contentElem = new Element('<tr />',
@@ -237,8 +237,8 @@ var ProjectsList = function()
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
-        $$(self.searchClearID).removeEvents();
-        $$(self.searchClearID).addEvent('click', function(e)
+        $(self.searchClearID).removeEvents();
+        $(self.searchClearID).addEvent('click', function(e)
         {
             e.preventDefault();
             self.clearSearch();
@@ -418,7 +418,7 @@ var ProjectsView = function(data)
     self.viewTerminationFieldID = 'view-termination-field';
 
     //for edit
-    self.editID = 'a[id^=edit_]';
+    self.editID = 'edit';
 
     //for change status
     self.viewChangeStatusID = 'a[id^=view-button-change-status]';
@@ -430,9 +430,8 @@ var ProjectsView = function(data)
 
         self.renderData();
         self.addEvents();
-        console.log('initializing contact person data '+data['project_id']);
         ContactPersonsSite.init(data['project_id']);
-
+        PointPersonsSite.init(data['project_id']);
     }
 
     self.postAjaxData = function()
@@ -477,10 +476,6 @@ var ProjectsView = function(data)
 
     self.renderData = function()
     {
-        contentHTML = '<a id="edit_' + data['project_id'] + '" href="#" title="Edit Project"><span class="">[Edit]</span></a>&nbsp';
-
-        $(self.viewContentID).set('html', contentHTML);
-
         $(self.viewNameID).set('html', data['name']);
         $(self.viewCodeID).set('html', data['code']);
         $(self.viewDescriptionID).set('html', data['description']);
@@ -511,8 +506,8 @@ var ProjectsView = function(data)
         });
 
         //EVENT FOR EDITING A PROJECT
-        $$(self.editID).removeEvents();
-        $$(self.editID).addEvent('click', function(e)
+        $(self.editID).removeEvents();
+        $(self.editID).addEvent('click', function(e)
         {
             e.preventDefault();            
 
@@ -654,11 +649,13 @@ var ProjectsEdit = function(data)
 var ProjectsSite = {
     mainObj         : null,
     createObj       : null,
+    ldapObj         : null,
 
     init: function()
     {
         var self = this;
         self.initObj();
+        self.initLDAP();
     },
 
     initObj: function()
@@ -693,6 +690,51 @@ var ProjectsSite = {
     {
         var self = this;
         new ProjectsView(data).init();
+    },
+
+    initLDAP: function()
+    {
+        var self = this;
+        if (self.ldapObj == null)
+        {
+            self.ldapObj = new LDAPData();
+        }
+        self.ldapObj.init();
+    }
+}
+
+var LDAPData = function()
+{
+    var self = this;
+    self._request = null;
+
+    self.ldapData = [];
+
+    self.init = function()
+    {
+        self.getLDAPData();
+    }
+
+    self.getLDAPData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON(
+            {
+                'url' : baseURL + '/pointpersons/test',
+                'method' : 'get',
+                'onSuccess': function(response)
+                {
+                    self.ldapData = response;
+                    console.log(response);
+                },
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('something went wrong');
+                }
+            }).send();
+        }
     }
 }
 

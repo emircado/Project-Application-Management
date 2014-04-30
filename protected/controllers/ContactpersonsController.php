@@ -60,16 +60,16 @@ class ContactpersonsController extends Controller
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'    => $row->project_id/*$p->purify($row->project_id)*/,
-                'name'          => $row->name/*$p->purify($row->name)*/,
-                'company'       => $row->company/*$p->purify($row->company)*/,
-                'position'      => $row->position/*$p->purify($row->position)*/,
-                'contacts'      => $row->contact_numbers/*$p->purify($row->contact_numbers)*/,
-                'email'         => $row->email/*$p->purify($row->email)*/,
-                'address'       => $row->address/*$p->purify($row->address)*/,
-                'notes'         => $row->notes/*$p->purify($row->notes)*/,
-                'date_created'  => $row->date_created/*$p->purify($row->date_created)*/,
-                'date_updated'  => $row->date_updated/*$p->purify($row->date_updated)*/,
+                'project_id'      => $row->project_id/*$p->purify($row->project_id)*/,
+                'name'            => $row->name/*$p->purify($row->name)*/,
+                'company'         => $row->company/*$p->purify($row->company)*/,
+                'position'        => $row->position/*$p->purify($row->position)*/,
+                'contact_numbers' => $row->contact_numbers/*$p->purify($row->contact_numbers)*/,
+                'email'           => $row->email/*$p->purify($row->email)*/,
+                'address'         => $row->address/*$p->purify($row->address)*/,
+                'notes'           => $row->notes/*$p->purify($row->notes)*/,
+                'date_created'    => $row->date_created/*$p->purify($row->date_created)*/,
+                'date_updated'    => $row->date_updated/*$p->purify($row->date_updated)*/,
             );
         }
 
@@ -160,7 +160,7 @@ class ContactpersonsController extends Controller
             //check if email already exists
             } else if (ProjectContactPersons::model()->exists(
                 'email = :email AND project_id = :project_id', 
-                array(":email"=>$data['email'], "project_id"=>$data['project_id']))) {
+                array(":email"=>$data['email'], ":project_id"=>$data['project_id']))) {
                 array_push($errors, 'EMAIL_ERROR: Email already taken');
             // must be a valid email - text regexp
             } else if (preg_match($this->emailRegExp, $data['email'])  != 1) {
@@ -174,7 +174,7 @@ class ContactpersonsController extends Controller
                 $contact_person->name = $data['name'];
                 $contact_person->company = $data['company'];
                 $contact_person->position = $data['position'];
-                $contact_person->contact_numbers = $data['contacts'];
+                $contact_person->contact_numbers = $data['contact_numbers'];
                 $contact_person->email = $data['email'];
                 $contact_person->address = $data['address'];
                 $contact_person->notes = $data['notes'];

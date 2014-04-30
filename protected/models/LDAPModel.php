@@ -11,7 +11,7 @@ class LDAPModel extends CFormModel {
 
     private $group_filter = array(
         'DEVELOPERS', 'RND1', 'RND2', 'RND3',
-        'PDEV', 'PDEV-Tech', 'PDEVTech', 'PDev-SPBO'
+        'PDEV', 'PDEV-Tech', 'PDEVTech', 'PDev-SPBO', 'UI', 'UX'
     );
 
     public function __construct() {
@@ -31,15 +31,40 @@ class LDAPModel extends CFormModel {
 
             foreach ($list as $l) {
                 //check if user is a member of any group of interest
-                // if (count(array_intersect(Yii::app()->ldap->user()->groups($l['samaccountname'][0]), $this->group_filter)) != 0) {
+                if (count(array_intersect(Yii::app()->ldap->user()->groups($l['samaccountname'][0]), $this->group_filter)) != 0) {
                     $name = explode(',', $l['dn']);
                     array_push($this->entries, array(
                         'samaccountname' => $l['samaccountname'][0],
                         'displayname' => substr($name[0],3),
                         'dn' => $l['dn'],
                     ));
-                // }
+                }
             }
+        }
+    }
+
+    public function get_selection() {
+        $this->entries = array();
+
+        foreach ($this->group_filter as $grp) {
+            $data = Yii::app()->ldap->group()->members($grp, true);
+            $members = array();
+
+            if (is_array($data)) {
+
+                foreach ($data as $mem) {
+                    $d = Yii::app()->ldap->user()->info($mem, array("samaccountname", "dn"));
+                    $name = explode(',', $d[0]['dn']);
+
+                    array_push($members, array(
+                        'username' => $d[0]['samaccountname'][0],
+                        'displayname' => substr($name[0], 3),
+                    ));
+                }
+            }
+            
+            $this->entries[$grp] = $members;
+                // $grp => $members);
         }
     }
 
@@ -170,7 +195,7 @@ class LDAPModel extends CFormModel {
                             $this->entries[$key] = $info[$key];
                         }
                 }
-                $this->entries['member'] = Yii::app()->ldap->group()->members($groupname, true);; 
+                $this->entries['member'] = Yii::app()->ldap->group()->members($groupname, true);
             }
         // }
     }
