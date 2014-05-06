@@ -10,7 +10,7 @@
             <!--CONTENT for EDIT POINT PERSON-->
             <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Username</span></div>
+                    <div class="field-secondary"><span class="label">Name</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
                             <span class="value" id="point-persons-edit-username"></span>

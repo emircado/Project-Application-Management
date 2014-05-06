@@ -530,6 +530,7 @@ class adLDAPUsers {
     public function dn($username, $isGUID=false)
     {
         $user = $this->info($username, array("cn"), $isGUID);
+
         if ($user[0]["dn"] === NULL) { 
             return false; 
         }

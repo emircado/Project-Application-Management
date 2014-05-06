@@ -121,11 +121,26 @@ form .field {
 	margin: 8px 0;
 }
 
+pre {
+	margin: 0px;
+	font-family: inherit;
+}
+
 /* SPECIFICS */
 #create-projects-view,
-#edit-projects-view,
-#view-projects-view {
+#edit-projects-view {
 	width: 47.5%;
+}
+
+#applications-list {
+	float: left;
+	width: 48.75%;
+}
+
+#details-projects-view {
+	width: 48.75%;
+	float: left;
+	margin-right: 2.5%;
 }
 
 #view-projects {

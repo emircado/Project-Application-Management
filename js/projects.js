@@ -72,7 +72,6 @@ var ProjectsList = function()
                     //callbacks
                     self.paginationChecker();
                     self.addEvents();
-                    console.log('got new data '+data.totalData);
                 },
                 'onError' : function(data)
                 {
@@ -412,7 +411,9 @@ var ProjectsView = function(data)
     self.viewDescriptionID = 'view-description';
     self.viewProductionID = 'view-production';
     self.viewCreatedID = 'view-created';
+    self.viewCreatedbyID = 'view-createdby';
     self.viewUpdatedID = 'view-updated';
+    self.viewUpdatedbyID = 'view-updatedby';
     self.viewStatusID = 'view-status';
     self.viewTerminationID = 'view-termination';
     self.viewTerminationFieldID = 'view-termination-field';
@@ -462,6 +463,8 @@ var ProjectsView = function(data)
                         data['termination_date_formatted'] = d['termination_date_formatted'];
                         data['date_updated'] = d['date_updated'];
                         data['date_updated_formatted'] = d['date_updated_formatted'];
+                        data['updated_by'] = d['updated_by'];
+                        data['updated_by_formatted'] = d['updated_by_formatted'];
 
                         self.init();
                     }
@@ -491,23 +494,7 @@ var ProjectsView = function(data)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    console.log('success');
                     console.log(response);
-
-                    $(self.viewToMainID).click();
-                    // if (response['type'] == 'error') {
-                    //     self._request.stop;
-                    //     console.log('error type 2');
-                    // } else if (response['type'] == 'success') {
-                    //     var d = response['data'];
-                    //     data['status'] = d['status'];
-                    //     data['termination_date'] = d['termination_date'];
-                    //     data['termination_date_formatted'] = d['termination_date_formatted'];
-                    //     data['date_updated'] = d['date_updated'];
-                    //     data['date_updated_formatted'] = d['date_updated_formatted'];
-
-                    //     self.init();
-                    // }
                 },
                 'onError' : function(errors)
                 {
@@ -522,12 +509,14 @@ var ProjectsView = function(data)
     {
         $(self.viewNameID).set('html', data['name']);
         $(self.viewCodeID).set('html', data['code']);
-        $(self.viewDescriptionID).set('html', data['description']);
+        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
         $(self.viewProductionID).set('html', data['production_date_formatted']);
         $(self.viewCreatedID).set('html', data['date_created_formatted']);
+        $(self.viewCreatedbyID).set('html', data['created_by_formatted']);
         $(self.viewStatusID).set('html', data['status']);
         $(self.viewTerminationID).set('html', data['termination_date_formatted']);
         $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
+        $(self.viewUpdatedbyID).set('html', data['updated_by_formatted']);
 
         if (data['status'] == 'TERMINATED') {
             $(self.viewTerminationFieldID).setStyle('display', 'block');
@@ -630,7 +619,9 @@ var ProjectsEdit = function(data)
                 'production_date'   : $(self.editProductionID).value,
                 'termination_date'  : data['termination_date'],
                 'date_created'		: data['date_created'],
-                'date_updated'		: data['date_updated']
+                'date_updated'		: data['date_updated'],
+                'created_by'        : data['created_by'],
+                'updated_by'        : data['updated_by']
             };
 
             self._request = new Request.JSON(

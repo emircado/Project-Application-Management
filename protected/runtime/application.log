@@ -3938,3 +3938,212 @@ Stack trace:
 REQUEST_URI=/pamgmt/pointpersons/getldapdata
 HTTP_REFERER=http://10.11.7.11/pamgmt/projects
 ---
+2014/05/06 13:55:18 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:251)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/changestatus
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (251)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 13:55:54 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:252)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/changestatus
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (252)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 13:56:02 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:252)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/changestatus
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (252)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 13:58:47 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:165)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (165)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:00:30 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:165)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (165)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:05:33 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:07:13 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:09:21 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:09:22 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:09:22 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:09:22 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:10:36 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:14:09 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:14:25 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:15:06 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:25:37 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:27:27 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:31:24 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/06 14:34:28 [error] [php] Undefined index: created_by (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:179)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (179)
+in /home/httpd/vhosts/pamgmt/index.php (15)

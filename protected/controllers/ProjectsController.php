@@ -38,6 +38,8 @@ class ProjectsController extends Controller
             $projects['data'][$i]['termination_date_formatted'] = ($projects['data'][$i]['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
             $projects['data'][$i]['date_created_formatted'] = ($projects['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
             $projects['data'][$i]['date_updated_formatted'] = ($projects['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_updated']));
+            $projects['data'][$i]['created_by_formatted'] = ($projects['data'][$i]['created_by'] == null)? '' : $this->get_user_name($projects['data'][$i]['created_by']);
+            $projects['data'][$i]['updated_by_formatted'] = ($projects['data'][$i]['updated_by'] == null)? '' : $this->get_user_name($projects['data'][$i]['updated_by']);
         }
 
         $return_data = array(
@@ -98,7 +100,9 @@ class ProjectsController extends Controller
                 'production_date'   => $row->production_date/*$p->purify($row->production_date)*/,
                 'termination_date'  => $row->termination_date/*$p->purify($row->termination_date)*/,
                 'date_created'      => $row->date_created/*$p->purify($row->date_created)*/,
-                'date_updated'      => $row->date_updated/*$p->purify($row->date_updated)*/
+                'date_updated'      => $row->date_updated/*$p->purify($row->date_updated)*/,
+                'created_by'        => $row->created_by,
+                'updated_by'        => $row->updated_by,
             );
         }
 
@@ -107,6 +111,19 @@ class ProjectsController extends Controller
             'data_count'=>count($data),
             'total_count'=>$count,          
         );
+    }
+
+    public function get_user_name($username) {
+        if (Yii::app()->user->isGuest) {
+            return '';
+        } else {
+            try {
+                $model = new LDAPModel;
+                return $model->get_display_name($username);
+            } catch (LDAPModelException $e) {
+                return '';
+            }
+        }
     }
 
     public function actionUpdate()
@@ -138,12 +155,14 @@ class ProjectsController extends Controller
             if (count($errors) == 0) {
                 $data['date_updated'] = date("Y-m-d H:i:s");
                 $data['updated_by'] = Yii::app()->user->name;
+                $data['updated_by_formatted'] = $this->get_user_name($data['updated_by']);
                 Projects::model()->updateByPk((int) $data['project_id'], $data);
 
                 $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
                 $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
                 $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
                 $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+                $data['created_by_formatted'] = (!isset($data['created_by'])) ? '' : $this->get_user_name($data['created_by']);
 
                 echo CJSON::encode(array(
                     'type' => 'success',
@@ -228,6 +247,8 @@ class ProjectsController extends Controller
             $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
             $data['date_updated'] = date("Y-m-d H:i:s");
             $data['date_updated_formatted'] = date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+            $data['updated_by'] = Yii::app()->user->name;
+            $data['updated_by_formatted'] = $this->get_user_name($data['updated_by']);
             Projects::model()->updateByPk((int) $data['project_id'], $data);
 
             echo CJSON::encode(array(
@@ -245,9 +266,15 @@ class ProjectsController extends Controller
     public function actionDelete()
     {
         $data = $_POST;
-
         $project = Projects::model()->findByPk($data['project_id']);
-        $contact_persons = ProjectContactPersons::model()->findAll('project_id=:project_id', array(':project_id'=>$data['project_id']));
+
+        if (Yii::app()->user->name != $project['created_by']) {
+            echo CJSON::encode(array(
+                'type' => 'error',
+                'data' => 'USER_ERROR: Only those who created the project can delete it',
+            ));
+            return;
+        }
 
         // SQL query for project data
         $query = "\n"."INSERT INTO `projects` ";

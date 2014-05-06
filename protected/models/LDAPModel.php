@@ -43,6 +43,19 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    public function get_display_name($username) {
+        if ($username === null) {   
+            return '';
+        } else {
+            $dn = Yii::app()->ldap->user()->dn($username);
+            if ($dn != false) {
+                $name = explode(',', $dn);
+                return substr($name[0],3);
+            }
+            return '';
+        }
+    }
+
     public function get_selection() {
         $this->entries = array();
 
@@ -56,16 +69,13 @@ class LDAPModel extends CFormModel {
                     $d = Yii::app()->ldap->user()->info($mem, array("samaccountname", "dn"));
                     $name = explode(',', $d[0]['dn']);
 
-                    array_push($members, array(
-                        'username' => $d[0]['samaccountname'][0],
-                        'displayname' => substr($name[0], 3),
-                    ));
+                    $members[$d[0]['samaccountname'][0]] = substr($name[0], 3);
                 }
+                asort($members);
             }
-            
             $this->entries[$grp] = $members;
-                // $grp => $members);
         }
+        ksort($this->entries);
     }
 
     public function get_userinfo($username) {
@@ -147,7 +157,6 @@ class LDAPModel extends CFormModel {
             }
         }
     }
-
 
     public function get_groupinfo($groupname) {
         //will end up false if bind is fail or group is not of interest

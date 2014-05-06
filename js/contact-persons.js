@@ -100,15 +100,6 @@ var ContactPersonsList = function(project_id)
             });
 
             contentElem.inject($(self.contactPersonsTableID), 'bottom');
-
-            contentHTML = '<td></td><td></td><td></td><td></td><td></td>';
-            contentElem = new Element('<tr />',
-            {
-                'class' : self.tableRowClass,
-                'html' : contentHTML
-            });
-
-            contentElem.inject($(self.contactPersonsTableID), 'bottom');
         }
     }
 
@@ -396,8 +387,8 @@ var ContactPersonsView = function(data)
         $(self.viewContactPersonsPositionID).set('html', data['position']);
         $(self.viewContactPersonsContactsID).set('html', data['contact_numbers']);
         $(self.viewContactPersonsEmailID).set('html', data['email']);
-        $(self.viewContactPersonsAddressID).set('html', data['address']);
-        $(self.viewContactPersonsNotesID).set('html', data['notes']);
+        $(self.viewContactPersonsAddressID).set('html', '<pre>'+data['address']);
+        $(self.viewContactPersonsNotesID).set('html', '<pre>'+data['notes']);
         $(self.viewContactPersonsCreatedID).set('html', data['date_created_formatted']);
         $(self.viewContactPersonsUpdatedID).set('html', data['date_updated_formatted']);
     }

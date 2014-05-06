@@ -1,11 +1,5 @@
 <!-- view contact persons view -->
 <div id="view-point-persons-view" style="display:none;" class="contact-info plain-list">
-    <div class="header-block-button">
-        <div class="pseudo-field back-button">
-            <a id="point-person-view-to-list" href="#" title="Back to list" class="with-tool-tip"><span class="icon"></span><span class="tooltip">Back<span class="arrow icon"></span></span></a>
-        </div>
-    </div><br /><br />
-
     <!-- CONTENT HERE -->
     <form>
         <input type="hidden" id="point-persons-view-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -19,7 +13,7 @@
             </div>
             <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Username</span></div>
+                    <div class="field-secondary"><span class="label">Name</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
                             <span class="value" id="point-persons-view-username"></span>
@@ -58,6 +52,7 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field --> 
+                <a id="point-person-view-to-list" href="#">[Back]</a>
             </div>
         </div>
     </form>

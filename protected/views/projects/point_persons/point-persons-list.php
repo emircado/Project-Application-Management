@@ -13,7 +13,7 @@
                 <table>
                     <thead>
                         <tr>                      
-                            <th width=''>Username</th>
+                            <th width=''>Name</th>
                             <th width=''>User Group</th>
                             <th width=''>Actions</th>
                         </tr>

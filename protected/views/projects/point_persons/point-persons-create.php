@@ -10,7 +10,7 @@
             <!--CONTENT for CREATE POINT PERSON-->
             <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">User Group</span><span>(required)</span></div>
+                    <div class="field-secondary"><span class="label">User Group*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <select class="select" id="point-persons-create-usergroup">
@@ -20,7 +20,7 @@
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Username</span><span>(required)</span></div>
+                    <div class="field-secondary"><span class="label">Name*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <select class="select" id="point-persons-create-username">

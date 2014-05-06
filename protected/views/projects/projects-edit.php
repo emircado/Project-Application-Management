@@ -19,7 +19,7 @@
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
                                         <div class="field field-input-name">
-                                            <div class="field-secondary"><span class="label">Code</span><span>(required)</span></div>
+                                            <div class="field-secondary"><span class="label">Code*</span></div>
                                             <div class="field-primary">
                                                 <div class="pseudo-field">
                                                 <input type="text" id="edit-code" class="text"></input>

@@ -18,6 +18,7 @@ class PointpersonsController extends Controller
             //date conversion
             $point_persons['data'][$i]['date_created_formatted'] = ($point_persons['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($point_persons['data'][$i]['date_created']));
             $point_persons['data'][$i]['date_updated_formatted'] = ($point_persons['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($point_persons['data'][$i]['date_updated']));
+            $point_persons['data'][$i]['username_formatted'] = $this->get_user_name($point_persons['data'][$i]['username']);
         }
 
         $return_data = array(
@@ -60,7 +61,7 @@ class PointpersonsController extends Controller
             $data[] = array(
                 'project_id'    => $row->project_id/*$p->purify($row->project_id)*/,
                 'username'      => $row->username/*$p->purify($row->name)*/,
-                'user_group'     => $row->user_group/*$p->purify($row->company)*/,
+                'user_group'    => $row->user_group/*$p->purify($row->company)*/,
                 'description'   => $row->description/*$p->purify($row->position)*/,
                 'date_created'  => $row->date_created/*$p->purify($row->date_created)*/,
                 'date_updated'  => $row->date_updated/*$p->purify($row->date_updated)*/,
@@ -72,6 +73,19 @@ class PointpersonsController extends Controller
             'data_count'=>count($data),
             'total_count'=>$count,          
         );
+    }
+
+    public function get_user_name($username) {
+        if (Yii::app()->user->isGuest) {
+            return '';
+        } else {
+            try {
+                $model = new LDAPModel;
+                return $model->get_display_name($username);
+            } catch (LDAPModelException $e) {
+                return '';
+            }
+        }
     }
 
     public function actionUpdate()
@@ -87,6 +101,7 @@ class PointpersonsController extends Controller
 
             $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
             $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
+            $data['username_formatted'] = $this->get_user_name($data['username']);
 
             echo CJSON::encode(array(
                 'type' => 'success',

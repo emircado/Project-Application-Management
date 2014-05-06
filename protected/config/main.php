@@ -103,5 +103,6 @@ return array(
 		'projects_per_page'=>20,
 		'contact_persons_per_page'=>5,
 		'point_persons_per_page'=>5,
+		
 	),
 );

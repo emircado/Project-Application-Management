@@ -44,10 +44,9 @@ var PointPersonsList = function(project_id)
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    // console.log('yaya');
                     self.currentPage  = data.page;
                     self.totalPage    = data.totalPage;
-                    self.resultData = data.resultData;
+                    self.resultData   = data.resultData;
                     self.pageLimit    = data.limit;
                     self.renderData(data.totalData);
 
@@ -72,7 +71,7 @@ var PointPersonsList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                contentHTML = '<td>'+val['username']+'</td>'
+                contentHTML = '<td>'+val['username_formatted']+'</td>'
                             + '<td>'+val['user_group']+'</td>'
                             + '<td class="actions-col two-column">'
                             + '<a id="point-persons-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
@@ -216,7 +215,6 @@ var PointPersonsCreate = function(project_id)
 
     self.init = function()
     {
-        console.log('creating point person for '+project_id);
         $(self.createViewID).setStyle('display', 'block');
         self.initDropdown();
         self.addEvents();
@@ -252,7 +250,6 @@ var PointPersonsCreate = function(project_id)
                                 $(self.createUsernameErrorID).set('html', msg[1]);
                                 $(self.createUsernameErrorID).setStyle('display', 'block');
                             } else if (msg[0] == 'USERGROUP_ERROR') {
-                                console.log('here');
                                 $(self.createUsergroupErrorID).set('html', msg[1]);
                                 $(self.createUsergroupErrorID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
@@ -261,7 +258,6 @@ var PointPersonsCreate = function(project_id)
                         });
                     } else if (response['type'] == 'success') {
                         $(self.createCancelButtonID).click();
-                        console.log('success');
                     }
                 },
                 'onError' : function(errors)
@@ -346,18 +342,17 @@ var PointPersonsCreate = function(project_id)
 			contentElem.inject($(self.createUsernameID), 'bottom');
 
             if (usergroup != '') {
-         		Array.each(ProjectsSite.ldapObj.ldapData[usergroup], function(val, idx)
-    	        {
-    	            contentElem = new Element('<option />',
-    		    	{
-    		    		'class' : self.usernameRowClass,
-                        'value' : val['username'],
-    		    		'html'  : val['displayname']
-    		    	});
-    		    	contentElem.inject($(self.createUsernameID), 'bottom');
-    	        });
+                hash = new Hash(ProjectsSite.ldapObj.ldapData[usergroup]);
+                hash.each(function(val, idx) {
+                    contentElem = new Element('<option />',
+                    {
+                        'class' : self.usernameRowClass,
+                        'value' : idx,
+                        'html'  : val
+                    });
+                    contentElem.inject($(self.createUsernameID), 'bottom');
+                });
             }
-
         });
     }
 }
@@ -430,9 +425,9 @@ var PointPersonsView = function(data)
 
     self.renderData = function()
     {
-        $(self.viewUsernameID).set('html', data['username']);
+        $(self.viewUsernameID).set('html', data['username_formatted']);
         $(self.viewUsergroupID).set('html', data['user_group']);
-        $(self.viewDescriptionID).set('html', data['description']);
+        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
         $(self.viewCreatedID).set('html', data['date_created_formatted']);
         $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
     }
@@ -544,7 +539,7 @@ var PointPersonsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editUsernameID).set('html', data['username']);
+        $(self.editUsernameID).set('html', data['username_formatted']);
         $(self.editUsergroupID).set('html', data['user_group']);
         $(self.editDescriptionID).value = data['description'];
     }
