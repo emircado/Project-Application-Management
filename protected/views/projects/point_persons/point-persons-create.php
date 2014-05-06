@@ -8,7 +8,7 @@
                 <div id="expand-primary" class="header"><h3><b>Add Point Person</b></h3></div>
             </div>
             <!--CONTENT for CREATE POINT PERSON-->
-            <div id="create-primary-content" class="content">
+            <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">User Group</span><span>(required)</span></div>
                     <div class="field-primary">

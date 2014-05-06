@@ -176,7 +176,7 @@ class PointpersonsController extends Controller
         }
     }
 
-    public function actionTest()
+    public function actionGetLDAPData()
     {
         if (Yii::app()->user->isGuest) {
             echo CJSON::encode("bad");

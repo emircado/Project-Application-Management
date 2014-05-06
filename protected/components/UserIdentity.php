@@ -37,13 +37,13 @@ class UserIdentity extends CUserIdentity
 		// }
 
 		// for ($i = 0; $i < 100; $i++) {
-			// $in = "system.loadavg_1min 10.00 ".time()."\n";
-			// $in .= "system.loadavg_5min 10.00 ".time()."\n";
-			// $in .= "system.loadavg_15min 10.00 ".time()."\n";
-			// $in .= "system.luke 10.00 ".time()."\n";
-			// socket_write($sock, $in);
+		// 	$in = "system.loadavg_1min 10.00 ".time()."\n";
+		// 	$in .= "system.loadavg_5min 10.00 ".time()."\n";
+		// 	$in .= "system.loadavg_15min 10.00 ".time()."\n";
+		// 	$in .= "system.luke 10.00 ".time()."\n";
+		// 	socket_write($sock, $in);
 
-			// sleep(1);
+		// 	sleep(1);
 		// }
 
 		

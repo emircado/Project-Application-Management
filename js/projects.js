@@ -63,15 +63,16 @@ var ProjectsList = function()
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    self.currentPage  = data.page;
-                    self.totalPage    = data.totalPage;
+                    self.currentPage = data.page;
+                    self.totalPage = data.totalPage;
                     self.resultData = data.resultData;
-                    self.pageLimit    = data.limit;
+                    self.pageLimit = data.limit;
                     self.renderData(data.totalData);
 
                     //callbacks
                     self.paginationChecker();
                     self.addEvents();
+                    console.log('got new data '+data.totalData);
                 },
                 'onError' : function(data)
                 {
@@ -400,7 +401,6 @@ var ProjectsView = function(data)
     self.postDataURL = baseURL + '/projects/changestatus';
     self._request = null;
 
-
     //for view project
     self.viewProjectViewID = 'view-projects-view';
     self.viewToMainID  = 'view-to-main';
@@ -419,6 +419,7 @@ var ProjectsView = function(data)
 
     //for edit
     self.editID = 'edit';
+    self.deleteID = 'delete';
 
     //for change status
     self.viewChangeStatusID = 'a[id^=view-button-change-status]';
@@ -464,6 +465,49 @@ var ProjectsView = function(data)
 
                         self.init();
                     }
+                },
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('error type 1');
+                }
+            }).send();
+        }
+    };
+
+    self.deleteProject = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            var params = {
+                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'project_id'        : data['project_id'],
+            };
+
+            self._request = new Request.JSON(
+            {
+                'url' : baseURL + '/projects/delete',
+                'method' : 'post',
+                'data' : params,
+                'onSuccess': function(response)
+                {
+                    console.log('success');
+                    console.log(response);
+
+                    $(self.viewToMainID).click();
+                    // if (response['type'] == 'error') {
+                    //     self._request.stop;
+                    //     console.log('error type 2');
+                    // } else if (response['type'] == 'success') {
+                    //     var d = response['data'];
+                    //     data['status'] = d['status'];
+                    //     data['termination_date'] = d['termination_date'];
+                    //     data['termination_date_formatted'] = d['termination_date_formatted'];
+                    //     data['date_updated'] = d['date_updated'];
+                    //     data['date_updated_formatted'] = d['date_updated_formatted'];
+
+                    //     self.init();
+                    // }
                 },
                 'onError' : function(errors)
                 {
@@ -523,6 +567,17 @@ var ProjectsView = function(data)
             if (confirm('Are you sure you want to change the project\'s status?'))
             {
                 self.postAjaxData();
+            }
+        });
+
+        //EVENT FOR DELETING A PROJECT
+        $(self.deleteID).removeEvents();
+        $(self.deleteID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete the project?'))
+            {
+                self.deleteProject();
             }
         });
     }
@@ -662,10 +717,10 @@ var ProjectsSite = {
     {
         var self = this;
 
-        if (self.mainObj == null)
-        {
+        // if (self.mainObj == null)
+        // {
             self.mainObj = new ProjectsList();
-        }
+        // }
         self.mainObj.init();
     },
 
@@ -721,12 +776,11 @@ var LDAPData = function()
         {
             self._request = new Request.JSON(
             {
-                'url' : baseURL + '/pointpersons/test',
+                'url' : baseURL + '/pointpersons/getldapdata',
                 'method' : 'get',
                 'onSuccess': function(response)
                 {
                     self.ldapData = response;
-                    console.log(response);
                 },
                 'onError' : function(errors)
                 {

@@ -9,13 +9,13 @@
                 <div id="expand-primary" class="header"><h3><b>Add Contact Person</b></h3></div>
             </div>
             <!--CONTENT for CREATE PROJECT-->
-            <div id="create-primary-content" class="content">
+            <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Name</span><span>(required)</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input type="text" id="contact-persons-create-username" class="text"></input>
-                        <span id="contact-persons-create-username-error" class="field-input-name-error error-message" style="display: none;"></span>
+                        <input type="text" id="contact-persons-create-name" class="text"></input>
+                        <span id="contact-persons-create-name-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

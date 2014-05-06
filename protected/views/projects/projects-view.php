@@ -14,6 +14,7 @@
                 <div id="expand-primary" class="header">
                     <h3><b>Project Details</b></h3>&nbsp&nbsp
                     <a id="edit" href="#">[Edit]</a>
+                    <a id="delete" href="#" style="float:right;">[Delete Project]</a>
                 </div>
             </div>
             <div id="edit-primary-content" class="content">

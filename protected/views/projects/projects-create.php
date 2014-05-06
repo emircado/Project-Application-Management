@@ -9,7 +9,7 @@
                                         <div id="expand-primary" class="header"><h3><b>Project Details</b></h3></div>
                                     </div>
                                     <!--CONTENT for CREATE PROJECT-->
-                                    <div id="create-primary-content" class="content">
+                                    <div id="edit-primary-content" class="content">
                                         <div class="field field-input-name">
                                             <div class="field-secondary"><span class="label">Name</span></div>
                                             <div class="field-primary">

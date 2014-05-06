@@ -92,7 +92,16 @@ var ContactPersonsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No contact persons found</td><td></td><td></td>';
+            contentHTML = '<td>No contact persons found</td><td></td><td></td><td></td><td></td>';
+            contentElem = new Element('<tr />',
+            {
+                'class' : self.tableRowClass,
+                'html' : contentHTML
+            });
+
+            contentElem.inject($(self.contactPersonsTableID), 'bottom');
+
+            contentHTML = '<td></td><td></td><td></td><td></td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -219,7 +228,6 @@ var ContactPersonsCreate = function(project_id)
 
     self.init = function()
     {
-        console.log('creating contact person for '+project_id);
         $(self.createContactPersonsViewID).setStyle('display', 'block');
         self.addEvents();
     }
@@ -234,7 +242,7 @@ var ContactPersonsCreate = function(project_id)
                 'name'              : $(self.createContactPersonsNameID).value.trim(),
                 'company'           : $(self.createContactPersonsCompanyID).value.trim(),
                 'position'          : $(self.createContactPersonsPositionID).value.trim(),
-                'contacts_numbers'  : $(self.createContactPersonsContactsID).value.trim(),
+                'contact_numbers'  : $(self.createContactPersonsContactsID).value.trim(),
                 'email'             : $(self.createContactPersonsEmailID).value.trim(),
                 'address'           : $(self.createContactPersonsAddressID).value.trim(),
                 'notes'             : $(self.createContactPersonsNotesID).value.trim()

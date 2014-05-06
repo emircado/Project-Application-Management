@@ -1,0 +1,142 @@
+/* MAIN TEMPLATE */
+
+body  {
+	background-color: #DECFA2;
+}
+
+a, a:hover {
+	color: #249180;
+}
+
+#page {
+	width: 1200px;
+	background: #F7F3E6;
+}
+
+#header {
+	background: #2E454F;
+	height: 120px;
+	position: relative;
+}
+
+#logo {
+	color: #F7F3E6;
+	font-size: 45px;
+	position: absolute;
+	bottom: 20px;
+	left: 10px;
+}
+
+.header-block-title hr {
+	border-top: 1px solid #EFE8D1;
+}
+
+#footer {
+	border-top: 1px solid #EFE8D1;
+}
+
+/* MAIN MENU */
+#mainmenu {
+	background: #249180;
+}
+
+#mainmenu ul li a:hover, #mainmenu ul li.active a
+{
+    color: #249180;
+    background-color:#F7F3E6;
+    text-decoration:none;
+}
+
+/* TABLES */
+thead th {
+	background-color: #AED5B5;
+	padding: 5px;
+	text-align: center;
+}
+tbody td {
+	text-align: center;
+}
+tbody tr {
+	min-height: 35px;
+}
+
+table thead{
+    border-bottom: 2px solid #77B882;
+    border-top: 2px solid #77B882;
+}
+
+.table-header-block {
+	margin: 0 0;
+}
+
+#edit-primary-content table {
+	margin-bottom: 10px;
+}
+
+/* SECTIONS AND FORMS */
+.contact-info-details {
+	background-color: #FFFFFF;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+.contact-info .contact-info-details .primary-info {
+	margin-bottom: 5px;
+	margin-top: 0;
+}
+
+.contact-info .contact-info-details .section .header {
+	background: #DCEDDF;
+	cursor: default;
+	padding: 10px 20px;
+}
+
+.plain-list .field {
+	border-bottom: 0;
+	padding: 0 0;
+}
+
+.plain-list .field > .field-secondary {
+	width: 20%;
+}
+
+.plain-list .field > .field-secondary .label {
+	font-size: 14px;
+}
+
+.plain-list .field > .field-primary {
+	width: 75%;
+}
+
+.field-primary .pseudo-field .text {
+	padding: 7px 5px;
+}
+
+.pseudo-field select {
+	padding: 7px 5px;
+	width: 100%;
+}
+
+form .field {
+	margin: 8px 0;
+}
+
+/* SPECIFICS */
+#create-projects-view,
+#edit-projects-view,
+#view-projects-view {
+	width: 47.5%;
+}
+
+#view-projects {
+	padding-bottom: 100px;
+}
+
+#edit-primary-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+#search-submit {
+	margin: 0px 0px;
+}

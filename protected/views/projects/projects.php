@@ -5,7 +5,7 @@
                 <div class="header-block">
                     <div class="header-block-content">
                         <div class="header-block-title">
-                            <h2 class="content-title">Projects</h2><br><hr>
+                            <h2 class="content-title">Projects</h2><hr>
                         </div>  
                         <?php 
                             //RENDER VIEWS

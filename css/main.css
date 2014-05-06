@@ -6894,7 +6894,9 @@ div#top-bar{background-color:#FFF;}
 	background-color:#F5F5F5;
 }
 
-form .field{margin:5px 0;}
+form .field{
+    margin:10px 0;
+}
 
 .contact-info-details > .section{margin-bottom:25px;}
 
