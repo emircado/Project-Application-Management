@@ -317,79 +317,79 @@ var Confirm =
     
     close : function()
     {
-        var self = this;
+    //     var self = this;
         
-        $(self.overlayId).setStyle('display', 'none');
-        $(self.dialogId).setStyle('display', 'none');
-        $(self.activeDialogId).setStyle('display', 'none');
+    //     $(self.overlayId).setStyle('display', 'none');
+    //     $(self.dialogId).setStyle('display', 'none');
+    //     $(self.activeDialogId).setStyle('display', 'none');
     },
     
     confirmButtons : function()
     {
-        var self = this;
+    //     var self = this;
         
-        $(self.buttonContainerId).set('html', '');
+    //     $(self.buttonContainerId).set('html', '');
         
-        Object.each(self.customButton, function(val, idx)
-        {
-            buttonName = idx.replace(/ /g, '');
-            buttonId = 'confirm-dialog-' + buttonName.toLowerCase();
-            button = buttonName.toLowerCase();
+    //     Object.each(self.customButton, function(val, idx)
+    //     {
+    //         buttonName = idx.replace(/ /g, '');
+    //         buttonId = 'confirm-dialog-' + buttonName.toLowerCase();
+    //         button = buttonName.toLowerCase();
             
-            if(button != 'cancel')
-                buttonHTML = '<input class="action-button '+button+'" id="'+ buttonId +'" type="button" value="'+ idx +'">';
-            else
-                buttonHTML = '<a id="'+ buttonId +'" class="cancel" href="#">'+idx+'</a>';
+    //         if(button != 'cancel')
+    //             buttonHTML = '<input class="action-button '+button+'" id="'+ buttonId +'" type="button" value="'+ idx +'">';
+    //         else
+    //             buttonHTML = '<a id="'+ buttonId +'" class="cancel" href="#">'+idx+'</a>';
             
-            buttonElem = new Element('<div/>',
-            {
-                'class' : 'pseudo-field pseudo-button' + ((val['primary']) ? ' delete-button' : ''),
-                'html' : buttonHTML
-            });
+    //         buttonElem = new Element('<div/>',
+    //         {
+    //             'class' : 'pseudo-field pseudo-button' + ((val['primary']) ? ' delete-button' : ''),
+    //             'html' : buttonHTML
+    //         });
             
-            buttonElem.inject($(self.buttonContainerId));
-            self.confirmEvents(buttonId, val['callback']);
-        });
+    //         buttonElem.inject($(self.buttonContainerId));
+    //         self.confirmEvents(buttonId, val['callback']);
+    //     });
     },
     
     confirmEvents : function(buttonId, buttonCallback)
     {
-        var self = this;
+    //     var self = this;
         
-        $(buttonId).removeEvents();
-        $(buttonId).addEvent('click', function(e)
-        {
-            e.preventDefault();
+    //     $(buttonId).removeEvents();
+    //     $(buttonId).addEvent('click', function(e)
+    //     {
+    //         e.preventDefault();
             
-            buttonCallback();
-        });
+    //         buttonCallback();
+    //     });
         
-        $(self.buttonX).removeEvents();
-        $(self.buttonX).addEvent('click', function(e)
-        {
-            e.preventDefault();
+    //     $(self.buttonX).removeEvents();
+    //     $(self.buttonX).addEvent('click', function(e)
+    //     {
+    //         e.preventDefault();
             
-            Confirm.close();
-        });
+    //         Confirm.close();
+    //     });
     },
     
     resizer : function()
     {
-        var self = Confirm;
+    //     var self = Confirm;
         
-        var theBox = $(self.activeDialogId),
-            winSize = window.getSize(),
-            boxSize = theBox.getSize();
+    //     var theBox = $(self.activeDialogId),
+    //         winSize = window.getSize(),
+    //         boxSize = theBox.getSize();
             
-        theBox.setPosition({
-            'x'  : ( ( winSize.x / 2 ) - ( boxSize.x / 2 ) ),
-            'y' : ( ( winSize.y / 2 ) - ( boxSize.y / 2 ) )
-        });
+    //     theBox.setPosition({
+    //         'x'  : ( ( winSize.x / 2 ) - ( boxSize.x / 2 ) ),
+    //         'y' : ( ( winSize.y / 2 ) - ( boxSize.y / 2 ) )
+    //     });
         
-        window.removeEvent('resize', self.resizer);
-        window.removeEvent('scroll', self.resizer);
-        window.addEvent('resize', self.resizer);
-        window.addEvent('scroll', self.resizer);
+    //     window.removeEvent('resize', self.resizer);
+    //     window.removeEvent('scroll', self.resizer);
+    //     window.addEvent('resize', self.resizer);
+    //     window.addEvent('scroll', self.resizer);
     }
 };
 

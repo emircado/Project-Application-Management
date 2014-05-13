@@ -224,16 +224,18 @@ var ProjectsList = function()
 
         //EVENT FOR SEARCH CODE FIELD KEYPRESS
         $(self.searchCodeID).removeEvents();
-        $(self.searchCodeID).addEvent('keypress', function(e)
+        $(self.searchCodeID).addEvent('input', function(e)
         {
             e.preventDefault();
-            if ($(this).value.length < 5)
-            {   
-                var c = String.fromCharCode(e.event.charCode);
-                if (/[a-zA-Z0-9]/.test(c)) {
-                    $(this).value+=c.toUpperCase();
-                }
-            }
+            $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
+            // e.preventDefault();
+            // if ($(this).value.length < 5)
+            // {   
+            //     var c = String.fromCharCode(e.event.charCode);
+            //     if (/[a-zA-Z0-9]/.test(c)) {
+            //         $(this).value+=c.toUpperCase();
+            //     }
+            // }
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
@@ -434,6 +436,7 @@ var ProjectsView = function(data)
         self.addEvents();
         ContactPersonsSite.init(data['project_id']);
         PointPersonsSite.init(data['project_id']);
+        ApplicationsSite.init(data['project_id']);
     }
 
     self.postAjaxData = function()
@@ -495,6 +498,7 @@ var ProjectsView = function(data)
                 'onSuccess': function(response)
                 {
                     console.log(response);
+                    $(self.viewToMainID).click();
                 },
                 'onError' : function(errors)
                 {
@@ -553,10 +557,12 @@ var ProjectsView = function(data)
         $$(self.viewChangeStatusID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (confirm('Are you sure you want to change the project\'s status?'))
-            {
-                self.postAjaxData();
-            }
+            new ConfirmModal(
+                'Confirm Change Status',
+                'Are you sure you want to change the project\'s status?',
+                'Change',
+                self.postAjaxData)
+            .show();
         });
 
         //EVENT FOR DELETING A PROJECT
@@ -564,10 +570,12 @@ var ProjectsView = function(data)
         $(self.deleteID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (confirm('Are you sure you want to delete the project?'))
-            {
-                self.deleteProject();
-            }
+            new ConfirmModal(
+                'Confirm Delete', 
+                'Are you sure you want to delete the project?', 
+                'Delete', 
+                self.deleteProject)
+            .show();
         });
     }
 }
@@ -696,12 +704,14 @@ var ProjectsSite = {
     mainObj         : null,
     createObj       : null,
     ldapObj         : null,
+    appTypesObj     : null,
 
     init: function()
     {
         var self = this;
-        self.initObj();
         self.initLDAP();
+        self.initAppTypes();
+        self.initObj();
     },
 
     initObj: function()
@@ -741,45 +751,15 @@ var ProjectsSite = {
     initLDAP: function()
     {
         var self = this;
-        if (self.ldapObj == null)
-        {
-            self.ldapObj = new LDAPData();
-        }
+        self.ldapObj = new LDAPData();
         self.ldapObj.init();
-    }
-}
+    },
 
-var LDAPData = function()
-{
-    var self = this;
-    self._request = null;
-
-    self.ldapData = [];
-
-    self.init = function()
+    initAppTypes: function()
     {
-        self.getLDAPData();
-    }
-
-    self.getLDAPData = function()
-    {
-        if(!self._request || !self._request.isRunning())
-        {
-            self._request = new Request.JSON(
-            {
-                'url' : baseURL + '/pointpersons/getldapdata',
-                'method' : 'get',
-                'onSuccess': function(response)
-                {
-                    self.ldapData = response;
-                },
-                'onError' : function(errors)
-                {
-                    self._request.stop;
-                    console.log('something went wrong');
-                }
-            }).send();
-        }
+        var self = this;
+        self.appTypesObj = new ApplicationTypesData();
+        self.appTypesObj.init();
     }
 }
 

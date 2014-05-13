@@ -409,10 +409,12 @@ var ContactPersonsView = function(data)
         $(self.deleteContactPersonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (confirm('Are you sure you want to delete this contact person from the list?'))
-            {
-                self.postAjaxData();
-            }
+            new ConfirmModal(
+                'Confirm Delete',
+                'Are you sure you want to delete this contact person from the list?',
+                'Delete',
+                self.postAjaxData)
+            .show();
         });
 
         //GO BACK TO THE LIST

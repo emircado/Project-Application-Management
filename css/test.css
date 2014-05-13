@@ -97,7 +97,7 @@ table thead{
 }
 
 .plain-list .field > .field-secondary {
-	width: 20%;
+	width: 25%;
 }
 
 .plain-list .field > .field-secondary .label {
@@ -105,7 +105,7 @@ table thead{
 }
 
 .plain-list .field > .field-primary {
-	width: 75%;
+	width: 70%%;
 }
 
 .field-primary .pseudo-field .text {
@@ -132,7 +132,7 @@ pre {
 	width: 47.5%;
 }
 
-#applications-list {
+#applications-panel {
 	float: left;
 	width: 48.75%;
 }
@@ -154,4 +154,82 @@ pre {
 
 #search-submit {
 	margin: 0px 0px;
+}
+
+/* CONFIRMATION MODAL */
+#projects-modal .dialog-content .dialog-content-block {
+	padding-bottom: 5px;
+}
+
+.dialog-content .dialog-header-block {
+	padding: 7px 12px;
+	background: #2E454F;
+}
+
+#projects-modal {
+	width: 300px;
+	margin-top: 150px;
+	margin-left: 40%;
+}
+
+.dialog-content .dialog-footer-block {
+	margin-top: 20px;
+}
+
+.dialog-box .field-action-content {
+	float: none;
+	width: 175px;
+	margin: auto;
+}
+
+/* APPLICATION TYPE MODAL */
+
+#application-type-modal {
+	min-width: 100px;
+	z-index: 1;
+	/*margin-right: auto;*/
+	margin-left: 400px;
+}
+
+#application-type-modal .dialog-content .dialog-content-block {
+	padding: 8px;
+	width: 150px;
+}
+
+#application-type-modal input {
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	width: 95%;
+	font-size: 14px;
+	text-align: center;
+}
+
+#application-type-modal td {
+	padding: 3px;
+}
+
+#application-type-modal tr.selected  td {
+	font-weight: bold;
+	background: #DCEDDF;
+}
+
+#application-type-modal tr.selected  td i {
+	font-weight: normal;
+}
+
+#application-type-modal-confirm-button,
+#application-type-modal-cancel-button {
+	font-size: 14px;
+}
+
+#application-type-modal .field-action-content {
+	width: 155px;
+}
+
+#application-type-modal-confirm-button:disabled {
+	background: #727070;
+	border: 1px solid #CCC;
+	color: #333;
+	font-weight: bold;
 }

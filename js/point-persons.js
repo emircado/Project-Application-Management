@@ -286,8 +286,7 @@ var PointPersonsCreate = function(project_id)
     	});
     	contentElem.inject($(self.createUsergroupID), 'bottom');
 
-    	hash = new Hash(ProjectsSite.ldapObj.ldapData);
-    	hash.each(function(val, idx)
+    	ProjectsSite.ldapObj.ldapData.each(function(val, idx)
         {
             contentElem = new Element('<option />',
 	    	{
@@ -342,8 +341,7 @@ var PointPersonsCreate = function(project_id)
 			contentElem.inject($(self.createUsernameID), 'bottom');
 
             if (usergroup != '') {
-                hash = new Hash(ProjectsSite.ldapObj.ldapData[usergroup]);
-                hash.each(function(val, idx) {
+                ProjectsSite.ldapObj.ldapData.get(usergroup).each(function(val, idx) {
                     contentElem = new Element('<option />',
                     {
                         'class' : self.usernameRowClass,
@@ -448,10 +446,12 @@ var PointPersonsView = function(data)
         $(self.deleteID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (confirm('Are you sure you want to delete this point person from the list?'))
-            {
-                self.postAjaxData();
-            }
+            new ConfirmModal(
+                'Confirm Delete',
+                'Are you sure you want to delete this point person from the list?',
+                'Delete',
+                self.postAjaxData)
+            .show();
         });
 
         //GO BACK TO THE LIST

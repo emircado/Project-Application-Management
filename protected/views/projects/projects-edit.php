@@ -14,7 +14,6 @@
                                             <div class="field-primary">
                                                 <div class="pseudo-field">
                                                 <input type="text" id="edit-name" class="text"></input>
-                                                <span id="edit-name-error" class="field-input-name-error error-message" style="display: none;"></span>
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
@@ -32,7 +31,6 @@
                                             <div class="field-primary">
                                                 <div class="pseudo-field">
                                                 <textarea rows="4" id="edit-description" class="text"></textarea>
-                                                <span id="edit-description-error" class="field-input-name-error error-message" style="display: none;"></span>
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->
@@ -41,7 +39,6 @@
                                             <div class="field-primary">
                                                 <div class="pseudo-field">
                                                 <input type="date" id="edit-production" class="text"></input>
-                                                <span id="edit-production-error" class="field-input-name-error error-message" style="display: none;"></span>
                                                 </div>
                                             </div><!-- End Field Primary -->
                                         </div><!-- End Field -->

@@ -267,3 +267,11 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2014-04-30 13:47:07
+
+
+CREATE TABLE `application_types` (
+  `type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` 
+  `created_by`
+  PRIMARY KEY (`type_id`)
+);

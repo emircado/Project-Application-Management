@@ -103,6 +103,14 @@
             </div>
         </form>
 
+        <!-- PROJECT NOTES HERE -->
+        <?php 
+            // $this->renderPartial('//projects/notes/notes-list');
+            // $this->renderPartial('//projects/notes/notes-create'); 
+            // $this->renderPartial('//projects/notes/notes-view');
+            // $this->renderPartial('//projects/notes/notes-edit');
+        ?>
+
         <!-- CONTACT PERSONS HERE -->
         <?php 
             $this->renderPartial('//projects/contact_persons/contact-persons-list');
@@ -117,10 +125,12 @@
             $this->renderPartial('//projects/point_persons/point-persons-create');
             $this->renderPartial('//projects/point_persons/point-persons-view');
             $this->renderPartial('//projects/point_persons/point-persons-edit');
+            
         ?>
         <a id="delete" href="#">[Delete Project]</a>
     </div>
-    <div id="applications-list">
+    
+    <div id="applications-panel">
         <?php
             $this->renderPartial('//projects/applications/applications-list');
             $this->renderPartial('//projects/applications/applications-create');
@@ -128,4 +138,5 @@
             $this->renderPartial('//projects/applications/applications-edit');
         ?>
     </div>
+
 </div><!--END view user-->
