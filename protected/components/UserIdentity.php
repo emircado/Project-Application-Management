@@ -25,12 +25,8 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_LDAP_BINDING;
         }
 
-        try {
-            $g = new GraphiteSocket();
-            $g->send_login($this->errorCode);
-        } catch (GraphiteSocketException $e) {
-            // save somewhere
-        }
+        // $g = new GraphiteSocket();
+        // $g->send_login($this->errorCode);
         
         return !$this->errorCode;
     }

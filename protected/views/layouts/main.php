@@ -64,10 +64,11 @@
     <div id="overlay" class="dialog-box-overlay" style="height: 100%;"></div>
     <div id="dialog-wrapper">
         <?php
-            $data = array();
-            
-            if(isset($this->modals))
-                    echo $this->renderPartial('//layouts/modals/' . $this->modals, $data);
+            if(isset($this->modals)) {
+                foreach ($this->modals as $modal) {
+                    echo $this->renderPartial('//layouts/modals/'.$modal);
+                }
+            }
         ?>
     </div>
 

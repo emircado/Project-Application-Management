@@ -4342,3 +4342,841 @@ Stack trace:
 REQUEST_URI=/pamgmt/applications/create
 in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (50)
 in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 15:32:33 [error] [exception.CException] exception 'CException' with message 'Property "Applications.des" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(145): CComponent->__get('des')
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php(51): CActiveRecord->__get('des')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php(15): ApplicationsController->get_data(Array, 5, 0)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationsController->actionList()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applications/li...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applications/list?page=1&project_id=102
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/13 15:32:51 [error] [php] Undefined index: total_count (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:19)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/list?page=1&project_id=102
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (19)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 15:33:47 [error] [exception.CException] exception 'CException' with message 'Property "Applications.des" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(145): CComponent->__get('des')
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php(52): CActiveRecord->__get('des')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php(15): ApplicationsController->get_data(Array, 5, 0)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationsController->actionList()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applications/li...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applications/list?page=1&project_id=102
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/13 15:37:41 [error] [php] socket_connect(): unable to connect [111]: Connection refused (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:16)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/site
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (16)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (29)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/13 15:39:45 [error] [php] socket_connect(): unable to connect [111]: Connection refused (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:17)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/site
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (17)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (29)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/13 15:39:47 [error] [php] socket_connect(): unable to connect [111]: Connection refused (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:17)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/site
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (17)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (29)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/13 15:39:49 [error] [php] socket_connect(): unable to connect [111]: Connection refused (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:17)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/site
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (17)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (29)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/13 16:11:17 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:141)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/delete
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (141)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 16:11:39 [error] [php] Undefined index: application_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:141)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/delete
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (141)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 16:14:33 [error] [php] Undefined index: application_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:140)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/delete
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (140)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 16:17:30 [error] [php] Undefined index: application_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:138)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/delete
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (138)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/13 18:58:23 [error] [exception.GraphiteSocketException] exception 'GraphiteSocketException' with message 'socket_connect() failed: reason: Connection timed out' in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:20
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php(29): GraphiteSocket->__construct()
+#1 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): CModel->validate()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#15 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/13 19:16:16 [error] [php] include(Thread.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php(4): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php(427): include()
+#2 unknown(0): autoload()
+#3 /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php(28): spl_autoload_call()
+#4 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#8 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (4)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (28)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/14 09:14:46 [error] [php] Undefined variable: is_connected (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:45)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#12 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (45)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (34)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/14 18:06:41 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/application-servers-advanced-search-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/applications/applications-view.php(131): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', NULL, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): CBaseController->renderFile('/home/httpd/vho...', NULL, true)
+#4 /home/httpd/vhosts/pamgmt/protected/views/projects/projects-view.php(136): CController->renderPartial('//applications/...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', NULL, true)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): CBaseController->renderFile('/home/httpd/vho...', NULL, true)
+#8 /home/httpd/vhosts/pamgmt/protected/views/projects/projects.php(15): CController->renderPartial('//projects/proj...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', NULL, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): CBaseController->renderFile('/home/httpd/vho...', NULL, true)
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): CController->renderPartial('projects', NULL, true)
+#13 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#20 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#21 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#22 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/15 13:35:47 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:35:54 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:36:33 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:36:34 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:36:34 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:34 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:35 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:35 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:35 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:36 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:37:36 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:38:18 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:42:14 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:44:21 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:44:22 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:44:22 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:44:22 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:44:22 [error] [exception.CException] exception 'CException' with message 'ProjectsController cannot find the requested view "//layouts/modals/projects-modal".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(70): CController->renderPartial('//layouts/modal...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/15 13:51:09 [error] [exception.CException] exception 'CException' with message 'Property "SiteController.modals" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(56): CComponent->__get('modals')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(38): CController->render('index')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/
+---
+2014/05/15 13:51:52 [error] [exception.CException] exception 'CException' with message 'Property "SiteController.modals" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(56): CComponent->__get('modals')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(38): CController->render('index')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/
+---
+2014/05/15 14:56:07 [error] [exception.CException] exception 'CException' with message 'Property "ProjectsController.modal" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/layouts/main.php(68): CComponent->__get('modal')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(206): COutputProcessor->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#8 /home/httpd/vhosts/pamgmt/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require('/home/httpd/vho...')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): CBaseController->renderInternal('/home/httpd/vho...', Array, true)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(784): CBaseController->renderFile('/home/httpd/vho...', Array, true)
+#12 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(17): CController->render('projects')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#18 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#19 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#20 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#21 {main}
+REQUEST_URI=/pamgmt/projects
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---

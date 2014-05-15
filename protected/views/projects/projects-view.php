@@ -125,18 +125,16 @@
             $this->renderPartial('//projects/point_persons/point-persons-create');
             $this->renderPartial('//projects/point_persons/point-persons-view');
             $this->renderPartial('//projects/point_persons/point-persons-edit');
-            
         ?>
         <a id="delete" href="#">[Delete Project]</a>
     </div>
     
     <div id="applications-panel">
         <?php
-            $this->renderPartial('//projects/applications/applications-list');
-            $this->renderPartial('//projects/applications/applications-create');
-            $this->renderPartial('//projects/applications/applications-view');
-            $this->renderPartial('//projects/applications/applications-edit');
+            $this->renderPartial('//applications/applications-list');
+            $this->renderPartial('//applications/applications-create');
+            $this->renderPartial('//applications/applications-view');
+            $this->renderPartial('//applications/applications-edit');
         ?>
     </div>
-
 </div><!--END view user-->

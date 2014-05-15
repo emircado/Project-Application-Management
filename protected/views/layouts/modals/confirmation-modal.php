@@ -1,4 +1,4 @@
-<div id="projects-modal" class="dialog-box module" style="display: none;">
+<div id="confirmation-modal" class="dialog-box module" style="display: none;">
     <div class="dialog-container">
         <div class="dialog-content">
             <form action="">

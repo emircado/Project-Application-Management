@@ -103,6 +103,7 @@ return array(
 		'projects_per_page'=>20,
 		'contact_persons_per_page'=>5,
 		'point_persons_per_page'=>5,
+		'applications_per_page'=>5,
 		'graphite_server_ip'=>'10.11.2.29',
 		'graphite_server_port'=>2003,
 	),

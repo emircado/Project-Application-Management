@@ -2,7 +2,7 @@ var ConfirmModal = function(title, message, confirm, onConfirm)
 {
     var self = this;
 
-    self.modalID = 'projects-modal';
+    self.modalID = 'confirmation-modal';
     self.overlayID = 'overlay';
     self.dialogWrapperID = 'dialog-wrapper';
 
@@ -115,7 +115,7 @@ var ApplicationTypesModal = function(onConfirm)
                 {
                     if (response['type'] == 'success') {
                         var entry = response['data'];
-                        ProjectsSite.appTypesObj.appTypes.set(entry['type_id'], entry['name']);
+                        ProjectsSite.appTypesObj.appTypes.set(entry['name'], entry['type_id']);
                     } else if (response['type'] == 'error') {
                         self._request.stop;
                         console.log(response['data']);
@@ -139,7 +139,7 @@ var ApplicationTypesModal = function(onConfirm)
             var filtered = {};
             ProjectsSite.appTypesObj.appTypes.each(function(val, idx)
             {
-                if (val.indexOf(filter) == 0) {
+                if (idx.indexOf(filter) == 0) {
                     filtered[idx] = val;
                 }
             });
@@ -156,7 +156,7 @@ var ApplicationTypesModal = function(onConfirm)
     self.renderData = function()
     {
         var inputVal = $(self.inputID).value;
-        var inputKey = hash.keyOf(inputVal);
+        var inputKey = hash.get(inputVal);
         if (inputVal != '' && inputKey == null)
         {
             contentHTML = '<td>'+inputVal+' <i>(Create)</i></td>';
@@ -172,12 +172,12 @@ var ApplicationTypesModal = function(onConfirm)
 
         self.choices.each(function(val, idx)
         {
-            contentHTML = '<td>'+val+'</td>';
+            contentHTML = '<td>'+idx+'</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
                 'html'  : contentHTML,
-                'id'    : 'type_'+idx
+                'id'    : 'type_'+val
             });
             contentElem.inject($(self.tableID), 'bottom');
         });
@@ -254,9 +254,193 @@ var ApplicationTypesModal = function(onConfirm)
                 }
                 $(this).addClass('selected');
                 self.rowSelected = id;
-                $(self.inputID).value = (id == 'create')? $(this).getChildren()[0].get('html').split('<i>')[0].trim() : self.choices.get(self.rowSelected);
+                $(self.inputID).value = (id == 'create')? $(this).getChildren()[0].get('html').split('<i>')[0].trim() : self.choices.indexOf(self.rowSelected);
                 $(self.confirmButtonID).set('disabled', false);
             }
+        });
+    }
+}
+
+var AppServersSearchModal = function()
+{
+    var self = this;
+
+    self.modalID = 'app-servers-search-modal';
+
+    self.createModal = new AppServersCreateModal();
+
+    // buttons
+    self.cancelButtonID = 'app-servers-search-modal-cancel-button';
+    self.confirmButtonID = 'app-servers-search-modal-confirm-button';
+
+    self.show = function()
+    {
+        $(self.modalID).setStyle('display', 'block');
+        self.addEvents();
+    }
+
+    self.closeModal = function()
+    {
+        $(self.modalID).setStyle('display', 'none');
+    }
+
+    self.addEvents = function()
+    {
+        // CANCEL BUTTON
+        $(self.cancelButtonID).removeEvents()
+        $(self.cancelButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+        });
+
+        // CONFIRM BUTTON
+        $(self.confirmButtonID).removeEvents();
+        $(self.confirmButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.createModalID = new AppServersCreateModal(self.setServer, self.cancelServer);
+            self.createModalID.show();
+        });
+    }
+
+    self.setServer = function()
+    {
+        console.log('created');
+    }
+
+    self.cancelServer = function()
+    {
+        console.log('cancelled');
+    }
+}
+
+var AppServersListModal = function(onSelected)
+{
+    var self = this;
+
+    self.modalID = 'app-servers-list-modal';
+    self.overlayID = 'overlay';
+    self.dialogWrapperID = 'dialog-wrapper';
+
+    self.createModal = new AppServersCreateModal();
+
+    // buttons
+    self.selectID = 'a[id^=app-servers-select]';
+    self.closeID = 'app-servers-list-modal-close-button';
+
+    self.show = function()
+    {
+        $(self.modalID).setStyle('display', 'block');
+        $(self.overlayID).setStyle('display', 'block');
+        $(self.dialogWrapperID).setStyle('display', 'block');
+        self.addEvents();
+    }
+
+    self.closeModal = function()
+    {
+        $(self.modalID).setStyle('display', 'none');
+        $(self.overlayID).setStyle('display', 'none');
+        $(self.dialogWrapperID).setStyle('display', 'none');
+    }
+
+    self.addEvents = function()
+    {
+        // SELECT SERVER EVENT
+        $$(self.selectID).removeEvents()
+        $$(self.selectID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            id = $(this).get('id').split('_')[1];
+
+            if (id == 'create') {
+                self.closeModal();
+                self.createModal = new AppServersCreateModal(self.setServer, self.cancelServer);
+                self.createModal.show();
+            } else {
+                console.log('selecting...');
+                self.closeModal();
+                onSelected();
+            }
+        });
+
+        // CLOSE SERVER EVENT
+        $(self.closeID).removeEvents();
+        $(self.closeID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+        });
+    }
+
+    self.setServer = function()
+    {
+        self.show();
+        console.log('created server');
+    }
+
+    self.cancelServer = function()
+    {
+        self.show();
+        console.log('cancelled creation');
+    }
+}
+
+var AppServersCreateModal = function(onCreate, onCancel)
+{
+    var self = this;
+
+    self.modalID = 'app-servers-create-modal';
+    self.overlayID = 'overlay';
+    self.dialogWrapperID = 'dialog-wrapper';
+
+    //buttons
+    self.closeID = 'app-servers-create-modal-close-button';
+    self.cancelButtonID = 'app-servers-create-modal-cancel-button';
+    self.confirmButtonID = 'app-servers-create-modal-create-button';
+
+    self.show = function()
+    {
+        $(self.modalID).setStyle('display', 'block');
+        $(self.overlayID).setStyle('display', 'block');
+        $(self.dialogWrapperID).setStyle('display', 'block');
+        self.addEvents();
+    }
+
+    self.closeModal = function()
+    {
+        $(self.modalID).setStyle('display', 'none');
+        $(self.overlayID).setStyle('display', 'none');
+        $(self.dialogWrapperID).setStyle('display', 'none');
+    }
+
+    self.addEvents = function()
+    {
+        // CLOSE BUTTON EVENT
+        $(self.closeID).removeEvents()
+        $(self.closeID).addEvent('click', function(e)
+        {
+            e.preventDefault()
+            self.closeModal();
+            onCancel();
+        });
+    
+        // CREATE BUTTON EVENT
+        $(self.confirmButtonID).removeEvents()
+        $(self.confirmButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+            onCreate();
+        });
+
+        // CANCEL BUTTON EVENT
+        $(self.cancelButtonID).removeEvents()
+        $(self.cancelButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+            onCancel();
         });
     }
 }

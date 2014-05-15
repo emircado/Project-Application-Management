@@ -194,7 +194,7 @@ class PointpersonsController extends Controller
     public function actionGetLDAPData()
     {
         if (Yii::app()->user->isGuest) {
-            echo CJSON::encode("bad");
+            echo CJSON::encode("bad1");
         } else {
             try {
                 $model = new LDAPModel;
@@ -202,7 +202,7 @@ class PointpersonsController extends Controller
                 echo CJSON::encode($model->entries);
 
             } catch (LDAPModelException $e) {
-                echo CJSON::encode("bad");
+                echo CJSON::encode("bad2");
             }
         }
     }

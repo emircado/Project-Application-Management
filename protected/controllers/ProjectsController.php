@@ -3,16 +3,24 @@
 class ProjectsController extends Controller
 {
     public $extraJS;
-    public $modals = 'projects-modal';
+    public $modals;
     
     public function actionIndex()
     {
-        $this->modals = 'projects-modal';
+        $this->modals = array(
+            'confirmation-modal',
+            'application-types-modal', 
+            'application-servers-search-modal',
+            'application-servers-list-modal',
+            'application-servers-create-modal',
+        );
+        
         $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/point-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/applications.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>';
         $this->render('projects');
     }

@@ -21,36 +21,6 @@
                         </tr>
                     </thead>
                     <tbody id="applications-table">
-                        <tr>
-                            <td>App 1</td>
-                            <td>Type 1</td>
-                            <td>someuser1</td>
-                            <td>View</td>
-                        </tr>
-                        <tr>
-                            <td>App 2</td>
-                            <td>Type 2</td>
-                            <td>someuser2</td>
-                            <td>View</td>
-                        </tr>
-                        <tr>
-                            <td>App 3</td>
-                            <td>Type 3</td>
-                            <td>someuser3</td>
-                            <td>View</td>
-                        </tr>
-                        <tr>
-                            <td>App 4</td>
-                            <td>Type 4</td>
-                            <td>someuser4</td>
-                            <td>View</td>
-                        </tr>
-                        <tr>
-                            <td>App 5</td>
-                            <td>Type 5</td>
-                            <td>someuser5</td>
-                            <td>View</td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="page-nav">

@@ -7,9 +7,9 @@ class ApplicationtypesController extends Controller
         $data = ApplicationTypes::model()->findAll();
         $appTypes = array();
         foreach ($data as $d) {
-            $appTypes[$d->type_id] = $d->name;
+            $appTypes[$d->name] = $d->type_id;
         }        
-
+        ksort($appTypes);
         echo CJSON::encode($appTypes);
     }
 
@@ -33,7 +33,7 @@ class ApplicationtypesController extends Controller
                     'data' => array(
                         'type_id' => $type->type_id,
                         'name' => $type->name,
-                    ),
+                    )
                 ));
             } else {
                 echo CJSON::encode(array(

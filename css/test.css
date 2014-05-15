@@ -157,7 +157,7 @@ pre {
 }
 
 /* CONFIRMATION MODAL */
-#projects-modal .dialog-content .dialog-content-block {
+#confirmation-modal .dialog-content .dialog-content-block {
 	padding-bottom: 5px;
 }
 
@@ -166,7 +166,7 @@ pre {
 	background: #2E454F;
 }
 
-#projects-modal {
+#confirmation-modal {
 	width: 300px;
 	margin-top: 150px;
 	margin-left: 40%;
@@ -182,8 +182,9 @@ pre {
 	margin: auto;
 }
 
-/* APPLICATION TYPE MODAL */
+/* APPLICATION MODALS */
 
+#app-servers-search-modal,
 #application-type-modal {
 	min-width: 100px;
 	z-index: 1;
@@ -191,11 +192,13 @@ pre {
 	margin-left: 400px;
 }
 
+#app-servers-search-modal .dialog-content .dialog-content-block,
 #application-type-modal .dialog-content .dialog-content-block {
 	padding: 8px;
 	width: 150px;
 }
 
+#app-servers-search-modal input,
 #application-type-modal input {
 	padding: 3px;
 	border-radius: 5px;
@@ -205,31 +208,74 @@ pre {
 	text-align: center;
 }
 
+#app-servers-search-modal td,
 #application-type-modal td {
 	padding: 3px;
 }
 
-#application-type-modal tr.selected  td {
+#app-servers-search-modal tr.selected td,
+#application-type-modal tr.selected td {
 	font-weight: bold;
 	background: #DCEDDF;
 }
 
-#application-type-modal tr.selected  td i {
+#app-servers-search-modal tr.selected td i,
+#application-type-modal tr.selected td i {
 	font-weight: normal;
 }
 
+#app-servers-search-modal-confirm-button,
+#app-servers-search-modal-cancel-button,
 #application-type-modal-confirm-button,
 #application-type-modal-cancel-button {
 	font-size: 14px;
 }
 
+#app-servers-search-modal .field-action-content,
 #application-type-modal .field-action-content {
 	width: 155px;
 }
 
+#app-servers-search-modal-confirm-button:disabled,
 #application-type-modal-confirm-button:disabled {
 	background: #727070;
 	border: 1px solid #CCC;
 	color: #333;
 	font-weight: bold;
+}
+
+#app-servers-list-modal {
+	background: #FFFFFF;
+	width: 900px;
+	margin-left: 26.5%;
+	margin-top: 100px;
+}
+
+#app-servers-list-modal .contact-info-details {
+	margin: 0px;
+}
+
+#app-servers-create-modal {
+	background: #FFFFFF;
+	width: 570px;
+	margin-top: 100px;
+	margin-left: 35%;
+}
+
+#app-servers-create-modal .dialog-content-block{
+	padding: 0px;
+}
+
+#app-servers-create-modal .contact-info-details {
+	margin-bottom: 5px;
+	padding: 0px;
+}
+
+#app-servers-create-modal form .field {
+	margin-top: 8px;
+	margin-bottom: 0px;
+}
+
+#app-servers-create-modal div.form input {
+	margin: 0px;
 }
