@@ -5,12 +5,9 @@
                 <div class="dialog-content-block">
                     <div class="form module">
                         <input type="hidden" id="app-servers-modal-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
-                        <input id="app-servers-input" type="text"/>
+                        <input id="app-servers-search-input" type="text"/>
                         <table>
-                            <tbody id="app-servers-table">
-                                <tr><td>Test 1</td></tr>
-                                <tr><td>Test 2</td></tr>
-                                <tr><td>Test 3</td></tr>
+                            <tbody id="app-servers-search-table">
                             </tbody>
                         </table>
                         <div class="dialog-footer-block">

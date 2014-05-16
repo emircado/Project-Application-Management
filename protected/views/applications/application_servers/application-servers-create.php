@@ -1,6 +1,6 @@
 <?php
     $server_types = ZHtml::enumItem(Servers::model(), 'server_type');
-    $select_types = array(''=>'') + $server_types;
+    $select_types = array(''=>'--Select Server Type--') + $server_types;
 ?>
 
 <!-- create note view -->
@@ -32,32 +32,34 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Server</span></div>
-                    <div id="create-app-servers-modal-container" class="field-primary">
-                        <div class="pseudo-field">
-                        <input id="create-app-servers-server" type="text" class="text" style="width:200px"/>
-                        <span id="create-app-servers-server-error" class="field-input-name-error error-message" style="display: none;"></span>
-                        <a id="create-app-servers-advanced" href="#">Advanced Search</a>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field -->
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Application Path</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field">
-                        <input id="create-app-servers-path" type="text" class="text"/>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field -->
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Application Log</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field">
-                        <input id="create-app-servers-log" type="text" class="text"/>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field -->
+                <div id="create-app-servers-more" style="display:none;">
+                    <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">Server</span></div>
+                        <div id="create-app-servers-modal-container" class="field-primary">
+                            <div class="pseudo-field">
+                            <input id="create-app-servers-server" type="text" class="text" style="width:325px" disabled/>
+                            <span id="create-app-servers-server-error" class="field-input-name-error error-message" style="display: none;"></span>
+                            <a id="create-app-servers-advanced" href="#"><img class="search" src="<?= Yii::app()->baseUrl ?>/css/search.png"></img></a>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->
+                    <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">Application Path</span></div>
+                        <div class="field-primary">
+                            <div class="pseudo-field">
+                            <input id="create-app-servers-path" type="text" class="text"/>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->
+                    <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">Application Log</span></div>
+                        <div class="field-primary">
+                            <div class="pseudo-field">
+                            <input id="create-app-servers-log" type="text" class="text"/>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->
+                </div>
                 <div class="dialog-footer-block">
                     <div class="field field-text">
                         <div class="field-action-content">

@@ -37,7 +37,7 @@ var LDAPData = function()
     }
 }
 
-var ApplicationTypesData = function()
+var AppTypesData = function()
 {
     var self = this;
     self.getDataURL = baseURL + '/applicationtypes/list';
@@ -60,6 +60,40 @@ var ApplicationTypesData = function()
                 'onSuccess': function(response)
                 {
                     self.appTypes = new Hash(response);
+                },
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('something went wrong');
+                }
+            }).send();
+        }
+    }
+}
+
+var AppServersData = function()
+{
+    var self = this;
+    self.getDataURL = baseURL + '/servers/data';
+    self._request = null;
+
+    self.appServers = null;
+
+    self.init = function()
+    {
+        self.getAjaxData();
+    }
+
+    self.getAjaxData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON({
+                'url' : self.getDataURL,
+                'method' : 'get',
+                'onSuccess': function(response)
+                {
+                    self.appServers = new Hash(response);
                 },
                 'onError' : function(errors)
                 {

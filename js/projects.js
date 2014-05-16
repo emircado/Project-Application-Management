@@ -705,12 +705,14 @@ var ProjectsSite = {
     createObj       : null,
     ldapObj         : null,
     appTypesObj     : null,
+    appServersObj   : null,
 
     init: function()
     {
         var self = this;
         self.initLDAP();
         self.initAppTypes();
+        self.initAppServers();
         self.initObj();
     },
 
@@ -758,8 +760,15 @@ var ProjectsSite = {
     initAppTypes: function()
     {
         var self = this;
-        self.appTypesObj = new ApplicationTypesData();
+        self.appTypesObj = new AppTypesData();
         self.appTypesObj.init();
+    },
+
+    initAppServers: function()
+    {
+        var self = this;
+        self.appServersObj = new AppServersData();
+        self.appServersObj.init();
     }
 }
 

@@ -126,6 +126,15 @@ pre {
 	font-family: inherit;
 }
 
+.search-icon {
+    background: url('search.png');
+}
+
+img.search {
+    width: 30px;
+    height: 30px;
+}
+
 /* SPECIFICS */
 #create-projects-view,
 #edit-projects-view {

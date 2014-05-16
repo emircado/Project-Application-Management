@@ -16,27 +16,26 @@
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
                             <span id="view-app-servers-name" class="value"></span>
-                            <a id="view-app-servers-details" href="#">[server details]</a>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Public IP</span></div>
+                    <div class="field-secondary"><span class="label">Type</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span id="view-app-servers-public" class="value"></span>
+                            <span id="view-app-servers-type" class="value"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Private IP</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span id="view-app-servers-private" class="value"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div id="view-app-servers-details-container" style="display:none;">
-                    <div class="field field-input-name">
-                        <div class="field-secondary"><span class="label">Type</span></div>
-                        <div class="field-primary">
-                            <div class="pseudo-field no-border">
-                                <span id="view-app-servers-type" class="value"></span>
-                            </div>
-                        </div><!-- End Field Primary -->
-                    </div><!-- End Field -->
                     <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Host</span></div>
                         <div class="field-primary">
@@ -46,10 +45,10 @@
                         </div><!-- End Field Primary -->
                     </div><!-- End Field -->
                     <div class="field field-input-name">
-                        <div class="field-secondary"><span class="label">Private IP</span></div>
+                        <div class="field-secondary"><span class="label">Public IP</span></div>
                         <div class="field-primary">
                             <div class="pseudo-field no-border">
-                                <span id="view-app-servers-private" class="value"></span>
+                                <span id="view-app-servers-public" class="value"></span>
                             </div>
                         </div><!-- End Field Primary -->
                     </div><!-- End Field -->
@@ -78,6 +77,8 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
+                <a id="view-app-servers-details" href="#" style="margin-left:225px;">[server details]</a>
+                <br>
                 <a id="view-app-servers-back" href="#">[Back]</a>
             </div>
         </div>

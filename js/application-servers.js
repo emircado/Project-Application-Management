@@ -57,14 +57,22 @@ var AppServersCreate = function(application_id)
     //container
     self.createAppServerID = 'create-app-servers-view';
     self.searchModalContainerID = 'create-app-servers-modal-container';
+    self.createMoreID = 'create-app-servers-more';
+
+    //fields
+    self.createTypeID = 'create-app-servers-type';
+    self.createServerID = 'create-app-servers-server';
+    self.createPathID = 'create-app-servers-path';
+    self.createLogID = 'create-app-servers-log';
+
+    //error fields
+    self.createTypeErrorID = 'create-app-servers-type-error';
+    self.createServerErrorID = 'create-app-servers-server-error';
 
     //buttons
     self.createButtonID = 'create-app-servers-add-button';
     self.cancelButtonID = 'create-app-servers-cancel-button';
     self.listButtonID = 'create-app-servers-advanced';
-
-    //fields
-    self.createServerID = 'create-app-servers-server';
 
     self.init = function()
     {
@@ -86,9 +94,19 @@ var AppServersCreate = function(application_id)
         {
             e.preventDefault();
             $(this).blur();
+            var servertype = $(self.createTypeID).value;
 
-           self.searchModal = new AppServersSearchModal();
-           self.searchModal.show(); 
+            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
+                self.searchModal = new AppServersSearchModal(
+                    servertype,
+                    function(value) {
+                        $(self.createServerID).value = value;
+                    }
+                );
+                self.searchModal.show(); 
+            } else {
+                $(self.createServerID).set('disabled', true);
+            }
         });
 
         // CREATE BUTTON EVENT
@@ -113,14 +131,31 @@ var AppServersCreate = function(application_id)
         $(self.listButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            self.listModal = new AppServersListModal(self.setServer);
+            self.listModal = new AppServersListModal(
+                function(value) {
+                    $(self.createServerID).value = value;
+                }
+            );
             self.listModal.show();
         });
-    }
 
-    self.setServer = function()
-    {
-        console.log('selected from list');
+        // SELECT SERVER TYPE DROPDOWN
+        $(self.createTypeID).removeEvents();
+        $(self.createTypeID).addEvent('change', function(e)
+        {
+            e.preventDefault();
+            var servertype = this.getElement(':selected').value;
+
+            $(self.createServerID).value = '';
+            self.searchModal.closeModal();
+            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
+                $(self.createMoreID).setStyle('display', 'block');
+                $(self.createServerID).set('disabled', false);
+            } else {
+                $(self.createMoreID).setStyle('display', 'none');
+                $(self.createServerID).set('disabled', true);
+            }
+        });
     }
 }
 

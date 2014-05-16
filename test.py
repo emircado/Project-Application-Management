@@ -147,18 +147,23 @@ except:
   sys.exit(1)
 
 
+while True:
+  t = int(time.time())
 
-
-for key in data:
-  t = int(time.mktime(time.strptime(key, '%Y-%m-%d %H:%M:%S')))
+# for key in data:
+#   t = int(time.mktime(time.strptime(key, '%Y-%m-%d %H:%M:%S')))
 
   lines = []
-  for line in data[key]:
-    lines.append(line+' '+str(t))
-  
+  # for line in data[key]:
+  #   lines.append(line+' '+str(t))
+
+  lines.append('pamgmt.accounts.authentication.login.attempted 1.00 '+str(t));
+  lines.append('pamgmt.accounts.authentication.login.succeeded 1.00 '+str(t));
+  lines.append('pamgmt.accounts.authentication.login.failed 1.00 '+str(t));
+
   message = '\n'.join(lines) + '\n' #all lines must end in a newline
   print "sending message\n"
-  print key
+  # print key
   print '-' * 80
   print message
   sock.sendall(message)

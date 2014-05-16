@@ -25,7 +25,7 @@
                                         <div class="field-secondary"><span class="label">Type</span></div>
                                         <div class="field-primary">
                                             <div class="pseudo-field">
-                                            <input id="app-servers-create-modal-type" type="text" class="text"/>
+                                            <span id="app-servers-create-modal-type" class="value"></span>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->

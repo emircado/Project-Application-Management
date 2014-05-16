@@ -295,7 +295,11 @@ var ApplicationsCreate = function(project_id)
             e.preventDefault();
             $(this).blur();
 
-            self.typeModal = new ApplicationTypesModal(self.setApplicationType);
+            self.typeModal = new ApplicationTypesModal(
+                function(app_type) {
+                    $(self.createTypeID).value = app_type;
+                }
+            );
             self.typeModal.show();
         });
 
@@ -352,11 +356,6 @@ var ApplicationsCreate = function(project_id)
             });
             contentElem.inject($(self.createPointPersonID), 'bottom');
         });
-    }
-
-    self.setApplicationType = function(app_type)
-    {
-        $(self.createTypeID).value = app_type;
     }
 }
 
@@ -618,7 +617,11 @@ var ApplicationsEdit = function(data)
             e.preventDefault();
             $(this).blur();
 
-            self.typeModal = new ApplicationTypesModal(self.setApplicationType);
+            self.typeModal = new ApplicationTypesModal(
+                function(app_type) {
+                    $(self.editTypeID).value = app_type;
+                }
+            );
             self.typeModal.show();
         });
 
@@ -675,11 +678,6 @@ var ApplicationsEdit = function(data)
             });
             contentElem.inject($(self.editPointPersonID), 'bottom');
         });
-    }
-
-    self.setApplicationType = function(app_type)
-    {
-        $(self.editTypeID).value = app_type;
     }
 }
 
