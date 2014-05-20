@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -18,6 +17,8 @@
  * @property string $termination_date
  * @property string $date_created
  * @property string $date_updated
+ * @property string $created_by
+ * @property string $updated_by
  */
 class Servers extends CActiveRecord
 {
@@ -38,14 +39,14 @@ class Servers extends CActiveRecord
         // will receive user inputs.
         return array(
             array('server_type, network, date_created, date_updated', 'required'),
-            array('name, hostname', 'length', 'max'=>255),
+            array('name, hostname, created_by, updated_by', 'length', 'max'=>255),
             array('server_type', 'length', 'max'=>11),
             array('public_ip, private_ip', 'length', 'max'=>20),
             array('network, location', 'length', 'max'=>50),
             array('description, production_date, termination_date', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('server_id, name, server_type, hostname, public_ip, private_ip, network, location, description, production_date, termination_date, date_created, date_updated', 'safe', 'on'=>'search'),
+            array('server_id, name, server_type, hostname, public_ip, private_ip, network, location, description, production_date, termination_date, date_created, date_updated, created_by, updated_by', 'safe', 'on'=>'search'),
         );
     }
 
@@ -79,6 +80,8 @@ class Servers extends CActiveRecord
             'termination_date' => 'Termination Date',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         );
     }
 
@@ -113,6 +116,8 @@ class Servers extends CActiveRecord
         $criteria->compare('termination_date',$this->termination_date,true);
         $criteria->compare('date_created',$this->date_created,true);
         $criteria->compare('date_updated',$this->date_updated,true);
+        $criteria->compare('created_by',$this->created_by,true);
+        $criteria->compare('updated_by',$this->updated_by,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

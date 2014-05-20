@@ -2,7 +2,7 @@
     <div class="dialog-container">
         <div class="dialog-content">
             <div class="dialog-header-block">
-                <h3>Servers</h3>
+                <h3 id="app-servers-list-modal-title">Servers</h3>
                 <a id="app-servers-list-modal-close-button" href="#" class="close-dialog" title="Close"><span class="icon"></span></a>
             </div>
             <form>
@@ -13,7 +13,6 @@
                             <thead>
                                 <tr>                      
                                     <th>Name</th>
-                                    <th>Type</th>
                                     <th>Network</th>
                                     <th>Public IP</th>
                                     <th>Private IP</th>
@@ -21,30 +20,13 @@
                                 </tr>
                                 <tr>
                                     <th><input id="app-servers-list-modal-name" type="text"/></th>
-                                    <th></th>
                                     <th><input id="app-servers-list-modal-network" type="text"/></th>
                                     <th><input id="app-servers-list-modal-public" type="text"/></th>
                                     <th><input id="app-servers-list-modal-private" type="text"/></th>
-                                    <th><div><button id="search-submit">Search</button></div><a id="app-servers-list-modal-clear" href="#">Clear</a></th>
+                                    <th><div><button id="app-servers-list-modal-search">Search</button></div><a id="app-servers-list-modal-clear" href="#">Clear</a></th>
                                 </tr>
                             </thead>
                             <tbody id="app-servers-list-modal-table">
-                                <tr>    
-                                    <td>Server 1</td>
-                                    <td>PRODUCTION</td>
-                                    <td>Network 1</td>
-                                    <td>255.255.255.255</td>
-                                    <td>255.255.255.255</td>
-                                    <td><a id="app-servers-select_1" href="#">Select</a></td>
-                                </tr>
-                                <tr>    
-                                    <td>Server 2</td>
-                                    <td>PRODUCTION</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><a id="app-servers-select_create" href="#">Create</a></td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="page-nav">

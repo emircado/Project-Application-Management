@@ -14,6 +14,7 @@
                 </div>
             </div>
             <div id="edit-primary-content" class="content">
+                <input type="hidden" id="create-app-servers-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Server Type</span></div>
                     <div class="field-primary">
@@ -35,13 +36,13 @@
                 <div id="create-app-servers-more" style="display:none;">
                     <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Server</span></div>
-                        <div id="create-app-servers-modal-container" class="field-primary">
+                        <div id="create-app-servers-modal-container" class="field-primary" style="width:340px;">
                             <div class="pseudo-field">
-                            <input id="create-app-servers-server" type="text" class="text" style="width:325px" disabled/>
+                            <input id="create-app-servers-server" type="text" class="text" disabled/>
                             <span id="create-app-servers-server-error" class="field-input-name-error error-message" style="display: none;"></span>
-                            <a id="create-app-servers-advanced" href="#"><img class="search" src="<?= Yii::app()->baseUrl ?>/css/search.png"></img></a>
                             </div>
                         </div><!-- End Field Primary -->
+                        <a id="create-app-servers-advanced" style="float:right;" href="#"><img class="search" src="<?= Yii::app()->baseUrl ?>/css/search.png"></img></a>
                     </div><!-- End Field -->
                     <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Application Path</span></div>

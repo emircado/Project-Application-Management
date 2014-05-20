@@ -9,6 +9,7 @@
                 </div>
             </div>
             <div id="edit-primary-content" class="content">
+                <input type="hidden" id="edit-app-servers-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Server</span></div>
                     <div class="field-primary">

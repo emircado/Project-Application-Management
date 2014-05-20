@@ -75,6 +75,7 @@ var ApplicationsList = function(project_id)
             {
                 var pointperson = ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(val['rd_point_person']);
 
+
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+ProjectsSite.appTypesObj.appTypes.keyOf(val['type_id'])+'</td>'
                             + '<td>'+((pointperson == null)? '' : pointperson)+'</td>'
@@ -445,7 +446,7 @@ var ApplicationsView = function(data)
         $(self.viewPointPersonID).set('html', ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(data['rd_point_person']));
         $(self.viewProductionID).set('html', data['production_date']);
         $(self.viewTerminationID).set('html', data['termination_date']);
-        $(self.viewCreatedID).set('html', data['date_created']);//new Date(data['date_created']).format(Config.datetime_display));
+        $(self.viewCreatedID).set('html', data['date_created']);
         $(self.viewCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
         $(self.viewUpdatedID).set('html', data['date_updated']);
         $(self.viewUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);

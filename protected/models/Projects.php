@@ -13,6 +13,8 @@
  * @property string $termination_date
  * @property string $date_created
  * @property string $date_updated
+ * @property string $created_by
+ * @property string $updated_by
  */
 class Projects extends CActiveRecord
 {
@@ -33,12 +35,12 @@ class Projects extends CActiveRecord
         // will receive user inputs.
         return array(
             array('code, status, date_created, date_updated', 'required'),
-            array('name', 'length', 'max'=>255),
+            array('name, created_by, updated_by', 'length', 'max'=>255),
             array('code, status', 'length', 'max'=>10),
             array('description, production_date, termination_date', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('project_id, name, code, description, status, production_date, termination_date, date_created, date_updated', 'safe', 'on'=>'search'),
+            array('project_id, name, code, description, status, production_date, termination_date, date_created, date_updated, created_by, updated_by', 'safe', 'on'=>'search'),
         );
     }
 
@@ -65,9 +67,11 @@ class Projects extends CActiveRecord
             'description' => 'Description',
             'status' => 'Status',
             'production_date' => 'Production Date',
-            'termination_date' => 'Date Terminated',
+            'termination_date' => 'Termination Date',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         );
     }
 
@@ -98,6 +102,8 @@ class Projects extends CActiveRecord
         $criteria->compare('termination_date',$this->termination_date,true);
         $criteria->compare('date_created',$this->date_created,true);
         $criteria->compare('date_updated',$this->date_updated,true);
+        $criteria->compare('created_by',$this->created_by,true);
+        $criteria->compare('updated_by',$this->updated_by,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

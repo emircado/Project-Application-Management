@@ -11,6 +11,7 @@
                     <div class="contact-info plain-list">
                         <!-- CONTENT HERE -->
                         <form>
+                            <input type="hidden" id="app-servers-create-modal-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                             <div class="contact-info-details">
                                 <div id="edit-primary-content" class="content">
                                     <div class="field field-input-name">
@@ -23,9 +24,10 @@
                                     </div><!-- End Field -->
                                     <div class="field field-input-name">
                                         <div class="field-secondary"><span class="label">Type</span></div>
-                                        <div class="field-primary">
+                                        <div class="field-primary" style="margin-top:8px;">
                                             <div class="pseudo-field">
                                             <span id="app-servers-create-modal-type" class="value"></span>
+                                            <span id="app-servers-create-modal-type-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->
@@ -50,6 +52,7 @@
                                         <div class="field-primary">
                                             <div class="pseudo-field">
                                             <input id="app-servers-create-modal-private" type="text" class="text"/>
+                                            <span id="app-servers-create-modal-private-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->
@@ -58,6 +61,7 @@
                                         <div class="field-primary">
                                             <div class="pseudo-field">
                                             <input id="app-servers-create-modal-network" type="text" class="text"/>
+                                            <span id="app-servers-create-modal-network-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->
@@ -73,7 +77,7 @@
                                         <div class="field-secondary"><span class="label">Description</span></div>
                                         <div class="field-primary">
                                             <div class="pseudo-field">
-                                            <textarea id="app-servers-create-modal-instructions" rows="4" class="text"></textarea>
+                                            <textarea id="app-servers-create-modal-description" rows="4" class="text"></textarea>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->

@@ -17,6 +17,8 @@
  * @property string $termination_date
  * @property string $date_created
  * @property string $date_updated
+ * @property string $created_by
+ * @property string $updated_by
  */
 class Applications extends CActiveRecord
 {
@@ -38,12 +40,12 @@ class Applications extends CActiveRecord
         return array(
             array('project_id, type_id, accessibility, date_created, date_updated', 'required'),
             array('project_id, type_id', 'numerical', 'integerOnly'=>true),
-            array('name, rd_point_person', 'length', 'max'=>255),
+            array('name, rd_point_person, created_by, updated_by', 'length', 'max'=>255),
             array('accessibility', 'length', 'max'=>7),
             array('description, repository_url, instructions, production_date, termination_date', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('application_id, project_id, type_id, name, description, accessibility, repository_url, instructions, rd_point_person, production_date, termination_date, date_created, date_updated', 'safe', 'on'=>'search'),
+            array('application_id, project_id, type_id, name, description, accessibility, repository_url, instructions, rd_point_person, production_date, termination_date, date_created, date_updated, created_by, updated_by', 'safe', 'on'=>'search'),
         );
     }
 
@@ -72,11 +74,13 @@ class Applications extends CActiveRecord
             'accessibility' => 'Accessibility',
             'repository_url' => 'Repository Url',
             'instructions' => 'Instructions',
-            'rd_point_person' => 'R&D Point Person',
+            'rd_point_person' => 'Rd Point Person',
             'production_date' => 'Production Date',
             'termination_date' => 'Termination Date',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         );
     }
 
@@ -111,6 +115,8 @@ class Applications extends CActiveRecord
         $criteria->compare('termination_date',$this->termination_date,true);
         $criteria->compare('date_created',$this->date_created,true);
         $criteria->compare('date_updated',$this->date_updated,true);
+        $criteria->compare('created_by',$this->created_by,true);
+        $criteria->compare('updated_by',$this->updated_by,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

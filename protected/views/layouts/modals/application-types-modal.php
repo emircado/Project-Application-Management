@@ -6,11 +6,13 @@
                     <div class="form module">
                         <input type="hidden" id="application-type-modal-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                         <input id="application-type-input" type="text"/>
-                        <table>
-                            <tbody id="application-type-table">
-                            </tbody>
-                        </table>
-                        <div class="dialog-footer-block">
+                        <div class="small-scroller">
+                            <table>
+                                <tbody id="application-type-table">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="dialog-footer-block" style="margin-top:0px;">
                             <div class="field field-text" style="margin:0px;">
                                 <div class="field-action-content">
                                     <div class="pseudo-field pseudo-button">

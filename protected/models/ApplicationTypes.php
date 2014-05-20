@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -28,7 +27,7 @@ class ApplicationTypes extends CActiveRecord
         // will receive user inputs.
         return array(
             array('name', 'required'),
-            array('name', 'length', 'max'=>10),
+            array('name', 'length', 'max'=>20),
             array('created_by', 'length', 'max'=>255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

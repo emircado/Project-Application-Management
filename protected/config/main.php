@@ -105,6 +105,7 @@ return array(
 		'point_persons_per_page'=>5,
 		'servers_per_page'=>5,
 		'applications_per_page'=>5,
+		'app_servers_per_page'=>5,
 		'graphite_server_ip'=>'10.11.2.29',
 		'graphite_server_port'=>2003,
 	),

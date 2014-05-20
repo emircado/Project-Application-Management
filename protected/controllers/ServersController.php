@@ -101,65 +101,80 @@ class ServersController extends Controller
 
     public function actionCreate()
     {
-        // $data = $_POST;
+        $data = $_POST;
 
-        // if (!empty($data)) {
-        //     //FORM VALIDATION HERE
-        //     $errors = array();
-        //     //code is required
-        //     if (strlen($data['type_name']) == 0) {
-        //         array_push($errors, 'TYPE_ERROR: Type is required');
-        //     //invalid code
-        //     } else {
-        //         $app_type = ApplicationTypes::model()->find('name=:name', array(':name'=>$data['type_name']));
-        //         if ($app_type == null) {
-        //             array_push($errors, 'TYPE_ERROR: Type is not in the list');
-        //         } else {
-        //             $data['type_id'] = $app_type->type_id;
-        //         }
-        //     }
+        $data['name']               = trim($data['name']);
+        $data['server_type']        = trim($data['server_type']);
+        $data['hostname']           = trim($data['hostname']);
+        $data['public_ip']          = trim($data['public_ip']);
+        $data['private_ip']         = trim($data['private_ip']);
+        $data['network']            = trim($data['network']);
+        $data['location']           = trim($data['location']);
+        $data['description']        = trim($data['description']);
+        $data['production_date']    = trim($data['production_date']);
+        $data['termination_date']   = trim($data['termination_date']);
 
-        //     //accessibility is required
-        //     if (strlen($data['accessibility']) == 0) {
-        //         array_push($errors, 'ACCESSIBILITY_ERROR: Accessibility is required');
-        //     //accessibility should either be PUBLIC or PRIVATE only
-        //     } else if ($data['accessibility'] != 'PUBLIC' && $data['accessibility'] != 'PRIVATE') {
-        //         array_push($errors, 'ACCESSIBILITY_ERROR: Accessibility option selected is invalid');
-        //     }
+        if (!empty($data)) {
+            //FORM VALIDATION HERE
+            $errors = array();
 
-        //     //data is good
-        //     if (count($errors) == 0) {
-        //         $application = new Applications;
-        //         $application->project_id        = $data['project_id'];
-        //         $application->type_id           = $data['type_id'];
-        //         $application->name              = $data['name'];
-        //         $application->description       = $data['description'];
-        //         $application->accessibility     = $data['accessibility'];
-        //         $application->repository_url    = $data['repository_url'];
-        //         $application->instructions      = $data['instructions'];
-        //         $application->rd_point_person   = $data['rd_point_person'];
-        //         $application->production_date   = $data['production_date'];
-        //         $application->termination_date  = $data['termination_date'];
-        //         $application->date_created      = date("Y-m-d H:i:s");
-        //         $application->date_updated      = '0000-00-00 00:00:00';
-        //         $application->created_by        = Yii::app()->user->name;
-        //         $application->save();
+            //network is required
+            if (strlen($data['network']) == 0) {
+                array_push($errors, 'NETWORK_ERROR: Network is required');
+            }
 
-        //         echo CJSON::encode(array(
-        //             'type' => 'success',
-        //             'data' => '',
-        //         ));
-        //     } else {
-        //         echo CJSON::encode(array(
-        //             'type' => 'error',
-        //             'data' => implode(',', $errors),
-        //         ));
-        //     }
-        // } else {
-        //     echo CJSON::encode(array(
-        //         'type' => 'error',
-        //         'data' => 'CSRF_ERROR: CSRF Token did not match',
-        //     ));
-        // }
+            $server_types = ZHtml::enumItem(Servers::model(), 'server_type');
+            //server type is required
+            if (strlen($data['server_type']) == 0) {
+                array_push($errors, 'TYPE_ERROR: Type is required');
+            //server type should be valid
+            } else if (!in_array($data['server_type'], $server_types)) {
+                array_push($errors, 'TYPE_ERROR: Type is invalid');
+            }
+
+            //data is good
+            if (count($errors) == 0) {
+                $server = new Servers;
+                $server->name = $data['name'];
+                $server->server_type = $data['server_type'];
+                $server->hostname = $data['hostname'];
+                $server->public_ip = $data['public_ip'];
+                $server->private_ip = $data['private_ip'];
+                $server->network = $data['network'];
+                $server->location = $data['location'];
+                $server->description = $data['description'];
+                $server->production_date = $data['production_date'];
+                $server->termination_date = $data['termination_date'];
+                $server->date_created = date("Y-m-d H:i:s");
+                $server->date_updated = '0000-00-00 00:00:00';
+                $server->created_by = Yii::app()->user->name;
+                $server->save();
+
+                echo CJSON::encode(array(
+                    'type' => 'success',
+                    'data' => array(
+                        'server_type'   =>  $server->server_type,
+                        'server'        =>  array(
+                            'server_id'     =>  $server->server_id,
+                            'name'          =>  $server->name,
+                            'hostname'      =>  $server->hostname,
+                            'public_ip'     =>  $server->public_ip,
+                            'private_ip'    =>  $server->private_ip,
+                            'network'       =>  $server->network,
+                        ),
+                    ),
+                ));
+            } else {
+                echo CJSON::encode(array(
+                    'type' => 'error',
+                    'data' => implode(',', $errors),
+                ));
+            }
+        } else {
+            echo CJSON::encode(array(
+                'type' => 'error',
+                'data' => 'CSRF_ERROR: CSRF Token did not match',
+            ));
+        }
     }
 }

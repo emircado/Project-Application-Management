@@ -3,6 +3,7 @@
     <!-- CONTENT HERE -->
     <form>
         <div class="contact-info-details">
+            <input type="hidden" id="view-app-servers-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
                     <h3><b>Application Server Details</b></h3>&nbsp&nbsp
@@ -74,6 +75,38 @@
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
                             <span id="view-app-servers-log" class="value"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Date Created</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span id="view-app-servers-created" class="value"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Created by</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span id="view-app-servers-createdby" class="value"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Date Updated</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span id="view-app-servers-updated" class="value"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Updated by</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span id="view-app-servers-updatedby" class="value"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

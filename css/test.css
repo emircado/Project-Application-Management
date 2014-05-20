@@ -8,6 +8,11 @@ a, a:hover {
 	color: #249180;
 }
 
+.small-scroller {
+	height:125px;
+	overflow-y: scroll;
+}
+
 #page {
 	width: 1200px;
 	background: #F7F3E6;

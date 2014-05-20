@@ -10,6 +10,8 @@
  * @property string $application_log
  * @property string $date_created
  * @property string $date_updated
+ * @property string $created_by
+ * @property string $updated_by
  */
 class ApplicationServers extends CActiveRecord
 {
@@ -31,10 +33,11 @@ class ApplicationServers extends CActiveRecord
         return array(
             array('server_id, date_created, date_updated', 'required'),
             array('server_id', 'numerical', 'integerOnly'=>true),
+            array('created_by, updated_by', 'length', 'max'=>255),
             array('application_path, application_log', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('application_id, server_id, application_path, application_log, date_created, date_updated', 'safe', 'on'=>'search'),
+            array('application_id, server_id, application_path, application_log, date_created, date_updated, created_by, updated_by', 'safe', 'on'=>'search'),
         );
     }
 
@@ -61,6 +64,8 @@ class ApplicationServers extends CActiveRecord
             'application_log' => 'Application Log',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         );
     }
 
@@ -88,6 +93,8 @@ class ApplicationServers extends CActiveRecord
         $criteria->compare('application_log',$this->application_log,true);
         $criteria->compare('date_created',$this->date_created,true);
         $criteria->compare('date_updated',$this->date_updated,true);
+        $criteria->compare('created_by',$this->created_by,true);
+        $criteria->compare('updated_by',$this->updated_by,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

@@ -301,21 +301,29 @@ var AppServersSearchModal = function(server_type, onConfirm)
         filter = $(self.inputID).value;
 
         if (filter != '') {
-            var filtered = {};
-            ProjectsSite.appServersObj.appServers.get(server_type).each(function(val, idx)
+            var filtered = [];
+            ProjectsSite.appServersObj.appServers.get(server_type).each(function(val)
             {
                 if (val['name'].toLowerCase().indexOf(filter.toLowerCase()) == 0) {
-                    filtered[idx] = val;
+                    filtered.include(val);
                 }
             });
 
             $(self.confirmButtonID).set('disabled', false); 
-            self.choices = new Hash(filtered);
+            self.choices = filtered;
         } else {
             $(self.confirmButtonID).set('disabled', true);
             self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
         }
+        // sort elements first
+        self.choices = self.choices.sort(self.rowComparator);
         self.renderData();
+    }
+
+    self.rowComparator = function(a,b) {
+        if (a['name'].toLowerCase() < b['name'].toLowerCase()) return -1;
+        if (a['name'].toLowerCase() > b['name'].toLowerCase()) return 1;
+        return 0;
     }
 
     self.renderData = function()
@@ -342,6 +350,7 @@ var AppServersSearchModal = function(server_type, onConfirm)
             contentElem.inject($(self.tableID), 'bottom');
             self.rowSelected = 'create';
         }
+
 
         self.choices.each(function(val, idx)
         {
@@ -403,10 +412,13 @@ var AppServersSearchModal = function(server_type, onConfirm)
                     'name': $(self.inputID).value
                 }
 
-                self.createModalID = new AppServersCreateModal(data, self.setServer, function(){});
+                self.createModalID = new AppServersCreateModal(data, self.setNewServer, function(){});
                 self.createModalID.show();
             } else {
-                onConfirm($(self.inputID).value);
+                onConfirm({
+                    'name': self.choices[self.rowSelected]['name'],
+                    'server_id': self.choices[self.rowSelected]['server_id']
+                });
                 self.closeModal();
             }
         });
@@ -439,12 +451,25 @@ var AppServersSearchModal = function(server_type, onConfirm)
         });
     } 
 
-    self.setServer = function(new_server)
+    // callback function
+    self.setNewServer = function(new_server)
     {
-        console.log('created');
-        // add to server choices
-        // filter choices again
-        // set input field
+        $(self.inputID).value = '';
+        console.log('filter start');
+        self.filterChoices();
+
+        console.log('filter end');
+        console.log(self.choices);
+        self.choices.each(function(val, idx){
+            if (val['server_id'] == new_server['server_id']) {
+                console.log('found');
+                $('appserver_'+idx).addClass('selected');
+                self.rowSelected = idx;
+                $(self.inputID).value = val['name'];
+                $(self.confirmButtonID).set('disabled', false);
+                return;
+            }
+        });
     }
 }
 
@@ -452,22 +477,63 @@ var AppServersListModal = function(server_type, onSelected)
 {
     var self = this;
 
+    // modal
     self.modalID = 'app-servers-list-modal';
     self.overlayID = 'overlay';
     self.dialogWrapperID = 'dialog-wrapper';
-
     self.createModal = new AppServersCreateModal();
 
+    //title
+    self.titleID = 'app-servers-list-modal-title';
+    self.titles = {
+        'PRODUCTION': 'Production',
+        'STAGING'   : 'Staging',
+        'DEVELOPMENT': 'Development'
+    }
+
+    //search fields
+    self.searchNameID = 'app-servers-list-modal-name';
+    self.searchNetworkID = 'app-servers-list-modal-network';
+    self.searchPublicID = 'app-servers-list-modal-public';
+    self.searchPrivateID = 'app-servers-list-modal-private';
+    self.searchParams = {
+        'server_type': server_type,
+        'name': '',
+        'network': '',
+        'public_ip': '',
+        'private_ip': ''
+    };
+
+    //table
+    self.tableID = 'app-servers-list-modal-table';
+    self.tableRowClass = 'app-servers-list-modal-row';
+
+    //for pagination
+    self.currentPage = 1;
+    self.totalPage = 1;
+    self.pageLimit = 5;
+
+    self.prevID = 'app-servers-list-modal-prev';
+    self.nextID = 'app-servers-list-modal-next';
+    self.totalDataID = 'app-servers-list-modal-total';
+    self.totalPartID = 'app-servers-list-modal-part';
+
     // buttons
-    self.selectID = 'a[id^=app-servers-select]';
+    self.selectID = 'a[id^=appserverslist-select_]';
     self.closeID = 'app-servers-list-modal-close-button';
+    self.searchButtonID = 'app-servers-list-modal-search';
+    self.clearButtonID = 'app-servers-list-modal-clear';
+
+    self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
 
     self.show = function()
     {
+        $(self.titleID).set('html', self.titles[server_type]+' Servers');
+
         $(self.modalID).setStyle('display', 'block');
         $(self.overlayID).setStyle('display', 'block');
         $(self.dialogWrapperID).setStyle('display', 'block');
-        self.addEvents();
+        self.filterChoices();
     }
 
     self.closeModal = function()
@@ -475,6 +541,116 @@ var AppServersListModal = function(server_type, onSelected)
         $(self.modalID).setStyle('display', 'none');
         $(self.overlayID).setStyle('display', 'none');
         $(self.dialogWrapperID).setStyle('display', 'none');
+
+        $(self.searchNameID).value = '';
+        $(self.searchNetworkID).value = '';
+        $(self.searchPublicID).value = '';
+        $(self.searchPrivateID).value = '';
+    }
+
+    self.filterChoices = function()
+    {
+        self.searchParams['name']       = $(self.searchNameID).value.trim();
+        self.searchParams['network']    = $(self.searchNetworkID).value.trim();
+        self.searchParams['public_ip']  = $(self.searchPublicID).value.trim();
+        self.searchParams['private_ip'] = $(self.searchPrivateID).value.trim();
+
+        if (self.searchParams['name'] == '' && self.searchParams['network'] == '' && self.searchParams['public_ip'] == '' && self.searchParams['private_ip'] == '') {
+            self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
+        } else {
+            var filtered = [];
+            ProjectsSite.appServersObj.appServers.get(server_type).each(function(val, idx)
+            {
+                // filter name
+                if (self.searchParams['name'].length > 0 && val['name'].toLowerCase().indexOf(self.searchParams['name'].toLowerCase()) != -1) {
+                    // filter network
+                    if (self.searchParams['network'].length > 0 && val['network'].toLowerCase().indexOf(self.searchParams['network'].toLowerCase()) != -1) {
+                        // filter public ip
+                        if (self.searchParams['public_ip'].length > 0 && val['public_ip'].toLowerCase().indexOf(self.searchParams['public_ip'].toLowerCase()) != -1) {
+                            // filter private ip
+                            if (self.searchParams['private_ip'].length > 0 && val['private_ip'].toLowerCase().indexOf(self.searchParams['private_ip'].toLowerCase()) != -1) {
+                                filtered.include(val);
+                            }
+                        }
+                    } 
+                }
+            });
+            self.choices = filtered;
+        }
+
+        self.totalPage = Math.ceil(self.choices.length/self.pageLimit);
+
+        // sort elements first
+        self.choices = self.choices.sort(self.rowComparator);
+        self.renderData();
+    }
+
+    self.rowComparator = function(a,b) {
+        if (a['name'].toLowerCase() < b['name'].toLowerCase()) return -1;
+        if (a['name'].toLowerCase() > b['name'].toLowerCase()) return 1;
+        return 0;
+    }
+
+    self.renderData = function()
+    {
+        $$('.'+self.tableRowClass).dispose();
+        if (self.choices.length != 0) {
+            var start = (self.currentPage-1)*self.pageLimit;
+            var end = (start+(self.pageLimit) <= self.choices.length)? start+(self.pageLimit) : self.choices.length;
+
+            $(self.totalPartID).set('html', (start+1)+'-'+end);
+            $(self.totalDataID).set('html', ' of '+self.choices.length);
+
+            if (self.currentPage == 1) {
+                $(self.prevID).addClass('disable');
+            } else {
+                $(self.prevID).removeClass('disable');
+            }
+
+            if (self.currentPage < self.totalPage) {
+                $(self.nextID).removeClass('disable');
+            } else {
+                $(self.nextID).addClass('disable');
+            }
+
+            var toDisplay = self.choices.slice(start, end);
+
+            toDisplay.each(function(val, idx)
+            {
+                var contentHTML = '<td>'+((val['name'] == null)? '' : val['name'])+'</td>'
+                                + '<td>'+((val['network'] == null)? '' : val['network'])+'</td>'
+                                + '<td>'+((val['public_ip'] == null)? '' : val['public_ip'])+'</td>'
+                                + '<td>'+((val['private_ip'] == null)? '' : val['private_ip'])+'</td>'
+                                + '<td><a href="#" id="appserverslist-select_'+(start+idx)+'">Select</a></td>';
+
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass+' selected',
+                    'html'  : contentHTML,
+                });
+                contentElem.inject($(self.tableID), 'bottom');
+            });
+        } else {
+            $(self.totalPartID).set('html', '');
+            $(self.totalDataID).set('html', '');
+            $(self.prevID).addClass('disable');
+            $(self.nextID).addClass('disable');
+
+            var contentHTML = '<td><b>'+self.searchParams['name']+'</b> <i>(Create)</i></td>'
+                + '<td>'+self.searchParams['network']+'</td>'
+                + '<td>'+self.searchParams['public_ip']+'</td>'
+                + '<td>'+self.searchParams['private_ip']+'</td>'
+                + '<td><a href="#" id="appserverslist-select_create">Create</a></td>';
+
+            contentElem = new Element('<tr />',
+            {
+                'class' : self.tableRowClass+' selected',
+                'html'  : contentHTML,
+            });
+            contentElem.inject($(self.tableID), 'bottom');
+        }
+
+        self.addEvents();
     }
 
     self.addEvents = function()
@@ -487,18 +663,20 @@ var AppServersListModal = function(server_type, onSelected)
             id = $(this).get('id').split('_')[1];
 
             if (id == 'create') {
-                var data = {
-                    'server_type': server_type,
-                    'name': ''
-                }
-
                 self.closeModal();
-                self.createModal = new AppServersCreateModal(data, self.setServer, self.cancelServer);
+                self.createModal = new AppServersCreateModal(
+                    self.searchParams,
+                    self.setNewServer,
+                    function() {
+                        self.show();
+                    });
                 self.createModal.show();
             } else {
-                console.log('selecting...');
                 self.closeModal();
-                onSelected();
+                onSelected({
+                    'name': self.choices[id]['name'],
+                    'server_id': self.choices[id]['server_id']
+                });
             }
         });
 
@@ -509,24 +687,80 @@ var AppServersListModal = function(server_type, onSelected)
             e.preventDefault();
             self.closeModal();
         });
+
+        // SEARCH EVENT
+        $(self.searchButtonID).removeEvents();
+        $(self.searchButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.filterChoices();
+        });
+
+        // CLEAR EVENT
+        $(self.clearButtonID).removeEvents();
+        $(self.clearButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.clearTable();
+            self.filterChoices();
+        });
+
+        // NEXT PAGE
+        $(self.nextID).removeEvents();
+        $(self.nextID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (self.currentPage != self.totalPage) {
+                self.currentPage++;
+                self.renderData();
+            }
+        });
+
+        // PREV PAGE
+        $(self.prevID).removeEvents();
+        $(self.prevID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (self.currentPage != 1) {
+                self.currentPage--;
+                self.renderData();
+            }
+        });
     }
 
-    self.setServer = function()
+    self.setNewServer = function(new_server)
     {
         self.show();
-        console.log('created server');
+        console.log(new_server);
+
+        self.clearTable();
+        self.filterChoices();
     }
 
-    self.cancelServer = function()
+    self.clearTable = function()
     {
-        self.show();
-        console.log('cancelled creation');
+        $(self.searchNameID).value = '';
+        $(self.searchNetworkID).value = '';
+        $(self.searchPublicID).value = '';
+        $(self.searchPrivateID).value = '';
+
+        self.searchParams = {
+            'server_type': server_type,
+            'name': '',
+            'network': '',
+            'public_ip': '',
+            'private_ip': ''
+        };
+
+        self.currentPage = 1;
     }
 }
 
 var AppServersCreateModal = function(data, onCreate, onCancel)
 {
     var self = this;
+    self._request = null;
+    self.postDataURL = baseURL + '/servers/create';
 
     self.modalID = 'app-servers-create-modal';
     self.overlayID = 'overlay';
@@ -535,6 +769,19 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     // fields
     self.createTypeID = 'app-servers-create-modal-type';
     self.createNameID = 'app-servers-create-modal-name';
+    self.createHostID = 'app-servers-create-modal-host';
+    self.createPublicID = 'app-servers-create-modal-public';
+    self.createPrivateID = 'app-servers-create-modal-private';
+    self.createNetworkID = 'app-servers-create-modal-network';
+    self.createLocationID = 'app-servers-create-modal-location';
+    self.createDescriptionID = 'app-servers-create-modal-description';
+    self.createProductionID = 'app-servers-create-modal-production';
+    self.createTerminationID = 'app-servers-create-modal-termination';
+    self.createCSRFID = 'app-servers-create-modal-csrf';
+
+    // errors
+    self.createTypeErrorID = 'app-servers-create-modal-type-error';
+    self.createNetworkErrorID = 'app-servers-create-modal-network-error';    
 
     //buttons
     self.closeID = 'app-servers-create-modal-close-button';
@@ -554,6 +801,9 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     {
         $(self.createTypeID).set('html', data['server_type']);
         $(self.createNameID).value = data['name'];
+        $(self.createNetworkID).value = data['network'];
+        $(self.createPublicID).value = ((data['public_ip'] == null)? '' : data['public_ip']);
+        $(self.createPrivateID).value = ((data['private_ip'] == null)? '' : data['private_ip']);
     }
 
     self.closeModal = function()
@@ -561,6 +811,77 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.modalID).setStyle('display', 'none');
         $(self.overlayID).setStyle('display', 'none');
         $(self.dialogWrapperID).setStyle('display', 'none');
+
+        // clear form
+        $(self.createTypeErrorID).setStyle('display', 'none');
+        $(self.createNetworkErrorID).setStyle('display', 'none');
+
+        $(self.createTypeID).set('html', '');
+        $(self.createNameID).value = '';
+        $(self.createHostID).value = '';
+        $(self.createPublicID).value = '';
+        $(self.createPrivateID).value = '';
+        $(self.createNetworkID).value = '';
+        $(self.createLocationID).value = '';
+        $(self.createDescriptionID).value = '';
+        $(self.createProductionID).value = '';
+        $(self.createTerminationID).value = '';
+    }
+
+    self.postAjaxData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            var params = {
+                'YII_CSRF_TOKEN'    : $(self.createCSRFID).value,
+                'name'              : $(self.createNameID).value,
+                'server_type'       : data['server_type'],
+                'hostname'          : $(self.createHostID).value,
+                'public_ip'         : $(self.createPublicID).value,
+                'private_ip'        : $(self.createPrivateID).value,
+                'network'           : $(self.createNetworkID).value,
+                'location'          : $(self.createLocationID).value,
+                'description'       : $(self.createDescriptionID).value,
+                'production_date'   : $(self.createProductionID).value,
+                'termination_date'  : $(self.createTerminationID).value
+            };
+
+            self._request = new Request.JSON(
+            {
+                'url' : self.postDataURL,
+                'method' : 'post',
+                'data' : params,
+                'onSuccess': function(response)
+                {
+                    if (response['type'] == 'success') {    
+                        var entry = response['data'];
+                        ProjectsSite.appServersObj.appServers.get(entry['server_type']).include(entry['server']);
+                        self.closeModal();
+                        onCreate(entry['server']);
+                    } else if (response['type'] == 'error') {
+                        self._request.stop;
+                        Array.each(response['data'].split(','), function(error, idx)
+                        {
+                            var msg = error.split(': ');
+                            if (msg[0] == 'NETWORK_ERROR') {
+                                $(self.createNetworkErrorID).set('html', msg[1]);
+                                $(self.createNetworkErrorID).setStyle('display', 'block');
+                            } else if (msg[0] == 'TYPE_ERROR') {
+                                $(self.createTypeErrorID).set('html', msg[1]);
+                                $(self.createTypeErrorID).setStyle('display', 'block');
+                            } else if (msg[0] == 'CSRF_ERROR') {
+                                console.log(msg[1]);
+                            }
+                        });
+                    }
+                },
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('something went wrong');
+                }
+            }).send();
+        }
     }
 
     self.addEvents = function()
@@ -579,8 +900,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.confirmButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            self.closeModal();
-            onCreate();
+            self.postAjaxData();
         });
 
         // CANCEL BUTTON EVENT

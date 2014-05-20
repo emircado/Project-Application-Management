@@ -2,13 +2,13 @@
 <div id="applications-create" class="contact-info plain-list" style="display:none;">
     <!-- CONTENT HERE -->
     <form>
-        <input type="hidden" id="applications-create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header"><h3><b>Add Application</b></h3></div>
             </div>
             <!-- CONTENT FOR CREATE Application -->
             <div id="edit-primary-content" class="content">
+                <input type="hidden" id="applications-create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Name</span></div>
                     <div class="field-primary">

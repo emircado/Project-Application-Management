@@ -21,11 +21,6 @@
                         </tr>
                     </thead>
                     <tbody id="app-servers-table">
-                        <tr>
-                        <td>Server 1</td>
-                        <td>PRODUCTION</td>
-                        <td><a id="app-servers-view_1" href="#">View</a></td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="page-nav">

@@ -144,7 +144,7 @@ var ProjectsList = function()
                             + '<td>'+val['status']+'</td>'
                             + '<td>'+val['production_date_formatted']+'</td>'
                             + '<td class="actions-col three-column">'
-                            + '<a id="view_' + idx + '" href="#" title="View Project"><span class="">View</span></a>&nbsp'
+                            + '<a id="view_' + idx + '" href="#" title="View Project">View</a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',

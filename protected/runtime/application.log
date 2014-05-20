@@ -5180,3 +5180,292 @@ Stack trace:
 REQUEST_URI=/pamgmt/projects
 HTTP_REFERER=http://10.11.7.11/pamgmt/projects
 ---
+2014/05/19 10:57:27 [error] [php] Undefined index: server_type (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:107)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (107)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 10:58:29 [error] [php] Undefined index: server_type (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:107)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (107)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 10:59:54 [error] [php] Undefined index: server_type (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:107)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (107)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:31:41 [error] [php] Undefined variable: row (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:155)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (155)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:32:21 [error] [php] Undefined variable: server (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:155)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (155)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:32:22 [error] [php] Undefined variable: server (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:155)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (155)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:32:22 [error] [php] Undefined variable: server (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:155)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (155)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:33:56 [error] [php] include(Server.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(137): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionCreate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#8 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (137)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 11:34:50 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:138)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (138)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 17:37:41 [error] [php] Undefined index: server_type (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:107)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (107)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 17:37:48 [error] [php] Undefined index: server_type (/home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:107)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (107)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/19 18:50:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "applicationservers/create".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/applicationservers/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/20 15:15:36 [error] [php] Undefined index: server_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:10)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (10)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 16:22:24 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'application_id' in 'where clause'. The SQL statement executed was: SELECT 1 FROM `servers` `t` WHERE server_id=:server_id AND application_id=:application_id LIMIT 1.
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (23)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 16:22:24 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'application_id' in 'where clause'. The SQL statement executed was: SELECT 1 FROM `servers` `t` WHERE server_id=:server_id AND application_id=:application_id LIMIT 1' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1670): CDbCommand->queryRow()
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(23): CActiveRecord->exists('server_id=:serv...', Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionCreate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/20 16:33:10 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (43)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 16:33:10 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(43): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionCreate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/20 16:42:55 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (39)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 16:42:55 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(39): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionCreate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/20 16:43:46 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (39)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 16:43:46 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-7' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `application_servers` (`application_id`, `server_id`, `application_path`, `application_log`, `date_created`, `date_updated`, `created_by`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6)' in /home/httpd/vhosts/yiiframework/1.1.14/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(1077): CDbCommand->execute()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(806): CActiveRecord->insert(NULL)
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(39): CActiveRecord->save()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionCreate()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/20 17:21:34 [error] [exception.CException] exception 'CException' with message 'Property "ApplicationServers.project_id" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(145): CComponent->__get('project_id')
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(61): CActiveRecord->__get('project_id')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(15): ApplicationserversController->get_data(Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionList()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/list
+---
+2014/05/20 17:21:46 [error] [exception.CException] exception 'CException' with message 'Property "ApplicationServers.name" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/db/ar/CActiveRecord.php(145): CComponent->__get('name')
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(62): CActiveRecord->__get('name')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php(15): ApplicationserversController->get_data(Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationserversController->actionList()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationserv...')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/pamgmt/applicationservers/list
+---
+2014/05/20 18:47:38 [error] [php] Undefined index: server_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:158)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (158)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 18:49:57 [error] [php] Undefined index: server_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:158)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (158)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/20 18:56:40 [error] [php] Undefined index: server_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:162)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (162)
+in /home/httpd/vhosts/pamgmt/index.php (15)
