@@ -47,6 +47,7 @@ class ServersController extends Controller
                     'public_ip'     =>  $row->public_ip,
                     'private_ip'    =>  $row->private_ip,
                     'network'       =>  $row->network,
+                    'description'   =>  $row->description,
                 )); 
             }
         }
@@ -117,6 +118,7 @@ class ServersController extends Controller
         if (!empty($data)) {
             //FORM VALIDATION HERE
             $errors = array();
+            $duplicate = NULL;
 
             //network is required
             if (strlen($data['network']) == 0) {
@@ -130,6 +132,23 @@ class ServersController extends Controller
             //server type should be valid
             } else if (!in_array($data['server_type'], $server_types)) {
                 array_push($errors, 'TYPE_ERROR: Type is invalid');
+            }
+
+            //public IP must be unique
+            if (strlen($data['public_ip']) != 0) {
+                $duplicate = Servers::model()->find('public_ip=:public_ip', array(':public_ip'=>$data['public_ip']));
+                if ($duplicate != NULL) {
+                    array_push($errors, 'PUBLIC_ERROR: Public IP is already assigned');
+                }
+            }
+
+            //private IP + network must be unique
+            if (strlen($data['private_ip']) != 0 && strlen($data['network']) != 0) {
+                $duplicate = Servers::model()->find('private_ip=:private_ip AND network=:network',
+                    array(':private_ip'=>$data['private_ip'], ':network'=>$data['network']));
+                if ($duplicate != NULL) {
+                    array_push($errors, 'PRIVATE_ERROR: Private IP is already assigned');
+                }
             }
 
             //data is good
@@ -161,6 +180,7 @@ class ServersController extends Controller
                             'public_ip'     =>  $server->public_ip,
                             'private_ip'    =>  $server->private_ip,
                             'network'       =>  $server->network,
+                            'description'   =>  $server->description,
                         ),
                     ),
                 ));
@@ -168,6 +188,7 @@ class ServersController extends Controller
                 echo CJSON::encode(array(
                     'type' => 'error',
                     'data' => implode(',', $errors),
+                    'duplicate' => $duplicate,
                 ));
             }
         } else {

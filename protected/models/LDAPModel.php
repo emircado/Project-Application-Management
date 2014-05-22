@@ -43,16 +43,17 @@ class LDAPModel extends CFormModel {
         }
     }
 
-    public function get_display_name($username) {
-        if ($username === null) {   
-            return '';
-        } else {
-            $dn = Yii::app()->ldap->user()->dn($username);
-            if ($dn != false) {
-                $name = explode(',', $dn);
-                return substr($name[0],3);
+    public function get_users_list() {
+        $this->entries = false;
+        $list = Yii::app()->ldap->user()->all();
+
+        if ($list != false) {
+            $this->entries = array();
+
+            foreach ($list as $l) {
+                $name = explode(',', $l['dn']);
+                $this->entries[$l['samaccountname'][0]] = substr($name[0],3);
             }
-            return '';
         }
     }
 

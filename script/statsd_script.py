@@ -12,7 +12,7 @@ STATSD_ADDR = ('10.11.2.29', 8125)
 
 while True:
     print "sending..."
-    StatsdClient.send({"system.newluke":"+1|g"}, STATSD_ADDR)
+    StatsdClient.send({"system.lukeup":"+1|g"}, STATSD_ADDR)
 
     # StatsdClient.send({"pamgmt.accounts.authentication.login.succeeded":"+1|g"}, STATSD_ADDR)
     time.sleep(11)

@@ -1,7 +1,7 @@
 /* MAIN TEMPLATE */
 
 body  {
-	background-color: #DECFA2;
+	background-color: #E0D3CA;
 }
 
 a, a:hover {
@@ -181,9 +181,10 @@ img.search {
 }
 
 #confirmation-modal {
-	width: 300px;
+	min-width: 300px;
 	margin-top: 150px;
 	margin-left: 40%;
+	z-index: 1500;
 }
 
 .dialog-content .dialog-footer-block {
@@ -292,4 +293,18 @@ img.search {
 
 #app-servers-create-modal div.form input {
 	margin: 0px;
+}
+
+#modal-for-server {
+	padding-top: 20px;
+	padding-left: 10px;
+	margin-bottom: 150px;
+}
+
+#overlay2 {
+	z-index: 1000;
+}
+
+#dialog-wrapper2 {
+	z-index: 1100;
 }

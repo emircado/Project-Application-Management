@@ -82,6 +82,12 @@ var ProjectsList = function()
         }
     }
 
+    self.rowComparator = function(a,b) {
+        if (a['name'].toLowerCase() < b['name'].toLowerCase()) return -1;
+        if (a['name'].toLowerCase() > b['name'].toLowerCase()) return 1;
+        return 0;
+    }
+
     self.paginationChecker = function()
     {
         //display the NEXT and PREV
@@ -142,7 +148,7 @@ var ProjectsList = function()
                             + '<td>'+val['code']+'</td>'                        
                             + '<td>'+val['description']+'</td>'
                             + '<td>'+val['status']+'</td>'
-                            + '<td>'+val['production_date_formatted']+'</td>'
+                            + '<td>'+val['production_date']+'</td>'
                             + '<td class="actions-col three-column">'
                             + '<a id="view_' + idx + '" href="#" title="View Project">View</a>&nbsp'
                             + '</td>';
@@ -399,7 +405,8 @@ var ProjectsCreate = function()
 var ProjectsView = function(data)
 {
     var self = this;
-    self.postDataURL = baseURL + '/projects/changestatus';
+    self.changeStatusURL = baseURL + '/projects/changestatus';
+    self.deleteURL = baseURL + '/projects/delete';
     self._request = null;
 
     //for view project
@@ -439,7 +446,7 @@ var ProjectsView = function(data)
         ApplicationsSite.init(data['project_id']);
     }
 
-    self.postAjaxData = function()
+    self.changeStatus = function()
     {
         if(!self._request || !self._request.isRunning())
         {
@@ -451,7 +458,7 @@ var ProjectsView = function(data)
 
             self._request = new Request.JSON(
             {
-                'url' : self.postDataURL,
+                'url' : self.changeStatusURL,
                 'method' : 'post',
                 'data' : params,
                 'onSuccess': function(response)
@@ -460,14 +467,10 @@ var ProjectsView = function(data)
                         self._request.stop;
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
-                        var d = response['data'];
-                        data['status'] = d['status'];
-                        data['termination_date'] = d['termination_date'];
-                        data['termination_date_formatted'] = d['termination_date_formatted'];
-                        data['date_updated'] = d['date_updated'];
-                        data['date_updated_formatted'] = d['date_updated_formatted'];
-                        data['updated_by'] = d['updated_by'];
-                        data['updated_by_formatted'] = d['updated_by_formatted'];
+                        data['status']              = response['data']['status'];
+                        data['termination_date']    = response['data']['termination_date'];
+                        data['date_updated']        = response['data']['date_updated'];
+                        data['updated_by']          = response['data']['updated_by'];
 
                         self.init();
                     }
@@ -492,7 +495,7 @@ var ProjectsView = function(data)
 
             self._request = new Request.JSON(
             {
-                'url' : baseURL + '/projects/delete',
+                'url' : self.deleteURL,
                 'method' : 'post',
                 'data' : params,
                 'onSuccess': function(response)
@@ -511,16 +514,24 @@ var ProjectsView = function(data)
 
     self.renderData = function()
     {
+        // format display data
+        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? 'mm' : data['termination_date'];
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : data['production_date'];
+
         $(self.viewNameID).set('html', data['name']);
         $(self.viewCodeID).set('html', data['code']);
         $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewProductionID).set('html', data['production_date_formatted']);
-        $(self.viewCreatedID).set('html', data['date_created_formatted']);
-        $(self.viewCreatedbyID).set('html', data['created_by_formatted']);
         $(self.viewStatusID).set('html', data['status']);
-        $(self.viewTerminationID).set('html', data['termination_date_formatted']);
-        $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
-        $(self.viewUpdatedbyID).set('html', data['updated_by_formatted']);
+        $(self.viewProductionID).set('html', production);
+        $(self.viewTerminationID).set('html', termination);
+        $(self.viewCreatedID).set('html', created);
+        $(self.viewUpdatedID).set('html', updated);
+        $(self.viewCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.viewUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
 
         if (data['status'] == 'TERMINATED') {
             $(self.viewTerminationFieldID).setStyle('display', 'block');
@@ -561,7 +572,7 @@ var ProjectsView = function(data)
                 'Confirm Change Status',
                 'Are you sure you want to change the project\'s status?',
                 'Change',
-                self.postAjaxData)
+                self.changeStatus)
             .show();
         });
 
@@ -623,13 +634,7 @@ var ProjectsEdit = function(data)
                 'name'              : $(self.editNameID).value.trim(),
                 'code'              : $(self.editCodeID).value.trim(),
                 'description'       : $(self.editDescriptionID).value.trim(),
-                'status'            : data['status'],
-                'production_date'   : $(self.editProductionID).value,
-                'termination_date'  : data['termination_date'],
-                'date_created'		: data['date_created'],
-                'date_updated'		: data['date_updated'],
-                'created_by'        : data['created_by'],
-                'updated_by'        : data['updated_by']
+                'production_date'   : $(self.editProductionID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -653,7 +658,13 @@ var ProjectsEdit = function(data)
                         });
 
                     } else if (response['type'] == 'success') {
-                        data = response['data'];
+                        data['name']            = response['data']['name'];
+                        data['code']            = response['data']['code'];
+                        data['description']     = response['data']['description'];
+                        data['production_date'] = response['data']['production_date'];
+                        data['updated_by']      = response['data']['updated_by'];
+                        data['date_updated']    = response['data']['date_updated'];
+
                         $(self.editCancelButtonID).click();
                     }
                 },
@@ -703,14 +714,18 @@ var ProjectsEdit = function(data)
 var ProjectsSite = {
     mainObj         : null,
     createObj       : null,
-    ldapObj         : null,
+    // data objects
+    ldapGroupsObj   : null,
+    ldapUsersObj    : null,
     appTypesObj     : null,
     appServersObj   : null,
+
 
     init: function()
     {
         var self = this;
-        self.initLDAP();
+        self.initLDAPGroups();
+        self.initLDAPUsers();
         self.initAppTypes();
         self.initAppServers();
         self.initObj();
@@ -719,11 +734,7 @@ var ProjectsSite = {
     initObj: function()
     {
         var self = this;
-
-        // if (self.mainObj == null)
-        // {
-            self.mainObj = new ProjectsList();
-        // }
+        self.mainObj = new ProjectsList();
         self.mainObj.init();
     },
 
@@ -750,11 +761,18 @@ var ProjectsSite = {
         new ProjectsView(data).init();
     },
 
-    initLDAP: function()
+    initLDAPGroups: function()
     {
         var self = this;
-        self.ldapObj = new LDAPData();
-        self.ldapObj.init();
+        self.ldapGroupsObj = new LDAPGroupsData();
+        self.ldapGroupsObj.init();
+    },
+
+    initLDAPUsers: function()
+    {
+        var self = this;
+        self.ldapUsersObj = new LDAPUsersData();
+        self.ldapUsersObj.init();
     },
 
     initAppTypes: function()

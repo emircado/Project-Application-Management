@@ -70,8 +70,8 @@
                 }
             }
         ?>
+        <div id="overlay2" class="dialog-box-overlay" style="height: 100%;"></div>
     </div>
-
 </div><!-- page -->
 
 </body>

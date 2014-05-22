@@ -75,7 +75,7 @@ var AppServersList = function(application_id)
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+val['server_type']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="app-servers-view_' + idx + '" href="#" title="View Server">View</a>&nbsp'
+                            + '<a id="app-servers-view_' + idx + '" href="#" title="View Server">View</a>'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -91,7 +91,7 @@ var AppServersList = function(application_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No applications found</td><td></td><td></td>';
+            contentHTML = '<td>No servers found</td><td></td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -246,7 +246,6 @@ var AppServersCreate = function(application_id)
                 'onSuccess': function(response)
                 {
                     if (response['type'] == 'success') {
-                        console.log(response);
                         $(self.cancelButtonID).click();
                     } else if (response['type'] == 'error') {
                         self._request.stop;         
@@ -444,6 +443,12 @@ var AppServersView = function(data)
 
     self.renderData = function()
     {
+        // format display data
+        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+
         $(self.viewNameID).set('html', data['name']);
         $(self.viewTypeID).set('html', data['server_type']);
         $(self.viewPrivateID).set('html', ((data['private_ip'] == null)? 'NONE': data['private_ip']));
@@ -452,10 +457,10 @@ var AppServersView = function(data)
         $(self.viewNetworkID).set('html', data['network']);
         $(self.viewPathID).set('html', data['application_path']);
         $(self.viewLogID).set('html', data['application_log']);
-        $(self.viewCreatedID).set('html', data['date_created']);
-        $(self.viewUpdatedID).set('html', data['date_updated']);
-        $(self.viewCreatedByID).set('html', data['created_by']);
-        $(self.viewUpdatedByID).set('html', data['updated_by']);
+        $(self.viewCreatedID).set('html', created);
+        $(self.viewUpdatedID).set('html', updated);
+        $(self.viewCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.viewUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()

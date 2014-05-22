@@ -73,7 +73,7 @@ var ApplicationsList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var pointperson = ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(val['rd_point_person']);
+                var pointperson = ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(val['rd_point_person']);
 
 
                 contentHTML = '<td>'+val['name']+'</td>'
@@ -239,15 +239,15 @@ var ApplicationsCreate = function(project_id)
             var params = {
                 'YII_CSRF_TOKEN':   $(self.createCSRFID).value,
                 'project_id':       project_id,
-                'name':             $(self.createNameID).value,
-                'type_name':        $(self.createTypeID).value,
-                'accessibility':    $(self.createAccessibilityID).value,
-                'repository_url':   $(self.createRepositoryID).value,
-                'description':      $(self.createDescriptionID).value,
-                'instructions':     $(self.createInstructionsID).value,
-                'rd_point_person':  $(self.createPointPersonID).value,
-                'production_date':  $(self.createProductionID).value,
-                'termination_date': $(self.createTerminationID).value
+                'name':             $(self.createNameID).value.trim(),
+                'type_name':        $(self.createTypeID).value.trim(),
+                'accessibility':    $(self.createAccessibilityID).value.trim(),
+                'repository_url':   $(self.createRepositoryID).value.trim(),
+                'description':      $(self.createDescriptionID).value.trim(),
+                'instructions':     $(self.createInstructionsID).value.trim(),
+                'rd_point_person':  $(self.createPointPersonID).value.trim(),
+                'production_date':  $(self.createProductionID).value.trim(),
+                'termination_date': $(self.createTerminationID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -347,7 +347,7 @@ var ApplicationsCreate = function(project_id)
         });
         contentElem.inject($(self.createPointPersonID), 'bottom');
 
-        hash = new Hash(ProjectsSite.ldapObj.ldapData['DEVELOPERS']);
+        hash = new Hash(ProjectsSite.ldapGroupsObj.ldapGroupsData['DEVELOPERS']);
         hash.each(function(val, idx) {
             contentElem = new Element('<option />',
             {
@@ -434,8 +434,12 @@ var ApplicationsView = function(data)
 
     self.renderData = function()
     {
-        var createdby = ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(data['created_by']);
-        var updatedby = ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(data['updated_by']);
+        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? '' : data['termination_date'];
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : data['production_date'];
 
         $(self.viewNameID).set('html', data['name']);
         $(self.viewTypeID).set('html', ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']));
@@ -443,12 +447,12 @@ var ApplicationsView = function(data)
         $(self.viewRepositoryID).set('html', data['repository_url']);
         $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
         $(self.viewInstructionsID).set('html', '<pre>'+data['instructions']);
-        $(self.viewPointPersonID).set('html', ProjectsSite.ldapObj.ldapData.get('DEVELOPERS').get(data['rd_point_person']));
-        $(self.viewProductionID).set('html', data['production_date']);
-        $(self.viewTerminationID).set('html', data['termination_date']);
-        $(self.viewCreatedID).set('html', data['date_created']);
+        $(self.viewPointPersonID).set('html', ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(data['rd_point_person']));
+        $(self.viewProductionID).set('html', production);
+        $(self.viewTerminationID).set('html', termination);
+        $(self.viewCreatedID).set('html', created);
+        $(self.viewUpdatedID).set('html', updated);
         $(self.viewCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedID).set('html', data['date_updated']);
         $(self.viewUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
@@ -536,13 +540,13 @@ var ApplicationsEdit = function(data)
                 'YII_CSRF_TOKEN':   $(self.editCSRFID).value,
                 'application_id':   data['application_id'],
                 'project_id':       data['project_id'],
-                'name':             $(self.editNameID).value,
-                'type_name':        $(self.editTypeID).value,
-                'accessibility':    $(self.editAccessibilityID).value,
-                'repository_url':   $(self.editRepositoryID).value,
-                'description':      $(self.editDescriptionID).value,
-                'instructions':     $(self.editInstructionsID).value,
-                'rd_point_person':  $(self.editPointPersonID).value,
+                'name':             $(self.editNameID).value.trim(),
+                'type_name':        $(self.editTypeID).value.trim(),
+                'accessibility':    $(self.editAccessibilityID).value.trim(),
+                'repository_url':   $(self.editRepositoryID).value.trim(),
+                'description':      $(self.editDescriptionID).value.trim(),
+                'instructions':     $(self.editInstructionsID).value.trim(),
+                'rd_point_person':  $(self.editPointPersonID).value.trim(),
                 'production_date':  $(self.editProductionID).value,
                 'termination_date': $(self.editTerminationID).value
             };
@@ -669,7 +673,7 @@ var ApplicationsEdit = function(data)
         });
         contentElem.inject($(self.editPointPersonID), 'bottom');
 
-        hash = new Hash(ProjectsSite.ldapObj.ldapData['DEVELOPERS']);
+        hash = new Hash(ProjectsSite.ldapGroupsObj.ldapGroupsData['DEVELOPERS']);
         hash.each(function(val, idx) {
             contentElem = new Element('<option />',
             {

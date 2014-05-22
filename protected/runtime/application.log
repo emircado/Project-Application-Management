@@ -5469,3 +5469,50 @@ Stack trace:
 REQUEST_URI=/pamgmt/applicationservers/update
 in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (162)
 in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/21 10:06:21 [error] [exception.CException] exception 'CException' with message 'LDAPModel and its behaviors do not have a method or closure named "get_user_list".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:266
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): CComponent->__call('get_user_list', Array)
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): LDAPModel->get_user_list()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): PointpersonsController->actionGetLDAPUsers()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getldapusers')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('pointpersons/ge...')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/pointpersons/getldapusers
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/21 10:06:38 [error] [exception.CException] exception 'CException' with message 'LDAPModel and its behaviors do not have a method or closure named "get_user_list".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:266
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): CComponent->__call('get_user_list', Array)
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): LDAPModel->get_user_list()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): PointpersonsController->actionGetLDAPUsers()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getldapusers')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('pointpersons/ge...')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/pointpersons/getldapusers
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/21 10:07:16 [error] [exception.CException] exception 'CException' with message 'LDAPModel and its behaviors do not have a method or closure named "get_user_list".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:266
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): CComponent->__call('get_user_list', Array)
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php(217): LDAPModel->get_user_list()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): PointpersonsController->actionGetLDAPUsers()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getldapusers')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('pointpersons/ge...')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/pointpersons/getldapusers
+---

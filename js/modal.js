@@ -12,6 +12,8 @@ var ConfirmModal = function(title, message, confirm, onConfirm)
     self.confirmButtonID = 'button-confirm-modal';
     self.closeModalID = 'close-modal';
 
+    self.forNoticeID = 'modal-for-server';
+
     self.show = function()
     {
         $(self.titleID).set('html', title);
@@ -21,6 +23,7 @@ var ConfirmModal = function(title, message, confirm, onConfirm)
         $(self.modalID).setStyle('display', 'block');
         $(self.overlayID).setStyle('display', 'block');
         $(self.dialogWrapperID).setStyle('display', 'block');
+        $(self.forNoticeID).setStyle('display', 'none');
         self.addEvents();
     }      
 
@@ -781,7 +784,9 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
 
     // errors
     self.createTypeErrorID = 'app-servers-create-modal-type-error';
-    self.createNetworkErrorID = 'app-servers-create-modal-network-error';    
+    self.createNetworkErrorID = 'app-servers-create-modal-network-error';
+    self.createPublicErrorID = 'app-servers-create-modal-public-error';
+    self.createPrivateErrorID = 'app-servers-create-modal-private-error';    
 
     //buttons
     self.closeID = 'app-servers-create-modal-close-button';
@@ -801,7 +806,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     {
         $(self.createTypeID).set('html', data['server_type']);
         $(self.createNameID).value = data['name'];
-        $(self.createNetworkID).value = data['network'];
+        $(self.createNetworkID).value = ((data['network'] == null)? '' : data['network']);
         $(self.createPublicID).value = ((data['public_ip'] == null)? '' : data['public_ip']);
         $(self.createPrivateID).value = ((data['private_ip'] == null)? '' : data['private_ip']);
     }
@@ -815,6 +820,8 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         // clear form
         $(self.createTypeErrorID).setStyle('display', 'none');
         $(self.createNetworkErrorID).setStyle('display', 'none');
+        $(self.createPublicErrorID).setStyle('display', 'none');
+        $(self.createPrivateErrorID).setStyle('display', 'none');
 
         $(self.createTypeID).set('html', '');
         $(self.createNameID).value = '';
@@ -869,6 +876,22 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
                             } else if (msg[0] == 'TYPE_ERROR') {
                                 $(self.createTypeErrorID).set('html', msg[1]);
                                 $(self.createTypeErrorID).setStyle('display', 'block');
+                            } else if (msg[0] == 'PUBLIC_ERROR') {
+                                $(self.createPublicErrorID).set('html', msg[1]);
+                                $(self.createPublicErrorID).setStyle('display', 'block');
+                            
+                                new AppServersNoticeModal(
+                                    'Notice', msg[1], response['duplicate'], 'OK',
+                                    function(){})
+                                .show();
+                            } else if (msg[0] == 'PRIVATE_ERROR') {
+                                $(self.createPrivateErrorID).set('html', msg[1]);
+                                $(self.createPrivateErrorID).setStyle('display', 'block');
+
+                                new AppServersNoticeModal(
+                                    'Notice', msg[1], response['duplicate'], 'OK',
+                                    function(){})
+                                .show();
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -910,6 +933,98 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
             e.preventDefault();
             self.closeModal();
             onCancel();
+        });
+    }
+}
+
+var AppServersNoticeModal = function(title, message, duplicate, confirm, onConfirm)
+{
+    var self = this;
+
+    self.modalID = 'confirmation-modal';
+    self.overlayID = 'overlay2';
+    self.dialogWrapperID = 'dialog-wrapper';
+
+    self.titleID = 'modal-title';
+    self.messageID = 'modal-message';
+    self.cancelButtonID = 'button-cancel-modal';
+    self.confirmButtonID = 'button-confirm-modal';
+    self.closeModalID = 'close-modal';
+
+    self.forNoticeID = 'modal-for-server';
+
+    // duplicate data
+    self.noticeServerID = 'notice-id';
+    self.noticeNameID = 'notice-name';
+    self.noticePrivateID = 'notice-private';
+    self.noticePublicID = 'notice-public';
+    self.noticeTypeID = 'notice-type';
+    self.noticeNetworkID = 'notice-network';
+    self.noticeDescriptionID = 'notice-description';
+
+    self.show = function()
+    {
+        $(self.titleID).set('html', title);
+        $(self.messageID).set('html', message);
+        $(self.confirmButtonID).set('html', confirm);
+
+        $(self.modalID).setStyle('display', 'block');
+        $(self.overlayID).setStyle('display', 'block');
+        $(self.dialogWrapperID).setStyle('display', 'block');
+        $(self.forNoticeID).setStyle('display', 'block');
+        
+        $(self.overlayID).grab($(self.modalID), 'after');
+
+        self.addEvents();
+        self.renderData();
+    }      
+
+    self.closeModal = function()
+    {
+        $(self.messageID).set('html', 'Confirm Action');
+        $(self.messageID).set('html', '');
+        $(self.confirmButtonID).set('html', 'Confirm');
+        $(self.cancelButtonID).set('html', 'Cancel');
+        $(self.modalID).setStyle('display', 'none');
+        $(self.overlayID).setStyle('display', 'none');
+    }
+
+    self.renderData = function()
+    {
+        $(self.noticeServerID).set('html', duplicate['server_id']);
+        $(self.noticeNameID).set('html', duplicate['name']);
+        $(self.noticePrivateID).set('html', (duplicate['private_ip'] == NULL || duplicate['private_ip'] == '')? 'NONE' : duplicate['private_ip']);
+        $(self.noticePublicID).set('html', (duplicate['public_ip'] == NULL || duplicate['public_ip'] == '')? 'NONE' : duplicate['public_ip']);
+        $(self.noticeTypeID).set('html', duplicate['server_type']);
+        $(self.noticeNetworkID).set('html', duplicate['network']);
+        $(self.noticeDescriptionID).set('html', '<pre>'+duplicate['description']);
+    }
+
+    self.addEvents = function()
+    {
+        //FOR CANCEL
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+        });
+
+        //FOR CLOSE
+        $(self.closeModalID).removeEvents();
+        $(self.closeModalID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+        });
+
+        //FOR CONFIRM
+        $(self.confirmButtonID).removeEvents();
+        $(self.confirmButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            onConfirm();
+            self.closeModal();
         });
     }
 }

@@ -14,13 +14,6 @@ class PointpersonsController extends Controller
 
         $point_persons = $this->get_data($filter, $limit, $offset);
 
-        for ($i = 0; $i < $point_persons['data_count']; $i++) {
-            //date conversion
-            $point_persons['data'][$i]['date_created_formatted'] = ($point_persons['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($point_persons['data'][$i]['date_created']));
-            $point_persons['data'][$i]['date_updated_formatted'] = ($point_persons['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($point_persons['data'][$i]['date_updated']));
-            $point_persons['data'][$i]['username_formatted'] = $this->get_user_name($point_persons['data'][$i]['username']);
-        }
-
         $return_data = array(
             'page'=>$page,
             'totalPage'=> ($point_persons['total_count'] == 0) ? 1 : ceil($point_persons['total_count']/$limit),
@@ -59,12 +52,12 @@ class PointpersonsController extends Controller
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'    => $row->project_id/*$p->purify($row->project_id)*/,
-                'username'      => $row->username/*$p->purify($row->name)*/,
-                'user_group'    => $row->user_group/*$p->purify($row->company)*/,
-                'description'   => $row->description/*$p->purify($row->position)*/,
-                'date_created'  => $row->date_created/*$p->purify($row->date_created)*/,
-                'date_updated'  => $row->date_updated/*$p->purify($row->date_updated)*/,
+                'project_id'    => $row->project_id,
+                'username'      => $row->username,
+                'user_group'    => $row->user_group,
+                'description'   => $row->description,
+                'date_created'  => $row->date_created,
+                'date_updated'  => $row->date_updated,
             );
         }
 
@@ -75,37 +68,24 @@ class PointpersonsController extends Controller
         );
     }
 
-    public function get_user_name($username) {
-        if (Yii::app()->user->isGuest) {
-            return '';
-        } else {
-            try {
-                $model = new LDAPModel;
-                return $model->get_display_name($username);
-            } catch (LDAPModelException $e) {
-                return '';
-            }
-        }
-    }
-
     public function actionUpdate()
     {
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
-            $data['date_updated'] = date("Y-m-d H:i:s");
+            $updates = array(
+                'description'   => trim($data['description']),
+                'date_updated'  => date("Y-m-d H:i:s"),
+            );
+
             ProjectPointPersons::model()->updateByPk(array(
                 'project_id' => (int) $data['project_id'],
                 'username' => (string) $data['username'],
-            ), $data);
-
-            $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
-            $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
-            $data['username_formatted'] = $this->get_user_name($data['username']);
+            ), $updates);
 
             echo CJSON::encode(array(
                 'type' => 'success',
-                'data' => $data,
+                'data' => $updates,
             ));
 
         } else {
@@ -122,6 +102,10 @@ class PointpersonsController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['description'] = trim($data['description']);
+            $data['username'] = trim($data['username']);
+            $data['user_group'] = trim($data['user_group']);
+
             //FORM VALIDATION HERE
             $errors = array();
             //username is required
@@ -188,22 +172,6 @@ class PointpersonsController extends Controller
                 'type' => 'error',
                 'data' => 'CSRF_ERROR: CSRF Token did not match',
             ));
-        }
-    }
-
-    public function actionGetLDAPData()
-    {
-        if (Yii::app()->user->isGuest) {
-            echo CJSON::encode("bad1");
-        } else {
-            try {
-                $model = new LDAPModel;
-                $model->get_selection();
-                echo CJSON::encode($model->entries);
-
-            } catch (LDAPModelException $e) {
-                echo CJSON::encode("bad2");
-            }
         }
     }
 }

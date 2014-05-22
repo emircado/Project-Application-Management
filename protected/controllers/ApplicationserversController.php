@@ -14,12 +14,6 @@ class ApplicationserversController extends Controller
 
         $app_servers = $this->get_data($filter, $limit, $offset);
 
-        // for ($i = 0; $i < $contact_persons['data_count']; $i++) {
-        //     //date conversion
-        //     $contact_persons['data'][$i]['date_created_formatted'] = ($contact_persons['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($contact_persons['data'][$i]['date_created']));
-        //     $contact_persons['data'][$i]['date_updated_formatted'] = ($contact_persons['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($contact_persons['data'][$i]['date_updated']));
-        // }
-
         $return_data = array(
             'page'=>$page,
             'totalPage'=> ($app_servers['total_count'] == 0) ? 1 : ceil($app_servers['total_count']/$limit),
@@ -87,6 +81,7 @@ class ApplicationserversController extends Controller
     {
         $data = $_POST;
 
+        // clean input here
         $data['application_id']    = trim($data['application_id']);
         $data['server_id']         = trim($data['server_id']);
         $data['application_path']  = trim($data['application_path']);
@@ -128,7 +123,7 @@ class ApplicationserversController extends Controller
 
                 echo CJSON::encode(array(
                     'type' => 'success',
-                    'data' => $data,
+                    'data' => '',
                 ));
             } else {
                 echo CJSON::encode(array(

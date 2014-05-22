@@ -233,7 +233,7 @@ var ContactPersonsCreate = function(project_id)
                 'name'              : $(self.createContactPersonsNameID).value.trim(),
                 'company'           : $(self.createContactPersonsCompanyID).value.trim(),
                 'position'          : $(self.createContactPersonsPositionID).value.trim(),
-                'contact_numbers'  : $(self.createContactPersonsContactsID).value.trim(),
+                'contact_numbers'   : $(self.createContactPersonsContactsID).value.trim(),
                 'email'             : $(self.createContactPersonsEmailID).value.trim(),
                 'address'           : $(self.createContactPersonsAddressID).value.trim(),
                 'notes'             : $(self.createContactPersonsNotesID).value.trim()
@@ -382,6 +382,9 @@ var ContactPersonsView = function(data)
 
     self.renderData = function()
     {
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+
         $(self.viewContactPersonsNameID).set('html', data['name']);
         $(self.viewContactPersonsCompanyID).set('html', data['company']);
         $(self.viewContactPersonsPositionID).set('html', data['position']);
@@ -389,8 +392,8 @@ var ContactPersonsView = function(data)
         $(self.viewContactPersonsEmailID).set('html', data['email']);
         $(self.viewContactPersonsAddressID).set('html', '<pre>'+data['address']);
         $(self.viewContactPersonsNotesID).set('html', '<pre>'+data['notes']);
-        $(self.viewContactPersonsCreatedID).set('html', data['date_created_formatted']);
-        $(self.viewContactPersonsUpdatedID).set('html', data['date_updated_formatted']);
+        $(self.viewContactPersonsCreatedID).set('html', data['date_created']);
+        $(self.viewContactPersonsUpdatedID).set('html', data['date_updated']);
     }
 
     self.addEvents = function()
@@ -479,8 +482,6 @@ var ContactPersonsEdit = function(data)
                 'new_email'         : $(self.editContactPersonsEmailID).value.trim(),
                 'address'           : $(self.editContactPersonsAddressID).value.trim(),
                 'notes'             : $(self.editContactPersonsNotesID).value.trim(),
-                'date_created'      : data['date_created'],
-                'date_updated'      : data['date_updated']
             };
 
             self._request = new Request.JSON(
@@ -508,7 +509,14 @@ var ContactPersonsEdit = function(data)
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        data = response['data'];
+                        data['name']            = response['data']['name'];
+                        data['company']         = response['data']['company'];
+                        data['position']        = response['data']['position'];
+                        data['contact_numbers'] = response['data']['contact_numbers'];
+                        data['email']           = response['data']['email'];
+                        data['address']         = response['data']['address'];
+                        data['notes']           = response['data']['notes'];
+
                         $(self.editContactPersonsCancelButtonID).click();
                     }
                 },

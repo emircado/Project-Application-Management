@@ -6,7 +6,7 @@
             <input type="hidden" id="view-app-servers-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Application Server Details</b></h3>&nbsp&nbsp
+                    <h3><b>Server Details</b></h3>&nbsp&nbsp
                     <a id="app-servers-edit-button" href="#">[Edit]</a>
                     <a id="app-servers-delete-button" href="#" style="float:right;">[Delete]</a>
                 </div>

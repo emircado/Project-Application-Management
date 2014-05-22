@@ -16,12 +16,6 @@ class ContactpersonsController extends Controller
 
         $contact_persons = $this->get_data($filter, $limit, $offset);
 
-        for ($i = 0; $i < $contact_persons['data_count']; $i++) {
-            //date conversion
-            $contact_persons['data'][$i]['date_created_formatted'] = ($contact_persons['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($contact_persons['data'][$i]['date_created']));
-            $contact_persons['data'][$i]['date_updated_formatted'] = ($contact_persons['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($contact_persons['data'][$i]['date_updated']));
-        }
-
         $return_data = array(
             'page'=>$page,
             'totalPage'=> ($contact_persons['total_count'] == 0) ? 1 : ceil($contact_persons['total_count']/$limit),
@@ -86,6 +80,15 @@ class ContactpersonsController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['name']               = trim($data['name']);
+            $data['company']            = trim($data['company']);
+            $data['position']           = trim($data['position']);
+            $data['new_email']          = trim($data['new_email']);
+            $data['email']              = trim($data['email']);
+            $data['contact_numbers']    = trim($data['contact_numbers']);
+            $data['address']            = trim($data['address']);
+            $data['notes']              = trim($data['notes']);
+
             //FORM VALIDATION HERE
             $errors = array();
             //name is required
@@ -109,23 +112,27 @@ class ContactpersonsController extends Controller
                 }
             }
 
-
             //data is good
             if (count($errors) == 0) {
-                $data['date_updated'] = date("Y-m-d H:i:s");
-                $old_email = $data['email'];
-                $data['email'] = $data['new_email'];
+                $updates = array(
+                    'name'              => $data['name'],
+                    'company'           => $data['company'],
+                    'position'          => $data['position'],
+                    'contact_numbers'   => $data['contact_numbers'],
+                    'address'           => $data['address'],
+                    'email'             => $data['new_email'],
+                    'notes'             => $data['notes'],
+                    'date_updated'      => date("Y-m-d H:i:s"),
+                );
+
                 ProjectContactPersons::model()->updateByPk(array(
                     'project_id' => (int) $data['project_id'],
-                    'email' => (string) $old_email,
-                ), $data);
-
-                $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
-                $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
-
+                    'email' => (string) $data['email'],
+                ), $updates);
+                
                 echo CJSON::encode(array(
                     'type' => 'success',
-                    'data' => $data,
+                    'data' => $updates,
                 ));
             } else {
                 echo CJSON::encode(array(
@@ -147,6 +154,14 @@ class ContactpersonsController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['name']               = trim($data['name']);
+            $data['company']            = trim($data['company']);
+            $data['position']           = trim($data['position']);
+            $data['email']              = trim($data['email']);
+            $data['contact_numbers']    = trim($data['contact_numbers']);
+            $data['address']            = trim($data['address']);
+            $data['notes']              = trim($data['notes']);
+
             //FORM VALIDATION HERE
             $errors = array();
             //name is required
@@ -169,17 +184,17 @@ class ContactpersonsController extends Controller
 
             //data is good
             if (count($errors) == 0) {
-                $contact_person = new ProjectContactPersons;
-                $contact_person->project_id = $data['project_id'];
-                $contact_person->name = $data['name'];
-                $contact_person->company = $data['company'];
-                $contact_person->position = $data['position'];
-                $contact_person->contact_numbers = $data['contact_numbers'];
-                $contact_person->email = $data['email'];
-                $contact_person->address = $data['address'];
-                $contact_person->notes = $data['notes'];
-                $contact_person->date_created = date("Y-m-d H:i:s");
-                $contact_person->date_updated = '0000-00-00 00:00:00';
+                $contact_person                     = new ProjectContactPersons;
+                $contact_person->project_id         = $data['project_id'];
+                $contact_person->name               = $data['name'];
+                $contact_person->company            = $data['company'];
+                $contact_person->position           = $data['position'];
+                $contact_person->contact_numbers    = $data['contact_numbers'];
+                $contact_person->email              = $data['email'];
+                $contact_person->address            = $data['address'];
+                $contact_person->notes              = $data['notes'];
+                $contact_person->date_created       = date("Y-m-d H:i:s");
+                $contact_person->date_updated       = '0000-00-00 00:00:00';
                 $contact_person->save();
 
                 echo CJSON::encode(array(

@@ -8,11 +8,11 @@ class ProjectsController extends Controller
     public function actionIndex()
     {
         $this->modals = array(
-            'confirmation-modal',
             'application-types-modal', 
             'application-servers-search-modal',
             'application-servers-list-modal',
             'application-servers-create-modal',
+            'confirmation-modal',
         );
         
         $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
@@ -42,16 +42,6 @@ class ProjectsController extends Controller
             $filter['status'] = (string) $_GET['status'];
 
         $projects = $this->get_data($filter, $limit, $offset);
-
-        for ($i = 0; $i < $projects['data_count']; $i++) {
-            //date conversion
-            $projects['data'][$i]['production_date_formatted'] = ($projects['data'][$i]['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['production_date']));
-            $projects['data'][$i]['termination_date_formatted'] = ($projects['data'][$i]['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($projects['data'][$i]['termination_date']));
-            $projects['data'][$i]['date_created_formatted'] = ($projects['data'][$i]['date_created'] == '0000-00-00 00:00:00') ? 'N/A' :date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_created']));
-            $projects['data'][$i]['date_updated_formatted'] = ($projects['data'][$i]['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($projects['data'][$i]['date_updated']));
-            $projects['data'][$i]['created_by_formatted'] = ($projects['data'][$i]['created_by'] == null)? '' : $this->get_user_name($projects['data'][$i]['created_by']);
-            $projects['data'][$i]['updated_by_formatted'] = ($projects['data'][$i]['updated_by'] == null)? '' : $this->get_user_name($projects['data'][$i]['updated_by']);
-        }
 
         $return_data = array(
             'page'=>$page,
@@ -124,25 +114,17 @@ class ProjectsController extends Controller
         );
     }
 
-    public function get_user_name($username) {
-        if (Yii::app()->user->isGuest) {
-            return '';
-        } else {
-            try {
-                $model = new LDAPModel;
-                return $model->get_display_name($username);
-            } catch (LDAPModelException $e) {
-                return '';
-            }
-        }
-    }
-
     public function actionUpdate()
     {
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['name'] = trim($data['name']);
+            $data['code'] = trim($data['code']);
+            $data['description'] = trim($data['description']);
+            $data['production_date'] = trim($data['production_date']);
+
             //FORM VALIDATION HERE
             $errors = array();
             //code is required
@@ -164,20 +146,20 @@ class ProjectsController extends Controller
 
             //data is good
             if (count($errors) == 0) {
-                $data['date_updated'] = date("Y-m-d H:i:s");
-                $data['updated_by'] = Yii::app()->user->name;
-                $data['updated_by_formatted'] = $this->get_user_name($data['updated_by']);
-                Projects::model()->updateByPk((int) $data['project_id'], $data);
+                $updates = array(
+                    'name'              => $data['name'],
+                    'code'              => $data['code'],
+                    'description'       => $data['description'],
+                    'production_date'   => $data['production_date'],
+                    'date_updated'      => date("Y-m-d H:i:s"),
+                    'updated_by'        => Yii::app()->user->name,
+                );
 
-                $data['production_date_formatted'] = ($data['production_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['production_date']));
-                $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
-                $data['date_created_formatted'] = ($data['date_created'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_created']));
-                $data['date_updated_formatted'] = ($data['date_updated'] == '0000-00-00 00:00:00') ? 'N/A' : date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
-                $data['created_by_formatted'] = (!isset($data['created_by'])) ? '' : $this->get_user_name($data['created_by']);
+                Projects::model()->updateByPk((int) $data['project_id'], $updates);
 
                 echo CJSON::encode(array(
                     'type' => 'success',
-                    'data' => $data,
+                    'data' => $updates,
                 ));
             } else {
                 echo CJSON::encode(array(
@@ -253,18 +235,18 @@ class ProjectsController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {    
-            $data['status'] = ($data['status'] == 'TERMINATED') ? 'ACTIVE' : 'TERMINATED';
-            $data['termination_date'] = ($data['status'] == 'TERMINATED') ? date("Y-m-d") : '0000-00-00';
-            $data['termination_date_formatted'] = ($data['termination_date'] == '0000-00-00') ? 'N/A' : date(Yii::app()->params['date_display'], strtotime($data['termination_date']));
-            $data['date_updated'] = date("Y-m-d H:i:s");
-            $data['date_updated_formatted'] = date(Yii::app()->params['datetime_display'], strtotime($data['date_updated']));
-            $data['updated_by'] = Yii::app()->user->name;
-            $data['updated_by_formatted'] = $this->get_user_name($data['updated_by']);
-            Projects::model()->updateByPk((int) $data['project_id'], $data);
+            $updates = array(
+                'status'            => ($data['status'] == 'TERMINATED') ? 'ACTIVE' : 'TERMINATED',
+                'termination_date'  => ($data['status'] == 'TERMINATED') ? '0000-00-00' : date("Y-m-d"),
+                'date_updated'      => date("Y-m-d H:i:s"),
+                'updated_by'        => Yii::app()->user->name,
+            );
+
+            Projects::model()->updateByPk((int) $data['project_id'], $updates);
 
             echo CJSON::encode(array(
                 'type' => 'success',
-                'data' => $data,
+                'data' => $updates,
             ));
         } else {
             echo CJSON::encode(array(

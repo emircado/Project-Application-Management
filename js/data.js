@@ -1,10 +1,11 @@
-var LDAPData = function()
+// contains group => members dictionary
+var LDAPGroupsData = function()
 {
     var self = this;
-    self.getDataURL = baseURL + '/pointpersons/getldapdata';
+    self.getDataURL = baseURL + '/ldap/getgroups';
     self._request = null;
 
-    self.ldapData = new Hash();
+    self.ldapGroupsData = new Hash();
 
     self.init = function()
     {
@@ -21,11 +22,47 @@ var LDAPData = function()
                 'method' : 'get',
                 'onSuccess': function(response)
                 {
-                    self.ldapData = new Hash(response);
-                    self.ldapData.each(function(val, idx)
+                    self.ldapGroupsData = new Hash(response);
+                    self.ldapGroupsData.each(function(val, idx)
                     {
-                        self.ldapData.set(idx, new Hash(val));
+                        self.ldapGroupsData.set(idx, new Hash(val));
                     });
+                },
+                'onError' : function(errors)
+                {
+                    self._request.stop;
+                    console.log('something went wrong');
+                }
+            }).send();
+        }
+    }
+}
+
+// contains username => displayname dictionary
+var LDAPUsersData = function()
+{
+    var self = this;
+    self.getDataURL = baseURL + '/ldap/getusers';
+    self._request = null;
+
+    self.ldapUsersData = new Hash();
+
+    self.init = function()
+    {
+        self.getAjaxData();
+    }
+
+    self.getAjaxData = function()
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON(
+            {
+                'url' : self.getDataURL,
+                'method' : 'get',
+                'onSuccess': function(response)
+                {
+                    self.ldapUsersData = new Hash(response);
                 },
                 'onError' : function(errors)
                 {

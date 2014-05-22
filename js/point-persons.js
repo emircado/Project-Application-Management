@@ -71,7 +71,9 @@ var PointPersonsList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                contentHTML = '<td>'+val['username_formatted']+'</td>'
+                var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
+
+                contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
                             + '<td>'+val['user_group']+'</td>'
                             + '<td class="actions-col two-column">'
                             + '<a id="point-persons-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
@@ -286,7 +288,7 @@ var PointPersonsCreate = function(project_id)
     	});
     	contentElem.inject($(self.createUsergroupID), 'bottom');
 
-    	ProjectsSite.ldapObj.ldapData.each(function(val, idx)
+    	ProjectsSite.ldapGroupsObj.ldapGroupsData.each(function(val, idx)
         {
             contentElem = new Element('<option />',
 	    	{
@@ -341,7 +343,7 @@ var PointPersonsCreate = function(project_id)
 			contentElem.inject($(self.createUsernameID), 'bottom');
 
             if (usergroup != '') {
-                ProjectsSite.ldapObj.ldapData.get(usergroup).each(function(val, idx) {
+                ProjectsSite.ldapGroupsObj.ldapGroupsData.get(usergroup).each(function(val, idx) {
                     contentElem = new Element('<option />',
                     {
                         'class' : self.usernameRowClass,
@@ -423,11 +425,15 @@ var PointPersonsView = function(data)
 
     self.renderData = function()
     {
-        $(self.viewUsernameID).set('html', data['username_formatted']);
+        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+
+        $(self.viewUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.viewUsergroupID).set('html', data['user_group']);
         $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewCreatedID).set('html', data['date_created_formatted']);
-        $(self.viewUpdatedID).set('html', data['date_updated_formatted']);
+        $(self.viewCreatedID).set('html', created);
+        $(self.viewUpdatedID).set('html', updated);
     }
 
     self.addEvents = function()
@@ -524,7 +530,9 @@ var PointPersonsEdit = function(data)
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        data = response['data'];
+                        data['description'] = response['data']['description'];
+                        data['date_updated'] = response['data']['date_updated'];
+                        
                         $(self.editCancelButtonID).click();
                     }
                 },
@@ -539,7 +547,9 @@ var PointPersonsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editUsernameID).set('html', data['username_formatted']);
+        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
+
+        $(self.editUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.editUsergroupID).set('html', data['user_group']);
         $(self.editDescriptionID).value = data['description'];
     }
