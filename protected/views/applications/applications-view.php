@@ -6,7 +6,7 @@
         <div class="contact-info-details">
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Application Details</b></h3>&nbsp&nbsp
+                    <h3><b>Details</b></h3>&nbsp&nbsp
                     <a id="applications-edit" href="#">[Edit]</a>
                     <a id="applications-delete" href="#" style="float:right;">[Delete]</a>
                 </div>
@@ -141,5 +141,12 @@
         $this->renderPartial('//applications/application_servers/application-servers-create');
         $this->renderPartial('//applications/application_servers/application-servers-view');
         $this->renderPartial('//applications/application_servers/application-servers-edit');
+    ?>
+
+    <?php
+        $this->renderPartial('//applications/application_point_persons/application-point-persons-list');
+        $this->renderPartial('//applications/application_point_persons/application-point-persons-create');
+        $this->renderPartial('//applications/application_point_persons/application-point-persons-view');
+        $this->renderPartial('//applications/application_point_persons/application-point-persons-edit');
     ?>
 </div><!--END view applications-->

@@ -5,7 +5,7 @@
             <!-- header -->
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Application Notes</b></h3>&nbsp&nbsp
+                    <h3><b>Notes</b></h3>&nbsp&nbsp
                     <a id="application-notes-list-create-button" href="#">[Add]</a>
                 </div>
             </div>

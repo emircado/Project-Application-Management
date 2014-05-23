@@ -23,6 +23,7 @@ class ProjectsController extends Controller
                          '<script src="' . Yii::app()->request->baseUrl . '/js/applications.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-notes.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-point-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>';
         $this->render('projects');
     }

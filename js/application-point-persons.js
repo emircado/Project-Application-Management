@@ -1,25 +1,25 @@
-var ProjectNotesList = function(project_id)
+var AppPointPersonsList = function(application_id)
 {
     var self = this;
-    self.getDataURL = baseURL + '/notes/list';
+    self.getDataURL = baseURL + '/applicationpointpersons/list';
     self._request = null;
 
     //buttons
-    self.viewID = 'a[id^=project-notes-list-view_]';
-    self.createButtonID = 'project-notes-list-create-button';
+    self.viewID = 'a[id^=app-point-persons-list-view_]';
+    self.createButtonID = 'app-point-persons-list-create-button';
 
     //container
-    self.containerID = 'project-notes-list';
+    self.containerID = 'app-point-persons-list';
 
     //table
-    self.nextID = 'project-notes-list-next';
-    self.prevID = 'project-notes-list-prev';
+    self.nextID = 'app-point-persons-list-next';
+    self.prevID = 'app-point-persons-list-prev';
     self.currentPage = 1;
     self.resultData = [];
-    self.totalDataID = 'project-notes-list-total';
-    self.totalPartID = 'project-notes-list-part';
-    self.tableID = 'project-notes-list-table';
-    self.tableRowClass = 'project-notes-list-row';
+    self.totalDataID = 'app-point-persons-list-total';
+    self.totalPartID = 'app-point-persons-list-part';
+    self.tableID = 'app-point-persons-list-table';
+    self.tableRowClass = 'app-point-persons-list-row';
 
     self.init = function()
     {
@@ -33,8 +33,8 @@ var ProjectNotesList = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'page'          : self.currentPage,
-                'project_id'    : project_id
+                'page'              : self.currentPage,
+                'application_id'    : application_id
             };
 
             self._request = new Request.JSON(
@@ -46,7 +46,7 @@ var ProjectNotesList = function(project_id)
                 {
                     self.currentPage  = data.page;
                     self.totalPage    = data.totalPage;
-                    self.resultData = data.resultData;
+                    self.resultData   = data.resultData;
                     self.pageLimit    = data.limit;
                     self.renderData(data.totalData);
 
@@ -60,7 +60,7 @@ var ProjectNotesList = function(project_id)
                     console.log('Something went wrong!');
                 }
             }).send();
-        }   
+        }
     }
 
     self.renderData = function(count)
@@ -71,14 +71,12 @@ var ProjectNotesList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : val['date_created'];
-                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : val['date_updated'];
+                var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
 
-                contentHTML = '<td>'+created+'</td>'
-                            + '<td>'+updated+'</td>'                        
-                            + '<td>'+val['notes']+'</td>'
+                contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
+                            + '<td>'+val['user_group']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="project-notes-list-view_' + idx + '" href="#" title="View Note"><span class="">View</span></a>&nbsp'
+                            + '<a id="app-point-persons-list-view_' + idx + '" href="#" title="View Point Person"><span class="">View</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -94,7 +92,7 @@ var ProjectNotesList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No notes found</td><td></td><td></td><td></td>';
+            contentHTML = '<td>No point persons found</td><td></td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -102,7 +100,7 @@ var ProjectNotesList = function(project_id)
             });
 
             contentElem.inject($(self.tableID), 'bottom');
-        }
+        }   
     }
 
     self.addEvents = function()
@@ -131,13 +129,13 @@ var ProjectNotesList = function(project_id)
             }
         });
 
-        //CREATE A CONTACT PERSON
+        //CREATE A POINT PERSON
         $(self.createButtonID).removeEvents();
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initCreate(project_id);
+            AppPointPersonsSite.initCreate(application_id);
         });
         
         //VIEW CONTACT PERSON
@@ -146,7 +144,7 @@ var ProjectNotesList = function(project_id)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            AppPointPersonsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
     }
 
@@ -188,28 +186,39 @@ var ProjectNotesList = function(project_id)
             $(self.nextID).addClass('disable');
         }
     }
-}
+};
 
-var ProjectNotesCreate = function(project_id)
+var AppPointPersonsCreate = function(application_id)
 {
     var self = this;
-    self.postDataURL = baseURL + '/notes/create';
+    self.postDataURL = baseURL + '/applicationpointpersons/create';
     self._request = null;
 
     //buttons
-    self.saveButtonID = 'project-notes-create-save-button';
-    self.cancelButtonID = 'project-notes-create-cancel-button';
+    self.saveButtonID = 'app-point-persons-create-save-button';
+    self.cancelButtonID = 'app-point-persons-create-cancel-button';
 
     //container
-    self.containerID = 'project-notes-create';
+    self.containerID = 'app-point-persons-create';
 
     //fields
-    self.createNotesID = 'project-notes-create-notes';
-    self.csrfID = 'project-notes-create-csrf';
+    self.createUsernameID =     'app-point-persons-create-username';
+    self.createUsergroupID =    'app-point-persons-create-usergroup';
+    self.createDescriptionID =  'app-point-persons-create-description';
+    self.usernameRowClass =     'app-point-persons-create-username-row';
+    self.usergroupRowClass =    'app-point-persons-create-usergroup-row';
+
+    //for csrf
+    self.csrfID = 'app-point-persons-create-csrf';
+
+    //errors
+    self.createUsernameErrorID = 'app-point-persons-create-username-error';
+    self.createUsergroupErrorID = 'app-point-persons-create-usergroup-error';
 
     self.init = function()
     {
         $(self.containerID).setStyle('display', 'block');
+        self.initDropdown();
         self.addEvents();
     }
 
@@ -219,11 +228,11 @@ var ProjectNotesCreate = function(project_id)
         {
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'project_id'        : project_id,
-                'notes'             : $(self.createNotesID).value.trim()
+                'application_id'    : application_id,
+                'username'          : $(self.createUsernameID).value.trim(),
+                'user_group'        : $(self.createUsergroupID).value.trim(),
+                'description'       : $(self.createDescriptionID).value.trim()
             };
-
-            console.log(params);
 
             self._request = new Request.JSON(
             {
@@ -234,7 +243,21 @@ var ProjectNotesCreate = function(project_id)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data'])
+                        $(self.createUsernameErrorID).setStyle('display', 'none');
+                        $(self.createUsergroupErrorID).setStyle('display', 'none');
+                        Array.each(response['data'].split(','), function(error, idx)
+                        {
+                            var msg = error.split(': ');
+                            if (msg[0] == 'USERNAME_ERROR') {
+                                $(self.createUsernameErrorID).set('html', msg[1]);
+                                $(self.createUsernameErrorID).setStyle('display', 'block');
+                            } else if (msg[0] == 'USERGROUP_ERROR') {
+                                $(self.createUsergroupErrorID).set('html', msg[1]);
+                                $(self.createUsergroupErrorID).setStyle('display', 'block');
+                            } else if (msg[0] == 'CSRF_ERROR') {
+                                console.log(msg[1]);
+                            }
+                        });
                     } else if (response['type'] == 'success') {
                         $(self.cancelButtonID).click();
                     }
@@ -246,6 +269,35 @@ var ProjectNotesCreate = function(project_id)
                 }
             }).send();
         }
+    }
+
+    self.initDropdown = function()
+    {
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usernameRowClass,
+            'value' : '',
+            'html'  : '--Select Username--'
+        });
+        contentElem.inject($(self.createUsernameID), 'bottom');
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usergroupRowClass,
+            'value' : '',
+            'html'  : '--Select User Group--'
+        });
+        contentElem.inject($(self.createUsergroupID), 'bottom');
+
+        ProjectsSite.ldapGroupsObj.ldapGroupsData.each(function(val, idx)
+        {
+            contentElem = new Element('<option />',
+            {
+                'class' : self.usergroupRowClass,
+                'value' : idx,
+                'html'  : idx
+            });
+            contentElem.inject($(self.createUsergroupID), 'bottom');
+        });
     }
 
     self.addEvents = function()
@@ -264,35 +316,74 @@ var ProjectNotesCreate = function(project_id)
         {
             e.preventDefault();
             //clean form
-            $(self.createNotesID).value = '';
+            $(self.createUsernameID).value = '';
+            $(self.createUsergroupID).set('html', '');
+            $(self.createDescriptionID).value = '';
 
+            $(self.createUsernameErrorID).setStyle('display', 'none');
+            
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initObj(project_id);
+            AppPointPersonsSite.initObj(application_id);
+        });
+
+        //USER GROUP DROPDOWN
+        $(self.createUsergroupID).removeEvents();
+        $(self.createUsergroupID).addEvent('change', function(e)
+        {
+            var usergroup = this.getElement(':selected').value;
+
+            $$('.'+self.usernameRowClass).dispose();
+
+            contentElem = new Element('<option />',
+            {
+                'class' : self.usernameRowClass,
+                'value' : '',
+                'html'  : '--Select Username--'
+            });
+            contentElem.inject($(self.createUsernameID), 'bottom');
+
+            if (usergroup != '') {
+                ProjectsSite.ldapGroupsObj.ldapGroupsData.get(usergroup).each(function(val, idx) {
+                    contentElem = new Element('<option />',
+                    {
+                        'class' : self.usernameRowClass,
+                        'value' : idx,
+                        'html'  : val
+                    });
+                    contentElem.inject($(self.createUsernameID), 'bottom');
+                });
+            }
         });
     }
 }
 
-var ProjectNotesView = function(data)
+var AppPointPersonsView = function(data)
 {
     var self = this;
-    self.postDataURL = baseURL + '/notes/delete';
+    self.postDataURL = baseURL + '/applicationpointpersons/delete';
     self._request = null;
 
     //display
-    self.containerID = 'project-notes-view';
+    self.containerID = 'app-point-persons-view';
 
     //buttons
-    self.deleteButtonID = 'project-notes-view-delete-button';
-    self.editButtonID = 'project-notes-view-edit-button';
-    self.backButtonID = 'project-notes-view-back-button';
+    self.editButtonID = 'app-point-persons-edit-button';
+    self.deleteButtonID = 'app-point-persons-delete-button';
+    self.backButtonID = 'app-point-persons-back-button';
+
+    //back to list
 
     //fields
-    self.viewNotesID = 'project-notes-view-notes';
-    self.viewCreatedID = 'project-notes-view-created';
-    self.viewUpdatedID = 'project-notes-view-updated';
-    self.viewCreatedByID = 'project-notes-view-createdby';
-    self.viewUpdatedByID = 'project-notes-view-updatedby';
-    self.csrfID = 'project-notes-view-csrf';
+    self.viewUsernameID = 'app-point-persons-view-username';
+    self.viewUsergroupID = 'app-point-persons-view-usergroup';
+    self.viewDescriptionID = 'app-point-persons-view-description';
+    self.viewCreatedID = 'app-point-persons-view-created';
+    self.viewUpdatedID = 'app-point-persons-view-updated';
+    self.viewCreatedByID = 'app-point-persons-view-createdby';
+    self.viewUpdatedByID = 'app-point-persons-view-updatedby';
+
+    //for csrf
+    self.csrfID = 'app-point-persons-view-csrf';
 
     self.init = function()
     {
@@ -307,7 +398,8 @@ var ProjectNotesView = function(data)
         {
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'note_id'           : data['note_id'],
+                'application_id'    : data['application_id'],
+                'username'          : data['username']
             };
 
             self._request = new Request.JSON(
@@ -335,17 +427,19 @@ var ProjectNotesView = function(data)
 
     self.renderData = function()
     {
-        // format display data
+        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
 
-        $(self.viewNotesID).set('html', '<pre>'+data['notes']);
+        $(self.viewUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.viewUsergroupID).set('html', data['user_group']);
+        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
         $(self.viewCreatedID).set('html', created);
         $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.viewCreatedByID).set('html', createdby);
+        $(self.viewUpdatedByID).set('html', updatedby);
     }
 
     self.addEvents = function()
@@ -356,7 +450,7 @@ var ProjectNotesView = function(data)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initEdit(data);
+            AppPointPersonsSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
@@ -366,7 +460,7 @@ var ProjectNotesView = function(data)
             e.preventDefault();
             new ConfirmModal(
                 'Confirm Delete',
-                'Are you sure you want to delete this note from the list?',
+                'Are you sure you want to delete this point person from the list?',
                 'Delete',
                 self.postAjaxData)
             .show();
@@ -378,27 +472,31 @@ var ProjectNotesView = function(data)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initObj(data['project_id']);
+            AppPointPersonsSite.initObj(data['application_id']);
         });
     }
 }
 
-var ProjectNotesEdit = function(data)
+var AppPointPersonsEdit = function(data)
 {
     var self = this;
-    self.postDataURL = baseURL + '/notes/update';
+    self.postDataURL = baseURL + '/applicationpointpersons/update';
     self._request = null;
 
     //display
-    self.containerID = 'project-notes-edit';
+    self.containerID = 'app-point-persons-edit';
 
     //fields
-    self.editNotesID = 'project-notes-edit-notes';
-    self.csrfID = 'project-notes-edit-csrf';
+    self.editUsernameID = 'app-point-persons-edit-username';
+    self.editUsergroupID = 'app-point-persons-edit-usergroup';
+    self.editDescriptionID = 'app-point-persons-edit-description';
+
+    //for csrf
+    self.csrfID = 'app-point-persons-edit-csrf';
 
     //buttons
-    self.cancelButtonID = 'project-notes-edit-cancel-button';
-    self.saveButtonID = 'project-notes-edit-save-button';
+    self.saveButtonID = 'app-point-persons-edit-save-button';
+    self.cancelButtonID = 'app-point-persons-edit-cancel-button';
 
     self.init = function()
     {
@@ -413,8 +511,9 @@ var ProjectNotesEdit = function(data)
         {
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'note_id'           : data['note_id'],
-                'notes'             : $(self.editNotesID).value.trim(),
+                'application_id'    : data['application_id'],
+                'username'          : data['username'],
+                'description'       : $(self.editDescriptionID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -426,12 +525,18 @@ var ProjectNotesEdit = function(data)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data']);
+                        Array.each(response['data'].split(','), function(error, idx)
+                        {
+                            var msg = error.split(': ');
+                            if (msg[0] == 'CSRF_ERROR') {
+                                console.log(msg[1]);
+                            }
+                        });
                     } else if (response['type'] == 'success') {
-                        data['notes']           = response['data']['notes'];
-                        data['date_updated']    = response['data']['date_updated']
-                        data['updated_by']      = response['data']['updated_by'];
-
+                        data['description'] = response['data']['description'];
+                        data['date_updated'] = response['data']['date_updated'];
+                        data['updated_by'] = response['data']['updated_by'];
+                        
                         $(self.cancelButtonID).click();
                     }
                 },
@@ -446,7 +551,11 @@ var ProjectNotesEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editNotesID).value = data['notes'];
+        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
+
+        $(self.editUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.editUsergroupID).set('html', data['user_group']);
+        $(self.editDescriptionID).value = data['description'];
     }
 
     self.addEvents = function()
@@ -465,38 +574,40 @@ var ProjectNotesEdit = function(data)
         {
             e.preventDefault();
             //clean form
-            $(self.editNotesID).value = '';
+            $(self.editUsernameID).set('html', '');
+            $(self.editUsergroupID).set('html', '');
+            $(self.editDescriptionID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initView(data);
+            AppPointPersonsSite.initView(data);
         });
     }
 }
 
-var ProjectNotesSite = {
-    init: function(project_id)
+var AppPointPersonsSite = {
+    init: function(application_id)
     {
         var self = this;
-        self.initObj(project_id);
+        self.initObj(application_id);
     },
 
-    initObj: function(project_id)
+    initObj: function(application_id)
     {
-        new ProjectNotesList(project_id).init();
+        new AppPointPersonsList(application_id).init();
     },
 
-    initCreate: function(project_id)
+    initCreate: function(application_id)
     {
-        new ProjectNotesCreate(project_id).init();
+        new AppPointPersonsCreate(application_id).init();
     },
 
     initEdit: function(data)
     {
-        new ProjectNotesEdit(data).init();
+        new AppPointPersonsEdit(data).init();
     },
 
     initView: function(data)
     {
-        new ProjectNotesView(data).init();
+        new AppPointPersonsView(data).init();
     }
 }

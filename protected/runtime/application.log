@@ -5830,3 +5830,69 @@ Stack trace:
 REQUEST_URI=/pamgmt/notes/update
 HTTP_REFERER=http://10.11.7.11/pamgmt/projects
 ---
+2014/05/23 19:59:53 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php:120)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationpointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationpointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationpointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationpointpersons/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php (120)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/23 20:01:13 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php:120)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationpointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationpointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationpointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationpointpersons/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php (120)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/23 20:02:04 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php:120)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationpointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationpointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationpointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationpointpersons/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php (120)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/23 20:02:55 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php:120)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationpointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationpointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationpointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationpointpersons/create
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php (120)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/23 20:07:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "delete".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('delete')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('delete')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationpoin...')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/applicationpointpersons/delete
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/23 20:08:12 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php:86)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationpointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationpointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationpointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationpointpersons/update
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationpointpersonsController.php (86)
+in /home/httpd/vhosts/pamgmt/index.php (15)

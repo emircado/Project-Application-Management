@@ -78,7 +78,7 @@ var ApplicationNotesList = function(application_id)
                             + '<td>'+updated+'</td>'                        
                             + '<td>'+val['notes']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="application-notes-list-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
+                            + '<a id="application-notes-list-view_' + idx + '" href="#" title="View Note"><span class="">View</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -236,7 +236,6 @@ var ApplicationNotesCreate = function(application_id)
                         self._request.stop;
                         console.log(response['data'])
                     } else if (response['type'] == 'success') {
-                        console.log(response);
                         $(self.cancelButtonID).click();
                     }
                 },

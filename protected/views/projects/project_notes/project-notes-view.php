@@ -6,7 +6,7 @@
         <div class="contact-info-details">
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Project Note Details</b></h3>&nbsp&nbsp
+                    <h3><b>Note Details</b></h3>&nbsp&nbsp
                     <a id="project-notes-view-edit-button" href="#">[Edit]</a>
                     <a id="project-notes-view-delete-button" href="#" style="float:right;">[Delete]</a>
                 </div>

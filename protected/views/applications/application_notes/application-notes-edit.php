@@ -5,7 +5,7 @@
         <input type="hidden" id="application-notes-edit-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <div class="section primary-info expanded">
-                <div id="expand-primary" class="header"><h3><b>Application Note Details</b></h3></div>
+                <div id="expand-primary" class="header"><h3><b>Note Details</b></h3></div>
             </div>
             <!--CONTENT for EDIT APPLICATION NOTE-->
             <div id="edit-primary-content" class="content">

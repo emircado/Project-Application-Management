@@ -1,12 +1,11 @@
-<!-- LIST PROJECT NOTES -->
-<div id="project-notes-list">
+<div id="app-point-persons-list">
     <form>
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Notes</b></h3>&nbsp&nbsp
-                    <a id="project-notes-list-create-button" href="#">[Add]</a>
+                    <h3><b>Point Persons</b></h3>&nbsp&nbsp
+                    <a id="app-point-persons-list-create-button" href="#">[Add]</a>
                 </div>
             </div>
             <!-- body -->
@@ -14,23 +13,22 @@
                 <table>
                     <thead>
                         <tr>                      
-                            <th width=''>Date Created</th>
-                            <th width=''>Date Updated</th>
-                            <th width=''>Notes</th>
+                            <th width=''>Name</th>
+                            <th width=''>User Group</th>
                             <th width=''>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="project-notes-list-table">
+                    <tbody id="app-point-persons-list-table">
                     </tbody>
                 </table>
                 <div class="page-nav">
                     <div class="page-count">
-                        <span class="current-page" id="project-notes-list-part"></span>
-                        <span class="all-page" id="project-notes-list-total"></span>
+                        <span class="current-page" id="app-point-persons-list-part"></span>
+                        <span class="all-page" id="app-point-persons-list-total"></span>
                     </div>
                     <div class="page-nav-arrow">
-                        <a id="project-notes-list-prev" class="prev" href="#" title="Previous"><span class="icon"></span></a>
-                        <a id="project-notes-list-next" class="next" href="#" title="Next"><span class="icon"></span></a>
+                        <a id="app-point-persons-list-prev" class="prev" href="#" title="Previous"><span class="icon"></span></a>
+                        <a id="app-point-persons-list-next" class="next" href="#" title="Next"><span class="icon"></span></a>
                     </div>
                 </div>
             </div>

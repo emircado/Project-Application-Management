@@ -400,6 +400,7 @@ var ApplicationsView = function(data)
         $(self.viewViewID).setStyle('display', 'block');
         ApplicationNotesSite.init(data['application_id']);
         AppServersSite.init(data['application_id']);
+        AppPointPersonsSite.init(data['application_id']);
         self.renderData();
         self.addEvents();
     }
