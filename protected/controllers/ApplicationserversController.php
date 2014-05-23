@@ -51,8 +51,7 @@ class ApplicationserversController extends Controller
 
         foreach($model as $row)
         {
-            $server = Servers::model()->findByPk($row->server_id);
-            $data[] = array(
+            $app_server = array(
                 'application_id'    => $row->application_id,
                 'server_id'         => $row->server_id,
                 'application_path'  => $row->application_path,
@@ -61,13 +60,21 @@ class ApplicationserversController extends Controller
                 'date_updated'      => $row->date_updated,
                 'created_by'        => $row->created_by,
                 'updated_by'        => $row->updated_by,
-                'server_type'       => $server->server_type,
-                'name'              => $server->name,
-                'private_ip'        => $server->private_ip,
-                'public_ip'         => $server->public_ip,
-                'hostname'          => $server->hostname,
-                'network'           => $server->network,
             );
+
+            $server = Servers::model()->findByPk($row->server_id);
+            if ($server != null) {
+                $app_server += array(
+                    'server_type'       => $server->server_type,
+                    'name'              => $server->name,
+                    'private_ip'        => $server->private_ip,
+                    'public_ip'         => $server->public_ip,
+                    'hostname'          => $server->hostname,
+                    'network'           => $server->network,
+                );
+            }
+
+            $data[] = $app_server;
         }
 
         return array(

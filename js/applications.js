@@ -212,6 +212,7 @@ var ApplicationsCreate = function(project_id)
     self.createPointPersonID = 'create-applications-pointperson';
     self.createProductionID = 'create-applications-production';
     self.createTerminationID = 'create-applications-termination';
+    self.createPatternID = 'create-applications-pattern';
     self.createCSRFID = 'applications-create-csrf';
 
     //error fields
@@ -237,17 +238,18 @@ var ApplicationsCreate = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN':   $(self.createCSRFID).value,
-                'project_id':       project_id,
-                'name':             $(self.createNameID).value.trim(),
-                'type_name':        $(self.createTypeID).value.trim(),
-                'accessibility':    $(self.createAccessibilityID).value.trim(),
-                'repository_url':   $(self.createRepositoryID).value.trim(),
-                'description':      $(self.createDescriptionID).value.trim(),
-                'instructions':     $(self.createInstructionsID).value.trim(),
-                'rd_point_person':  $(self.createPointPersonID).value.trim(),
-                'production_date':  $(self.createProductionID).value.trim(),
-                'termination_date': $(self.createTerminationID).value.trim()
+                'YII_CSRF_TOKEN':       $(self.createCSRFID).value,
+                'project_id':           project_id,
+                'name':                 $(self.createNameID).value.trim(),
+                'type_name':            $(self.createTypeID).value.trim(),
+                'accessibility':        $(self.createAccessibilityID).value.trim(),
+                'repository_url':       $(self.createRepositoryID).value.trim(),
+                'uses_mobile_patterns': $(self.createPatternID).checked,
+                'description':          $(self.createDescriptionID).value.trim(),
+                'instructions':         $(self.createInstructionsID).value.trim(),
+                'rd_point_person':      $(self.createPointPersonID).value.trim(),
+                'production_date':      $(self.createProductionID).value.trim(),
+                'termination_date':     $(self.createTerminationID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -379,6 +381,7 @@ var ApplicationsView = function(data)
     self.viewTypeID = 'view-applications-type';
     self.viewAccessibilityID = 'view-applications-accessibility';
     self.viewRepositoryID = 'view-applications-repository';
+    self.viewPatternID = 'view-applications-pattern';
     self.viewDescriptionID = 'view-applications-description';
     self.viewInstructionsID = 'view-applications-instructions';
     self.viewPointPersonID = 'view-applications-pointperson';
@@ -395,6 +398,7 @@ var ApplicationsView = function(data)
     self.init = function()
     {
         $(self.viewViewID).setStyle('display', 'block');
+        ApplicationNotesSite.init(data['application_id']);
         AppServersSite.init(data['application_id']);
         self.renderData();
         self.addEvents();
@@ -445,6 +449,7 @@ var ApplicationsView = function(data)
         $(self.viewTypeID).set('html', ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']));
         $(self.viewAccessibilityID).set('html', data['accessibility']);
         $(self.viewRepositoryID).set('html', data['repository_url']);
+        $(self.viewPatternID).set('html', (data['uses_mobile_patterns'] == 1)? 'YES' : 'NO');
         $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
         $(self.viewInstructionsID).set('html', '<pre>'+data['instructions']);
         $(self.viewPointPersonID).set('html', ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(data['rd_point_person']));
@@ -511,6 +516,7 @@ var ApplicationsEdit = function(data)
     self.editPointPersonID = 'edit-applications-pointperson';
     self.editProductionID = 'edit-applications-production';
     self.editTerminationID = 'edit-applications-termination';
+    self.editPatternID = 'edit-applications-pattern';
     self.editCSRFID = 'applications-edit-csrf';
 
     //error fields
@@ -537,19 +543,22 @@ var ApplicationsEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN':   $(self.editCSRFID).value,
-                'application_id':   data['application_id'],
-                'project_id':       data['project_id'],
-                'name':             $(self.editNameID).value.trim(),
-                'type_name':        $(self.editTypeID).value.trim(),
-                'accessibility':    $(self.editAccessibilityID).value.trim(),
-                'repository_url':   $(self.editRepositoryID).value.trim(),
-                'description':      $(self.editDescriptionID).value.trim(),
-                'instructions':     $(self.editInstructionsID).value.trim(),
-                'rd_point_person':  $(self.editPointPersonID).value.trim(),
-                'production_date':  $(self.editProductionID).value,
-                'termination_date': $(self.editTerminationID).value
+                'YII_CSRF_TOKEN':       $(self.editCSRFID).value,
+                'application_id':       data['application_id'],
+                'project_id':           data['project_id'],
+                'name':                 $(self.editNameID).value.trim(),
+                'type_name':            $(self.editTypeID).value.trim(),
+                'accessibility':        $(self.editAccessibilityID).value.trim(),
+                'repository_url':       $(self.editRepositoryID).value.trim(),
+                'uses_mobile_patterns': $(self.editPatternID).checked,
+                'description':          $(self.editDescriptionID).value.trim(),
+                'instructions':         $(self.editInstructionsID).value.trim(),
+                'rd_point_person':      $(self.editPointPersonID).value.trim(),
+                'production_date':      $(self.editProductionID).value,
+                'termination_date':     $(self.editTerminationID).value
             };
+
+            console.log(params);
 
             self._request = new Request.JSON(
             {
@@ -577,14 +586,15 @@ var ApplicationsEdit = function(data)
                         });
                     } else if (response['type'] == 'success') {
                         data['type_id']             = ProjectsSite.appTypesObj.appTypes.get(params['type_name']);
-                        data['name']                = params['name'];
-                        data['description']         = params['description'];
-                        data['accessibility']       = params['accessibility'];
-                        data['repository_url']      = params['repository_url'];
-                        data['instructions']        = params['instructions'];
-                        data['rd_point_person']     = params['rd_point_person'];
-                        data['production_date']     = params['production_date'];
-                        data['termination_date']    = params['termination_date'];
+                        data['name']                = response['data']['name'];
+                        data['description']         = response['data']['description'];
+                        data['accessibility']       = response['data']['accessibility'];
+                        data['repository_url']      = response['data']['repository_url'];
+                        data['uses_mobile_patterns']= response['data']['uses_mobile_patterns'];
+                        data['instructions']        = response['data']['instructions'];
+                        data['rd_point_person']     = response['data']['rd_point_person'];
+                        data['production_date']     = response['data']['production_date'];
+                        data['termination_date']    = response['data']['termination_date'];
                         data['date_updated']        = response['data']['date_updated'];
                         data['updated_by']          = response['data']['updated_by'];
 
@@ -606,6 +616,7 @@ var ApplicationsEdit = function(data)
         $(self.editTypeID).value            = ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']);
         $(self.editAccessibilityID).value   = data['accessibility'];
         $(self.editRepositoryID).value      = data['repository_url'];
+        $(self.editPatternID).checked       = (data['uses_mobile_patterns'] == 1)? true : false;
         $(self.editDescriptionID).value     = data['description'];
         $(self.editInstructionsID).value    = data['instructions'];
         $(self.editPointPersonID).value     = data['rd_point_person'];

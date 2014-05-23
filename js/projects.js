@@ -441,9 +441,11 @@ var ProjectsView = function(data)
 
         self.renderData();
         self.addEvents();
+        ProjectNotesSite.init(data['project_id']);
         ContactPersonsSite.init(data['project_id']);
         PointPersonsSite.init(data['project_id']);
         ApplicationsSite.init(data['project_id']);
+
     }
 
     self.changeStatus = function()

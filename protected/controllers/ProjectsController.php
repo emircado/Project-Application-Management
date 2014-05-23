@@ -17,9 +17,11 @@ class ProjectsController extends Controller
         
         $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/project-notes.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/point-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/applications.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-notes.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>';
         $this->render('projects');
@@ -27,6 +29,8 @@ class ProjectsController extends Controller
 
     public function actionList()
     {
+        $begin_time = microtime(true);
+
         $limit = Yii::app()->params['projects_per_page'];
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
@@ -50,6 +54,14 @@ class ProjectsController extends Controller
             'limit'=>$limit,
             'resultData'=>$projects['data'],
         );
+
+        $time = floor((microtime(true) - $begin_time) * 1000);
+        // statsd component
+        $statsd = new StatsD(Yii::app()->params['statsd_server_ip'], Yii::app()->params['statsd_server_port']);
+        $statsd->timing("system.lukefar", $time);
+        // socket component
+        $graphite = new GraphiteSocket();
+        $graphite->send_projectlist($time);
 
         echo CJSON::encode($return_data);
     }

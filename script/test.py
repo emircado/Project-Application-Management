@@ -1,98 +1,102 @@
 #!/usr/bin/python
 import sys
 import time
+import random
 from socket import socket
+from datetime import date
 
 CARBON_SERVER = '10.11.2.29'
 CARBON_PORT = 2003
-delay = 9 
+delay = 11
 sock = socket()
 
-data = {
-  '2014-05-': {
-    '08:00:00': ['pamgmt.accounts.authentication.login.attempted 0.00',
-                'pamgmt.accounts.authentication.login.failed 0.00',
-                'pamgmt.accounts.authentication.login.succeeded 0.00'],
-
-    '08:30:00': ['pamgmt.accounts.authentication.login.attempted 1.00',
-                'pamgmt.accounts.authentication.login.failed 1.00'],
-
-    '09:00:00': ['pamgmt.accounts.authentication.login.attempted 2.00',
-                'pamgmt.accounts.authentication.login.succeeded 1.00'],
-
-    '09:30:00': ['pamgmt.accounts.authentication.login.attempted 4.00',
-                'pamgmt.accounts.authentication.login.failed 3.00'],
-
-    '11:00:00': ['pamgmt.accounts.authentication.login.attempted 5.00',
-                'pamgmt.accounts.authentication.login.succeeded 2.00'],
-
-    '11:30:00': ['pamgmt.accounts.authentication.login.attempted 6.00',
-                'pamgmt.accounts.authentication.login.failed 4.00'],
-
-    '12:00:00': ['pamgmt.accounts.authentication.login.attempted 7.00',
-                'pamgmt.accounts.authentication.login.succeeded 3.00'],
-
-    '12:30:00': ['pamgmt.accounts.authentication.login.attempted 9.00',
-                'pamgmt.accounts.authentication.login.failed 6.00'],
-
-    '12:00:00': ['pamgmt.accounts.authentication.login.attempted 11.00',
-                'pamgmt.accounts.authentication.login.succeeded 5.00'],
-
-    '12:30:00': ['pamgmt.accounts.authentication.login.attempted 12.00',
-                'pamgmt.accounts.authentication.login.failed 7.00'],
-
-    '13:00:00': ['pamgmt.accounts.authentication.login.attempted 14.00',
-                'pamgmt.accounts.authentication.login.succeeded 7.00'],
-
-    '13:30:00': ['pamgmt.accounts.authentication.login.attempted 15.00',
-                'pamgmt.accounts.authentication.login.failed 8.00'],
-
-    '14:00:00': ['pamgmt.accounts.authentication.login.attempted 18.00',
-                'pamgmt.accounts.authentication.login.succeeded 10.00'],
-
-    '14:30:00': ['pamgmt.accounts.authentication.login.attempted 19.00',
-                'pamgmt.accounts.authentication.login.failed 9.00'],
-
-    '15:00:00': ['pamgmt.accounts.authentication.login.attempted 21.00',
-                'pamgmt.accounts.authentication.login.succeeded 12.00'],
-
-    '15:30:00': ['pamgmt.accounts.authentication.login.attempted 22.00',
-                'pamgmt.accounts.authentication.login.failed 10.00'],
-
-    '16:00:00': ['pamgmt.accounts.authentication.login.attempted 26.00',
-                'pamgmt.accounts.authentication.login.succeeded 16.00'],
-
-    '16:30:00': ['pamgmt.accounts.authentication.login.attempted 28.00',
-                'pamgmt.accounts.authentication.login.failed 12.00'],
-
-    '17:00:00': ['pamgmt.accounts.authentication.login.attempted 29.00',
-                'pamgmt.accounts.authentication.login.succeeded 17.00'],
-
-    '17:30:00': ['pamgmt.accounts.authentication.login.attempted 30.00',
-                'pamgmt.accounts.authentication.login.failed 13.0']}
+# Change months and days range to desired range
+months = ('2014-05', )
+days = {
+    '2014-04': range(20, 31),
+    '2014-05': range(12, 22)
 }
 
+hours = range(0,24)
+minutes = range(0,60)
+seconds = range(0,60)
+delta = range(1,4)  #increase per hit
+
+metrics = ( 'pamgmt.accounts.authentication.login.attempted',
+            'pamgmt.accounts.authentication.login.succeeded',
+            'pamgmt.accounts.authentication.login.failed')
+either = (metrics[1], metrics[2])
+
 try:
-  sock.connect( (CARBON_SERVER,CARBON_PORT) )
+    sock.connect( (CARBON_SERVER,CARBON_PORT) )
 except:
-  print "Couldn't connect to %(server)s on port %(port)d, is carbon-agent.py running?" % { 'server':CARBON_SERVER, 'port':CARBON_PORT }
-  sys.exit(1)
+    print "Couldn't connect to %(server)s on port %(port)d, is carbon-agent.py running?" % { 'server':CARBON_SERVER, 'port':CARBON_PORT }
+    sys.exit(1)
 
-for day in range(1,22):
-  for data_month in data:
-    data_date = data_month+str(day)
-    print data_date
-    for data_time in data[data_month]:
-      t = int(time.mktime(time.strptime(data_date+' '+data_time, '%Y-%m-%d %H:%M:%S')))
+def reset():
+    timestamp = int(time.mktime(time.strptime(month+'-'+day_str+' 00:00:00', '%Y-%m-%d %H:%M:%S')))
 
-      lines = []
-      for line in data[data_month][data_time]:
-        lines.append(line+' '+str(t))
+    lines = []
+    # set stats to zero
+    for metric in metrics:
+        lines.append(metric+' 0.00 '+str(timestamp))
 
-      message = '\n'.join(lines) + '\n' #all lines must end in a newline
-      print "sending message\n"
-      # print key
-      print '-' * 80
-      print message
-      sock.sendall(message)
-      time.sleep(delay)
+    message = '\n'.join(lines) + '\n' #all lines must end in a newline
+    print "sending message\n"
+    print '-' * 80
+    print message
+    sock.sendall(message)
+    time.sleep(delay)
+  
+for month in months:
+    print 'currently on '+month
+  
+    for day in days[month]:
+        day_str = str(day)
+        day_str = '0'+day_str if len(day_str) == 1 else day_str
+        print 'on '+day_str
+
+        reset()
+
+        # produce logins
+        points = random.randint(30, 100)
+        timestamps = []
+        for point in range(points):
+            h = str(random.choice(hours))
+            m = str(random.choice(minutes))
+            s = str(random.choice(seconds))
+            h = '0'+h if len(h) == 1 else h
+            m = '0'+m if len(m) == 1 else m
+            s = '0'+s if len(s) == 1 else s
+
+            timestamps.append(month+'-'+day_str+' '+h+':'+m+':'+s)
+    
+        total_attempts = 0
+        total_succeeded = 0
+        total_failed = 0
+
+        for timestamp in sorted(timestamps):
+            t = int(time.mktime(time.strptime(timestamp, '%Y-%m-%d %H:%M:%S')))
+            hits = random.choice(delta)
+            total_attempts = total_attempts + hits
+
+            login_result = random.choice(either)
+            login_hits = 0
+
+            if login_result.endswith('succeeded'):
+                total_succeeded = total_succeeded + hits
+                login_hits = total_succeeded
+            elif login_result.endswith('failed'):
+                total_failed = total_failed + hits
+                login_hits = total_failed
+
+            lines = []
+            lines.append(metrics[0]+' '+str(total_attempts)+'.00'+' '+str(t))
+            lines.append(login_result+' '+str(login_hits)+'.00'+' '+str(t))
+
+            message = '\n'.join(lines) + '\n' #all lines must end in a newline
+            print "sending message\n"
+            print '-' * 80
+            print message
+            sock.sendall(message)
+            time.sleep(delay)

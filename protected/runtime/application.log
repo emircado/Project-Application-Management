@@ -5516,3 +5516,317 @@ Stack trace:
 #10 {main}
 REQUEST_URI=/pamgmt/pointpersons/getldapusers
 ---
+2014/05/22 17:02:54 [error] [php] Trying to get property of non-object (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:64)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/list?page=2&application_id=1
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (64)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (15)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 17:03:46 [error] [php] Trying to get property of non-object (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:64)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/list?page=2&application_id=1
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (64)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (15)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 17:04:12 [error] [php] Trying to get property of non-object (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php:64)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationserversController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationserversController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationserversController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applicationservers/list
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (64)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationserversController.php (15)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:02:44 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getgroups
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (11)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:02:44 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getusers
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (27)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:03:27 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getusers
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (27)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:03:27 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getgroups
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (11)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:11:27 [error] [exception.CException] exception 'CException' with message 'LoginForm and its behaviors do not have a method or closure named "openCryptModule".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:266
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php(198): CComponent->__call('openCryptModule', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php(198): LoginForm->openCryptModule()
+#2 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(100): CSecurityManager->encrypt('ermercado')
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->login()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#12 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#13 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/22 19:12:31 [error] [exception.CException] exception 'CException' with message 'LoginForm and its behaviors do not have a method or closure named "openCryptModule".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:266
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php(198): CComponent->__call('openCryptModule', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php(198): LoginForm->openCryptModule()
+#2 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(100): CSecurityManager->encrypt('ermercado', 'pamgmtsalt888')
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->login()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#12 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#13 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/22 19:16:43 [error] [exception.CException] exception 'CException' with message 'Property "CWebApplication.getSecurityManager" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:130
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModule.php(105): CComponent->__get('getSecurityMana...')
+#1 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(100): CModule->__get('getSecurityMana...')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->login()
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#11 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#12 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/22 19:17:23 [error] [exception.CException] exception 'CException' with message 'CSecurityManager requires PHP mcrypt extension to be loaded in order to use data encryption feature.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php:250
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CSecurityManager.php(198): CSecurityManager->openCryptModule()
+#1 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(100): CSecurityManager->encrypt('ermercado', 'pamgmtsalt888')
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->login()
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#11 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#12 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/
+---
+2014/05/22 19:59:07 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getgroups
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (11)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:59:07 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getusers
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (27)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:59:09 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getgroups
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (11)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/22 19:59:09 [error] [php] Undefined index: username (/home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php:18)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): LdapController->runAction()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): LdapController->runActionWithFilters()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): LdapController->run()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/ldap/getusers
+in /home/httpd/vhosts/pamgmt/protected/models/LDAPModel.php (18)
+in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php (27)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/23 10:21:00 [error] [php] fsockopen() expects parameter 2 to be long, string given (/home/httpd/vhosts/pamgmt/protected/components/StatsD.php:44)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php(31): StatsD->gauge()
+#1 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/
+in /home/httpd/vhosts/pamgmt/protected/components/StatsD.php (44)
+in /home/httpd/vhosts/pamgmt/protected/components/StatsD.php (25)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (31)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+2014/05/23 11:39:39 [error] [php] Undefined variable: in (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:67)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#3 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#12 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (67)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (30)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (35)
+2014/05/23 13:38:02 [error] [php] Undefined variable: socket (/home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php:79)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CModel.php(159): CInlineValidator->validate()
+#4 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(129): LoginForm->validate()
+#5 /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php(35): SiteController->actionLogin()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): SiteController->runAction()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (79)
+in /home/httpd/vhosts/pamgmt/protected/components/GraphiteSocket.php (66)
+in /home/httpd/vhosts/pamgmt/protected/components/UserIdentity.php (30)
+in /home/httpd/vhosts/pamgmt/protected/models/LoginForm.php (52)
+in /home/httpd/vhosts/pamgmt/protected/controllers/SiteController.php (129)
+2014/05/23 17:15:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "notes/list".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('notes/list')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/notes/list?page=1&project_id=102
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/23 17:31:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "create".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('create')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('notes/create')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/notes/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/23 17:55:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "update".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('update')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('update')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('notes/update')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/notes/update
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---

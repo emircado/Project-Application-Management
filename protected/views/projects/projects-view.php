@@ -105,10 +105,10 @@
 
         <!-- PROJECT NOTES HERE -->
         <?php 
-            // $this->renderPartial('//projects/notes/notes-list');
-            // $this->renderPartial('//projects/notes/notes-create'); 
-            // $this->renderPartial('//projects/notes/notes-view');
-            // $this->renderPartial('//projects/notes/notes-edit');
+            $this->renderPartial('//projects/project_notes/project-notes-list');
+            $this->renderPartial('//projects/project_notes/project-notes-create'); 
+            $this->renderPartial('//projects/project_notes/project-notes-view');
+            $this->renderPartial('//projects/project_notes/project-notes-edit');
         ?>
 
         <!-- CONTACT PERSONS HERE -->

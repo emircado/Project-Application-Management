@@ -45,21 +45,22 @@ class ApplicationsController extends Controller
         foreach($model as $row)
         {
             $data[] = array(
-                'application_id'    => $row->application_id,
-                'project_id'        => $row->project_id,
-                'type_id'           => $row->type_id,
-                'name'              => $row->name,
-                'description'       => $row->description,
-                'accessibility'     => $row->accessibility,
-                'repository_url'    => $row->repository_url,
-                'instructions'      => $row->instructions,
-                'rd_point_person'   => $row->rd_point_person,
-                'production_date'   => $row->production_date,
-                'termination_date'  => $row->termination_date,
-                'date_created'      => $row->date_created,
-                'date_updated'      => $row->date_updated,
-                'created_by'        => $row->created_by,
-                'updated_by'        => $row->updated_by,
+                'application_id'        => $row->application_id,
+                'project_id'            => $row->project_id,
+                'type_id'               => $row->type_id,
+                'name'                  => $row->name,
+                'description'           => $row->description,
+                'accessibility'         => $row->accessibility,
+                'repository_url'        => $row->repository_url,
+                'uses_mobile_patterns'  => $row->uses_mobile_patterns,
+                'instructions'          => $row->instructions,
+                'rd_point_person'       => $row->rd_point_person,
+                'production_date'       => $row->production_date,
+                'termination_date'      => $row->termination_date,
+                'date_created'          => $row->date_created,
+                'date_updated'          => $row->date_updated,
+                'created_by'            => $row->created_by,
+                'updated_by'            => $row->updated_by,
             );
         }
 
@@ -75,6 +76,15 @@ class ApplicationsController extends Controller
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['name']                   = trim($data['name']);
+            $data['description']            = trim($data['description']);
+            $data['accessibility']          = trim($data['accessibility']);
+            $data['repository_url']         = trim($data['repository_url']);
+            $data['instructions']           = trim($data['instructions']);
+            $data['production_date']        = trim($data['production_date']);
+            $data['termination_date']       = trim($data['termination_date']);
+            $data['uses_mobile_patterns']   = ($data['uses_mobile_patterns'] == 'true')? 1 : 0;
+
             //FORM VALIDATION HERE
             $errors = array();
             //code is required
@@ -99,16 +109,27 @@ class ApplicationsController extends Controller
             }
 
             if (count($errors) == 0) {
-                $data['date_updated'] = date("Y-m-d H:i:s");
-                $data['updated_by'] = Yii::app()->user->name;
-                Applications::model()->updateByPk($data['application_id'], $data);
+                $updates = array(
+                    'name'                  => $data['name'],
+                    'type_id'               => $data['type_id'],
+                    'accessibility'         => $data['accessibility'],
+                    'description'           => $data['description'],
+                    'accessibility'         => $data['accessibility'],
+                    'repository_url'        => $data['repository_url'],
+                    'uses_mobile_patterns'  => $data['uses_mobile_patterns'],
+                    'description'           => $data['description'],
+                    'instructions'          => $data['instructions'],
+                    'rd_point_person'       => $data['rd_point_person'],
+                    'production_date'       => $data['production_date'],
+                    'termination_date'      => $data['termination_date'],
+                    'date_updated'          => date("Y-m-d H:i:s"),
+                    'updated_by'            => Yii::app()->user->name,
+                );
+                Applications::model()->updateByPk($data['application_id'], $updates);
 
                 echo CJSON::encode(array(
                     'type' => 'success',
-                    'data' => array(
-                        'updated_by' => $data['updated_by'],
-                        'date_updated' => $data['date_updated'],
-                    )
+                    'data' => $updates
                 ));
             } else {
                 echo CJSON::encode(array(
@@ -129,6 +150,16 @@ class ApplicationsController extends Controller
         $data = $_POST;
 
         if (!empty($data)) {
+            $data['name']                   = trim($data['name']);
+            $data['description']            = trim($data['description']);
+            $data['accessibility']          = trim($data['accessibility']);
+            $data['repository_url']         = trim($data['repository_url']);
+            $data['description']            = trim($data['description']);
+            $data['instructions']           = trim($data['instructions']);
+            $data['production_date']        = trim($data['production_date']);
+            $data['termination_date']       = trim($data['termination_date']);
+            $data['uses_mobile_patterns']   = ($data['uses_mobile_patterns'] == 'true')? 1 : 0;
+
             //FORM VALIDATION HERE
             $errors = array();
             //code is required
@@ -155,19 +186,20 @@ class ApplicationsController extends Controller
             //data is good
             if (count($errors) == 0) {
                 $application = new Applications;
-                $application->project_id        = $data['project_id'];
-                $application->type_id           = $data['type_id'];
-                $application->name              = $data['name'];
-                $application->description       = $data['description'];
-                $application->accessibility     = $data['accessibility'];
-                $application->repository_url    = $data['repository_url'];
-                $application->instructions      = $data['instructions'];
-                $application->rd_point_person   = $data['rd_point_person'];
-                $application->production_date   = $data['production_date'];
-                $application->termination_date  = $data['termination_date'];
-                $application->date_created      = date("Y-m-d H:i:s");
-                $application->date_updated      = '0000-00-00 00:00:00';
-                $application->created_by        = Yii::app()->user->name;
+                $application->project_id            = $data['project_id'];
+                $application->type_id               = $data['type_id'];
+                $application->name                  = $data['name'];
+                $application->description           = $data['description'];
+                $application->accessibility         = $data['accessibility'];
+                $application->repository_url        = $data['repository_url'];
+                $application->uses_mobile_patterns  = $data['uses_mobile_patterns'];
+                $application->instructions          = $data['instructions'];
+                $application->rd_point_person       = $data['rd_point_person'];
+                $application->production_date       = $data['production_date'];
+                $application->termination_date      = $data['termination_date'];
+                $application->date_created          = date("Y-m-d H:i:s");
+                $application->date_updated          = '0000-00-00 00:00:00';
+                $application->created_by            = Yii::app()->user->name;
                 $application->save();
 
                 echo CJSON::encode(array(
@@ -194,6 +226,7 @@ class ApplicationsController extends Controller
 
         if (!empty($data)) {
             Applications::model()->deleteByPk($data['application_id']);
+            ApplicationServers::model()->deleteAll('application_id=:application_id', array(':application_id' => $data['application_id']));
 
             echo CJSON::encode(array(
                 'type' => 'success',

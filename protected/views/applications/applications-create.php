@@ -47,6 +47,15 @@
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Uses Mobile Patterns</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field">
+                        <input id="create-applications-pattern" type="checkbox" style="margin-top:5px;"></input>
+                        <span style="font-size:12px;"><i>(Check if Yes)</i></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">

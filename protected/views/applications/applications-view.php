@@ -45,6 +45,14 @@
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Uses Mobile Patterns</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span class="value" id="view-applications-pattern"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
@@ -120,6 +128,13 @@
             </div>
         </div>
     </form>
+
+    <?php
+        $this->renderPartial('//applications/application_notes/application-notes-list');
+        $this->renderPartial('//applications/application_notes/application-notes-create');
+        $this->renderPartial('//applications/application_notes/application-notes-view');
+        $this->renderPartial('//applications/application_notes/application-notes-edit');
+    ?>
 
     <?php
         $this->renderPartial('//applications/application_servers/application-servers-list');

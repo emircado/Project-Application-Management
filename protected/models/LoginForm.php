@@ -97,8 +97,8 @@ class LoginForm extends CFormModel
 
 			//SESSION HERE
 			// session_start();
-			$_SESSION['username'] = $this->username;
-			$_SESSION['password'] = $this->password;
+			$_SESSION['username'] = $this->username;//Yii::app()->getSecurityManager()->encrypt($this->username, Yii::app()->params['salt']);
+			$_SESSION['password'] = $this->password;//Yii::app()->getSecurityManager()->encrypt($this->password, Yii::app()->params['salt']);
 
 			return true;
 
