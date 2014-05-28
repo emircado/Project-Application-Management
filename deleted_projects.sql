@@ -22,3 +22,9 @@ INSERT INTO `project_point_persons` (`project_id`, `username`, `user_group`, `de
 
 INSERT INTO `projects` (`project_id`, `name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`, `created_by`, `updated_by`) VALUES
 ('186', '', '33333', '', 'ACTIVE', '0000-00-00', '0000-00-00', '2014-05-07 11:29:40', '0000-00-00 00:00:00', 'ermercado', NULL);
+
+INSERT INTO `projects` (`project_id`, `name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`, `created_by`, `updated_by`) VALUES
+('182', '', 'ASDFF', '', 'ACTIVE', '0000-00-00', '0000-00-00', '2014-05-05 19:00:00', '0000-00-00 00:00:00', 'ermercado', NULL);
+
+INSERT INTO `project_contact_persons` (`project_id`, `name`, `company`, `position`, `contact_numbers`, `email`, `address`, `notes`, `date_created`, `date_updated`) VALUES
+('182', 'a', '', '', '', 'yo@yo.yo', '', '', '2014-05-05 19:05:03', '0000-00-00 00:00:00');

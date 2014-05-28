@@ -1,5 +1,5 @@
 <!-- view applications view -->
-<div id="view-applications-view" class="contact-info plain-list" style="display:none;">
+<div id="applications-view" class="contact-info plain-list" style="display:none;">
     <!-- CONTENT HERE -->
     <form>
         <input type="hidden" id="applications-view-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -7,8 +7,8 @@
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
                     <h3><b>Details</b></h3>&nbsp&nbsp
-                    <a id="applications-edit" href="#">[Edit]</a>
-                    <a id="applications-delete" href="#" style="float:right;">[Delete]</a>
+                    <a id="applications-view-edit-button" href="#">[Edit]</a>
+                    <a id="applications-view-delete-button" href="#" style="float:right;">[Delete]</a>
                 </div>
             </div>
             <div id="edit-primary-content" class="content">
@@ -16,7 +16,7 @@
                     <div class="field-secondary"><span class="label">Name</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-name"></span>
+                            <span class="value" id="applications-view-name"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -24,7 +24,7 @@
                     <div class="field-secondary"><span class="label">Type</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-type"></span>
+                            <span class="value" id="applications-view-type"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -32,7 +32,7 @@
                     <div class="field-secondary"><span class="label">Accessibility</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-accessibility"></span>
+                            <span class="value" id="applications-view-accessibility"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -40,7 +40,7 @@
                     <div class="field-secondary"><span class="label">Repository</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-repository"></span>
+                            <span class="value" id="applications-view-repository"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -48,7 +48,7 @@
                     <div class="field-secondary"><span class="label">Uses Mobile Patterns</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-pattern"></span>
+                            <span class="value" id="applications-view-pattern"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -56,7 +56,7 @@
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-description"></span>
+                            <span class="value" id="applications-view-description"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -64,7 +64,7 @@
                     <div class="field-secondary"><span class="label">Instructions</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-instructions"></span>
+                            <span class="value" id="applications-view-instructions"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -72,7 +72,7 @@
                     <div class="field-secondary"><span class="label">R<?php echo htmlentities("&"); ?>D Point Person</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-pointperson"></span>
+                            <span class="value" id="applications-view-pointperson"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -80,7 +80,7 @@
                     <div class="field-secondary"><span class="label">Production Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-production"></span>
+                            <span class="value" id="applications-view-production"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -88,7 +88,7 @@
                     <div class="field-secondary"><span class="label">Termination Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-termination"></span>
+                            <span class="value" id="applications-view-termination"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -96,7 +96,7 @@
                     <div class="field-secondary"><span class="label">Date Created</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-created"></span>
+                            <span class="value" id="applications-view-created"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -104,7 +104,7 @@
                     <div class="field-secondary"><span class="label">Created by</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-createdby"></span>
+                            <span class="value" id="applications-view-createdby"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -112,7 +112,7 @@
                     <div class="field-secondary"><span class="label">Date Updated</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-updated"></span>
+                            <span class="value" id="applications-view-updated"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -120,11 +120,11 @@
                     <div class="field-secondary"><span class="label">Updated by</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field no-border">
-                            <span class="value" id="view-applications-updatedby"></span>
+                            <span class="value" id="applications-view-updatedby"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
-                <a id="view-applications-back" href="#">[Back]</a>
+                <a id="applications-view-back-button" href="#">[Back]</a>
             </div>
         </div>
     </form>

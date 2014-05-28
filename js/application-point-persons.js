@@ -4,22 +4,24 @@ var AppPointPersonsList = function(application_id)
     self.getDataURL = baseURL + '/applicationpointpersons/list';
     self._request = null;
 
+    self.containerID    = 'app-point-persons-list';
+    
+    //for pagination
+    self.nextID         = 'app-point-persons-list-next';
+    self.prevID         = 'app-point-persons-list-prev';
+    self.totalDataID    = 'app-point-persons-list-total';
+    self.totalPartID    = 'app-point-persons-list-part';
+    
+    //for table
+    self.tableID        = 'app-point-persons-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'app-point-persons-list-row';
+
     //buttons
-    self.viewID = 'a[id^=app-point-persons-list-view_]';
+    self.viewButtonID   = 'a[id^=app-point-persons-list-view_]';
     self.createButtonID = 'app-point-persons-list-create-button';
-
-    //container
-    self.containerID = 'app-point-persons-list';
-
-    //table
-    self.nextID = 'app-point-persons-list-next';
-    self.prevID = 'app-point-persons-list-prev';
-    self.currentPage = 1;
-    self.resultData = [];
-    self.totalDataID = 'app-point-persons-list-total';
-    self.totalPartID = 'app-point-persons-list-part';
-    self.tableID = 'app-point-persons-list-table';
-    self.tableRowClass = 'app-point-persons-list-row';
 
     self.init = function()
     {
@@ -72,7 +74,6 @@ var AppPointPersonsList = function(application_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
-
                 contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
                             + '<td>'+val['user_group']+'</td>'
                             + '<td class="actions-col two-column">'
@@ -139,8 +140,8 @@ var AppPointPersonsList = function(application_id)
         });
         
         //VIEW CONTACT PERSON
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
@@ -194,26 +195,25 @@ var AppPointPersonsCreate = function(application_id)
     self.postDataURL = baseURL + '/applicationpointpersons/create';
     self._request = null;
 
-    //buttons
-    self.saveButtonID = 'app-point-persons-create-save-button';
-    self.cancelButtonID = 'app-point-persons-create-cancel-button';
+    self.containerID        = 'app-point-persons-create';
 
-    //container
-    self.containerID = 'app-point-persons-create';
+    //buttons
+    self.saveButtonID       = 'app-point-persons-create-save-button';
+    self.cancelButtonID     = 'app-point-persons-create-cancel-button';
 
     //fields
-    self.createUsernameID =     'app-point-persons-create-username';
-    self.createUsergroupID =    'app-point-persons-create-usergroup';
-    self.createDescriptionID =  'app-point-persons-create-description';
-    self.usernameRowClass =     'app-point-persons-create-username-row';
-    self.usergroupRowClass =    'app-point-persons-create-usergroup-row';
+    self.fieldUsernameID    = 'app-point-persons-create-username';
+    self.fieldUsergroupID   = 'app-point-persons-create-usergroup';
+    self.fieldDescriptionID = 'app-point-persons-create-description';
+    self.csrfID             = 'app-point-persons-create-csrf';
 
-    //for csrf
-    self.csrfID = 'app-point-persons-create-csrf';
+    //dropdown classes
+    self.usernameRowClass   = 'app-point-persons-create-username-row';
+    self.usergroupRowClass  = 'app-point-persons-create-usergroup-row';
 
     //errors
-    self.createUsernameErrorID = 'app-point-persons-create-username-error';
-    self.createUsergroupErrorID = 'app-point-persons-create-usergroup-error';
+    self.errorUsernameID    = 'app-point-persons-create-username-error';
+    self.errorUsergroupID   = 'app-point-persons-create-usergroup-error';
 
     self.init = function()
     {
@@ -229,9 +229,9 @@ var AppPointPersonsCreate = function(application_id)
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : application_id,
-                'username'          : $(self.createUsernameID).value.trim(),
-                'user_group'        : $(self.createUsergroupID).value.trim(),
-                'description'       : $(self.createDescriptionID).value.trim()
+                'username'          : $(self.fieldUsernameID).value.trim(),
+                'user_group'        : $(self.fieldUsergroupID).value.trim(),
+                'description'       : $(self.fieldDescriptionID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -243,17 +243,16 @@ var AppPointPersonsCreate = function(application_id)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        $(self.createUsernameErrorID).setStyle('display', 'none');
-                        $(self.createUsergroupErrorID).setStyle('display', 'none');
+
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'USERNAME_ERROR') {
-                                $(self.createUsernameErrorID).set('html', msg[1]);
-                                $(self.createUsernameErrorID).setStyle('display', 'block');
+                                $(self.errorUsernameID).set('html', msg[1]);
+                                $(self.errorUsernameID).setStyle('display', 'block');
                             } else if (msg[0] == 'USERGROUP_ERROR') {
-                                $(self.createUsergroupErrorID).set('html', msg[1]);
-                                $(self.createUsergroupErrorID).setStyle('display', 'block');
+                                $(self.errorUsergroupID).set('html', msg[1]);
+                                $(self.errorUsergroupID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -279,14 +278,14 @@ var AppPointPersonsCreate = function(application_id)
             'value' : '',
             'html'  : '--Select Username--'
         });
-        contentElem.inject($(self.createUsernameID), 'bottom');
+        contentElem.inject($(self.fieldUsernameID), 'bottom');
         contentElem = new Element('<option />',
         {
             'class' : self.usergroupRowClass,
             'value' : '',
             'html'  : '--Select User Group--'
         });
-        contentElem.inject($(self.createUsergroupID), 'bottom');
+        contentElem.inject($(self.fieldUsergroupID), 'bottom');
 
         ProjectsSite.ldapGroupsObj.ldapGroupsData.each(function(val, idx)
         {
@@ -296,7 +295,7 @@ var AppPointPersonsCreate = function(application_id)
                 'value' : idx,
                 'html'  : idx
             });
-            contentElem.inject($(self.createUsergroupID), 'bottom');
+            contentElem.inject($(self.fieldUsergroupID), 'bottom');
         });
     }
 
@@ -307,6 +306,8 @@ var AppPointPersonsCreate = function(application_id)
         $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorUsernameID).setStyle('display', 'none');
+            $(self.errorUsergroupID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
@@ -316,19 +317,20 @@ var AppPointPersonsCreate = function(application_id)
         {
             e.preventDefault();
             //clean form
-            $(self.createUsernameID).value = '';
-            $(self.createUsergroupID).set('html', '');
-            $(self.createDescriptionID).value = '';
+            $(self.fieldUsernameID).value = '';
+            $(self.fieldUsergroupID).set('html', '');
+            $(self.fieldDescriptionID).value = '';
 
-            $(self.createUsernameErrorID).setStyle('display', 'none');
-            
+            $(self.errorUsernameID).setStyle('display', 'none');
+            $(self.errorUsergroupID).setStyle('display', 'none');
+
             $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initObj(application_id);
         });
 
         //USER GROUP DROPDOWN
-        $(self.createUsergroupID).removeEvents();
-        $(self.createUsergroupID).addEvent('change', function(e)
+        $(self.fieldUsergroupID).removeEvents();
+        $(self.fieldUsergroupID).addEvent('change', function(e)
         {
             var usergroup = this.getElement(':selected').value;
 
@@ -340,7 +342,7 @@ var AppPointPersonsCreate = function(application_id)
                 'value' : '',
                 'html'  : '--Select Username--'
             });
-            contentElem.inject($(self.createUsernameID), 'bottom');
+            contentElem.inject($(self.fieldUsernameID), 'bottom');
 
             if (usergroup != '') {
                 ProjectsSite.ldapGroupsObj.ldapGroupsData.get(usergroup).each(function(val, idx) {
@@ -350,7 +352,7 @@ var AppPointPersonsCreate = function(application_id)
                         'value' : idx,
                         'html'  : val
                     });
-                    contentElem.inject($(self.createUsernameID), 'bottom');
+                    contentElem.inject($(self.fieldUsernameID), 'bottom');
                 });
             }
         });
@@ -363,27 +365,22 @@ var AppPointPersonsView = function(data)
     self.postDataURL = baseURL + '/applicationpointpersons/delete';
     self._request = null;
 
-    //display
-    self.containerID = 'app-point-persons-view';
-
-    //buttons
-    self.editButtonID = 'app-point-persons-edit-button';
-    self.deleteButtonID = 'app-point-persons-delete-button';
-    self.backButtonID = 'app-point-persons-back-button';
-
-    //back to list
+    self.containerID        = 'app-point-persons-view';
 
     //fields
-    self.viewUsernameID = 'app-point-persons-view-username';
-    self.viewUsergroupID = 'app-point-persons-view-usergroup';
-    self.viewDescriptionID = 'app-point-persons-view-description';
-    self.viewCreatedID = 'app-point-persons-view-created';
-    self.viewUpdatedID = 'app-point-persons-view-updated';
-    self.viewCreatedByID = 'app-point-persons-view-createdby';
-    self.viewUpdatedByID = 'app-point-persons-view-updatedby';
+    self.fieldUsernameID    = 'app-point-persons-view-username';
+    self.fieldUsergroupID   = 'app-point-persons-view-usergroup';
+    self.fieldDescriptionID = 'app-point-persons-view-description';
+    self.fieldCreatedID     = 'app-point-persons-view-created';
+    self.fieldUpdatedID     = 'app-point-persons-view-updated';
+    self.fieldCreatedByID   = 'app-point-persons-view-createdby';
+    self.fieldUpdatedByID   = 'app-point-persons-view-updatedby';
+    self.csrfID             = 'app-point-persons-view-csrf';
 
-    //for csrf
-    self.csrfID = 'app-point-persons-view-csrf';
+    //buttons
+    self.editButtonID       = 'app-point-persons-edit-button';
+    self.deleteButtonID     = 'app-point-persons-delete-button';
+    self.backButtonID       = 'app-point-persons-back-button';
 
     self.init = function()
     {
@@ -430,16 +427,16 @@ var AppPointPersonsView = function(data)
         var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewUsernameID).set('html', (displayname == null)? data['username'] : displayname);
-        $(self.viewUsergroupID).set('html', data['user_group']);
-        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedByID).set('html', createdby);
-        $(self.viewUpdatedByID).set('html', updatedby);
+        $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.fieldUsergroupID).set('html', data['user_group']);
+        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', createdby);
+        $(self.fieldUpdatedByID).set('html', updatedby);
     }
 
     self.addEvents = function()
@@ -483,20 +480,17 @@ var AppPointPersonsEdit = function(data)
     self.postDataURL = baseURL + '/applicationpointpersons/update';
     self._request = null;
 
-    //display
-    self.containerID = 'app-point-persons-edit';
+    self.containerID        = 'app-point-persons-edit';
 
     //fields
-    self.editUsernameID = 'app-point-persons-edit-username';
-    self.editUsergroupID = 'app-point-persons-edit-usergroup';
-    self.editDescriptionID = 'app-point-persons-edit-description';
-
-    //for csrf
-    self.csrfID = 'app-point-persons-edit-csrf';
+    self.fieldUsernameID    = 'app-point-persons-edit-username';
+    self.fieldUsergroupID   = 'app-point-persons-edit-usergroup';
+    self.fieldDescriptionID = 'app-point-persons-edit-description';
+    self.csrfID             = 'app-point-persons-edit-csrf';
 
     //buttons
-    self.saveButtonID = 'app-point-persons-edit-save-button';
-    self.cancelButtonID = 'app-point-persons-edit-cancel-button';
+    self.saveButtonID       = 'app-point-persons-edit-save-button';
+    self.cancelButtonID     = 'app-point-persons-edit-cancel-button';
 
     self.init = function()
     {
@@ -513,7 +507,7 @@ var AppPointPersonsEdit = function(data)
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : data['application_id'],
                 'username'          : data['username'],
-                'description'       : $(self.editDescriptionID).value.trim(),
+                'description'       : $(self.fieldDescriptionID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -553,9 +547,9 @@ var AppPointPersonsEdit = function(data)
     {
         var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
 
-        $(self.editUsernameID).set('html', (displayname == null)? data['username'] : displayname);
-        $(self.editUsergroupID).set('html', data['user_group']);
-        $(self.editDescriptionID).value = data['description'];
+        $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.fieldUsergroupID).set('html', data['user_group']);
+        $(self.fieldDescriptionID).value = data['description'];
     }
 
     self.addEvents = function()
@@ -574,9 +568,9 @@ var AppPointPersonsEdit = function(data)
         {
             e.preventDefault();
             //clean form
-            $(self.editUsernameID).set('html', '');
-            $(self.editUsergroupID).set('html', '');
-            $(self.editDescriptionID).value = '';
+            $(self.fieldUsernameID).set('html', '');
+            $(self.fieldUsergroupID).set('html', '');
+            $(self.fieldDescriptionID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initView(data);

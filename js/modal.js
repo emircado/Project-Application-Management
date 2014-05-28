@@ -74,17 +74,21 @@ var ApplicationTypesModal = function(onConfirm)
     self.postDataURL = baseURL + '/applicationtypes/create';
     
     self.modalID = 'application-type-modal';
+
+    //fields
     self.inputID = 'application-type-input';
-    self.tableID = 'application-type-table';
-    self.tableRowClass = 'application-type-row';
     self.csrfID = 'application-type-modal-csrf';
 
-    self.cancelButtonID = 'application-type-modal-cancel-button';
-    self.confirmButtonID = 'application-type-modal-confirm-button';
-
+    //for table
+    self.tableID = 'application-type-table';
+    self.tableRowClass = 'application-type-row';
     self.tableRowID = 'tr[id^=type_]';
     self.rowSelected = '';
     self.choices = ProjectsSite.appTypesObj.appTypes;
+
+    //buttons
+    self.cancelButtonID = 'application-type-modal-cancel-button';
+    self.confirmButtonID = 'application-type-modal-confirm-button';
 
     self.show = function()
     {
@@ -106,7 +110,7 @@ var ApplicationTypesModal = function(onConfirm)
         {
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'name'              : $(self.inputID).value
+                'name'              : $(self.inputID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -765,33 +769,33 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     self._request = null;
     self.postDataURL = baseURL + '/servers/create';
 
-    self.modalID = 'app-servers-create-modal';
-    self.overlayID = 'overlay';
-    self.dialogWrapperID = 'dialog-wrapper';
+    self.modalID            = 'app-servers-create-modal';
+    self.overlayID          = 'overlay';
+    self.dialogWrapperID    = 'dialog-wrapper';
 
     // fields
-    self.createTypeID = 'app-servers-create-modal-type';
-    self.createNameID = 'app-servers-create-modal-name';
-    self.createHostID = 'app-servers-create-modal-host';
-    self.createPublicID = 'app-servers-create-modal-public';
-    self.createPrivateID = 'app-servers-create-modal-private';
-    self.createNetworkID = 'app-servers-create-modal-network';
-    self.createLocationID = 'app-servers-create-modal-location';
-    self.createDescriptionID = 'app-servers-create-modal-description';
-    self.createProductionID = 'app-servers-create-modal-production';
-    self.createTerminationID = 'app-servers-create-modal-termination';
-    self.createCSRFID = 'app-servers-create-modal-csrf';
+    self.fieldTypeID        = 'app-servers-create-modal-type';
+    self.fieldNameID        = 'app-servers-create-modal-name';
+    self.fieldHostID        = 'app-servers-create-modal-host';
+    self.fieldPublicID      = 'app-servers-create-modal-public';
+    self.fieldPrivateID     = 'app-servers-create-modal-private';
+    self.fieldNetworkID     = 'app-servers-create-modal-network';
+    self.fieldLocationID    = 'app-servers-create-modal-location';
+    self.fieldDescriptionID = 'app-servers-create-modal-description';
+    self.fieldProductionID  = 'app-servers-create-modal-production';
+    self.fieldTerminationID = 'app-servers-create-modal-termination';
+    self.csrfID             = 'app-servers-create-modal-csrf';
 
     // errors
-    self.createTypeErrorID = 'app-servers-create-modal-type-error';
-    self.createNetworkErrorID = 'app-servers-create-modal-network-error';
-    self.createPublicErrorID = 'app-servers-create-modal-public-error';
-    self.createPrivateErrorID = 'app-servers-create-modal-private-error';    
+    self.errorTypeID        = 'app-servers-create-modal-type-error';
+    self.errorNetworkID     = 'app-servers-create-modal-network-error';
+    self.errorPublicID      = 'app-servers-create-modal-public-error';
+    self.errorPrivateID     = 'app-servers-create-modal-private-error';    
 
     //buttons
-    self.closeID = 'app-servers-create-modal-close-button';
-    self.cancelButtonID = 'app-servers-create-modal-cancel-button';
-    self.confirmButtonID = 'app-servers-create-modal-create-button';
+    self.closeButtonID      = 'app-servers-create-modal-close-button';
+    self.cancelButtonID     = 'app-servers-create-modal-cancel-button';
+    self.confirmButtonID    = 'app-servers-create-modal-create-button';
 
     self.show = function()
     {
@@ -804,11 +808,11 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
 
     self.renderData = function()
     {
-        $(self.createTypeID).set('html', data['server_type']);
-        $(self.createNameID).value = data['name'];
-        $(self.createNetworkID).value = ((data['network'] == null)? '' : data['network']);
-        $(self.createPublicID).value = ((data['public_ip'] == null)? '' : data['public_ip']);
-        $(self.createPrivateID).value = ((data['private_ip'] == null)? '' : data['private_ip']);
+        $(self.fieldTypeID).set('html', data['server_type']);
+        $(self.fieldNameID).value = data['name'];
+        $(self.fieldNetworkID).value = ((data['network'] == null)? '' : data['network']);
+        $(self.fieldPublicID).value = ((data['public_ip'] == null)? '' : data['public_ip']);
+        $(self.fieldPrivateID).value = ((data['private_ip'] == null)? '' : data['private_ip']);
     }
 
     self.closeModal = function()
@@ -818,21 +822,21 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.dialogWrapperID).setStyle('display', 'none');
 
         // clear form
-        $(self.createTypeErrorID).setStyle('display', 'none');
-        $(self.createNetworkErrorID).setStyle('display', 'none');
-        $(self.createPublicErrorID).setStyle('display', 'none');
-        $(self.createPrivateErrorID).setStyle('display', 'none');
+        $(self.errorTypeID).setStyle('display', 'none');
+        $(self.errorNetworkID).setStyle('display', 'none');
+        $(self.errorPublicID).setStyle('display', 'none');
+        $(self.errorPrivateID).setStyle('display', 'none');
 
-        $(self.createTypeID).set('html', '');
-        $(self.createNameID).value = '';
-        $(self.createHostID).value = '';
-        $(self.createPublicID).value = '';
-        $(self.createPrivateID).value = '';
-        $(self.createNetworkID).value = '';
-        $(self.createLocationID).value = '';
-        $(self.createDescriptionID).value = '';
-        $(self.createProductionID).value = '';
-        $(self.createTerminationID).value = '';
+        $(self.fieldTypeID).set('html', '');
+        $(self.fieldNameID).value = '';
+        $(self.fieldHostID).value = '';
+        $(self.fieldPublicID).value = '';
+        $(self.fieldPrivateID).value = '';
+        $(self.fieldNetworkID).value = '';
+        $(self.fieldLocationID).value = '';
+        $(self.fieldDescriptionID).value = '';
+        $(self.fieldProductionID).value = '';
+        $(self.fieldTerminationID).value = '';
     }
 
     self.postAjaxData = function()
@@ -840,17 +844,17 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.createCSRFID).value,
-                'name'              : $(self.createNameID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
+                'name'              : $(self.fieldNameID).value,
                 'server_type'       : data['server_type'],
-                'hostname'          : $(self.createHostID).value,
-                'public_ip'         : $(self.createPublicID).value,
-                'private_ip'        : $(self.createPrivateID).value,
-                'network'           : $(self.createNetworkID).value,
-                'location'          : $(self.createLocationID).value,
-                'description'       : $(self.createDescriptionID).value,
-                'production_date'   : $(self.createProductionID).value,
-                'termination_date'  : $(self.createTerminationID).value
+                'hostname'          : $(self.fieldHostID).value,
+                'public_ip'         : $(self.fieldPublicID).value,
+                'private_ip'        : $(self.fieldPrivateID).value,
+                'network'           : $(self.fieldNetworkID).value,
+                'location'          : $(self.fieldLocationID).value,
+                'description'       : $(self.fieldDescriptionID).value,
+                'production_date'   : $(self.fieldProductionID).value,
+                'termination_date'  : $(self.fieldTerminationID).value
             };
 
             self._request = new Request.JSON(
@@ -871,22 +875,22 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'NETWORK_ERROR') {
-                                $(self.createNetworkErrorID).set('html', msg[1]);
-                                $(self.createNetworkErrorID).setStyle('display', 'block');
+                                $(self.errorNetworkID).set('html', msg[1]);
+                                $(self.errorNetworkID).setStyle('display', 'block');
                             } else if (msg[0] == 'TYPE_ERROR') {
-                                $(self.createTypeErrorID).set('html', msg[1]);
-                                $(self.createTypeErrorID).setStyle('display', 'block');
+                                $(self.errorTypeID).set('html', msg[1]);
+                                $(self.errorTypeID).setStyle('display', 'block');
                             } else if (msg[0] == 'PUBLIC_ERROR') {
-                                $(self.createPublicErrorID).set('html', msg[1]);
-                                $(self.createPublicErrorID).setStyle('display', 'block');
+                                $(self.errorPublicID).set('html', msg[1]);
+                                $(self.errorPublicID).setStyle('display', 'block');
                             
                                 new AppServersNoticeModal(
                                     'Notice', msg[1], response['duplicate'], 'OK',
                                     function(){})
                                 .show();
                             } else if (msg[0] == 'PRIVATE_ERROR') {
-                                $(self.createPrivateErrorID).set('html', msg[1]);
-                                $(self.createPrivateErrorID).setStyle('display', 'block');
+                                $(self.errorPrivateID).set('html', msg[1]);
+                                $(self.errorPrivateID).setStyle('display', 'block');
 
                                 new AppServersNoticeModal(
                                     'Notice', msg[1], response['duplicate'], 'OK',
@@ -923,6 +927,10 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.confirmButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorNetworkID).setStyle('display', 'none');
+            $(self.errorTypeID).setStyle('display', 'none');
+            $(self.errorPrivateID).setStyle('display', 'none');
+            $(self.errorPublicID).setStyle('display', 'none');
             self.postAjaxData();
         });
 

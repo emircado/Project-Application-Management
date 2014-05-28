@@ -1,5 +1,5 @@
 <!-- edit applications view -->
-<div id="edit-applications-view" class="contact-info plain-list" style="display:none;">
+<div id="applications-edit" class="contact-info plain-list" style="display:none;">
     <!-- FORM HERE -->
     <form>
         <input type="hidden" id="applications-edit-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -13,16 +13,16 @@
                     <div class="field-secondary"><span class="label">Name</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-name" type="text" class="text"></input>
+                        <input id="applications-edit-name" type="text" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Type</span></div>
-                    <div id="edit-applications-modal-container" class="field-primary">
+                    <div id="applications-edit-modal-container" class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-type" type="text" class="text"/>
-                        <span id="edit-applications-type-error" class="field-input-name-error error-message" style="display: none;"></span>
+                        <input id="applications-edit-type" type="text" class="text"/>
+                        <span id="applications-edit-type-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -31,10 +31,10 @@
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <?php echo ZHtml::enumDropDownList(Applications::model(), 'accessibility', array(
-                            'id'=>'edit-applications-accessibility',
+                            'id'=>'applications-edit-accessibility',
                             'class' => 'select',
                         )); ?>
-                        <span id="edit-applications-accessibility-error" class="field-input-name-error error-message" style="display: none;"></span>
+                        <span id="applications-edit-accessibility-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -42,7 +42,7 @@
                     <div class="field-secondary"><span class="label">Repository</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-repository" type="text" class="text"></input>
+                        <input id="applications-edit-repository" type="text" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -50,7 +50,7 @@
                     <div class="field-secondary"><span class="label">Uses Mobile Patterns</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-pattern" type="checkbox" style="margin-top:5px;"></input>
+                        <input id="applications-edit-pattern" type="checkbox" style="margin-top:5px;"></input>
                         <span style="font-size:12px;"><i>(Check if Yes)</i></span>
                         </div>
                     </div><!-- End Field Primary -->
@@ -59,7 +59,7 @@
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <textarea id="edit-applications-description" rows="4" class="text"></textarea>
+                        <textarea id="applications-edit-description" rows="4" class="text"></textarea>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -67,7 +67,7 @@
                     <div class="field-secondary"><span class="label">Instructions</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <textarea id="edit-applications-instructions" rows="4" class="text"></textarea>
+                        <textarea id="applications-edit-instructions" rows="4" class="text"></textarea>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -75,7 +75,7 @@
                     <div class="field-secondary"><span class="label">R<?php echo htmlentities("&"); ?>D Point Person</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <select id="edit-applications-pointperson" class="select">
+                        <select id="applications-edit-pointperson" class="select">
                         </select>
                         </div>
                     </div><!-- End Field Primary -->
@@ -84,7 +84,7 @@
                     <div class="field-secondary"><span class="label">Production Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-production" type="date" class="text"></input>
+                        <input id="applications-edit-production" type="date" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -92,7 +92,7 @@
                     <div class="field-secondary"><span class="label">Termination Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="edit-applications-termination" type="date" class="text"></input>
+                        <input id="applications-edit-termination" type="date" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -100,10 +100,10 @@
                     <div class="field field-text">
                         <div class="field-action-content">
                             <div class="pseudo-field pseudo-button">
-                                <a id="edit-applications-cancel-button" class="cancel" href="#">Cancel</a>
+                                <a id="applications-edit-cancel-button" class="cancel" href="#">Cancel</a>
                             </div>
                             <div class="pseudo-field pseudo-button primary-button">
-                                <button id="edit-applications-save-button">Save Changes</button>
+                                <button id="applications-edit-save-button">Save Changes</button>
                             </div>
                         </div><!-- End Field Action Content -->
                     </div><!-- End Field Action -->

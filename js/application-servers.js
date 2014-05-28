@@ -4,28 +4,28 @@ var AppServersList = function(application_id)
     self.getDataURL = baseURL + '/applicationservers/list';
     self._request = null;
 
-    //container
-    self.appserversListID = 'app-servers-list';
+    self.containerID    = 'app-servers-list';
+
+    //for pagination
+    self.nextID         = 'app-servers-list-next';
+    self.prevID         = 'app-servers-list-prev';
+    self.totalDataID    = 'app-servers-list-total';
+    self.totalPartID    = 'app-servers-list-part';
+
+    //for table
+    self.tableID        = 'app-servers-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'app-servers-list-row';
 
     //buttons
-    self.viewID = 'a[id^=app-servers-view_]';
-    self.createButtonID = 'app-servers-add-button';
-
-    //table
-    self.tableID = 'app-servers-table';
-    self.tableRowClass = 'app-servers-row';
-    self.currentPage = 1;
-    self.resultData = [];
-
-    //nav
-    self.nextID = 'app-servers-next';
-    self.prevID = 'app-servers-prev';
-    self.totalDataID = 'app-servers-total';
-    self.totalPartID = 'app-servers-part';
+    self.viewButtonID   = 'a[id^=app-servers-list-view_]';
+    self.createButtonID = 'app-servers-list-create-button';
 
     self.init = function()
     {
-        $(self.appserversListID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
     }
 
@@ -75,7 +75,7 @@ var AppServersList = function(application_id)
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+val['server_type']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="app-servers-view_' + idx + '" href="#" title="View Server">View</a>'
+                            + '<a id="app-servers-list-view_' + idx + '" href="#" title="View Server">View</a>'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -133,16 +133,16 @@ var AppServersList = function(application_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.appserversListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initCreate(application_id);
         });
 
         // VIEW APP SERVER
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.appserversListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
     }
@@ -193,35 +193,35 @@ var AppServersCreate = function(application_id)
     self.postDataURL = baseURL + '/applicationservers/create';
     self._request = null;
 
-    // modals
-    self.searchModal = new AppServersSearchModal();
-    self.listModal = new AppServersListModal();
+    //containers
+    self.containerID    = 'app-servers-create';
+    self.searchModalContainerID = 'app-servers-create-modal-container';
+    self.createMoreID   = 'app-servers-create-more';
+    self.searchModal    = new AppServersSearchModal();
+    self.listModal      = new AppServersListModal();
 
-    //container
-    self.createAppServerID = 'create-app-servers-view';
-    self.searchModalContainerID = 'create-app-servers-modal-container';
-    self.createMoreID = 'create-app-servers-more';
-
+    //buttons
+    self.createButtonID = 'app-servers-create-save-button';
+    self.cancelButtonID = 'app-servers-create-cancel-button';
+    self.listButtonID   = 'app-servers-create-advanced-button';
+    
     //fields
-    self.createCSRFID = 'create-app-servers-csrf';
-    self.createTypeID = 'create-app-servers-type';
-    self.createServerID = 'create-app-servers-server';
-    self.createPathID = 'create-app-servers-path';
-    self.createLogID = 'create-app-servers-log';
+    self.fieldTypeID    = 'app-servers-create-type';
+    self.fieldServerID  = 'app-servers-create-server';
+    self.fieldPathID    = 'app-servers-create-path';
+    self.fieldLogID     = 'app-servers-create-log';
+    self.csrfID         = 'app-servers-create-csrf';
     self.selectedServer = '';
 
     //error fields
-    self.createTypeErrorID = 'create-app-servers-type-error';
-    self.createServerErrorID = 'create-app-servers-server-error';
+    self.errorTypeID    = 'app-servers-create-type-error';
+    self.errorServerID  = 'app-servers-create-server-error';
 
-    //buttons
-    self.createButtonID = 'create-app-servers-add-button';
-    self.cancelButtonID = 'create-app-servers-cancel-button';
-    self.listButtonID = 'create-app-servers-advanced';
+    self.checkDuplicate = true;
 
     self.init = function()
     {
-        $(self.createAppServerID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         $(self.searchModalContainerID).grab($(self.searchModal.modalID), 'top');
         self.addEvents();
     }
@@ -231,11 +231,12 @@ var AppServersCreate = function(application_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.createCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : application_id,
                 'server_id'         : self.selectedServer,
-                'application_path'  : $(self.createPathID).value,
-                'application_log'   : $(self.createLogID).value
+                'application_path'  : $(self.fieldPathID).value,
+                'application_log'   : $(self.fieldLogID).value,
+                'check_duplicate'   : self.checkDuplicate
             };
 
             self._request = new Request.JSON(
@@ -253,8 +254,8 @@ var AppServersCreate = function(application_id)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'SERVER_ERROR') {
-                                $(self.createServerErrorID).set('html', msg[1]);
-                                $(self.createServerErrorID).setStyle('display', 'block');
+                                $(self.errorServerID).set('html', msg[1]);
+                                $(self.errorServerID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -273,18 +274,18 @@ var AppServersCreate = function(application_id)
     self.addEvents = function()
     {
         // SERVER FIELD
-        $(self.createServerID).removeEvents();
-        $(self.createServerID).addEvent('focus', function(e)
+        $(self.fieldServerID).removeEvents();
+        $(self.fieldServerID).addEvent('focus', function(e)
         {
             e.preventDefault();
             $(this).blur();
-            var servertype = $(self.createTypeID).value;
+            var servertype = $(self.fieldTypeID).value;
 
             if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
                 self.searchModal = new AppServersSearchModal(servertype, self.setSelectedServer);
                 self.searchModal.show(); 
             } else {
-                $(self.createServerID).set('disabled', true);
+                $(self.fieldServerID).set('disabled', true);
             }
         });
 
@@ -293,12 +294,12 @@ var AppServersCreate = function(application_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.createTypeErrorID).setStyle('display', 'none');
-            $(self.createServerErrorID).setStyle('display', 'none');
+            $(self.errorTypeID).setStyle('display', 'none');
+            $(self.errorServerID).setStyle('display', 'none');
 
-            if ($(self.createTypeID).value == '') {
-                $(self.createTypeErrorID).set('html', 'Please chooose a server type');
-                $(self.createTypeErrorID).setStyle('display', 'block');
+            if ($(self.fieldTypeID).value == '') {
+                $(self.errorTypeID).set('html', 'Please chooose a server type');
+                $(self.errorTypeID).setStyle('display', 'block');
             } else {
                 self.postAjaxData();
             }
@@ -309,12 +310,12 @@ var AppServersCreate = function(application_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.createAppServerID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             
-            $(self.createTypeID).value = '';
-            $(self.createServerID).value = '';
-            $(self.createPathID).value = '';
-            $(self.createLogID).value = '';
+            $(self.fieldTypeID).value = '';
+            $(self.fieldServerID).value = '';
+            $(self.fieldPathID).value = '';
+            $(self.fieldLogID).value = '';
             self.selectedServer = '';
             $(self.createMoreID).setStyle('display', 'none');
 
@@ -326,43 +327,43 @@ var AppServersCreate = function(application_id)
         $(self.listButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            var servertype = $(self.createTypeID).value;
+            var servertype = $(self.fieldTypeID).value;
 
             if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
                 self.listModal = new AppServersListModal(servertype, self.setSelectedServer);
                 self.searchModal.closeModal();
                 self.listModal.show();
             } else {
-                $(self.createServerID).set('disabled', true);
+                $(self.fieldServerID).set('disabled', true);
             }
         });
 
         // SELECT SERVER TYPE DROPDOWN
-        $(self.createTypeID).removeEvents();
-        $(self.createTypeID).addEvent('change', function(e)
+        $(self.fieldTypeID).removeEvents();
+        $(self.fieldTypeID).addEvent('change', function(e)
         {
             e.preventDefault();
             var servertype = this.getElement(':selected').value;
 
-            $(self.createServerID).value = '';
+            $(self.fieldServerID).value = '';
             self.searchModal.closeModal();
             if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
                 $(self.createMoreID).setStyle('display', 'block');
-                $(self.createServerID).set('disabled', false);
-                $(self.createTypeErrorID).setStyle('display', 'none');
-                $(self.createServerErrorID).setStyle('display', 'none');
+                $(self.fieldServerID).set('disabled', false);
+                $(self.errorTypeID).setStyle('display', 'none');
+                $(self.errorServerID).setStyle('display', 'none');
                 self.selectedServer = '';
             } else {
                 $(self.createMoreID).setStyle('display', 'none');
-                $(self.createServerID).set('disabled', true);
+                $(self.fieldServerID).set('disabled', true);
                 self.selectedServer = '';
             }
         });
 
         self.setSelectedServer = function(server) {
-            $(self.createServerID).value = server['name'];
+            $(self.fieldServerID).value = server['name'];
             self.selectedServer = server['server_id'];
-            $(self.createServerErrorID).setStyle('display', 'none');
+            $(self.errorServerID).setStyle('display', 'none');
         }
     }
 }
@@ -373,36 +374,39 @@ var AppServersView = function(data)
     self.postDataURL = baseURL + '/applicationservers/delete';
     self._request = null;
 
-    //container
-    self.viewAppServerID = 'view-app-servers-view';
-    self.detailsContainerID = 'view-app-servers-details-container';
-
-    //buttons
-    self.editID = 'app-servers-edit-button';
-    self.deleteID = 'app-servers-delete-button';
-    self.viewToListID = 'view-app-servers-back';
-    self.detailsID = 'view-app-servers-details';
-
-    self._isDetailsShown = false;
+    self.containerID        = 'app-servers-view';
+    self.detailsContainerID = 'app-servers-view-details-container';
 
     //fields
-    self.viewNameID = 'view-app-servers-name';
-    self.viewTypeID = 'view-app-servers-type';
-    self.viewPrivateID = 'view-app-servers-private';
-    self.viewPublicID = 'view-app-servers-public';
-    self.viewHostID = 'view-app-servers-host';
-    self.viewNetworkID = 'view-app-servers-network';
-    self.viewPathID = 'view-app-servers-path';
-    self.viewLogID = 'view-app-servers-log';
-    self.viewCreatedID = 'view-app-servers-created';
-    self.viewCreatedByID = 'view-app-servers-createdby';
-    self.viewUpdatedID = 'view-app-servers-updated';
-    self.viewUpdatedByID = 'view-app-servers-updatedby';
-    self.viewCSRFID = 'view-app-servers-csrf';
+    self.fieldNameID        = 'app-servers-view-name';
+    self.fieldTypeID        = 'app-servers-view-type';
+    self.fieldPrivateID     = 'app-servers-view-private';
+    self.fieldPublicID      = 'app-servers-view-public';
+    self.fieldHostID        = 'app-servers-view-host';
+    self.fieldNetworkID     = 'app-servers-view-network';
+    self.fieldPathID        = 'app-servers-view-path';
+    self.fieldLogID         = 'app-servers-view-log';
+    self.fieldCreatedID     = 'app-servers-view-created';
+    self.fieldCreatedByID   = 'app-servers-view-createdby';
+    self.fieldUpdatedID     = 'app-servers-view-updated';
+    self.fieldUpdatedByID   = 'app-servers-view-updatedby';
+    self.csrfID             = 'app-servers-view-csrf';
+
+    self._isDetailsShown    = false;
+
+    //buttons
+    self.editButtonID       = 'app-servers-edit-button';
+    self.deleteButtonID     = 'app-servers-delete-button';
+    self.backButtonID       = 'app-servers-view-back-button';
+    self.detailsButtonID    = 'app-servers-view-details-button';
 
     self.init = function()
     {
-        $(self.viewAppServerID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
+        
+        $(self.detailsContainerID).setStyle('display', 'none');
+        self._isDetailsShown = false;
+
         self.renderData();
         self.addEvents();
     }
@@ -412,7 +416,7 @@ var AppServersView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : data['application_id'],
                 'server_id'         : data['server_id'],
             };
@@ -429,7 +433,7 @@ var AppServersView = function(data)
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
 
-                        $(self.viewToListID).click();
+                        $(self.backButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -446,53 +450,53 @@ var AppServersView = function(data)
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewNameID).set('html', data['name']);
-        $(self.viewTypeID).set('html', data['server_type']);
-        $(self.viewPrivateID).set('html', ((data['private_ip'] == null)? 'NONE': data['private_ip']));
-        $(self.viewPublicID).set('html', ((data['public_ip'] == null)? 'NONE': data['public_ip']));
-        $(self.viewHostID).set('html', data['hostname']);
-        $(self.viewNetworkID).set('html', data['network']);
-        $(self.viewPathID).set('html', data['application_path']);
-        $(self.viewLogID).set('html', data['application_log']);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldNameID).set('html', data['name']);
+        $(self.fieldTypeID).set('html', data['server_type']);
+        $(self.fieldPrivateID).set('html', ((data['private_ip'] == null)? 'NONE': data['private_ip']));
+        $(self.fieldPublicID).set('html', ((data['public_ip'] == null)? 'NONE': data['public_ip']));
+        $(self.fieldHostID).set('html', data['hostname']);
+        $(self.fieldNetworkID).set('html', data['network']);
+        $(self.fieldPathID).set('html', data['application_path']);
+        $(self.fieldLogID).set('html', data['application_log']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
     {
         // EDIT APP SERVER
-        $(self.editID).removeEvents()
-        $(self.editID).addEvent('click', function(e)
+        $(self.editButtonID).removeEvents()
+        $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewAppServerID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initEdit(data);
         });
 
         // VIEW SERVER DETAILS
-        $(self.detailsID).removeEvents();
-        $(self.detailsID).addEvent('click', function(e)
+        $(self.detailsButtonID).removeEvents();
+        $(self.detailsButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             if (self._isDetailsShown) {
                 $(self.detailsContainerID).setStyle('display', 'none');
                 self._isDetailsShown = false;
-                $(self.detailsID).set('html', '[server details]');
+                $(self.detailsButtonID).set('html', '[server details]');
             } else {
                 $(self.detailsContainerID).setStyle('display', 'block');
                 self._isDetailsShown = true;
-                $(self.detailsID).set('html', '[hide details]');
+                $(self.detailsButtonID).set('html', '[hide details]');
             }
         });
 
         // DELETE APP SERVER
-        $(self.deleteID).removeEvents()
-        $(self.deleteID).addEvent('click', function(e)
+        $(self.deleteButtonID).removeEvents()
+        $(self.deleteButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -504,11 +508,11 @@ var AppServersView = function(data)
         });
 
         // BACK TO LIST BUTTON
-        $(self.viewToListID).removeEvents();
-        $(self.viewToListID).addEvent('click', function(e)
+        $(self.backButtonID).removeEvents();
+        $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewAppServerID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initObj(data['application_id']);
         });
     }
@@ -520,22 +524,21 @@ var AppServersEdit = function(data)
     self.postDataURL = baseURL + '/applicationservers/update';
     self._request = null;
 
-    // containers
-    self.editAppServerID = 'edit-app-servers-view';
+    self.containerID    = 'app-servers-edit';
 
     //fields
-    self.editServerID = 'edit-app-servers-server';
-    self.editPathID = 'edit-app-servers-path';
-    self.editLogID = 'edit-app-servers-log';
-    self.editCSRFID = 'edit-app-servers-csrf';
+    self.fieldServerID  = 'app-servers-edit-server';
+    self.fieldPathID    = 'app-servers-edit-path';
+    self.fieldLogID     = 'app-servers-edit-log';
+    self.csrfID    = 'app-servers-edit-csrf';
 
     //buttons
-    self.cancelButtonID = 'edit-app-servers-cancel-button';
-    self.editButtonID = 'edit-app-servers-save-button';
+    self.cancelButtonID = 'app-servers-edit-cancel-button';
+    self.saveButtonID   = 'app-servers-edit-save-button';
 
     self.init = function()
     {
-        $(self.editAppServerID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -545,11 +548,11 @@ var AppServersEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN':   $(self.editCSRFID).value,
+                'YII_CSRF_TOKEN':   $(self.csrfID).value,
                 'application_id':   data['application_id'],
                 'server_id':        data['server_id'],
-                'application_path': $(self.editPathID).value,
-                'application_log' : $(self.editLogID).value
+                'application_path': $(self.fieldPathID).value.trim(),
+                'application_log' : $(self.fieldLogID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -563,8 +566,8 @@ var AppServersEdit = function(data)
                         self._request.stop;
                         console.log(response['data']);
                     } else if (response['type'] == 'success') {
-                        data['application_path']    = params['application_path'];
-                        data['application_log']     = params['application_log'];
+                        data['application_path']    = response['data']['application_path'];
+                        data['application_log']     = response['data']['application_log'];
                         data['date_updated']        = response['data']['date_updated'];
                         data['updated_by']          = response['data']['updated_by'];
 
@@ -582,16 +585,16 @@ var AppServersEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editServerID).set('html', data['name']);
-        $(self.editPathID).value = data['application_path'];
-        $(self.editLogID).value = data['application_log'];
+        $(self.fieldServerID).set('html', data['name']);
+        $(self.fieldPathID).value = data['application_path'];
+        $(self.fieldLogID).value = data['application_log'];
     }
 
     self.addEvents = function()
     {
         // SAVE BUTTON
-        $(self.editButtonID).removeEvents();
-        $(self.editButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             self.postAjaxData();
@@ -602,12 +605,12 @@ var AppServersEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.editAppServerID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
 
             // clear form
-            $(self.editServerID).set('html', '');
-            $(self.editPathID).value = '';
-            $(self.editLogID).value = '';
+            $(self.fieldServerID).set('html', '');
+            $(self.fieldPathID).value = '';
+            $(self.fieldLogID).value = '';
 
             AppServersSite.initView(data);
         });

@@ -4,29 +4,29 @@ var ApplicationsList = function(project_id)
     self.getDataURL = baseURL + '/applications/list';
     self._request = null;
 
-    //container
-    self.applicationsListID = 'applications-list';
+    self.containerID    = 'applications-list';
     
+    //for pagination
+    self.nextID         = 'applications-list-next';
+    self.prevID         = 'applications-list-prev';
+    self.totalDataID    = 'applications-list-total';
+    self.totalPartID    = 'applications-list-part';
+
+    //for table
+    self.tableID        = 'applications-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'applications-list-row';
+
     //buttons
-    self.viewID = 'a[id^=applications-view_]';
-    self.createButtonID = 'applications-button-add';
-
-    //table
-    self.tableID = 'applications-table';
-    self.tableRowClass = 'applications-row';
-    self.currentPage = 1;
-    self.resultData = [];
-
-    //nav
-    self.nextID = 'applications-next';
-    self.prevID = 'applications-prev';
-    self.totalDataID = 'applications-total';
-    self.totalPartID = 'applications-part';
+    self.viewButtonID   = 'a[id^=applications-list-view_]';
+    self.createButtonID = 'applications-list-create-button';
 
     self.init = function()
     {   
         $$('.'+self.tableRowClass).dispose();
-        $(self.applicationsListID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
     }
 
@@ -74,13 +74,11 @@ var ApplicationsList = function(project_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var pointperson = ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(val['rd_point_person']);
-
-
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+ProjectsSite.appTypesObj.appTypes.keyOf(val['type_id'])+'</td>'
                             + '<td>'+((pointperson == null)? '' : pointperson)+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="applications-view_' + idx + '" href="#" title="View Application"><span class="">View</span></a>&nbsp'
+                            + '<a id="applications-list-view_' + idx + '" href="#" title="View Application"><span class="">View</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -138,16 +136,16 @@ var ApplicationsList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.applicationsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ApplicationsSite.initCreate(project_id);
         });
 
         //VIEW CONTACT PERSON
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.applicationsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ApplicationsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
     }
@@ -197,38 +195,39 @@ var ApplicationsCreate = function(project_id)
     var self = this;
     self.postDataURL = baseURL + '/applications/create';
     self._request = null;
+
+    self.containerID = 'applications-create';
+    self.modalContainerID = 'applications-create-modal-container';
     self.typeModal = new ApplicationTypesModal();
 
-    self.createApplicationID = 'applications-create';
-    self.createModalContainerID = 'create-applications-modal-container';
-
     //fields
-    self.createNameID = 'create-applications-name';
-    self.createTypeID = 'create-applications-type';
-    self.createAccessibilityID = 'create-applications-accessibility';
-    self.createRepositoryID = 'create-applications-repository';
-    self.createDescriptionID = 'create-applications-description';
-    self.createInstructionsID = 'create-applications-instructions';
-    self.createPointPersonID = 'create-applications-pointperson';
-    self.createProductionID = 'create-applications-production';
-    self.createTerminationID = 'create-applications-termination';
-    self.createPatternID = 'create-applications-pattern';
-    self.createCSRFID = 'applications-create-csrf';
+    self.fieldNameID           = 'applications-create-name';
+    self.fieldTypeID           = 'applications-create-type';
+    self.fieldAccessibilityID  = 'applications-create-accessibility';
+    self.fieldRepositoryID     = 'applications-create-repository';
+    self.fieldDescriptionID    = 'applications-create-description';
+    self.fieldInstructionsID   = 'applications-create-instructions';
+    self.fieldPointPersonID    = 'applications-create-pointperson';
+    self.fieldProductionID     = 'applications-create-production';
+    self.fieldTerminationID    = 'applications-create-termination';
+    self.fieldPatternID        = 'applications-create-pattern';
+    self.csrfID                = 'applications-create-csrf';
 
+    //dropdown class
+    self.pointPersonRowClass   = 'applications-create-pointperson-row';
+    
     //error fields
-    self.createTypeErrorID = 'create-applications-type-error';
-    self.createAccessibilityErrorID = 'create-applications-accessibility-error';
-
-    self.pointPersonRowClass = 'create-applications-pointperson-row';
+    self.errorTypeID           = 'applications-create-type-error';
+    self.errorAccessibilityID  = 'applications-create-accessibility-error';
 
     //buttons
-    self.createButtonID = 'create-applications-create-button';
-    self.cancelButtonID = 'create-applications-cancel-button';
+    self.createButtonID        = 'applications-create-save-button';
+    self.cancelButtonID        = 'applications-create-cancel-button';
 
     self.init = function()
     {
-        $(self.createApplicationID).setStyle('display', 'block');
-        $(self.createModalContainerID).grab($(self.typeModal.modalID), 'top');
+        $(self.containerID).setStyle('display', 'block');
+        $(self.modalContainerID).grab($(self.typeModal.modalID), 'top');
         self.initDropdown();
         self.addEvents();
     }
@@ -238,18 +237,18 @@ var ApplicationsCreate = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN':       $(self.createCSRFID).value,
+                'YII_CSRF_TOKEN':       $(self.csrfID).value,
                 'project_id':           project_id,
-                'name':                 $(self.createNameID).value.trim(),
-                'type_name':            $(self.createTypeID).value.trim(),
-                'accessibility':        $(self.createAccessibilityID).value.trim(),
-                'repository_url':       $(self.createRepositoryID).value.trim(),
-                'uses_mobile_patterns': $(self.createPatternID).checked,
-                'description':          $(self.createDescriptionID).value.trim(),
-                'instructions':         $(self.createInstructionsID).value.trim(),
-                'rd_point_person':      $(self.createPointPersonID).value.trim(),
-                'production_date':      $(self.createProductionID).value.trim(),
-                'termination_date':     $(self.createTerminationID).value.trim()
+                'name':                 $(self.fieldNameID).value.trim(),
+                'type_name':            $(self.fieldTypeID).value.trim(),
+                'accessibility':        $(self.fieldAccessibilityID).value.trim(),
+                'repository_url':       $(self.fieldRepositoryID).value.trim(),
+                'uses_mobile_patterns': $(self.fieldPatternID).checked,
+                'description':          $(self.fieldDescriptionID).value.trim(),
+                'instructions':         $(self.fieldInstructionsID).value.trim(),
+                'rd_point_person':      $(self.fieldPointPersonID).value.trim(),
+                'production_date':      $(self.fieldProductionID).value.trim(),
+                'termination_date':     $(self.fieldTerminationID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -261,17 +260,15 @@ var ApplicationsCreate = function(project_id)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        $(self.createTypeErrorID).setStyle('display', 'none');
-                        $(self.createAccessibilityErrorID).setStyle('display', 'none');
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'TYPE_ERROR') {
-                                $(self.createTypeErrorID).set('html', msg[1]);
-                                $(self.createTypeErrorID).setStyle('display', 'block');
+                                $(self.errorTypeID).set('html', msg[1]);
+                                $(self.errorTypeID).setStyle('display', 'block');
                             } else if (msg[0] == 'ACCESSIBILITY_ERROR') {
-                                $(self.createAccessibilityErrorID).set('html', msg[1]);
-                                $(self.createAccessibilityErrorID).setStyle('display', 'block');
+                                $(self.errorAccessibilityID).set('html', msg[1]);
+                                $(self.errorAccessibilityID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -292,15 +289,15 @@ var ApplicationsCreate = function(project_id)
     self.addEvents = function()
     {
         // prevent focus on type field
-        $(self.createTypeID).removeEvents();
-        $(self.createTypeID).addEvent('focus', function(e)
+        $(self.fieldTypeID).removeEvents();
+        $(self.fieldTypeID).addEvent('focus', function(e)
         {
             e.preventDefault();
             $(this).blur();
 
             self.typeModal = new ApplicationTypesModal(
                 function(app_type) {
-                    $(self.createTypeID).value = app_type;
+                    $(self.fieldTypeID).value = app_type;
                 }
             );
             self.typeModal.show();
@@ -311,6 +308,8 @@ var ApplicationsCreate = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorTypeID).setStyle('display', 'none');
+            $(self.errorAccessibilityID).setStyle('display', 'none');
             self.postAjaxData();
         });
     
@@ -319,19 +318,19 @@ var ApplicationsCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.createApplicationID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
 
             // clear form
             self.typeModal.closeModal();
-            $(self.createNameID).value = '';
-            $(self.createTypeID).value = '';
-            $(self.createAccessibilityID).value = 'PUBLIC';
-            $(self.createRepositoryID).value = '';
-            $(self.createDescriptionID).value = '';
-            $(self.createInstructionsID).value = '';
-            $(self.createPointPersonID).set('html', '');
-            $(self.createProductionID).value = '0000-00-00';
-            $(self.createTerminationID).value = '0000-00-00';
+            $(self.fieldNameID).value = '';
+            $(self.fieldTypeID).value = '';
+            $(self.fieldAccessibilityID).value = 'PUBLIC';
+            $(self.fieldRepositoryID).value = '';
+            $(self.fieldDescriptionID).value = '';
+            $(self.fieldInstructionsID).value = '';
+            $(self.fieldPointPersonID).set('html', '');
+            $(self.fieldProductionID).value = '0000-00-00';
+            $(self.fieldTerminationID).value = '0000-00-00';
 
             ApplicationsSite.initObj(project_id);
         });
@@ -347,7 +346,7 @@ var ApplicationsCreate = function(project_id)
             'value' : '',
             'html'  : '--Select Point Person--'
         });
-        contentElem.inject($(self.createPointPersonID), 'bottom');
+        contentElem.inject($(self.fieldPointPersonID), 'bottom');
 
         hash = new Hash(ProjectsSite.ldapGroupsObj.ldapGroupsData['DEVELOPERS']);
         hash.each(function(val, idx) {
@@ -357,7 +356,7 @@ var ApplicationsCreate = function(project_id)
                 'value' : idx,
                 'html'  : val
             });
-            contentElem.inject($(self.createPointPersonID), 'bottom');
+            contentElem.inject($(self.fieldPointPersonID), 'bottom');
         });
     }
 }
@@ -369,38 +368,38 @@ var ApplicationsView = function(data)
     self._request = null;
 
     //display
-    self.viewViewID = 'view-applications-view';
-
-    //buttons
-    self.editID = 'applications-edit';
-    self.deleteID = 'applications-delete';
-    self.viewToListID = 'view-applications-back';
+    self.containerID            = 'applications-view';
 
     //fields
-    self.viewNameID = 'view-applications-name';
-    self.viewTypeID = 'view-applications-type';
-    self.viewAccessibilityID = 'view-applications-accessibility';
-    self.viewRepositoryID = 'view-applications-repository';
-    self.viewPatternID = 'view-applications-pattern';
-    self.viewDescriptionID = 'view-applications-description';
-    self.viewInstructionsID = 'view-applications-instructions';
-    self.viewPointPersonID = 'view-applications-pointperson';
-    self.viewProductionID = 'view-applications-production';
-    self.viewTerminationID = 'view-applications-termination';
-    self.viewCreatedID = 'view-applications-created';
-    self.viewCreatedbyID = 'view-applications-createdby';
-    self.viewUpdatedID = 'view-applications-updated';
-    self.viewUpdatedbyID = 'view-applications-updatedby';
-
-    //for csrf
-    self.viewCSRFID = 'applications-view-csrf';
+    self.fieldNameID            = 'applications-view-name';
+    self.fieldTypeID            = 'applications-view-type';
+    self.fieldAccessibilityID   = 'applications-view-accessibility';
+    self.fieldRepositoryID      = 'applications-view-repository';
+    self.fieldPatternID         = 'applications-view-pattern';
+    self.fieldDescriptionID     = 'applications-view-description';
+    self.fieldInstructionsID    = 'applications-view-instructions';
+    self.fieldPointPersonID     = 'applications-view-pointperson';
+    self.fieldProductionID      = 'applications-view-production';
+    self.fieldTerminationID     = 'applications-view-termination';
+    self.fieldCreatedID         = 'applications-view-created';
+    self.fieldCreatedbyID       = 'applications-view-createdby';
+    self.fieldUpdatedID         = 'applications-view-updated';
+    self.fieldUpdatedbyID       = 'applications-view-updatedby';
+    self.csrfID                 = 'applications-view-csrf';
+    
+    //buttons
+    self.editButtonID           = 'applications-view-edit-button';
+    self.deleteButtonID         = 'applications-view-delete-button';
+    self.backButtonID           = 'applications-view-back-button';
 
     self.init = function()
     {
-        $(self.viewViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
+        
         ApplicationNotesSite.init(data['application_id']);
         AppServersSite.init(data['application_id']);
         AppPointPersonsSite.init(data['application_id']);
+        
         self.renderData();
         self.addEvents();
     }
@@ -410,7 +409,7 @@ var ApplicationsView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : data['application_id']
             };
 
@@ -425,7 +424,7 @@ var ApplicationsView = function(data)
                         self._request.stop;
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
-                        $(self.viewToListID).click();
+                        $(self.backButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -441,41 +440,41 @@ var ApplicationsView = function(data)
     {
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
-        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? '' : data['termination_date'];
-        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : data['production_date'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['termination_date']);
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['production_date']);
 
-        $(self.viewNameID).set('html', data['name']);
-        $(self.viewTypeID).set('html', ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']));
-        $(self.viewAccessibilityID).set('html', data['accessibility']);
-        $(self.viewRepositoryID).set('html', data['repository_url']);
-        $(self.viewPatternID).set('html', (data['uses_mobile_patterns'] == 1)? 'YES' : 'NO');
-        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewInstructionsID).set('html', '<pre>'+data['instructions']);
-        $(self.viewPointPersonID).set('html', ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(data['rd_point_person']));
-        $(self.viewProductionID).set('html', production);
-        $(self.viewTerminationID).set('html', termination);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldNameID).set('html', data['name']);
+        $(self.fieldTypeID).set('html', ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']));
+        $(self.fieldAccessibilityID).set('html', data['accessibility']);
+        $(self.fieldRepositoryID).set('html', data['repository_url']);
+        $(self.fieldPatternID).set('html', (data['uses_mobile_patterns'] == 1)? 'YES' : 'NO');
+        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        $(self.fieldInstructionsID).set('html', '<pre>'+data['instructions']);
+        $(self.fieldPointPersonID).set('html', ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(data['rd_point_person']));
+        $(self.fieldProductionID).set('html', production);
+        $(self.fieldTerminationID).set('html', termination);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
     {
         //EDIT CONTACT PERSON
-        $(self.editID).removeEvents();
-        $(self.editID).addEvent('click', function(e)
+        $(self.editButtonID).removeEvents();
+        $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ApplicationsSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
-        $(self.deleteID).removeEvents();
-        $(self.deleteID).addEvent('click', function(e)
+        $(self.deleteButtonID).removeEvents();
+        $(self.deleteButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -487,11 +486,11 @@ var ApplicationsView = function(data)
         });
 
         //GO BACK TO THE LIST
-        $(self.viewToListID).removeEvents();
-        $(self.viewToListID).addEvent('click', function(e)
+        $(self.backButtonID).removeEvents();
+        $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ApplicationsSite.initObj(data['project_id']);
         });
     }
@@ -502,38 +501,39 @@ var ApplicationsEdit = function(data)
     var self = this;
     self.postDataURL = baseURL + '/applications/update';
     self._request = null;
-    self.typeModal = new ApplicationTypesModal();
 
-    self.editApplicationID = 'edit-applications-view';
-    self.editModalContainerID = 'edit-applications-modal-container';
+    self.containerID            = 'applications-edit';
+    self.modalContainerID       = 'applications-edit-modal-container';
+    self.typeModal              = new ApplicationTypesModal();
 
     //fields
-    self.editNameID = 'edit-applications-name';
-    self.editTypeID = 'edit-applications-type';
-    self.editAccessibilityID = 'edit-applications-accessibility';
-    self.editRepositoryID = 'edit-applications-repository';
-    self.editDescriptionID = 'edit-applications-description';
-    self.editInstructionsID = 'edit-applications-instructions';
-    self.editPointPersonID = 'edit-applications-pointperson';
-    self.editProductionID = 'edit-applications-production';
-    self.editTerminationID = 'edit-applications-termination';
-    self.editPatternID = 'edit-applications-pattern';
-    self.editCSRFID = 'applications-edit-csrf';
+    self.fieldNameID            = 'applications-edit-name';
+    self.fieldTypeID            = 'applications-edit-type';
+    self.fieldAccessibilityID   = 'applications-edit-accessibility';
+    self.fieldRepositoryID      = 'applications-edit-repository';
+    self.fieldDescriptionID     = 'applications-edit-description';
+    self.fieldInstructionsID    = 'applications-edit-instructions';
+    self.fieldPointPersonID     = 'applications-edit-pointperson';
+    self.fieldProductionID      = 'applications-edit-production';
+    self.fieldTerminationID     = 'applications-edit-termination';
+    self.fieldPatternID         = 'applications-edit-pattern';
+    self.csrfID                 = 'applications-edit-csrf';
+
+    //dropdown class
+    self.pointPersonRowClass = 'applications-edit-pointperson-row';
 
     //error fields
-    self.editTypeErrorID = 'edit-applications-type-error';
-    self.editAccessibilityErrorID = 'edit-applications-accessibility-error';
-
-    self.pointPersonRowClass = 'edit-applications-pointperson-row';
+    self.errorTypeID = 'applications-edit-type-error';
+    self.errorAccessibilityID = 'applications-edit-accessibility-error';
 
     //buttons
-    self.editButtonID = 'edit-applications-save-button';
-    self.cancelButtonID = 'edit-applications-cancel-button';
+    self.saveButtonID = 'applications-edit-save-button';
+    self.cancelButtonID = 'applications-edit-cancel-button';
 
     self.init = function()
     {
-        $(self.editApplicationID).setStyle('display', 'block');
-        $(self.editModalContainerID).grab($(self.typeModal.modalID), 'top');
+        $(self.containerID).setStyle('display', 'block');
+        $(self.modalContainerID).grab($(self.typeModal.modalID), 'top');
         self.initDropdown();
         self.renderData();
         self.addEvents();
@@ -544,22 +544,20 @@ var ApplicationsEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN':       $(self.editCSRFID).value,
+                'YII_CSRF_TOKEN':       $(self.csrfID).value,
                 'application_id':       data['application_id'],
                 'project_id':           data['project_id'],
-                'name':                 $(self.editNameID).value.trim(),
-                'type_name':            $(self.editTypeID).value.trim(),
-                'accessibility':        $(self.editAccessibilityID).value.trim(),
-                'repository_url':       $(self.editRepositoryID).value.trim(),
-                'uses_mobile_patterns': $(self.editPatternID).checked,
-                'description':          $(self.editDescriptionID).value.trim(),
-                'instructions':         $(self.editInstructionsID).value.trim(),
-                'rd_point_person':      $(self.editPointPersonID).value.trim(),
-                'production_date':      $(self.editProductionID).value,
-                'termination_date':     $(self.editTerminationID).value
+                'name':                 $(self.fieldNameID).value.trim(),
+                'type_name':            $(self.fieldTypeID).value.trim(),
+                'accessibility':        $(self.fieldAccessibilityID).value.trim(),
+                'repository_url':       $(self.fieldRepositoryID).value.trim(),
+                'uses_mobile_patterns': $(self.fieldPatternID).checked,
+                'description':          $(self.fieldDescriptionID).value.trim(),
+                'instructions':         $(self.fieldInstructionsID).value.trim(),
+                'rd_point_person':      $(self.fieldPointPersonID).value.trim(),
+                'production_date':      $(self.fieldProductionID).value,
+                'termination_date':     $(self.fieldTerminationID).value
             };
-
-            console.log(params);
 
             self._request = new Request.JSON(
             {
@@ -570,17 +568,15 @@ var ApplicationsEdit = function(data)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        $(self.editTypeErrorID).setStyle('display', 'none');
-                        $(self.editAccessibilityErrorID).setStyle('display', 'none');
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'TYPE_ERROR') {
-                                $(self.editTypeErrorID).set('html', msg[1]);
-                                $(self.editTypeErrorID).setStyle('display', 'block');
+                                $(self.errorTypeID).set('html', msg[1]);
+                                $(self.errorTypeID).setStyle('display', 'block');
                             } else if (msg[0] == 'ACCESSIBILITY_ERROR') {
-                                $(self.editAccessibilityErrorID).set('html', msg[1]);
-                                $(self.editAccessibilityErrorID).setStyle('display', 'block');
+                                $(self.errorAccessibilityID).set('html', msg[1]);
+                                $(self.errorAccessibilityID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -613,40 +609,42 @@ var ApplicationsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editNameID).value            = data['name'];
-        $(self.editTypeID).value            = ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']);
-        $(self.editAccessibilityID).value   = data['accessibility'];
-        $(self.editRepositoryID).value      = data['repository_url'];
-        $(self.editPatternID).checked       = (data['uses_mobile_patterns'] == 1)? true : false;
-        $(self.editDescriptionID).value     = data['description'];
-        $(self.editInstructionsID).value    = data['instructions'];
-        $(self.editPointPersonID).value     = data['rd_point_person'];
-        $(self.editProductionID).value      = data['production_date'];
-        $(self.editTerminationID).value     = data['termination_date'];
+        $(self.fieldNameID).value            = data['name'];
+        $(self.fieldTypeID).value            = ProjectsSite.appTypesObj.appTypes.keyOf(data['type_id']);
+        $(self.fieldAccessibilityID).value   = data['accessibility'];
+        $(self.fieldRepositoryID).value      = data['repository_url'];
+        $(self.fieldPatternID).checked       = (data['uses_mobile_patterns'] == 1)? true : false;
+        $(self.fieldDescriptionID).value     = data['description'];
+        $(self.fieldInstructionsID).value    = data['instructions'];
+        $(self.fieldPointPersonID).value     = data['rd_point_person'];
+        $(self.fieldProductionID).value      = data['production_date'];
+        $(self.fieldTerminationID).value     = data['termination_date'];
     }
 
     self.addEvents = function()
     {
         // prevent focus on type field
-        $(self.editTypeID).removeEvents();
-        $(self.editTypeID).addEvent('focus', function(e)
+        $(self.fieldTypeID).removeEvents();
+        $(self.fieldTypeID).addEvent('focus', function(e)
         {
             e.preventDefault();
             $(this).blur();
 
             self.typeModal = new ApplicationTypesModal(
                 function(app_type) {
-                    $(self.editTypeID).value = app_type;
+                    $(self.fieldTypeID).value = app_type;
                 }
             );
             self.typeModal.show();
         });
 
         // event for edit button
-        $(self.editButtonID).removeEvents();
-        $(self.editButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorTypeID).setStyle('display', 'none');
+            $(self.errorAccessibilityID).setStyle('display', 'none');
             self.postAjaxData();
         });
     
@@ -655,19 +653,19 @@ var ApplicationsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.editApplicationID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
 
             // clear form
             self.typeModal.closeModal();
-            $(self.editNameID).value = '';
-            $(self.editTypeID).value = '';
-            $(self.editAccessibilityID).value = 'PUBLIC';
-            $(self.editRepositoryID).value = '';
-            $(self.editDescriptionID).value = '';
-            $(self.editInstructionsID).value = '';
-            $(self.editPointPersonID).set('html', '');
-            $(self.editProductionID).value = '0000-00-00';
-            $(self.editTerminationID).value = '0000-00-00';
+            $(self.fieldNameID).value = '';
+            $(self.fieldTypeID).value = '';
+            $(self.fieldAccessibilityID).value = 'PUBLIC';
+            $(self.fieldRepositoryID).value = '';
+            $(self.fieldDescriptionID).value = '';
+            $(self.fieldInstructionsID).value = '';
+            $(self.fieldPointPersonID).set('html', '');
+            $(self.fieldProductionID).value = '0000-00-00';
+            $(self.fieldTerminationID).value = '0000-00-00';
 
             ApplicationsSite.initView(data);
         });
@@ -683,7 +681,7 @@ var ApplicationsEdit = function(data)
             'value' : '',
             'html'  : '--Select Point Person--'
         });
-        contentElem.inject($(self.editPointPersonID), 'bottom');
+        contentElem.inject($(self.fieldPointPersonID), 'bottom');
 
         hash = new Hash(ProjectsSite.ldapGroupsObj.ldapGroupsData['DEVELOPERS']);
         hash.each(function(val, idx) {
@@ -693,7 +691,7 @@ var ApplicationsEdit = function(data)
                 'value' : idx,
                 'html'  : val
             });
-            contentElem.inject($(self.editPointPersonID), 'bottom');
+            contentElem.inject($(self.fieldPointPersonID), 'bottom');
         });
     }
 }

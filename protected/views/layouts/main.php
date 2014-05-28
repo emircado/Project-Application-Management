@@ -8,6 +8,8 @@
 	<!-- blueprint CSS framework -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/datepicker_vista.css" media="print" />
+
 	<!--[if lt IE 8]>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
 	<![endif]-->
@@ -24,7 +26,8 @@
     <!--add mootools lib here-->
     <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-core-1.4.5.js"></script>
 	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-more-1.4.0.1.js"></script>
-	<script src="<?= Yii::app()->request->baseUrl; ?>/js/common.js"></script>
+    <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/datepicker.js"></script>
+    <script src="<?= Yii::app()->request->baseUrl; ?>/js/common.js"></script>
     <!--add here the extra JS-->
     <?php
         if(isset($this->extraJS))
@@ -45,6 +48,7 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site')),
 				array('label'=>'Projects', 'url'=>array('/projects'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Servers', 'url'=>array('/servers'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/site/users'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Groups', 'url'=>array('/site/groups'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),

@@ -4,27 +4,29 @@ var PointPersonsList = function(project_id)
     self.getDataURL = baseURL + '/pointpersons/list';
     self._request = null;
 
+    self.containerID    = 'point-persons-list';
+
+    //for pagination
+    self.prevID         = 'point-persons-list-prev';
+    self.nextID         = 'point-persons-list-next';
+    self.totalDataID    = 'point-persons-list-total';
+    self.totalPartID    = 'point-persons-list-part';
+
+    //for table
+    self.tableID        = 'point-persons-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'point-persons-list-row';
+
     //buttons
-    self.viewID = 'a[id^=point-persons-view_]';
-    self.createButtonID = 'point-button-add';
-
-    //container
-    self.pointPersonsListID = 'point-persons-list';
-
-    //table
-    self.nextID = 'point-next';
-    self.prevID = 'point-prev';
-    self.currentPage = 1;
-    self.resultData = [];
-    self.totalDataID = 'point-persons-total';
-    self.totalPartID = 'point-persons-part';
-    self.pointPersonsTableID = 'point-persons-table';
-    self.tableRowClass = 'point-person-row';
+    self.viewButtonID   = 'a[id^=point-persons-list-view_]';
+    self.createButtonID = 'point-persons-list-create-button';
 
     self.init = function()
     {
         $$('.'+self.tableRowClass).dispose();
-        $(self.pointPersonsListID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
     }
 
@@ -72,11 +74,10 @@ var PointPersonsList = function(project_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
-
                 contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
                             + '<td>'+val['user_group']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="point-persons-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
+                            + '<a id="point-persons-list-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -85,7 +86,7 @@ var PointPersonsList = function(project_id)
                     'html' : contentHTML
                 });
                 
-                contentElem.inject($(self.pointPersonsTableID), 'bottom');
+                contentElem.inject($(self.tableID), 'bottom');
             });
         }
         else
@@ -99,7 +100,7 @@ var PointPersonsList = function(project_id)
                 'html' : contentHTML
             });
 
-            contentElem.inject($(self.pointPersonsTableID), 'bottom');
+            contentElem.inject($(self.tableID), 'bottom');
         }   
     }
 
@@ -134,16 +135,16 @@ var PointPersonsList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.pointPersonsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initCreate(project_id);
         });
         
         //VIEW CONTACT PERSON
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.pointPersonsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
     }
@@ -194,30 +195,27 @@ var PointPersonsCreate = function(project_id)
     self.postDataURL = baseURL + '/pointpersons/create';
     self._request = null;
 
-    //buttons
-    self.createSaveButtonID = 'create-button-create-point-persons';
-    self.createCancelButtonID = 'point-persons-create-button-cancel';
+    self.containerID        = 'point-persons-create';
 
-    //container
-    self.createViewID = 'create-point-persons-view';
+    //buttons
+    self.saveButtonID       = 'point-persons-create-save-button';
+    self.cancelButtonID     = 'point-persons-create-cancel-button';
 
     //fields
-    self.createUsernameID =     'point-persons-create-username';
-    self.createUsergroupID =    'point-persons-create-usergroup';
-    self.createDescriptionID =  'point-persons-create-description';
-    self.usernameRowClass = 	'username-row';
-    self.usergroupRowClass =	'usergroup-row';
-
-    //for csrf
-    self.createCSRFID = 'point-persons-create-csrf';
+    self.fieldUsernameID    = 'point-persons-create-username';
+    self.fieldUsergroupID   = 'point-persons-create-usergroup';
+    self.fieldDescriptionID = 'point-persons-create-description';
+    self.usernameRowClass   = 'point-persons-create-username-row';
+    self.usergroupRowClass  = 'point-persons-create-usergroup-row';
+    self.csrfID             = 'point-persons-create-csrf';
 
     //errors
-    self.createUsernameErrorID = 'point-persons-create-username-error';
-    self.createUsergroupErrorID = 'point-persons-create-usergroup-error';
+    self.errorUsernameID    = 'point-persons-create-username-error';
+    self.errorUsergroupID   = 'point-persons-create-usergroup-error';
 
     self.init = function()
     {
-        $(self.createViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.initDropdown();
         self.addEvents();
     }
@@ -227,11 +225,11 @@ var PointPersonsCreate = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.createCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : project_id,
-                'username'          : $(self.createUsernameID).value.trim(),
-                'user_group'         : $(self.createUsergroupID).value.trim(),
-                'description'       : $(self.createDescriptionID).value.trim()
+                'username'          : $(self.fieldUsernameID).value.trim(),
+                'user_group'        : $(self.fieldUsergroupID).value.trim(),
+                'description'       : $(self.fieldDescriptionID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -243,23 +241,21 @@ var PointPersonsCreate = function(project_id)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        $(self.createUsernameErrorID).setStyle('display', 'none');
-                        $(self.createUsergroupErrorID).setStyle('display', 'none');
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'USERNAME_ERROR') {
-                                $(self.createUsernameErrorID).set('html', msg[1]);
-                                $(self.createUsernameErrorID).setStyle('display', 'block');
+                                $(self.errorUsernameID).set('html', msg[1]);
+                                $(self.errorUsernameID).setStyle('display', 'block');
                             } else if (msg[0] == 'USERGROUP_ERROR') {
-                                $(self.createUsergroupErrorID).set('html', msg[1]);
-                                $(self.createUsergroupErrorID).setStyle('display', 'block');
+                                $(self.errorUsergroupID).set('html', msg[1]);
+                                $(self.errorUsergroupID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        $(self.createCancelButtonID).click();
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -279,14 +275,14 @@ var PointPersonsCreate = function(project_id)
             'value' : '',
     		'html'  : '--Select Username--'
     	});
-    	contentElem.inject($(self.createUsernameID), 'bottom');
+    	contentElem.inject($(self.fieldUsernameID), 'bottom');
     	contentElem = new Element('<option />',
     	{
     		'class' : self.usergroupRowClass,
             'value' : '',
     		'html'  : '--Select User Group--'
     	});
-    	contentElem.inject($(self.createUsergroupID), 'bottom');
+    	contentElem.inject($(self.fieldUsergroupID), 'bottom');
 
     	ProjectsSite.ldapGroupsObj.ldapGroupsData.each(function(val, idx)
         {
@@ -296,39 +292,42 @@ var PointPersonsCreate = function(project_id)
                 'value' : idx,
 	    		'html'  : idx
 	    	});
-	    	contentElem.inject($(self.createUsergroupID), 'bottom');
+	    	contentElem.inject($(self.fieldUsergroupID), 'bottom');
         });
     }
 
     self.addEvents = function()
     {
         //CREATE CONTACT PERSON
-        $(self.createSaveButtonID).removeEvents();
-        $(self.createSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorUsergroupID).setStyle('display', 'none');
+            $(self.errorUsernameID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
         //CANCEL BUTTON
-        $(self.createCancelButtonID).removeEvents();
-        $(self.createCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             //clean form
-            $(self.createUsernameID).value = '';
-            $(self.createUsergroupID).set('html', '');
-            $(self.createDescriptionID).value = '';
+            $(self.fieldUsernameID).value = '';
+            $(self.fieldUsergroupID).set('html', '');
+            $(self.fieldDescriptionID).value = '';
 
-            $(self.createUsernameErrorID).setStyle('display', 'none');
-            
-            $(self.createViewID).setStyle('display', 'none');
+            $(self.errorUsernameID).setStyle('display', 'none');
+            $(self.errorUsergroupID).setStyle('display', 'none');
+
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initObj(project_id);
         });
 
         //USER GROUP DROPDOWN
-        $(self.createUsergroupID).removeEvents();
-        $(self.createUsergroupID).addEvent('change', function(e)
+        $(self.fieldUsergroupID).removeEvents();
+        $(self.fieldUsergroupID).addEvent('change', function(e)
         {
         	var usergroup = this.getElement(':selected').value;
 
@@ -340,7 +339,7 @@ var PointPersonsCreate = function(project_id)
 				'value' : '',
 				'html'  : '--Select Username--'
 			});
-			contentElem.inject($(self.createUsernameID), 'bottom');
+			contentElem.inject($(self.fieldUsernameID), 'bottom');
 
             if (usergroup != '') {
                 ProjectsSite.ldapGroupsObj.ldapGroupsData.get(usergroup).each(function(val, idx) {
@@ -350,7 +349,7 @@ var PointPersonsCreate = function(project_id)
                         'value' : idx,
                         'html'  : val
                     });
-                    contentElem.inject($(self.createUsernameID), 'bottom');
+                    contentElem.inject($(self.fieldUsernameID), 'bottom');
                 });
             }
         });
@@ -363,29 +362,26 @@ var PointPersonsView = function(data)
     self.postDataURL = baseURL + '/pointpersons/delete';
     self._request = null;
 
-    //display
-    self.viewViewID = 'view-point-persons-view';
-
-    //buttons
-    self.editID = 'point-persons-edit';
-    self.deleteID = 'point-persons-delete';
-
-    //back to list
-    self.viewToListID = 'point-person-view-to-list';
+    self.containerID        = 'point-persons-view';
 
     //fields
-    self.viewUsernameID = 'point-persons-view-username';
-    self.viewUsergroupID = 'point-persons-view-usergroup';
-    self.viewDescriptionID = 'point-persons-view-description';
-    self.viewCreatedID = 'point-persons-view-created';
-    self.viewUpdatedID = 'point-persons-view-updated';
-
-    //for csrf
-    self.viewCSRFID = 'point-persons-view-csrf';
+    self.fieldUsernameID    = 'point-persons-view-username';
+    self.fieldUsergroupID   = 'point-persons-view-usergroup';
+    self.fieldDescriptionID = 'point-persons-view-description';
+    self.fieldCreatedID     = 'point-persons-view-created';
+    self.fieldCreatedByID   = 'point-persons-view-createdby';
+    self.fieldUpdatedID     = 'point-persons-view-updated';
+    self.fieldUpdatedByID   = 'point-persons-view-updatedby';
+    self.csrfID             = 'point-persons-view-csrf';
+    
+    //buttons
+    self.editButtonID = 'point-persons-view-edit-button';
+    self.deleteButtonID = 'point-persons-view-delete-button';
+    self.backButtonID = 'point-persons-view-back-button';
 
     self.init = function()
     {
-        $(self.viewViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -395,7 +391,7 @@ var PointPersonsView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
                 'username'          : data['username']
             };
@@ -426,30 +422,34 @@ var PointPersonsView = function(data)
     self.renderData = function()
     {
         var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewUsernameID).set('html', (displayname == null)? data['username'] : displayname);
-        $(self.viewUsergroupID).set('html', data['user_group']);
-        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
+        $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.fieldUsergroupID).set('html', data['user_group']);
+        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
     {
         //EDIT CONTACT PERSON
-        $(self.editID).removeEvents();
-        $(self.editID).addEvent('click', function(e)
+        $(self.editButtonID).removeEvents();
+        $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
-        $(self.deleteID).removeEvents();
-        $(self.deleteID).addEvent('click', function(e)
+        $(self.deleteButtonID).removeEvents();
+        $(self.deleteButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -461,11 +461,11 @@ var PointPersonsView = function(data)
         });
 
         //GO BACK TO THE LIST
-        $(self.viewToListID).removeEvents();
-        $(self.viewToListID).addEvent('click', function(e)
+        $(self.backButtonID).removeEvents();
+        $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initObj(data['project_id']);
         });
     }
@@ -477,24 +477,21 @@ var PointPersonsEdit = function(data)
     self.postDataURL = baseURL + '/pointpersons/update';
     self._request = null;
 
-    //display
-    self.editViewID = 'edit-point-persons-view';
+    self.containerID        = 'point-persons-edit';
 
     //fields
-    self.editUsernameID = 'point-persons-edit-username';
-    self.editUsergroupID = 'point-persons-edit-usergroup';
-    self.editDescriptionID = 'point-persons-edit-description';
-
-    //for csrf
-    self.editCSRFID = 'point-persons-edit-csrf';
+    self.fieldUsernameID    = 'point-persons-edit-username';
+    self.fieldUsergroupID   = 'point-persons-edit-usergroup';
+    self.fieldDescriptionID = 'point-persons-edit-description';
+    self.csrfID             = 'point-persons-edit-csrf';
 
     //buttons
-    self.editSaveButtonID = 'edit-button-update-point-persons';
-    self.editCancelButtonID = 'point-persons-edit-button-cancel';
+    self.saveButtonID       = 'point-persons-edit-save-button';
+    self.cancelButtonID     = 'point-persons-edit-cancel-button';
 
     self.init = function()
     {
-        $(self.editViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -504,13 +501,10 @@ var PointPersonsEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.editCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
                 'username'          : data['username'],
-                'user_group'        : data['user_group'],
-                'description'       : $(self.editDescriptionID).value.trim(),
-                'date_created'      : data['date_created'],
-                'date_updated'      : data['date_updated']
+                'description'       : $(self.fieldDescriptionID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -532,8 +526,9 @@ var PointPersonsEdit = function(data)
                     } else if (response['type'] == 'success') {
                         data['description'] = response['data']['description'];
                         data['date_updated'] = response['data']['date_updated'];
-                        
-                        $(self.editCancelButtonID).click();
+                        data['updated_by'] = response['data']['updated_by'];
+
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -549,32 +544,32 @@ var PointPersonsEdit = function(data)
     {
         var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
 
-        $(self.editUsernameID).set('html', (displayname == null)? data['username'] : displayname);
-        $(self.editUsergroupID).set('html', data['user_group']);
-        $(self.editDescriptionID).value = data['description'];
+        $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
+        $(self.fieldUsergroupID).set('html', data['user_group']);
+        $(self.fieldDescriptionID).value = data['description'];
     }
 
     self.addEvents = function()
     {
         //UPDATE CONTACT PERSON
-        $(self.editSaveButtonID).removeEvents();
-        $(self.editSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             self.postAjaxData();
         });
 
         //CANCEL BUTTON
-        $(self.editCancelButtonID).removeEvents();
-        $(self.editCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             //clean form
-            $(self.editUsernameID).set('html', '');
-            $(self.editUsergroupID).set('html', '');
-            $(self.editDescriptionID).value = '';
+            $(self.fieldUsernameID).set('html', '');
+            $(self.fieldUsergroupID).set('html', '');
+            $(self.fieldDescriptionID).value = '';
 
-            $(self.editViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initView(data);
         });
     }

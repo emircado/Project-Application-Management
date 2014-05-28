@@ -57,12 +57,11 @@ class ProjectsController extends Controller
         );
 
         $time = floor((microtime(true) - $begin_time) * 1000);
-        // statsd component
-        $statsd = new StatsD(Yii::app()->params['statsd_server_ip'], Yii::app()->params['statsd_server_port']);
-        $statsd->timing("system.lukefar", $time);
-        // socket component
-        $graphite = new GraphiteSocket();
-        $graphite->send_projectlist($time);
+        //send time to graphite
+        $sender = new GraphiteSender('statsd');
+        $sender->send_projectlist($time);
+        $sender = new GraphiteSender('direct');
+        $sender->send_projectlist($time);
 
         echo CJSON::encode($return_data);
     }
@@ -72,6 +71,7 @@ class ProjectsController extends Controller
         $criteria = new CDbCriteria;
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = 'code';
 
         if(is_array($filter))
         {
@@ -194,6 +194,11 @@ class ProjectsController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['name'] = trim($data['name']);
+            $data['code'] = trim($data['code']);
+            $data['description'] = trim($data['description']);
+            $data['production_date'] = trim($data['production_date']);
+
             //FORM VALIDATION HERE
             $errors = array();
             //code is required

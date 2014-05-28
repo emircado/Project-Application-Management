@@ -141,3 +141,22 @@ var AppServersData = function()
         }
     }
 }
+
+var DateFormatter = {
+    dateFormat:     "%b %e, %Y",
+    datetimeFormat: "%b %e, %Y %l:%M%p",
+
+    formatDate: function(date_str)
+    {
+        var self = this;
+        var date = new Date(date_str);
+        return date.formatter(self.dateFormat);
+    },
+
+    formatDateTime: function(date_str)
+    {
+        var self = this;
+        var date = new Date(date_str);
+        return date.formatter(self.datetimeFormat);
+    }
+}

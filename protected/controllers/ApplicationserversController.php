@@ -38,7 +38,7 @@ class ApplicationserversController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
-        
+
         $model = ApplicationServers::model()->findAll($criteria);
         $data  = array();
 
@@ -113,6 +113,9 @@ class ApplicationserversController extends Controller
 
                 if ($server != null) {
                     array_push($errors, 'SERVER_ERROR: The application is already in this server');
+                // check if application is already in a server of the same type
+                } else if ($data['check_duplicate']) {
+            
                 }
             }
 

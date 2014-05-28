@@ -38,6 +38,7 @@ class PointpersonsController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = 'username';
         
         $model = ProjectPointPersons::model()->findAll($criteria);
         $data  = array();
@@ -58,6 +59,8 @@ class PointpersonsController extends Controller
                 'description'   => $row->description,
                 'date_created'  => $row->date_created,
                 'date_updated'  => $row->date_updated,
+                'created_by'    => $row->created_by,
+                'updated_by'    => $row->updated_by,
             );
         }
 
@@ -76,6 +79,7 @@ class PointpersonsController extends Controller
             $updates = array(
                 'description'   => trim($data['description']),
                 'date_updated'  => date("Y-m-d H:i:s"),
+                'updated_by'    => Yii::app()->user->name,
             );
 
             ProjectPointPersons::model()->updateByPk(array(
@@ -132,6 +136,7 @@ class PointpersonsController extends Controller
                 $point_person->description = $data['description'];
                 $point_person->date_created = date("Y-m-d H:i:s");
                 $point_person->date_updated = '0000-00-00 00:00:00';
+                $point_person->created_by = Yii::app()->user->name;
                 $point_person->save();
 
                 echo CJSON::encode(array(

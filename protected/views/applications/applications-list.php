@@ -6,7 +6,7 @@
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
                     <h3><b>Applications</b></h3>&nbsp&nbsp
-                    <a id="applications-button-add" href="#">[Add]</a>
+                    <a id="applications-list-create-button" href="#">[Add]</a>
                 </div>
             </div>
             <!-- body -->
@@ -20,17 +20,17 @@
                             <th width=''>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="applications-table">
+                    <tbody id="applications-list-table">
                     </tbody>
                 </table>
                 <div class="page-nav">
                     <div class="page-count">
-                        <span class="current-page" id="applications-part"></span>
-                        <span class="all-page" id="applications-total"></span>
+                        <span class="current-page" id="applications-list-part"></span>
+                        <span class="all-page" id="applications-list-total"></span>
                     </div>
                     <div class="page-nav-arrow">
-                        <a id="applications-prev" class="prev" href="#" title="Previous"><span class="icon"></span></a>
-                        <a id="applications-next" class="next" href="#" title="Next"><span class="icon"></span></a>
+                        <a id="applications-list-prev" class="prev" href="#" title="Previous"><span class="icon"></span></a>
+                        <a id="applications-list-next" class="next" href="#" title="Next"><span class="icon"></span></a>
                     </div>
                 </div>
             </div>

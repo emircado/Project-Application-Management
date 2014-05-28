@@ -141,8 +141,8 @@ img.search {
 }
 
 /* SPECIFICS */
-#create-projects-view,
-#edit-projects-view {
+#projects-create,
+#projects-edit {
 	width: 47.5%;
 }
 

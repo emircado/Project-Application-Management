@@ -38,6 +38,7 @@ class ApplicationpointpersonsController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = 'username';
         
         $model = ApplicationPointPersons::model()->findAll($criteria);
         $data  = array();

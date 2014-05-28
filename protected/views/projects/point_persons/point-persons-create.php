@@ -1,5 +1,5 @@
 <!-- create part view -->
-<div id="create-point-persons-view" style="display:none;" class="contact-info plain-list">
+<div id="point-persons-create" style="display:none;" class="contact-info plain-list">
     <!-- FORM HERE -->
     <form>
         <input type="hidden" id="point-persons-create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -41,10 +41,10 @@
                     <div class="field field-text">
                         <div class="field-action-content">
                             <div class="pseudo-field pseudo-button">
-                                <a id="point-persons-create-button-cancel" class="cancel" href="#">Cancel</a>
+                                <a id="point-persons-create-cancel-button" class="cancel" href="#">Cancel</a>
                             </div>
                             <div class="pseudo-field pseudo-button primary-button">
-                                <button id="create-button-create-point-persons">Create</button>
+                                <button id="point-persons-create-save-button">Create</button>
                             </div>
                         </div><!-- End Field Action Content -->
                     </div><!-- End Field Action -->
@@ -53,4 +53,4 @@
             <!--END CREATE CONTENT POINT PERSON-->
         </div>
     </form>
-</div><!--END create Contact Person
+</div><!--END create Point Person

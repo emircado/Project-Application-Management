@@ -40,6 +40,7 @@ class ContactpersonsController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = 'LOWER(name)';
         
         $model = ProjectContactPersons::model()->findAll($criteria);
         $data  = array();
@@ -54,16 +55,18 @@ class ContactpersonsController extends Controller
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'      => $row->project_id/*$p->purify($row->project_id)*/,
-                'name'            => $row->name/*$p->purify($row->name)*/,
-                'company'         => $row->company/*$p->purify($row->company)*/,
-                'position'        => $row->position/*$p->purify($row->position)*/,
-                'contact_numbers' => $row->contact_numbers/*$p->purify($row->contact_numbers)*/,
-                'email'           => $row->email/*$p->purify($row->email)*/,
-                'address'         => $row->address/*$p->purify($row->address)*/,
-                'notes'           => $row->notes/*$p->purify($row->notes)*/,
-                'date_created'    => $row->date_created/*$p->purify($row->date_created)*/,
-                'date_updated'    => $row->date_updated/*$p->purify($row->date_updated)*/,
+                'project_id'      => $row->project_id,
+                'name'            => $row->name,
+                'company'         => $row->company,
+                'position'        => $row->position,
+                'contact_numbers' => $row->contact_numbers,
+                'email'           => $row->email,
+                'address'         => $row->address,
+                'notes'           => $row->notes,
+                'date_created'    => $row->date_created,
+                'date_updated'    => $row->date_updated,
+                'created_by'      => $row->created_by,
+                'updated_by'      => $row->updated_by,
             );
         }
 
@@ -123,6 +126,7 @@ class ContactpersonsController extends Controller
                     'email'             => $data['new_email'],
                     'notes'             => $data['notes'],
                     'date_updated'      => date("Y-m-d H:i:s"),
+                    'updated_by'        => Yii::app()->user->name,
                 );
 
                 ProjectContactPersons::model()->updateByPk(array(
@@ -195,6 +199,7 @@ class ContactpersonsController extends Controller
                 $contact_person->notes              = $data['notes'];
                 $contact_person->date_created       = date("Y-m-d H:i:s");
                 $contact_person->date_updated       = '0000-00-00 00:00:00';
+                $contact_person->created_by         = Yii::app()->user->name;
                 $contact_person->save();
 
                 echo CJSON::encode(array(

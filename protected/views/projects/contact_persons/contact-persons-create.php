@@ -1,5 +1,5 @@
 <!-- create part view -->
-<div id="create-contact-persons-view" style="display:none;" class="contact-info plain-list">
+<div id="contact-persons-create" style="display:none;" class="contact-info plain-list">
     <!-- FORM HERE -->
     <form>
         <!-- CSRF TOKEN HERE -->
@@ -72,10 +72,10 @@
                     <div class="field field-text">
                         <div class="field-action-content">
                             <div class="pseudo-field pseudo-button">
-                                <a id="contact-persons-create-button-cancel" class="cancel" href="#">Cancel</a>
+                                <a id="contact-persons-create-cancel-button" class="cancel" href="#">Cancel</a>
                             </div>
                             <div class="pseudo-field pseudo-button primary-button">
-                                <button id="create-button-create-contact-persons">Create</button>
+                                <button id="contact-persons-create-save-button">Create</button>
                             </div>
                         </div><!-- End Field Action Content -->
                     </div><!-- End Field Action -->

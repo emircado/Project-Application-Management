@@ -25,22 +25,37 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_LDAP_BINDING;
         }
 
-        // socket component
-        $g = new GraphiteSocket();
-        $g->send_login($this->errorCode);
-        // statsd component
-        $statsd = new StatsD(Yii::app()->params['statsd_server_ip'], Yii::app()->params['statsd_server_port']);
-        $statsd->gauge("system.lukefar", "+1");
+        // send login details
+        $sender = new GraphiteSender('statsd');
+        $sender->send_login($this->errorCode);
+        $sender = new GraphiteSender('direct');
+        $sender->send_login($this->errorCode);
 
         return !$this->errorCode;
     }
 
-    // http://blog.justin.kelly.org.au/simple-mcrypt-encrypt-decrypt-functions-for-p/
-    public static function encrypt($text) {
-        return trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, Yii::app()->params['salt'], $text, MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
-    }
+    // http://naveensnayak.wordpress.com/2013/03/12/simple-php-encrypt-and-decrypt/
+    // function encrypt_decrypt($action, $string) {
+    //     $output = false;
 
-    public static function decrypt($text) {
-        return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, Yii::app()->params['salt'], base64_decode($text), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
-    }
+    //     $encrypt_method = "AES-256-CBC";
+    //     $secret_key = 'This is my secret key';
+    //     $secret_iv = 'This is my secret iv';
+
+    //     // hash
+    //     $key = hash('sha256', $secret_key);
+        
+    //     // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+    //     $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+    //     if( $action == 'encrypt' ) {
+    //         $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+    //         $output = base64_encode($output);
+    //     }
+    //     else if( $action == 'decrypt' ){
+    //         $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+    //     }
+
+    //     return $output;
+    // }
 }

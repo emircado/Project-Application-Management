@@ -48,6 +48,7 @@ class NotesController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = 'date_created DESC';
         
         $model = Notes::model()->findAll($criteria);
         $data  = array();

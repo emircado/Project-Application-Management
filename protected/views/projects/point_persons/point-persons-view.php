@@ -1,5 +1,5 @@
 <!-- view point persons view -->
-<div id="view-point-persons-view" style="display:none;" class="contact-info plain-list">
+<div id="point-persons-view" style="display:none;" class="contact-info plain-list">
     <!-- CONTENT HERE -->
     <form>
         <input type="hidden" id="point-persons-view-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -7,8 +7,8 @@
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
                     <h3><b>Point Person Details</b></h3>&nbsp&nbsp
-                    <a id="point-persons-edit" href="#">[Edit]</a>
-                    <a id="point-persons-delete" href="#" style="float:right;">[Delete]</a>
+                    <a id="point-persons-view-edit-button" href="#">[Edit]</a>
+                    <a id="point-persons-view-delete-button" href="#" style="float:right;">[Delete]</a>
                 </div>
             </div>
             <div id="edit-primary-content" class="content">
@@ -43,6 +43,14 @@
                             <span class="value" id="point-persons-view-created"></span>
                         </div>
                     </div><!-- End Field Primary -->
+                </div><!-- End Field -->
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Created by</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span class="value" id="point-persons-view-createdby"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
                 </div><!-- End Field --> 
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Date Updated</span></div>
@@ -52,7 +60,15 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field --> 
-                <a id="point-person-view-to-list" href="#">[Back]</a>
+                <div class="field field-input-name">
+                    <div class="field-secondary"><span class="label">Updated by</span></div>
+                    <div class="field-primary">
+                        <div class="pseudo-field no-border">
+                            <span class="value" id="point-persons-view-updatedby"></span>
+                        </div>
+                    </div><!-- End Field Primary -->
+                </div><!-- End Field --> 
+                <a id="point-persons-view-back-button" href="#">[Back]</a>
             </div>
         </div>
     </form>

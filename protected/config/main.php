@@ -114,9 +114,11 @@ return array(
 		'notes_per_page'=>5,
 
 		'graphite_server_ip'=>'10.11.2.29',
-		'graphite_server_port'=>2003,
+		'graphite_server_port_udp'=>2023,
+		'graphite_server_port_tcp'=>2003,
 		'statsd_server_ip'=>'10.11.2.29',
 		'statsd_server_port'=>8125,
+
 		'salt'=>'pamgmtsalt888',
 	),
 );

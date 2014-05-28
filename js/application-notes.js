@@ -4,22 +4,24 @@ var ApplicationNotesList = function(application_id)
     self.getDataURL = baseURL + '/notes/list';
     self._request = null;
 
+    self.containerID    = 'application-notes-list';
+
+    //for pagination
+    self.nextID         = 'application-notes-list-next';
+    self.prevID         = 'application-notes-list-prev';
+    self.totalDataID    = 'application-notes-list-total';
+    self.totalPartID    = 'application-notes-list-part';
+
+    //for table
+    self.tableID        = 'application-notes-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'application-notes-list-row';
+
     //buttons
-    self.viewID = 'a[id^=application-notes-list-view_]';
+    self.viewButtonID   = 'a[id^=application-notes-list-view_]';
     self.createButtonID = 'application-notes-list-create-button';
-
-    //container
-    self.containerID = 'application-notes-list';
-
-    //table
-    self.nextID = 'application-notes-list-next';
-    self.prevID = 'application-notes-list-prev';
-    self.currentPage = 1;
-    self.resultData = [];
-    self.totalDataID = 'application-notes-list-total';
-    self.totalPartID = 'application-notes-list-part';
-    self.tableID = 'application-notes-list-table';
-    self.tableRowClass = 'application-notes-list-row';
 
     self.init = function()
     {
@@ -71,8 +73,8 @@ var ApplicationNotesList = function(application_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : val['date_created'];
-                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : val['date_updated'];
+                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_created']);
+                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_updated']);
 
                 contentHTML = '<td>'+created+'</td>'
                             + '<td>'+updated+'</td>'                        
@@ -141,8 +143,8 @@ var ApplicationNotesList = function(application_id)
         });
         
         //VIEW CONTACT PERSON
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
@@ -196,16 +198,15 @@ var ApplicationNotesCreate = function(application_id)
     self.postDataURL = baseURL + '/notes/create';
     self._request = null;
 
+    self.containerID    = 'application-notes-create';
+
     //buttons
-    self.saveButtonID = 'application-notes-create-save-button';
+    self.saveButtonID   = 'application-notes-create-save-button';
     self.cancelButtonID = 'application-notes-create-cancel-button';
 
-    //container
-    self.containerID = 'application-notes-create';
-
     //fields
-    self.createNotesID = 'application-notes-create-notes';
-    self.csrfID = 'application-notes-create-csrf';
+    self.fieldNotesID  = 'application-notes-create-notes';
+    self.csrfID         = 'application-notes-create-csrf';
 
     self.init = function()
     {
@@ -220,7 +221,7 @@ var ApplicationNotesCreate = function(application_id)
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : application_id,
-                'notes'             : $(self.createNotesID).value.trim()
+                'notes'             : $(self.fieldNotesID).value.trim()
             };
 
             console.log(params);
@@ -264,7 +265,7 @@ var ApplicationNotesCreate = function(application_id)
         {
             e.preventDefault();
             //clean form
-            $(self.createNotesID).value = '';
+            $(self.fieldNotesID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initObj(application_id);
@@ -278,21 +279,20 @@ var ApplicationNotesView = function(data)
     self.postDataURL = baseURL + '/notes/delete';
     self._request = null;
 
-    //display
     self.containerID = 'application-notes-view';
 
-    //buttons
-    self.deleteButtonID = 'application-notes-view-delete-button';
-    self.editButtonID = 'application-notes-view-edit-button';
-    self.backButtonID = 'application-notes-view-back-button';
-
     //fields
-    self.viewNotesID = 'application-notes-view-notes';
-    self.viewCreatedID = 'application-notes-view-created';
-    self.viewUpdatedID = 'application-notes-view-updated';
-    self.viewCreatedByID = 'application-notes-view-createdby';
-    self.viewUpdatedByID = 'application-notes-view-updatedby';
-    self.csrfID = 'application-notes-view-csrf';
+    self.fieldNotesID       = 'application-notes-view-notes';
+    self.fieldCreatedID     = 'application-notes-view-created';
+    self.fieldUpdatedID     = 'application-notes-view-updated';
+    self.fieldCreatedByID   = 'application-notes-view-createdby';
+    self.fieldUpdatedByID   = 'application-notes-view-updatedby';
+    self.csrfID             = 'application-notes-view-csrf';
+
+    //buttons
+    self.deleteButtonID     = 'application-notes-view-delete-button';
+    self.editButtonID       = 'application-notes-view-edit-button';
+    self.backButtonID       = 'application-notes-view-back-button';
 
     self.init = function()
     {
@@ -338,14 +338,14 @@ var ApplicationNotesView = function(data)
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewNotesID).set('html', '<pre>'+data['notes']);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
@@ -389,16 +389,15 @@ var ApplicationNotesEdit = function(data)
     self.postDataURL = baseURL + '/notes/update';
     self._request = null;
 
-    //display
-    self.containerID = 'application-notes-edit';
+    self.containerID    = 'application-notes-edit';
 
     //fields
-    self.editNotesID = 'application-notes-edit-notes';
-    self.csrfID = 'application-notes-edit-csrf';
+    self.fieldNotesID   = 'application-notes-edit-notes';
+    self.csrfID         = 'application-notes-edit-csrf';
 
     //buttons
     self.cancelButtonID = 'application-notes-edit-cancel-button';
-    self.saveButtonID = 'application-notes-edit-save-button';
+    self.saveButtonID   = 'application-notes-edit-save-button';
 
     self.init = function()
     {
@@ -414,7 +413,7 @@ var ApplicationNotesEdit = function(data)
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'note_id'           : data['note_id'],
-                'notes'             : $(self.editNotesID).value.trim(),
+                'notes'             : $(self.fieldNotesID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -446,7 +445,7 @@ var ApplicationNotesEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editNotesID).value = data['notes'];
+        $(self.fieldNotesID).value = data['notes'];
     }
 
     self.addEvents = function()
@@ -465,7 +464,7 @@ var ApplicationNotesEdit = function(data)
         {
             e.preventDefault();
             //clean form
-            $(self.editNotesID).value = '';
+            $(self.fieldNotesID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initView(data);

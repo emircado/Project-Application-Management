@@ -11,10 +11,10 @@ delay = 11
 sock = socket()
 
 # Change months and days range to desired range
-months = ('2014-05', )
+months = ('2014-05',)
 days = {
-    '2014-04': range(20, 31),
-    '2014-05': range(12, 22)
+    '2014-04': range(1, 31),
+    '2014-05': range(26, 28)
 }
 
 hours = range(0,24)
@@ -59,7 +59,7 @@ for month in months:
         reset()
 
         # produce logins
-        points = random.randint(30, 100)
+        points = random.randint(10, 80)
         timestamps = []
         for point in range(points):
             h = str(random.choice(hours))

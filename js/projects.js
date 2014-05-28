@@ -1,47 +1,44 @@
 var ProjectsList = function()
 {
     var self = this;
-    
     self.getDataURL = baseURL + '/projects/list';
+    self._request         = null;
     
-    //for data gathering
-    self.tableContainerID       = 'data-result';
-    self._request               = null;
-    self.totalPage        = 1;
-    self.currentPage      = 1;
-    self.resultData       = [];
+    self.containerID      = 'projects-list';
 
     //for pagination
-    self.pageLimit        = '';
-    self.prevID           = 'prev-main-button';
-    self.nextID           = 'next-main-button';
-    self.totalDataID      = 'total-main-data';
-    self.totalPartID      = 'total-main-part';
+    self.prevID          = 'projects-list-prev';
+    self.nextID          = 'projects-list-next';
+    self.totalDataID     = 'projects-list-total';
+    self.totalPartID     = 'projects-list-part';
 
     //for table
-    self.projectListID    = 'projects-lists';
-    self.tableRowClass    = 'data-row';
+    self.tableID         = 'projects-list-table';
+    self.totalPage       = 1;
+    self.currentPage     = 1;
+    self.resultData      = [];
+    self.tableRowClass   = 'projects-list-row';
 
-    //for search
-    self.searchNameID     = 'search-name';
-    self.searchCodeID     = 'search-code';
-    self.searchStatusID   = 'search-status';
-    self.searchSubmitID   = 'search-submit';
-    self.searchClearID    = 'clear-search';
-    self.searchParams     = {
+    //fields
+    self.fieldNameID     = 'projects-list-search-name';
+    self.fieldCodeID     = 'projects-list-search-code';
+    self.fieldStatusID   = 'projects-list-search-status';
+    
+    //buttons
+    self.createButtonID  = 'projects-list-create-button';
+    self.viewButtonID    = 'a[id^=projects-list-view_]';
+    self.searchButtonID  = 'search-submit';
+    self.clearButtonID   = 'projects-list-clear-button';
+    self.searchParams    = {
         'name'      : '',
         'code'      : '',
         'status'    : ''
     };
-    
-    //actions
-    self.createButtonID = 'create-project';
-    self.viewID = 'a[id^=view_]';
 
     self.init = function()
     {
         $$('.'+self.tableRowClass).dispose();
-        $(self.projectListID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
     }
     
@@ -51,9 +48,9 @@ var ProjectsList = function()
         {
             var params = {
                 'page'      : self.currentPage,
-                'name'      : self.searchParams['name'],
-                'code'      : self.searchParams['code'],
-                'status'    : self.searchParams['status'],
+                'name'      : self.searchParams['name'].trim(),
+                'code'      : self.searchParams['code'].trim(),
+                'status'    : self.searchParams['status'].trim(),
             };
             
             self._request = new Request.JSON(
@@ -119,7 +116,7 @@ var ProjectsList = function()
         }
 
         //below will be the calcutaion and displaying for the total data results
-        var start   = (self.pageLimit * self.currentPage) - self.pageLimit + 1;
+        var start = (self.pageLimit * self.currentPage) - self.pageLimit + 1;
         var end   = (start + self.resultData.length) - 1;
 
         if(self.resultData.length)
@@ -144,13 +141,15 @@ var ProjectsList = function()
 
             Array.each(self.resultData, function(val, idx)
             {
+                var production = (val['production_date'] == null || val['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(val['production_date']);
+
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+val['code']+'</td>'                        
                             + '<td>'+val['description']+'</td>'
                             + '<td>'+val['status']+'</td>'
-                            + '<td>'+val['production_date']+'</td>'
+                            + '<td>'+production+'</td>'
                             + '<td class="actions-col three-column">'
-                            + '<a id="view_' + idx + '" href="#" title="View Project">View</a>&nbsp'
+                            + '<a id="projects-list-view_' + idx + '" href="#" title="View Project">View</a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -159,7 +158,7 @@ var ProjectsList = function()
                     'html' : contentHTML
                 });
                 
-                contentElem.inject($(self.tableContainerID), 'bottom');
+                contentElem.inject($(self.tableID), 'bottom');
             });
         }
         else
@@ -173,7 +172,7 @@ var ProjectsList = function()
                 'html' : contentHTML
             });
 
-            contentElem.inject($(self.tableContainerID), 'bottom');
+            contentElem.inject($(self.tableID), 'bottom');
         }
     }
 
@@ -184,9 +183,9 @@ var ProjectsList = function()
         self.searchParams['code'] = '';
         self.searchParams['status'] = '';
 
-        $(self.searchNameID).value = '';
-        $(self.searchCodeID).value = '';
-        $(self.searchStatusID).value = '';    
+        $(self.fieldNameID).value = '';
+        $(self.fieldCodeID).value = '';
+        $(self.fieldStatusID).value = '';    
     }
 
     self.addEvents = function()
@@ -216,21 +215,21 @@ var ProjectsList = function()
         });
 
         //EVENT FOR SEARCH BUTTON
-        $(self.searchSubmitID).removeEvents();
-        $(self.searchSubmitID).addEvent('click', function(e)
+        $(self.searchButtonID).removeEvents();
+        $(self.searchButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
 
             self.currentPage = 1;
-            self.searchParams['name'] = $(self.searchNameID).value.trim();
-            self.searchParams['code'] = $(self.searchCodeID).value.trim();
-            self.searchParams['status'] = $(self.searchStatusID).value;
+            self.searchParams['name'] = $(self.fieldNameID).value.trim();
+            self.searchParams['code'] = $(self.fieldCodeID).value.trim();
+            self.searchParams['status'] = $(self.fieldStatusID).value;
             self.init();
         });
 
-        //EVENT FOR SEARCH CODE FIELD KEYPRESS
-        $(self.searchCodeID).removeEvents();
-        $(self.searchCodeID).addEvent('input', function(e)
+        //EVENT FOR SEARCH CODE FIELD INPUT
+        $(self.fieldCodeID).removeEvents();
+        $(self.fieldCodeID).addEvent('input', function(e)
         {
             e.preventDefault();
             $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
@@ -245,19 +244,19 @@ var ProjectsList = function()
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
-        $(self.searchClearID).removeEvents();
-        $(self.searchClearID).addEvent('click', function(e)
+        $(self.clearButtonID).removeEvents();
+        $(self.clearButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             self.clearSearch();
         });
 
         //EVENT FOR VIEWING A PROJECT
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click',function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click',function(e)
         {
             e.preventDefault();
-            $(self.projectListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
 
@@ -266,7 +265,7 @@ var ProjectsList = function()
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.projectListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initCreate();
         });
     };
@@ -278,31 +277,25 @@ var ProjectsCreate = function()
     self.postDataURL = baseURL + '/projects/create';
     self._request = null;
 
-    //display
-    self.createProjectViewID = 'create-projects-view';
+    self.containerID = 'projects-create';
 
     //buttons
-    self.createSaveButtonID = 'create-button-create-project';
-    self.createCancelButtonID = 'create-button-cancel';
+    self.saveButtonID = 'projects-create-save-button';
+    self.cancelButtonID = 'projects-create-cancel-button';
 
     //fields
-    self.createNameID = 'create-name';
-    self.createCodeID = 'create-code';
-    self.createDescriptionID = 'create-description';
-    self.createProductionID = 'create-production';
+    self.fieldNameID = 'projects-create-name';
+    self.fieldCodeID = 'projects-create-code';
+    self.fieldDescriptionID = 'projects-create-description';
+    self.fieldProductionID = 'projects-create-production';
+    self.csrfID = 'projects-create-csrf';
 
-    //error displays
-    self.createNameErrorID = 'create-name-error';
-    self.createCodeErrorID = 'create-code-error';
-    self.createDescriptionErrorID = 'create-description-error';
-    self.createProductionErrorID = 'create-production-error';
-
-    //csrf
-    self.createCSRFID = 'create-csrf';
+    //errors
+    self.errorCodeID = 'projects-create-code-error';
 
     self.init = function()
     {
-        $(self.createProjectViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.addEvents();
     }
 
@@ -311,12 +304,11 @@ var ProjectsCreate = function()
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.createCSRFID).value,
-                'project_id'        : '',
-                'name'              : $(self.createNameID).value.trim(),
-                'code'              : $(self.createCodeID).value.trim(),
-                'description'       : $(self.createDescriptionID).value.trim(),
-                'production_date'   : $(self.createProductionID).value.trim()
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
+                'name'              : $(self.fieldNameID).value.trim(),
+                'code'              : $(self.fieldCodeID).value.trim(),
+                'description'       : $(self.fieldDescriptionID).value.trim(),
+                'production_date'   : $(self.fieldProductionID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -332,24 +324,20 @@ var ProjectsCreate = function()
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'CODE_ERROR') {
-                                $(self.createCodeErrorID).set('html', msg[1]);
-                                $(self.createCodeErrorID).setStyle('display', 'block');
+                                $(self.errorCodeID).set('html', msg[1]);
+                                $(self.errorCodeID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        $(self.createCancelButtonID).click();
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
                 {
                     self._request.stop;
                     console.log('something went wrong.');
-                },
-                'onComplete': function(data)
-                {
-                    $(self.createCancelButtonID).click();
                 }
             }).send();
         }
@@ -358,47 +346,63 @@ var ProjectsCreate = function()
     self.addEvents = function()
     {
         //EVENT FOR SAVING CHANGES BUTTON IN EDIT/CREATE PROJECT
-        $(self.createSaveButtonID).removeEvents();
-        $(self.createSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-
-            //hide error messages
-            $(self.createNameErrorID).setStyle('display', 'none');
-
+            $(self.errorCodeID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
         //EVENT FOR CANCEL BUTTON IN EDIT/CREATE PROJECT
-        $(self.createCancelButtonID).removeEvents();
-        $(self.createCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-
             ProjectsSite.mainObj.clearSearch();
-            $(self.createProjectViewID).setStyle('display', 'none');
-            ProjectsSite.mainObj.init();
+            $(self.containerID).setStyle('display', 'none');
 
             //clear form
-            $(self.createNameID).value = '';
-            $(self.createCodeID).value = '';
-            $(self.createDescriptionID).value = '';
-            $(self.createProductionID).value = '0000-00-00';
+            $(self.fieldNameID).value = '';
+            $(self.fieldCodeID).value = '';
+            $(self.fieldDescriptionID).value = '';
+            $(self.fieldProductionID).value = '0000-00-00';
+
+            ProjectsSite.mainObj.init();
         });
 
-        //EVENT FOR CODE INPUT FIELD - UPPERCASE INPUTS ONLY, 5 CHARS
-        $(self.createCodeID).removeEvents();
-        $(self.createCodeID).addEvent('keypress', function(e)
+        //EVENT FOR CODE FIELD INPUT
+        $(self.fieldCodeID).removeEvents();
+        $(self.fieldCodeID).addEvent('input', function(e)
         {
             e.preventDefault();
-            if ($(this).value.length < 5)
-            {   
-                var c = String.fromCharCode(e.event.charCode);
-                if (/[a-zA-Z0-9]/.test(c)) {
-                    $(this).value+=c.toUpperCase();
-                }
-            }
+            $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
+            // e.preventDefault();
+            // if ($(this).value.length < 5)
+            // {   
+            //     var c = String.fromCharCode(e.event.charCode);
+            //     if (/[a-zA-Z0-9]/.test(c)) {
+            //         $(this).value+=c.toUpperCase();
+            //     }
+            // }
         });
+
+        //EVENT FOR CHOOSE PRODUCTION DATE
+        // $(self.fieldProductionID).removeEvents();
+        // $(self.fieldProductionID).addEvent('focus', function(e) 
+        // {
+        //     e.preventDefault();
+        //     $(this).blur();
+
+        //     picker = new DatePicker('#'+self.fieldProductionID, {
+        //         timePicker: false,
+        //         pickerClass: 'datepicker_vista',
+        //         onSelect: function(date) {
+        //             $(self.fieldProductionID).value = date.formatter('%s');
+        //         }
+        //     });
+        //     picker.show();
+        // });
     }
 }
 
@@ -409,35 +413,31 @@ var ProjectsView = function(data)
     self.deleteURL = baseURL + '/projects/delete';
     self._request = null;
 
-    //for view project
-    self.viewProjectViewID = 'view-projects-view';
-    self.viewToMainID  = 'view-to-main';
-    self.viewContentID = 'view-content';
+    self.containerID            = 'projects-view';
 
     //fields
-    self.viewNameID = 'view-name';
-    self.viewCodeID = 'view-code';
-    self.viewDescriptionID = 'view-description';
-    self.viewProductionID = 'view-production';
-    self.viewCreatedID = 'view-created';
-    self.viewCreatedbyID = 'view-createdby';
-    self.viewUpdatedID = 'view-updated';
-    self.viewUpdatedbyID = 'view-updatedby';
-    self.viewStatusID = 'view-status';
-    self.viewTerminationID = 'view-termination';
-    self.viewTerminationFieldID = 'view-termination-field';
+    self.fieldNameID            = 'projects-view-name';
+    self.fieldCodeID            = 'projects-view-code';
+    self.fieldDescriptionID     = 'projects-view-description';
+    self.fieldProductionID      = 'projects-view-production';
+    self.fieldCreatedID         = 'projects-view-created';
+    self.fieldCreatedByID       = 'projects-view-createdby';
+    self.fieldUpdatedID         = 'projects-view-updated';
+    self.fieldUpdatedByID       = 'projects-view-updatedby';
+    self.fieldStatusID          = 'projects-view-status';
+    self.fieldTerminationID     = 'projects-view-termination';
+    self.fieldTerminationConID  = 'projects-view-termination-con';
+    self.csrfID                 = 'projects-view-csrf';
 
-    //for edit
-    self.editID = 'edit';
-    self.deleteID = 'delete';
-
-    //for change status
-    self.viewChangeStatusID = 'a[id^=view-button-change-status]';
-    self.viewCSRFID = 'view-csrf';
+    //buttons
+    self.backButtonID           = 'projects-view-back-button';
+    self.editButtonID           = 'projects-view-edit-button';
+    self.deleteButtonID         = 'projects-view-delete-button';
+    self.changeButtonID         = 'projects-view-change-button';
 
     self.init = function()
     {
-        $(self.viewProjectViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
 
         self.renderData();
         self.addEvents();
@@ -453,7 +453,7 @@ var ProjectsView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
                 'status'            : data['status']
             };
@@ -491,7 +491,7 @@ var ProjectsView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
             };
 
@@ -503,7 +503,7 @@ var ProjectsView = function(data)
                 'onSuccess': function(response)
                 {
                     console.log(response);
-                    $(self.viewToMainID).click();
+                    $(self.backButtonID).click();
                 },
                 'onError' : function(errors)
                 {
@@ -519,55 +519,55 @@ var ProjectsView = function(data)
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
-        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? 'mm' : data['termination_date'];
-        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : data['production_date'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? 'mm' : DateFormatter.formatDate(data['termination_date']);
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['production_date']);
 
-        $(self.viewNameID).set('html', data['name']);
-        $(self.viewCodeID).set('html', data['code']);
-        $(self.viewDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.viewStatusID).set('html', data['status']);
-        $(self.viewProductionID).set('html', production);
-        $(self.viewTerminationID).set('html', termination);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldNameID).set('html', data['name']);
+        $(self.fieldCodeID).set('html', data['code']);
+        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        $(self.fieldStatusID).set('html', data['status']);
+        $(self.fieldProductionID).set('html', production);
+        $(self.fieldTerminationID).set('html', termination);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
 
         if (data['status'] == 'TERMINATED') {
-            $(self.viewTerminationFieldID).setStyle('display', 'block');
+            $(self.fieldTerminationConID).setStyle('display', 'block');
         } else {
-            $(self.viewTerminationFieldID).setStyle('display', 'none');
+            $(self.fieldTerminationConID).setStyle('display', 'none');
         }
     }
 
     self.addEvents = function()
     {
         //EVENT FOR GOING BACK TO MAIN FROM VIEW
-        $(self.viewToMainID).removeEvents();
-        $(self.viewToMainID).addEvent('click', function(e)
+        $(self.backButtonID).removeEvents();
+        $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             ProjectsSite.mainObj.clearSearch();
 
-            $(self.viewProjectViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ProjectsSite.mainObj.init();
         });
 
         //EVENT FOR EDITING A PROJECT
-        $(self.editID).removeEvents();
-        $(self.editID).addEvent('click', function(e)
+        $(self.editButtonID).removeEvents();
+        $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();            
 
-            $(self.viewProjectViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initEdit(data);
         });
 
         //EVENT FOR CHANGING PROJECT STATUS
-        $$(self.viewChangeStatusID).removeEvents();
-        $$(self.viewChangeStatusID).addEvent('click', function(e)
+        $(self.changeButtonID).removeEvents();
+        $(self.changeButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -579,8 +579,8 @@ var ProjectsView = function(data)
         });
 
         //EVENT FOR DELETING A PROJECT
-        $(self.deleteID).removeEvents();
-        $(self.deleteID).addEvent('click', function(e)
+        $(self.deleteButtonID).removeEvents();
+        $(self.deleteButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -597,31 +597,27 @@ var ProjectsEdit = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/projects/update';
+    self._request = null;
 
-    //for edit project
-    self.editProjectViewID = 'edit-projects-view';
-    self.editContentID = 'edit-content';
-    self.editSaveButtonID = 'edit-button-update-project';
-    self.editCancelButtonID = 'edit-button-cancel';
+    self.containerID        = 'projects-edit';
 
     //fields
-    self.editNameID = 'edit-name';
-    self.editCodeID = 'edit-code';
-    self.editDescriptionID = 'edit-description';
-    self.editProductionID = 'edit-production';
+    self.fieldNameID        = 'projects-edit-name';
+    self.fieldCodeID        = 'projects-edit-code';
+    self.fieldDescriptionID = 'projects-edit-description';
+    self.fieldProductionID  = 'projects-edit-production';
+    self.csrfID             = 'projects-edit-csrf';
 
-    //error messages
-    self.editNameErrorID = 'edit-name-error';
-    self.editCodeErrorID = 'edit-code-error';
-    self.editDescriptionErrorID = 'edit-description-error';
-    self.editProductionErrorID = 'edit-production-error';
+    //errors
+    self.errorCodeID        = 'projects-edit-code-error';
 
-    //for csrf
-    self.editCSRFID = 'edit-csrf';
+    //buttons
+    self.saveButtonID       = 'projects-edit-save-button';
+    self.cancelButtonID     = 'projects-edit-cancel-button';
 
     self.init = function()
     {
-        $(self.editProjectViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -631,12 +627,12 @@ var ProjectsEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.editCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
-                'name'              : $(self.editNameID).value.trim(),
-                'code'              : $(self.editCodeID).value.trim(),
-                'description'       : $(self.editDescriptionID).value.trim(),
-                'production_date'   : $(self.editProductionID).value.trim(),
+                'name'              : $(self.fieldNameID).value.trim(),
+                'code'              : $(self.fieldCodeID).value.trim(),
+                'description'       : $(self.fieldDescriptionID).value.trim(),
+                'production_date'   : $(self.fieldProductionID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -652,8 +648,8 @@ var ProjectsEdit = function(data)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'CODE_ERROR') {
-                                $(self.editCodeErrorID).set('html', msg[1]);
-                                $(self.editCodeErrorID).setStyle('display', 'block');
+                                $(self.errorCodeID).set('html', msg[1]);
+                                $(self.errorCodeID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -667,7 +663,7 @@ var ProjectsEdit = function(data)
                         data['updated_by']      = response['data']['updated_by'];
                         data['date_updated']    = response['data']['date_updated'];
 
-                        $(self.editCancelButtonID).click();
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -680,35 +676,52 @@ var ProjectsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editNameID).value = data['name'];
-        $(self.editCodeID).value = data['code'];
-        $(self.editDescriptionID).value = data['description'];
-        $(self.editProductionID).value = data['production_date'];
+        $(self.fieldNameID).value = data['name'];
+        $(self.fieldCodeID).value = data['code'];
+        $(self.fieldDescriptionID).value = data['description'];
+        $(self.fieldProductionID).value = data['production_date'];
     }
 
     self.addEvents = function()
     {
         //EVENT FOR SAVING CHANGES BUTTON IN EDIT PROJECT
-        $(self.editSaveButtonID).removeEvents();
-        $(self.editSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorCodeID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
         //EVENT FOR CANCEL BUTTON IN EDIT PROJECT
-        $(self.editCancelButtonID).removeEvents();
-        $(self.editCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.editProjectViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initView(data);
 
             //clear form
-            $(self.editNameID).value = '';
-            $(self.editCodeID).value = '';
-            $(self.editDescriptionID).value = '';
-            $(self.editProductionID).value = '0000-00-00';
+            $(self.fieldNameID).value = '';
+            $(self.fieldCodeID).value = '';
+            $(self.fieldDescriptionID).value = '';
+            $(self.fieldProductionID).value = '0000-00-00';
+        });
+
+        //EVENT FOR SEARCH CODE FIELD INPUT
+        $(self.fieldCodeID).removeEvents();
+        $(self.fieldCodeID).addEvent('input', function(e)
+        {
+            e.preventDefault();
+            $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
+            // e.preventDefault();
+            // if ($(this).value.length < 5)
+            // {   
+            //     var c = String.fromCharCode(e.event.charCode);
+            //     if (/[a-zA-Z0-9]/.test(c)) {
+            //         $(this).value+=c.toUpperCase();
+            //     }
+            // }
         });
     }
 }

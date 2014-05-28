@@ -1,5 +1,5 @@
 <!-- edit part view -->
-<div id="edit-contact-persons-view" style="display:none;" class="contact-info plain-list">
+<div id="contact-persons-edit" style="display:none;" class="contact-info plain-list">
     <!-- FORM HERE -->
     <form>
         <input type="hidden" id="contact-persons-edit-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
@@ -71,10 +71,10 @@
                     <div class="field field-text">
                         <div class="field-action-content">
                             <div class="pseudo-field pseudo-button">
-                                <a id="contact-persons-edit-button-cancel" class="cancel" href="#">Cancel</a>
+                                <a id="contact-persons-edit-cancel-button" class="cancel" href="#">Cancel</a>
                             </div>
                             <div class="pseudo-field pseudo-button primary-button">
-                                <button id="edit-button-update-contact-persons">Save Changes</button>
+                                <button id="contact-persons-edit-save-button">Save Changes</button>
                             </div>
                         </div><!-- End Field Action Content -->
                     </div><!-- End Field Action -->

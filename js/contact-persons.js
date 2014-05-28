@@ -4,27 +4,29 @@ var ContactPersonsList = function(project_id)
     self.getDataURL = baseURL + '/contactpersons/list';
     self._request = null;
 
+    self.containerID    = 'contact-persons-list';
+    
+    //for pagination
+    self.nextID         = 'contact-persons-list-next';
+    self.prevID         = 'contact-persons-list-prev';
+    self.totalDataID    = 'contact-persons-list-total';
+    self.totalPartID    = 'contact-persons-list-part';
+
+    //for table
+    self.tableID        = 'contact-persons-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'contact-persons-list-row';
+
     //buttons
-    self.viewContactPersonID = 'a[id^=contact-persons-view_]';
-    self.createContactButtonID = 'contact-button-add';
-
-    //container
-    self.contactPersonsListID = 'contact-persons-list';
-
-    //table
-    self.nextID = 'contact-next';
-    self.prevID = 'contact-prev';
-    self.currentPage = 1;
-    self.resultData = [];
-    self.totalDataID = 'contact-persons-total';
-    self.totalPartID = 'contact-persons-part';
-    self.contactPersonsTableID = 'contact-persons-table';
-    self.tableRowClass = 'contact-person-row';
+    self.createButtonID = 'contact-persons-list-create-button';
+    self.viewButtonID   = 'a[id^=contact-persons-list-view_]';
 
     self.init = function()
     {
         $$('.'+self.tableRowClass).dispose();
-        $(self.contactPersonsListID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();    
     }
 
@@ -46,7 +48,7 @@ var ContactPersonsList = function(project_id)
                 {
                     self.currentPage  = data.page;
                     self.totalPage    = data.totalPage;
-                    self.resultData = data.resultData;
+                    self.resultData   = data.resultData;
                     self.pageLimit    = data.limit;
                     self.renderData(data.totalData);
 
@@ -76,7 +78,7 @@ var ContactPersonsList = function(project_id)
                             + '<td>'+val['position']+'</td>'
                             + '<td>'+val['email']+'</td>'
                             + '<td class="actions-col two-column">'
-                            + '<a id="contact-persons-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
+                            + '<a id="contact-persons-list-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
                             + '</td>';
 
                 contentElem = new Element('<tr />',
@@ -85,7 +87,7 @@ var ContactPersonsList = function(project_id)
                     'html' : contentHTML
                 });
                 
-                contentElem.inject($(self.contactPersonsTableID), 'bottom');
+                contentElem.inject($(self.tableID), 'bottom');
             });
         }
         else
@@ -99,7 +101,7 @@ var ContactPersonsList = function(project_id)
                 'html' : contentHTML
             });
 
-            contentElem.inject($(self.contactPersonsTableID), 'bottom');
+            contentElem.inject($(self.tableID), 'bottom');
         }
     }
 
@@ -130,20 +132,20 @@ var ContactPersonsList = function(project_id)
         });
 
         //CREATE A CONTACT PERSON
-        $(self.createContactButtonID).removeEvents();
-        $(self.createContactButtonID).addEvent('click', function(e)
+        $(self.createButtonID).removeEvents();
+        $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.contactPersonsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initCreate(project_id);
         });
         
         //VIEW CONTACT PERSON
-        $$(self.viewContactPersonID).removeEvents();
-        $$(self.viewContactPersonID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.contactPersonsListID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
         });
     }
@@ -194,32 +196,29 @@ var ContactPersonsCreate = function(project_id)
     self.postDataURL = baseURL + '/contactpersons/create';
     self._request = null;
 
+    self.containerID = 'contact-persons-create';
+    
     //buttons
-    self.createContactPersonsSaveButtonID = 'create-button-create-contact-persons';
-    self.createContactPersonsCancelButtonID = 'contact-persons-create-button-cancel';
-
-    //container
-    self.createContactPersonsViewID = 'create-contact-persons-view';
+    self.saveButtonID    = 'contact-persons-create-save-button';
+    self.cancelButtonID  = 'contact-persons-create-cancel-button';
 
     //fields
-    self.createContactPersonsNameID =       'contact-persons-create-name';
-    self.createContactPersonsCompanyID =    'contact-persons-create-company';
-    self.createContactPersonsPositionID =   'contact-persons-create-position';
-    self.createContactPersonsContactsID =   'contact-persons-create-contacts';
-    self.createContactPersonsEmailID =      'contact-persons-create-email';
-    self.createContactPersonsAddressID =    'contact-persons-create-address';
-    self.createContactPersonsNotesID =      'contact-persons-create-notes';
-
-    //for csrf
-    self.createContactPersonsCSRFID = 'contact-persons-create-csrf';
+    self.fieldNameID     = 'contact-persons-create-name';
+    self.fieldCompanyID  = 'contact-persons-create-company';
+    self.fieldPositionID = 'contact-persons-create-position';
+    self.fieldContactsID = 'contact-persons-create-contacts';
+    self.fieldEmailID    = 'contact-persons-create-email';
+    self.fieldAddressID  = 'contact-persons-create-address';
+    self.fieldNotesID    = 'contact-persons-create-notes';
+    self.csrfID          = 'contact-persons-create-csrf';
 
     //errors
-    self.createContactPersonsNameErrorID = 'contact-persons-create-name-error';
-    self.createContactPersonsEmailErrorID = 'contact-persons-create-email-error';
+    self.errorNameID = 'contact-persons-create-name-error';
+    self.errorEmailID = 'contact-persons-create-email-error';
 
     self.init = function()
     {
-        $(self.createContactPersonsViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.addEvents();
     }
 
@@ -228,15 +227,15 @@ var ContactPersonsCreate = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.createContactPersonsCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : project_id,
-                'name'              : $(self.createContactPersonsNameID).value.trim(),
-                'company'           : $(self.createContactPersonsCompanyID).value.trim(),
-                'position'          : $(self.createContactPersonsPositionID).value.trim(),
-                'contact_numbers'   : $(self.createContactPersonsContactsID).value.trim(),
-                'email'             : $(self.createContactPersonsEmailID).value.trim(),
-                'address'           : $(self.createContactPersonsAddressID).value.trim(),
-                'notes'             : $(self.createContactPersonsNotesID).value.trim()
+                'name'              : $(self.fieldNameID).value.trim(),
+                'company'           : $(self.fieldCompanyID).value.trim(),
+                'position'          : $(self.fieldPositionID).value.trim(),
+                'contact_numbers'   : $(self.fieldContactsID).value.trim(),
+                'email'             : $(self.fieldEmailID).value.trim(),
+                'address'           : $(self.fieldAddressID).value.trim(),
+                'notes'             : $(self.fieldNotesID).value.trim()
             };
 
             self._request = new Request.JSON(
@@ -252,19 +251,19 @@ var ContactPersonsCreate = function(project_id)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'NAME_ERROR') {
-                                $(self.createContactPersonsNameErrorID).set('html', msg[1]);
-                                $(self.createContactPersonsNameErrorID).setStyle('display', 'block');
+                                $(self.errorNameID).set('html', msg[1]);
+                                $(self.errorNameID).setStyle('display', 'block');
                             
                             } else if (msg[0] == 'EMAIL_ERROR') {
-                                $(self.createContactPersonsEmailErrorID).set('html', msg[1]);
-                                $(self.createContactPersonsEmailErrorID).setStyle('display', 'block');
+                                $(self.errorEmailID).set('html', msg[1]);
+                                $(self.errorEmailID).setStyle('display', 'block');
 
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        $(self.createContactPersonsCancelButtonID).click();
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -279,31 +278,33 @@ var ContactPersonsCreate = function(project_id)
     self.addEvents = function()
     {
         //CREATE CONTACT PERSON
-        $(self.createContactPersonsSaveButtonID).removeEvents();
-        $(self.createContactPersonsSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorNameID).setStyle('display', 'none');
+            $(self.errorEmailID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
         //CANCEL BUTTON
-        $(self.createContactPersonsCancelButtonID).removeEvents();
-        $(self.createContactPersonsCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             //clean form
-            $(self.createContactPersonsNameID).value = '';
-            $(self.createContactPersonsCompanyID).value = '';
-            $(self.createContactPersonsPositionID).value = '';
-            $(self.createContactPersonsEmailID).value = '';
-            $(self.createContactPersonsContactsID).value = '';
-            $(self.createContactPersonsAddressID).value = '';
-            $(self.createContactPersonsNotesID).value = '';
+            $(self.fieldNameID).value = '';
+            $(self.fieldCompanyID).value = '';
+            $(self.fieldPositionID).value = '';
+            $(self.fieldEmailID).value = '';
+            $(self.fieldContactsID).value = '';
+            $(self.fieldAddressID).value = '';
+            $(self.fieldNotesID).value = '';
 
-            $(self.createContactPersonsNameErrorID).setStyle('display', 'none');
-            $(self.createContactPersonsEmailErrorID).setStyle('display', 'none');
+            $(self.errorNameID).setStyle('display', 'none');
+            $(self.errorEmailID).setStyle('display', 'none');
             
-            $(self.createContactPersonsViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initObj(project_id);
 
         });
@@ -316,33 +317,30 @@ var ContactPersonsView = function(data)
     self.postDataURL = baseURL + '/contactpersons/delete';
     self._request = null;
 
-    //display
-    self.viewContactPersonsViewID = 'view-contact-persons-view';
-
-    //buttons
-    self.editContactPersonID = 'contact-persons-edit';
-    self.deleteContactPersonID = 'contact-persons-delete';
-
-    //back to list
-    self.contactPersonsViewToListID = 'contact-person-view-to-list';
+    self.containerID = 'contact-persons-view';
 
     //fields
-    self.viewContactPersonsNameID = 'contact-persons-view-name';
-    self.viewContactPersonsCompanyID = 'contact-persons-view-company';
-    self.viewContactPersonsPositionID = 'contact-persons-view-position';
-    self.viewContactPersonsContactsID = 'contact-persons-view-contacts';
-    self.viewContactPersonsEmailID = 'contact-persons-view-email';
-    self.viewContactPersonsAddressID = 'contact-persons-view-address';
-    self.viewContactPersonsNotesID = 'contact-persons-view-notes';
-    self.viewContactPersonsCreatedID = 'contact-persons-view-created';
-    self.viewContactPersonsUpdatedID = 'contact-persons-view-updated';
+    self.fieldNameID        = 'contact-persons-view-name';
+    self.fieldCompanyID     = 'contact-persons-view-company';
+    self.fieldPositionID    = 'contact-persons-view-position';
+    self.fieldContactsID    = 'contact-persons-view-contacts';
+    self.fieldEmailID       = 'contact-persons-view-email';
+    self.fieldAddressID     = 'contact-persons-view-address';
+    self.fieldNotesID       = 'contact-persons-view-notes';
+    self.fieldCreatedID     = 'contact-persons-view-created';
+    self.fieldUpdatedID     = 'contact-persons-view-updated';
+    self.fieldCreatedByID   = 'contact-persons-view-createdby';
+    self.fieldUpdatedByID   = 'contact-persons-view-updatedby';
+    self.csrfID             = 'contact-persons-view-csrf';
 
-    //for csrf
-    self.viewContactPersonsCSRFID = 'contact-persons-view-csrf';
+    //buttons
+    self.editButtonID       = 'contact-persons-view-edit-button';
+    self.deleteButtonID     = 'contact-persons-view-delete-button';
+    self.backButtonID       = 'contact-persons-view-back-button';
 
     self.init = function()
     {
-        $(self.viewContactPersonsViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -352,7 +350,7 @@ var ContactPersonsView = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.viewContactPersonsCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
                 'email'             : data['email']
             };
@@ -368,7 +366,7 @@ var ContactPersonsView = function(data)
                         self._request.stop;
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
-                        $(self.contactPersonsViewToListID).click();
+                        $(self.backButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -382,34 +380,38 @@ var ContactPersonsView = function(data)
 
     self.renderData = function()
     {
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewContactPersonsNameID).set('html', data['name']);
-        $(self.viewContactPersonsCompanyID).set('html', data['company']);
-        $(self.viewContactPersonsPositionID).set('html', data['position']);
-        $(self.viewContactPersonsContactsID).set('html', data['contact_numbers']);
-        $(self.viewContactPersonsEmailID).set('html', data['email']);
-        $(self.viewContactPersonsAddressID).set('html', '<pre>'+data['address']);
-        $(self.viewContactPersonsNotesID).set('html', '<pre>'+data['notes']);
-        $(self.viewContactPersonsCreatedID).set('html', data['date_created']);
-        $(self.viewContactPersonsUpdatedID).set('html', data['date_updated']);
+        $(self.fieldNameID).set('html', data['name']);
+        $(self.fieldCompanyID).set('html', data['company']);
+        $(self.fieldPositionID).set('html', data['position']);
+        $(self.fieldContactsID).set('html', data['contact_numbers']);
+        $(self.fieldEmailID).set('html', data['email']);
+        $(self.fieldAddressID).set('html', '<pre>'+data['address']);
+        $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
     {
         //EDIT CONTACT PERSON
-        $(self.editContactPersonID).removeEvents();
-        $(self.editContactPersonID).addEvent('click', function(e)
+        $(self.editButtonID).removeEvents();
+        $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewContactPersonsViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
-        $(self.deleteContactPersonID).removeEvents();
-        $(self.deleteContactPersonID).addEvent('click', function(e)
+        $(self.deleteButtonID).removeEvents();
+        $(self.deleteButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             new ConfirmModal(
@@ -421,11 +423,11 @@ var ContactPersonsView = function(data)
         });
 
         //GO BACK TO THE LIST
-        $(self.contactPersonsViewToListID).removeEvents();
-        $(self.contactPersonsViewToListID).addEvent('click', function(e)
+        $(self.backButtonID).removeEvents();
+        $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.viewContactPersonsViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initObj(data['project_id']);
         });
     }
@@ -437,32 +439,29 @@ var ContactPersonsEdit = function(data)
     self.postDataURL = baseURL + '/contactpersons/update';
     self._request = null;
 
-    //display
-    self.editContactPersonsViewID = 'edit-contact-persons-view';
+    self.containerID        = 'contact-persons-edit';
 
     //fields
-    self.editContactPersonsNameID = 'contact-persons-edit-name';
-    self.editContactPersonsCompanyID = 'contact-persons-edit-company';
-    self.editContactPersonsPositionID = 'contact-persons-edit-position';
-    self.editContactPersonsEmailID = 'contact-persons-edit-email';
-    self.editContactPersonsContactsID = 'contact-persons-edit-contacts';
-    self.editContactPersonsAddressID = 'contact-persons-edit-address';
-    self.editContactPersonsNotesID = 'contact-persons-edit-notes';
-
-    //for csrf
-    self.editContactPersonsCSRFID = 'contact-persons-edit-csrf';
+    self.fieldNameID        = 'contact-persons-edit-name';
+    self.fieldCompanyID     = 'contact-persons-edit-company';
+    self.fieldPositionID    = 'contact-persons-edit-position';
+    self.fieldEmailID       = 'contact-persons-edit-email';
+    self.fieldContactsID    = 'contact-persons-edit-contacts';
+    self.fieldAddressID     = 'contact-persons-edit-address';
+    self.fieldNotesID       = 'contact-persons-edit-notes';
+    self.csrfID             = 'contact-persons-edit-csrf';
 
     //errors
-    self.editContactPersonsNameErrorID = 'contact-persons-edit-name-error';
-    self.editContactPersonsEmailErrorID = 'contact-persons-edit-email-error';
+    self.errorNameID        = 'contact-persons-edit-name-error';
+    self.errorEmailID       = 'contact-persons-edit-email-error';
 
     //buttons
-    self.editContactPersonsSaveButtonID = 'edit-button-update-contact-persons';
-    self.editContactPersonsCancelButtonID = 'contact-persons-edit-button-cancel';
+    self.saveButtonID       = 'contact-persons-edit-save-button';
+    self.cancelButtonID     = 'contact-persons-edit-cancel-button';
 
     self.init = function()
     {
-        $(self.editContactPersonsViewID).setStyle('display', 'block');
+        $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
     }
@@ -472,16 +471,16 @@ var ContactPersonsEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.editContactPersonsCSRFID).value,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : data['project_id'],
-                'name'              : $(self.editContactPersonsNameID).value.trim(),
-                'company'           : $(self.editContactPersonsCompanyID).value.trim(),
-                'position'          : $(self.editContactPersonsPositionID).value.trim(),
-                'contact_numbers'   : $(self.editContactPersonsContactsID).value.trim(),
+                'name'              : $(self.fieldNameID).value.trim(),
+                'company'           : $(self.fieldCompanyID).value.trim(),
+                'position'          : $(self.fieldPositionID).value.trim(),
+                'contact_numbers'   : $(self.fieldContactsID).value.trim(),
                 'email'             : data['email'],
-                'new_email'         : $(self.editContactPersonsEmailID).value.trim(),
-                'address'           : $(self.editContactPersonsAddressID).value.trim(),
-                'notes'             : $(self.editContactPersonsNotesID).value.trim(),
+                'new_email'         : $(self.fieldEmailID).value.trim(),
+                'address'           : $(self.fieldAddressID).value.trim(),
+                'notes'             : $(self.fieldNotesID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -497,12 +496,12 @@ var ContactPersonsEdit = function(data)
                         {
                             var msg = error.split(': ');
                             if (msg[0] == 'NAME_ERROR') {
-                                $(self.editContactPersonsNameErrorID).set('html', msg[1]);
-                                $(self.editContactPersonsNameErrorID).setStyle('display', 'block');
+                                $(self.errorNameID).set('html', msg[1]);
+                                $(self.errorNameID).setStyle('display', 'block');
                             
                             } else if (msg[0] == 'EMAIL_ERROR') {
-                                $(self.editContactPersonsEmailErrorID).set('html', msg[1]);
-                                $(self.editContactPersonsEmailErrorID).setStyle('display', 'block');
+                                $(self.errorEmailID).set('html', msg[1]);
+                                $(self.errorEmailID).setStyle('display', 'block');
 
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
@@ -516,8 +515,10 @@ var ContactPersonsEdit = function(data)
                         data['email']           = response['data']['email'];
                         data['address']         = response['data']['address'];
                         data['notes']           = response['data']['notes'];
+                        data['date_updated']    = response['data']['date_updated'];
+                        data['updated_by']      = response['data']['updated_by'];
 
-                        $(self.editContactPersonsCancelButtonID).click();
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -531,43 +532,45 @@ var ContactPersonsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editContactPersonsNameID).value = data['name'];
-        $(self.editContactPersonsCompanyID).value = data['company'];
-        $(self.editContactPersonsPositionID).value = data['position'];
-        $(self.editContactPersonsEmailID).value = data['email'];
-        $(self.editContactPersonsContactsID).value = data['contact_numbers'];
-        $(self.editContactPersonsAddressID).value = data['address'];
-        $(self.editContactPersonsNotesID).value = data['notes'];
+        $(self.fieldNameID).value = data['name'];
+        $(self.fieldCompanyID).value = data['company'];
+        $(self.fieldPositionID).value = data['position'];
+        $(self.fieldEmailID).value = data['email'];
+        $(self.fieldContactsID).value = data['contact_numbers'];
+        $(self.fieldAddressID).value = data['address'];
+        $(self.fieldNotesID).value = data['notes'];
     }
 
     self.addEvents = function()
     {
         //UPDATE CONTACT PERSON
-        $(self.editContactPersonsSaveButtonID).removeEvents();
-        $(self.editContactPersonsSaveButtonID).addEvent('click', function(e)
+        $(self.saveButtonID).removeEvents();
+        $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorNameID).setStyle('display', 'none');
+            $(self.errorEmailID).setStyle('display', 'none');
             self.postAjaxData();
         });
 
         //CANCEL BUTTON
-        $(self.editContactPersonsCancelButtonID).removeEvents();
-        $(self.editContactPersonsCancelButtonID).addEvent('click', function(e)
+        $(self.cancelButtonID).removeEvents();
+        $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             //clean form
-            $(self.editContactPersonsNameID).value = '';
-            $(self.editContactPersonsCompanyID).value = '';
-            $(self.editContactPersonsPositionID).value = '';
-            $(self.editContactPersonsEmailID).value = '';
-            $(self.editContactPersonsContactsID).value = '';
-            $(self.editContactPersonsAddressID).value = '';
-            $(self.editContactPersonsNotesID).value = '';
+            $(self.fieldNameID).value = '';
+            $(self.fieldCompanyID).value = '';
+            $(self.fieldPositionID).value = '';
+            $(self.fieldEmailID).value = '';
+            $(self.fieldContactsID).value = '';
+            $(self.fieldAddressID).value = '';
+            $(self.fieldNotesID).value = '';
             
-            $(self.editContactPersonsNameErrorID).setStyle('display', 'none');
-            $(self.editContactPersonsEmailErrorID).setStyle('display', 'none');
+            $(self.errorNameID).setStyle('display', 'none');
+            $(self.errorEmailID).setStyle('display', 'none');
 
-            $(self.editContactPersonsViewID).setStyle('display', 'none');
+            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initView(data);
         });
     }

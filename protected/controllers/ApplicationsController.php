@@ -227,6 +227,8 @@ class ApplicationsController extends Controller
         if (!empty($data)) {
             Applications::model()->deleteByPk($data['application_id']);
             ApplicationServers::model()->deleteAll('application_id=:application_id', array(':application_id' => $data['application_id']));
+            ApplicationPointPersons::model()->deleteAll('application_id=:application_id', array(':application_id' => $data['application_id']));
+            Notes::model()->deleteAll('application_id=:application_id', array(':application_id' => $data['application_id']));
 
             echo CJSON::encode(array(
                 'type' => 'success',

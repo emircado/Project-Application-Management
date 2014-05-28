@@ -4,22 +4,24 @@ var ProjectNotesList = function(project_id)
     self.getDataURL = baseURL + '/notes/list';
     self._request = null;
 
-    //buttons
-    self.viewID = 'a[id^=project-notes-list-view_]';
-    self.createButtonID = 'project-notes-list-create-button';
-
-    //container
     self.containerID = 'project-notes-list';
+    
+    //for pagination
+    self.prevID         = 'project-notes-list-prev';
+    self.nextID         = 'project-notes-list-next';
+    self.totalDataID    = 'project-notes-list-total';
+    self.totalPartID    = 'project-notes-list-part';
 
-    //table
-    self.nextID = 'project-notes-list-next';
-    self.prevID = 'project-notes-list-prev';
-    self.currentPage = 1;
-    self.resultData = [];
-    self.totalDataID = 'project-notes-list-total';
-    self.totalPartID = 'project-notes-list-part';
-    self.tableID = 'project-notes-list-table';
-    self.tableRowClass = 'project-notes-list-row';
+    //for table
+    self.tableID        = 'project-notes-list-table';
+    self.totalPage      = 1;
+    self.currentPage    = 1;
+    self.resultData     = [];
+    self.tableRowClass  = 'project-notes-list-row';
+    
+    //buttons
+    self.viewButtonID   = 'a[id^=project-notes-list-view_]';
+    self.createButtonID = 'project-notes-list-create-button';
 
     self.init = function()
     {
@@ -46,7 +48,7 @@ var ProjectNotesList = function(project_id)
                 {
                     self.currentPage  = data.page;
                     self.totalPage    = data.totalPage;
-                    self.resultData = data.resultData;
+                    self.resultData   = data.resultData;
                     self.pageLimit    = data.limit;
                     self.renderData(data.totalData);
 
@@ -71,8 +73,8 @@ var ProjectNotesList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : val['date_created'];
-                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : val['date_updated'];
+                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_created']);
+                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_updated']);
 
                 contentHTML = '<td>'+created+'</td>'
                             + '<td>'+updated+'</td>'                        
@@ -141,8 +143,8 @@ var ProjectNotesList = function(project_id)
         });
         
         //VIEW CONTACT PERSON
-        $$(self.viewID).removeEvents();
-        $$(self.viewID).addEvent('click', function(e)
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
             $(self.containerID).setStyle('display', 'none');
@@ -196,15 +198,14 @@ var ProjectNotesCreate = function(project_id)
     self.postDataURL = baseURL + '/notes/create';
     self._request = null;
 
+    self.containerID = 'project-notes-create';
+    
     //buttons
     self.saveButtonID = 'project-notes-create-save-button';
     self.cancelButtonID = 'project-notes-create-cancel-button';
 
-    //container
-    self.containerID = 'project-notes-create';
-
     //fields
-    self.createNotesID = 'project-notes-create-notes';
+    self.fieldNotesID = 'project-notes-create-notes';
     self.csrfID = 'project-notes-create-csrf';
 
     self.init = function()
@@ -220,10 +221,8 @@ var ProjectNotesCreate = function(project_id)
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'project_id'        : project_id,
-                'notes'             : $(self.createNotesID).value.trim()
+                'notes'             : $(self.fieldNotesID).value.trim()
             };
-
-            console.log(params);
 
             self._request = new Request.JSON(
             {
@@ -264,7 +263,7 @@ var ProjectNotesCreate = function(project_id)
         {
             e.preventDefault();
             //clean form
-            $(self.createNotesID).value = '';
+            $(self.fieldNotesID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initObj(project_id);
@@ -278,21 +277,20 @@ var ProjectNotesView = function(data)
     self.postDataURL = baseURL + '/notes/delete';
     self._request = null;
 
-    //display
-    self.containerID = 'project-notes-view';
-
-    //buttons
-    self.deleteButtonID = 'project-notes-view-delete-button';
-    self.editButtonID = 'project-notes-view-edit-button';
-    self.backButtonID = 'project-notes-view-back-button';
+    self.containerID        = 'project-notes-view';
 
     //fields
-    self.viewNotesID = 'project-notes-view-notes';
-    self.viewCreatedID = 'project-notes-view-created';
-    self.viewUpdatedID = 'project-notes-view-updated';
-    self.viewCreatedByID = 'project-notes-view-createdby';
-    self.viewUpdatedByID = 'project-notes-view-updatedby';
-    self.csrfID = 'project-notes-view-csrf';
+    self.fieldNotesID       = 'project-notes-view-notes';
+    self.fieldCreatedID     = 'project-notes-view-created';
+    self.fieldUpdatedID     = 'project-notes-view-updated';
+    self.fieldCreatedByID   = 'project-notes-view-createdby';
+    self.fieldUpdatedByID   = 'project-notes-view-updatedby';
+    self.csrfID             = 'project-notes-view-csrf';
+
+    //buttons
+    self.deleteButtonID     = 'project-notes-view-delete-button';
+    self.editButtonID       = 'project-notes-view-edit-button';
+    self.backButtonID       = 'project-notes-view-back-button';
 
     self.init = function()
     {
@@ -338,14 +336,14 @@ var ProjectNotesView = function(data)
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : data['date_created'];
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : data['date_updated'];
+        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
+        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
-        $(self.viewNotesID).set('html', '<pre>'+data['notes']);
-        $(self.viewCreatedID).set('html', created);
-        $(self.viewUpdatedID).set('html', updated);
-        $(self.viewCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.viewUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
+        $(self.fieldCreatedID).set('html', created);
+        $(self.fieldUpdatedID).set('html', updated);
+        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
+        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
@@ -389,16 +387,15 @@ var ProjectNotesEdit = function(data)
     self.postDataURL = baseURL + '/notes/update';
     self._request = null;
 
-    //display
-    self.containerID = 'project-notes-edit';
+    self.containerID    = 'project-notes-edit';
 
     //fields
-    self.editNotesID = 'project-notes-edit-notes';
-    self.csrfID = 'project-notes-edit-csrf';
+    self.fieldNotesID   = 'project-notes-edit-notes';
+    self.csrfID         = 'project-notes-edit-csrf';
 
     //buttons
+    self.saveButtonID   = 'project-notes-edit-save-button';
     self.cancelButtonID = 'project-notes-edit-cancel-button';
-    self.saveButtonID = 'project-notes-edit-save-button';
 
     self.init = function()
     {
@@ -412,9 +409,9 @@ var ProjectNotesEdit = function(data)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'note_id'           : data['note_id'],
-                'notes'             : $(self.editNotesID).value.trim(),
+                'YII_CSRF_TOKEN': $(self.csrfID).value,
+                'note_id'       : data['note_id'],
+                'notes'         : $(self.fieldNotesID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -446,7 +443,7 @@ var ProjectNotesEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.editNotesID).value = data['notes'];
+        $(self.fieldNotesID).value = data['notes'];
     }
 
     self.addEvents = function()
@@ -465,7 +462,7 @@ var ProjectNotesEdit = function(data)
         {
             e.preventDefault();
             //clean form
-            $(self.editNotesID).value = '';
+            $(self.fieldNotesID).value = '';
 
             $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initView(data);
