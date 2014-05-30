@@ -19,6 +19,14 @@
                 </div>
                 <div id="edit-primary-content" class="content">
                     <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">ID</span></div>
+                        <div class="field-primary">
+                            <div class="pseudo-field no-border">
+                                <span class="value" id="projects-view-id"></span>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->                
+                    <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Name</span></div>
                         <div class="field-primary">
                             <div class="pseudo-field no-border">
@@ -103,14 +111,6 @@
             </div>
         </form>
 
-        <!-- PROJECT NOTES HERE -->
-        <?php 
-            $this->renderPartial('//projects/project_notes/project-notes-list');
-            $this->renderPartial('//projects/project_notes/project-notes-create'); 
-            $this->renderPartial('//projects/project_notes/project-notes-view');
-            $this->renderPartial('//projects/project_notes/project-notes-edit');
-        ?>
-
         <!-- CONTACT PERSONS HERE -->
         <?php 
             $this->renderPartial('//projects/contact_persons/contact-persons-list');
@@ -125,6 +125,14 @@
             $this->renderPartial('//projects/point_persons/point-persons-create');
             $this->renderPartial('//projects/point_persons/point-persons-view');
             $this->renderPartial('//projects/point_persons/point-persons-edit');
+        ?>
+
+        <!-- PROJECT NOTES HERE -->
+        <?php 
+            $this->renderPartial('//projects/project_notes/project-notes-list');
+            $this->renderPartial('//projects/project_notes/project-notes-create'); 
+            $this->renderPartial('//projects/project_notes/project-notes-view');
+            $this->renderPartial('//projects/project_notes/project-notes-edit');
         ?>
         <a id="projects-view-delete-button" href="#">[Delete Project]</a>
     </div>

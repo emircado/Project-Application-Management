@@ -5,6 +5,7 @@ var ApplicationNotesList = function(application_id)
     self._request = null;
 
     self.containerID    = 'application-notes-list';
+    self.csrfID         = 'application-notes-list-csrf';
 
     //for pagination
     self.nextID         = 'application-notes-list-next';
@@ -20,7 +21,7 @@ var ApplicationNotesList = function(application_id)
     self.tableRowClass  = 'application-notes-list-row';
 
     //buttons
-    self.viewButtonID   = 'a[id^=application-notes-list-view_]';
+    self.viewButtonID   = 'tr[id^=application-notes-list-view_]';
     self.createButtonID = 'application-notes-list-create-button';
 
     self.init = function()
@@ -36,7 +37,8 @@ var ApplicationNotesList = function(application_id)
         {
             var params = {
                 'page'              : self.currentPage,
-                'application_id'    : application_id
+                'application_id'    : application_id,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -74,19 +76,15 @@ var ApplicationNotesList = function(application_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_created']);
-                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_updated']);
 
-                contentHTML = '<td>'+created+'</td>'
-                            + '<td>'+updated+'</td>'                        
-                            + '<td>'+val['notes']+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="application-notes-list-view_' + idx + '" href="#" title="View Note"><span class="">View</span></a>&nbsp'
-                            + '</td>';
+                contentHTML = '<td>'+created+'</td>'                    
+                            + '<td>'+val['notes']+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'application-notes-list-view_'+idx,
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -96,11 +94,12 @@ var ApplicationNotesList = function(application_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No notes found</td><td></td><td></td><td></td>';
+            contentHTML = '<td>No notes found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'application-notes-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -147,8 +146,11 @@ var ApplicationNotesList = function(application_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ApplicationNotesSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                ApplicationNotesSite.initView(self.resultData[idx]);
+            }
         });
     }
 
@@ -286,7 +288,6 @@ var ApplicationNotesView = function(data)
     self.fieldCreatedID     = 'application-notes-view-created';
     self.fieldUpdatedID     = 'application-notes-view-updated';
     self.fieldCreatedByID   = 'application-notes-view-createdby';
-    self.fieldUpdatedByID   = 'application-notes-view-updatedby';
     self.csrfID             = 'application-notes-view-csrf';
 
     //buttons
@@ -337,7 +338,6 @@ var ApplicationNotesView = function(data)
     {
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
@@ -345,7 +345,6 @@ var ApplicationNotesView = function(data)
         $(self.fieldCreatedID).set('html', created);
         $(self.fieldUpdatedID).set('html', updated);
         $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()

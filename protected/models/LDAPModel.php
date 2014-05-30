@@ -15,8 +15,8 @@ class LDAPModel extends CFormModel {
     );
 
     public function __construct() {
-        $username = $_SESSION['username'];//Yii::app()->getSecurityManager()->decrypt($_SESSION['username'], Yii::app()->params['salt']);
-        $password = $_SESSION['password'];//Yii::app()->getSecurityManager()->decrypt($_SESSION['password'], Yii::app()->params['salt']);
+        $username = UserIdentity::encrypt_decrypt('decrypt', $_SESSION['username']);
+        $password = UserIdentity::encrypt_decrypt('decrypt', $_SESSION['password']);
 
         if (!Yii::app()->ldap->authenticate($username, $password)) {
             throw new LDAPModelException('Invalid LDAP authentication');

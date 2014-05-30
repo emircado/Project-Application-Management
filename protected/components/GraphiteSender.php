@@ -34,7 +34,7 @@ class GraphiteSender extends CApplicationComponent
 
     public function send_login($error_code) {
         if ($this->method == 'direct') {
-            $timestamp = time() - ((3*60)+40);
+            $timestamp = time();
             $message = "pamgmt.accounts.authentication.login.attempted 1.00 ".$timestamp."\n";
 
             switch ($error_code) {
@@ -68,7 +68,7 @@ class GraphiteSender extends CApplicationComponent
     public function send_projectlist($time)
     {
         if ($this->method == 'direct') {
-            $timestamp = time() - ((3*60)+40);
+            $timestamp = time() - ((3*60)+50);
             $message = "pamgmt.projects.list.load.time ".$time.".00 ".$timestamp."\n";
             $this->send($message);
         } else if ($this->method == 'statsd') {

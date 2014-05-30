@@ -7,7 +7,7 @@
             </div>
             <div class="dialog-content-block">
                 <div class="form module">
-                    <!-- create note view -->
+                    <!-- create application server view -->
                     <div class="contact-info plain-list">
                         <!-- CONTENT HERE -->
                         <form>
@@ -105,7 +105,7 @@
                                                     <a id="app-servers-create-modal-cancel-button" class="cancel" href="#">Cancel</a>
                                                 </div>
                                                 <div class="pseudo-field pseudo-button primary-button">
-                                                    <button id="app-servers-create-modal-create-button">Create</button>
+                                                    <button id="app-servers-create-modal-save-button">Create</button>
                                                 </div>
                                             </div><!-- End Field Action Content -->
                                         </div><!-- End Field Action -->
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div><!--END create note-->
+                    </div><!--END create application server-->
                 </div>
             </div>
         </div>

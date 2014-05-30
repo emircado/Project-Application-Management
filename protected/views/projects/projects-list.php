@@ -6,9 +6,10 @@
     $search_status = array(''=>'') + $status;
 ?>
 
-<div id="projects-list" class="table-main">
+<div id="projects-list" class="table-main" style="display:none";>
     <?php echo CHtml::form('', 'post', array('id'=>'export-form', 'enctype'=>'multipart/form-data')); ?>
     <fieldset>
+        <input type="hidden" id="projects-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="table-header-block">
             <div class="header-block-button">
                 <a id="projects-list-create-button" class="button round blue image-right ic-add text-upper" href="#">Create Project</a>
@@ -29,20 +30,19 @@
         </div><!-- End Table Header Block -->
         
         <div id="content-div">
-            <table>
+            <table id="test">
                 <thead>
                     <tr>                      
-                        <th width='150'>Name</th>
+                        <th width='250'>Name</th>
                         <th width='90'>Code</th>
                         <th width=''>Description</th>
                         <th width='115'>Status</th>
-                        <th width='120'>Production Date</th>
-                        <th width=''>Actions</th>
+                        <th></th>
                     </tr>
                     <tr>
-                        <th><input id="projects-list-search-name" type="text" style="width:130px"/></th>
-                        <th><input id="projects-list-search-code" type="text" style="width:70px"/></th>
-                        <th>&nbsp;</th>
+                        <th><input id="projects-list-search-name" type="text" style="width:180px;"/></th>
+                        <th><input id="projects-list-search-code" type="text" style="width:70px;"/></th>
+                        <th></th>
                         <th>
                             <select class="select" name="projects-list-search-status" id="projects-list-search-status" style="width:115px;">
                                 <?php
@@ -55,7 +55,6 @@
                                 ?>
                             </select>
                         </th>
-                        <th>&nbsp;</th>
                         <th><div><button id="search-submit">Search</button></div><a href="#" id="projects-list-clear-button">Clear</a></th>
                     </tr>
                 </thead>

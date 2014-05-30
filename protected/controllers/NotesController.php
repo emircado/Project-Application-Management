@@ -4,6 +4,14 @@ class NotesController extends Controller
 {
     public function actionList()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
+        if (!isset($_GET['YII_CSRF_TOKEN']))
+            throw new CHttpException(400, 'Bad Request');
+        else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
+            throw new CHttpException(400, 'Bad Request');
+
         $limit = Yii::app()->params['notes_per_page'];
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
@@ -83,6 +91,9 @@ class NotesController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -110,22 +121,41 @@ class NotesController extends Controller
 
     public function actionUpdate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
-            $updates = array(
-                'notes'         => $data['notes'],
-                'date_updated'  => date("Y-m-d H:i:s"),
-                'updated_by'    => Yii::app()->user->name,
-            );
+            $errors = array();
 
-            Notes::model()->updateByPk($data['note_id'], $updates);
-            
-            echo CJSON::encode(array(
-                'type' => 'success',
-                'data' => $updates,
-            ));
+            //editable only by creator
+            $note = Notes::model()->findByPk($data['note_id']);
+            if ($note->created_by != Yii::app()->user->name) {
+                array_push($errors, 'UPDATEDBY_ERROR: Only the creator can update the note');
+            }
+
+            if (count($errors) == 0) {
+                $updates = array(
+                    'notes'         => $data['notes'],
+                    'date_updated'  => date("Y-m-d H:i:s"),
+                    'updated_by'    => Yii::app()->user->name,
+                );
+
+                Notes::model()->updateByPk($data['note_id'], $updates);
+                
+                echo CJSON::encode(array(
+                    'type' => 'success',
+                    'data' => $updates,
+                ));
+            } else {
+                echo CJSON::encode(array(
+                    'type' => 'error', 
+                    'data' => $errors,
+                ));
+            }
+
         } else {
             echo CJSON::encode(array(
                 'type' => 'error',
@@ -136,6 +166,9 @@ class NotesController extends Controller
 
     public function actionDelete()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+        
         $data = $_POST;
 
         if (!empty($data)) {

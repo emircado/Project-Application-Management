@@ -4,6 +4,14 @@ class ApplicationpointpersonsController extends Controller
 {
     public function actionList()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
+        if (!isset($_GET['YII_CSRF_TOKEN']))
+            throw new CHttpException(400, 'Bad Request');
+        else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
+            throw new CHttpException(400, 'Bad Request');
+
         $limit = Yii::app()->params['point_persons_per_page'];
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
@@ -57,10 +65,6 @@ class ApplicationpointpersonsController extends Controller
                 'username'          => $row->username,
                 'user_group'        => $row->user_group,
                 'description'       => $row->description,
-                'date_created'      => $row->date_created,
-                'date_updated'      => $row->date_updated,
-                'created_by'        => $row->created_by,
-                'updated_by'        => $row->updated_by,
             );
         }
 
@@ -73,6 +77,9 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionUpdate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
@@ -102,6 +109,9 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -159,6 +169,9 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionDelete()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         if (!empty($data)) {

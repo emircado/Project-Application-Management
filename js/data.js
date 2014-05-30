@@ -1,5 +1,5 @@
 // contains group => members dictionary
-var LDAPGroupsData = function()
+var LDAPGroupsData = function(csrf_token)
 {
     var self = this;
     self.getDataURL = baseURL + '/ldap/getgroups';
@@ -16,10 +16,15 @@ var LDAPGroupsData = function()
     {
         if(!self._request || !self._request.isRunning())
         {
+            var params = {
+                'YII_CSRF_TOKEN'    : csrf_token,
+            };
+
             self._request = new Request.JSON(
             {
                 'url' : self.getDataURL,
                 'method' : 'get',
+                'data' : params,
                 'onSuccess': function(response)
                 {
                     self.ldapGroupsData = new Hash(response);
@@ -39,7 +44,7 @@ var LDAPGroupsData = function()
 }
 
 // contains username => displayname dictionary
-var LDAPUsersData = function()
+var LDAPUsersData = function(csrf_token)
 {
     var self = this;
     self.getDataURL = baseURL + '/ldap/getusers';
@@ -56,10 +61,15 @@ var LDAPUsersData = function()
     {
         if(!self._request || !self._request.isRunning())
         {
+            var params = {
+                'YII_CSRF_TOKEN'    : csrf_token,
+            };
+
             self._request = new Request.JSON(
             {
                 'url' : self.getDataURL,
                 'method' : 'get',
+                'data' : params,
                 'onSuccess': function(response)
                 {
                     self.ldapUsersData = new Hash(response);
@@ -74,7 +84,7 @@ var LDAPUsersData = function()
     }
 }
 
-var AppTypesData = function()
+var AppTypesData = function(csrf_token)
 {
     var self = this;
     self.getDataURL = baseURL + '/applicationtypes/list';
@@ -91,9 +101,14 @@ var AppTypesData = function()
     {
         if(!self._request || !self._request.isRunning())
         {
+            var params = {
+                'YII_CSRF_TOKEN'    : csrf_token,
+            };
+
             self._request = new Request.JSON({
                 'url' : self.getDataURL,
                 'method' : 'get',
+                'data' : params,
                 'onSuccess': function(response)
                 {
                     self.appTypes = new Hash(response);
@@ -108,7 +123,7 @@ var AppTypesData = function()
     }
 }
 
-var AppServersData = function()
+var AppServersData = function(csrf_token)
 {
     var self = this;
     self.getDataURL = baseURL + '/servers/data';
@@ -125,9 +140,14 @@ var AppServersData = function()
     {
         if(!self._request || !self._request.isRunning())
         {
+            var params = {
+                'YII_CSRF_TOKEN'    : csrf_token,
+            };
+
             self._request = new Request.JSON({
                 'url' : self.getDataURL,
                 'method' : 'get',
+                'data' : params,
                 'onSuccess': function(response)
                 {
                     self.appServers = new Hash(response);
@@ -149,14 +169,15 @@ var DateFormatter = {
     formatDate: function(date_str)
     {
         var self = this;
-        var date = new Date(date_str);
+        var date = new Date(date_str.replace(/-/g,'/'));
         return date.formatter(self.dateFormat);
     },
 
     formatDateTime: function(date_str)
     {
         var self = this;
-        var date = new Date(date_str);
+        var date = new Date(date_str.replace(/-/g,'/'));
+
         return date.formatter(self.datetimeFormat);
     }
 }

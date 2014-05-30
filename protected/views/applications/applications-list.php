@@ -1,6 +1,7 @@
 <!-- LIST APPLICATIONS -->
 <div id="applications-list">
     <form>
+        <input type="hidden" id="applications-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">
@@ -15,9 +16,7 @@
                     <thead>
                         <tr>                      
                             <th width=''>Name</th>
-                            <th width=''>Type</th>
                             <th width=''>R<?php echo htmlentities("&"); ?>D Point Person</th>
-                            <th width=''>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="applications-list-table">

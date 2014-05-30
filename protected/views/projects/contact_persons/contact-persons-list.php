@@ -1,6 +1,7 @@
 <!-- LIST PROJECTS -->
 <div id="contact-persons-list">
     <form>
+        <input type="hidden" id="contact-persons-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">
@@ -16,9 +17,6 @@
                         <tr>                      
                             <th width=''>Name</th>
                             <th width=''>Company</th>
-                            <th width=''>Position</th>
-                            <th width=''>Email</th>
-                            <th width=''>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="contact-persons-list-table">

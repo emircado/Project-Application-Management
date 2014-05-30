@@ -3,25 +3,6 @@
 class SiteController extends Controller
 {
     /**
-     * Declares class-based actions.
-     */
-    public function actions()
-    {
-        return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
-            'captcha'=>array(
-                'class'=>'CCaptchaAction',
-                'backColor'=>0xFFFFFF,
-            ),
-            // page action renders "static" pages stored under 'protected/views/site/pages'
-            // They can be accessed via: index.php?r=site/page&view=FileName
-            'page'=>array(
-                'class'=>'CViewAction',
-            ),
-        );
-    }
-
-    /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
@@ -58,26 +39,24 @@ class SiteController extends Controller
      */
     public function actionUsers($username = NULL)
     {
-        if (Yii::app()->user->isGuest) {
-            $this->redirect('index');
-        } else {
-            try {
-                $model = new LDAPModel;
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
 
-                $is_individual = False;
+        try {
+            $model = new LDAPModel;
 
-                if ($username == NULL) {
-                    $model->get_users();
-                } else {
-                    $model->get_userinfo($username);
-                    $is_individual = True;
-                }
-                $this->render('users', array('model'=>$model, 'is_individual'=>$is_individual));
+            $is_individual = False;
 
-            } catch (LDAPModelException $e) {
-                //raise an error here
-                $this->redirect('index');
+            if ($username == NULL) {
+                $model->get_users();
+            } else {
+                $model->get_userinfo($username);
+                $is_individual = True;
             }
+            $this->render('users', array('model'=>$model, 'is_individual'=>$is_individual));
+
+        } catch (LDAPModelException $e) {
+            throw new CHttpException(404, 'The specified page cannot be found');
         }
     }
 
@@ -86,24 +65,22 @@ class SiteController extends Controller
      */
     public function actionGroups($groupname = NULL)
     {
-        if (Yii::app()->user->isGuest) {
-            $this->redirect('index');
-        } else {
-            try {
-                $model = new LDAPModel;
-                $is_individual = False;
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+        
+        try {
+            $model = new LDAPModel;
+            $is_individual = False;
 
-                if ($groupname == NULL) {
-                    $model->get_groups();
-                } else {
-                    $model->get_groupinfo($groupname);
-                    $is_individual = True;
-                }
-                $this->render('groups', array('model'=>$model, 'is_individual'=>$is_individual));
-            } catch (LDAPModelException $e) {
-                //raise an error here
-                $this->redirect('index');
+            if ($groupname == NULL) {
+                $model->get_groups();
+            } else {
+                $model->get_groupinfo($groupname);
+                $is_individual = True;
             }
+            $this->render('groups', array('model'=>$model, 'is_individual'=>$is_individual));
+        } catch (LDAPModelException $e) {
+            throw new CHttpException(404, 'The specified page cannot be found');
         }
     }
 
@@ -138,6 +115,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+        
         //close LDAP connection here
         Yii::app()->ldap->close();
 

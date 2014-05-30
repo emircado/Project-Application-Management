@@ -2,6 +2,7 @@
 <div id="app-servers-list" sytle="display:block;">
     <!-- CONTENT HERE -->
     <form>
+        <input type="hidden" id="app-servers-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">

@@ -6032,3 +6032,903 @@ Stack trace:
 REQUEST_URI=/pamgmt/
 HTTP_REFERER=http://10.11.7.11/pamgmt/
 ---
+2014/05/28 11:15:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:31
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/28 11:15:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:31
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/28 11:15:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "asd".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('asd')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/asd
+---
+2014/05/28 13:28:47 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:29:13 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:29:13 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:29:40 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:29:41 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:30:33 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:31:03 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:31:04 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:31:04 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:32:16 [error] [php] include(servers.php): failed to open stream: No such file or directory (/home/httpd/vhosts/yiiframework/1.1.14/framework/YiiBase.php:427)
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php(3): spl_autoload_call()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#4 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#9 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#15 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#16 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#17 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (3)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:34:15 [error] [php] Undefined variable: status (/home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php:6)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#1 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (6)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:34:17 [error] [php] Undefined variable: status (/home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php:6)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#1 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (6)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:34:17 [error] [php] Undefined variable: status (/home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php:6)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#1 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (6)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/28 13:34:43 [error] [php] Undefined variable: status (/home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php:6)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#1 /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php(12): ServersController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ServersController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ServersController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ServersController->renderPartial()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php(12): ServersController->render()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ServersController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ServersController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ServersController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/servers
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers-list.php (6)
+in /home/httpd/vhosts/pamgmt/protected/views/servers/servers.php (12)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 13:55:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:31
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/29 13:55:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:73
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/list')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/list
+---
+2014/05/29 14:09:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "asdfasdf".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('asdfasdf')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/asdfasdf
+---
+2014/05/29 14:09:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:73
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/list')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/list
+---
+2014/05/29 15:13:46 [error] [php] Undefined variable: roles (/home/httpd/vhosts/pamgmt/protected/views/projects/projects-create.php:92)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#1 /home/httpd/vhosts/pamgmt/protected/views/projects/projects.php(13): ProjectsController->renderPartial()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(126): require()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CBaseController.php(95): ProjectsController->renderInternal()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): ProjectsController->renderFile()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): ProjectsController->renderPartial()
+#6 /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php(29): ProjectsController->render()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/index
+in /home/httpd/vhosts/pamgmt/protected/views/projects/projects-create.php (92)
+in /home/httpd/vhosts/pamgmt/protected/views/projects/projects.php (13)
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (29)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 15:22:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:22:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:22:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:22:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:22:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:22:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:33:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:262
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionCreate()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('create')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/create')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/create
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:35:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/index')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 15:35:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/29 15:52:11 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:336
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('view')
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/view')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#7 {main}
+REQUEST_URI=/pamgmt/projects/view?3
+---
+2014/05/29 15:52:31 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:336
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('view')
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/view/3')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#6 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#7 {main}
+REQUEST_URI=/pamgmt/projects/view/3
+---
+2014/05/29 15:52:44 [error] [php] Undefined variable: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:35)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/view/3
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (35)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 16:34:46 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/pamgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 17:01:26 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'The CSRF token could not be verified.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CHttpRequest.php:1247
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php(561): CHttpRequest->validateCsrfToken(Object(CEvent))
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(207): CComponent->raiseEvent('onBeginRequest', Object(CEvent))
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(178): CApplication->onBeginRequest(Object(CEvent))
+#3 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#4 {main}
+REQUEST_URI=/pamgmt/projects/update
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 17:24:30 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:40
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/list')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/list?page=1&name=&code=&status=&YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 17:39:25 [error] [php] Undefined index: YII_CSRF_TOKEN (/home/httpd/vhosts/pamgmt/protected/controllers/ContactpersonsController.php:12)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ContactpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ContactpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ContactpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/contactpersons/list?page=1&project_id=184
+in /home/httpd/vhosts/pamgmt/protected/controllers/ContactpersonsController.php (12)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 17:39:25 [error] [php] Undefined index: YII_CSRF_TOKEN (/home/httpd/vhosts/pamgmt/protected/controllers/NotesController.php:10)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): NotesController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): NotesController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): NotesController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/notes/list?page=1&project_id=184
+in /home/httpd/vhosts/pamgmt/protected/controllers/NotesController.php (10)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 17:39:25 [error] [php] Undefined index: YII_CSRF_TOKEN (/home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php:10)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): PointpersonsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): PointpersonsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): PointpersonsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/pointpersons/list?page=1&project_id=184
+in /home/httpd/vhosts/pamgmt/protected/controllers/PointpersonsController.php (10)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 17:39:25 [error] [php] Undefined index: YII_CSRF_TOKEN (/home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php:10)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ApplicationsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ApplicationsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ApplicationsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/applications/list?page=1&project_id=184
+in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationsController.php (10)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/29 17:53:52 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:42
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/list')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/list?page=1&name=&code=&status=&YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7dh
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 18:02:13 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php:36
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionGetUsers()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getusers')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/getusers')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/ldap/getusers?YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7sd
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 18:02:13 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationtypesController.php:13
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationtypesController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationtype...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/applicationtypes/list?YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7sd
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 18:02:13 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/ServersController.php:77
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ServersController->actionData()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('data')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('servers/data')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/servers/data?YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7sd
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 18:02:13 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php:13
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionGetGroups()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getgroups')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/getgroups')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/ldap/getgroups?YII_CSRF_TOKEN=50e8b801d3437574e0b700530ffdbd9dbb1b95e7sd
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects/index
+---
+2014/05/29 18:03:42 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php:34
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionGetUsers()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getusers')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/getusers')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/ldap/getusers
+HTTP_REFERER=http://10.11.7.11/pamgmt/servers/index
+---
+2014/05/29 18:05:47 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php:34
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionGetUsers()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('getusers')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/getusers')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/ldap/getusers
+HTTP_REFERER=http://10.11.7.11/pamgmt/servers/index
+---
+2014/05/30 08:57:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/index')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/index
+---
+2014/05/30 11:32:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ApplicationtypesController.php:8
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ApplicationtypesController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('applicationtype...')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/applicationtypes/list
+---
+2014/05/30 13:56:00 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Bad Request' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:42
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionList()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('list')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/list')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects/list?name=&code=&status=&YII_CSRF_TOKEN=%5Bobject%20HTMLInputElement%5D
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/05/30 13:56:31 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/list?name=&code=&status=&YII_CSRF_TOKEN=60d5f446bd32291131c6eef3f8bcf050cf62b609
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/30 13:57:55 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/list?name=&code=&status=&YII_CSRF_TOKEN=60d5f446bd32291131c6eef3f8bcf050cf62b609
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/30 13:58:02 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/list?name=&code=&status=&YII_CSRF_TOKEN=60d5f446bd32291131c6eef3f8bcf050cf62b609
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/05/30 14:06:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/index')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/30 14:06:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/index')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/30 14:06:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The specified page cannot be found' in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:11
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): ProjectsController->actionIndex()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/index')
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#7 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#8 {main}
+REQUEST_URI=/pamgmt/projects
+---
+2014/05/30 16:05:22 [error] [php] Undefined index: project_id (/home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php:51)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(286): ProjectsController->runAction()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): ProjectsController->runActionWithFilters()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): ProjectsController->run()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/projects/list?page=1&name=&code=&status=&YII_CSRF_TOKEN=60d5f446bd32291131c6eef3f8bcf050cf62b609
+in /home/httpd/vhosts/pamgmt/protected/controllers/ProjectsController.php (51)
+in /home/httpd/vhosts/pamgmt/index.php (15)

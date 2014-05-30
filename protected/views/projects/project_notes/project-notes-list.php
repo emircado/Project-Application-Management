@@ -1,6 +1,7 @@
 <!-- LIST PROJECT NOTES -->
 <div id="project-notes-list">
     <form>
+        <input type="hidden" id="project-notes-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">
@@ -14,10 +15,8 @@
                 <table>
                     <thead>
                         <tr>                      
-                            <th width=''>Date Created</th>
-                            <th width=''>Date Updated</th>
+                            <th width='170px'>Date Created</th>
                             <th width=''>Notes</th>
-                            <th width=''>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="project-notes-list-table">

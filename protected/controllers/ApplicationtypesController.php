@@ -4,6 +4,14 @@ class ApplicationtypesController extends Controller
 {
     public function actionList()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
+        if (!isset($_GET['YII_CSRF_TOKEN']))
+            throw new CHttpException(400, 'Bad Request');
+        else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
+            throw new CHttpException(400, 'Bad Request');
+
         $data = ApplicationTypes::model()->findAll();
         $appTypes = array();
         foreach ($data as $d) {
@@ -15,6 +23,9 @@ class ApplicationtypesController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+        
         $data = $_POST;
 
         if (!empty($data['name'])) {

@@ -795,7 +795,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     //buttons
     self.closeButtonID      = 'app-servers-create-modal-close-button';
     self.cancelButtonID     = 'app-servers-create-modal-cancel-button';
-    self.confirmButtonID    = 'app-servers-create-modal-create-button';
+    self.confirmButtonID    = 'app-servers-create-modal-save-button';
 
     self.show = function()
     {
@@ -884,18 +884,12 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
                                 $(self.errorPublicID).set('html', msg[1]);
                                 $(self.errorPublicID).setStyle('display', 'block');
                             
-                                new AppServersNoticeModal(
-                                    'Notice', msg[1], response['duplicate'], 'OK',
-                                    function(){})
-                                .show();
+                                new AppServersNoticeModal('Notice', msg[1], response['duplicate'], 'OK', function(){}, false).show();
                             } else if (msg[0] == 'PRIVATE_ERROR') {
                                 $(self.errorPrivateID).set('html', msg[1]);
                                 $(self.errorPrivateID).setStyle('display', 'block');
 
-                                new AppServersNoticeModal(
-                                    'Notice', msg[1], response['duplicate'], 'OK',
-                                    function(){})
-                                .show();
+                                new AppServersNoticeModal('Notice', msg[1], response['duplicate'], 'OK', function(){}, false).show();
                             } else if (msg[0] == 'CSRF_ERROR') {
                                 console.log(msg[1]);
                             }
@@ -914,8 +908,8 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     self.addEvents = function()
     {
         // CLOSE BUTTON EVENT
-        $(self.closeID).removeEvents()
-        $(self.closeID).addEvent('click', function(e)
+        $(self.closeButtonID).removeEvents()
+        $(self.closeButtonID).addEvent('click', function(e)
         {
             e.preventDefault()
             self.closeModal();
@@ -945,7 +939,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     }
 }
 
-var AppServersNoticeModal = function(title, message, duplicate, confirm, onConfirm)
+var AppServersNoticeModal = function(title, message, duplicate, confirm, onConfirm, closeWrapper)
 {
     var self = this;
 
@@ -995,14 +989,18 @@ var AppServersNoticeModal = function(title, message, duplicate, confirm, onConfi
         $(self.cancelButtonID).set('html', 'Cancel');
         $(self.modalID).setStyle('display', 'none');
         $(self.overlayID).setStyle('display', 'none');
+
+        if (closeWrapper == true) {
+            $(self.dialogWrapperID).setStyle('display', 'none');
+        }
     }
 
     self.renderData = function()
     {
         $(self.noticeServerID).set('html', duplicate['server_id']);
         $(self.noticeNameID).set('html', duplicate['name']);
-        $(self.noticePrivateID).set('html', (duplicate['private_ip'] == NULL || duplicate['private_ip'] == '')? 'NONE' : duplicate['private_ip']);
-        $(self.noticePublicID).set('html', (duplicate['public_ip'] == NULL || duplicate['public_ip'] == '')? 'NONE' : duplicate['public_ip']);
+        $(self.noticePrivateID).set('html', (duplicate['private_ip'] == null || duplicate['private_ip'] == '')? 'NONE' : duplicate['private_ip']);
+        $(self.noticePublicID).set('html', (duplicate['public_ip'] == null || duplicate['public_ip'] == '')? 'NONE' : duplicate['public_ip']);
         $(self.noticeTypeID).set('html', duplicate['server_type']);
         $(self.noticeNetworkID).set('html', duplicate['network']);
         $(self.noticeDescriptionID).set('html', '<pre>'+duplicate['description']);

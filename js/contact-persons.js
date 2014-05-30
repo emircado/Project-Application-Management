@@ -5,6 +5,7 @@ var ContactPersonsList = function(project_id)
     self._request = null;
 
     self.containerID    = 'contact-persons-list';
+    self.csrfID         = 'contact-persons-list-csrf';
     
     //for pagination
     self.nextID         = 'contact-persons-list-next';
@@ -21,7 +22,7 @@ var ContactPersonsList = function(project_id)
 
     //buttons
     self.createButtonID = 'contact-persons-list-create-button';
-    self.viewButtonID   = 'a[id^=contact-persons-list-view_]';
+    self.viewButtonID   = 'tr[id^=contact-persons-list-view_]';
 
     self.init = function()
     {
@@ -35,8 +36,9 @@ var ContactPersonsList = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'page'          : self.currentPage,
-                'project_id'    : project_id
+                'page'            : self.currentPage,
+                'project_id'      : project_id,
+                'YII_CSRF_TOKEN'  : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -74,17 +76,14 @@ var ContactPersonsList = function(project_id)
             Array.each(self.resultData, function(val, idx)
             {
                 contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+val['company']+'</td>'                        
-                            + '<td>'+val['position']+'</td>'
-                            + '<td>'+val['email']+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="contact-persons-list-view_' + idx + '" href="#" title="View Contact Person"><span class="">View</span></a>&nbsp'
-                            + '</td>';
+                            + '<td>'+val['company']+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'contact-persons-list-view_'+idx
+
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -94,11 +93,12 @@ var ContactPersonsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No contact persons found</td><td></td><td></td><td></td><td></td>';
+            contentHTML = '<td>No contact persons found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'contact-persons-list-view_none'
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -145,8 +145,11 @@ var ContactPersonsList = function(project_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ContactPersonsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                ContactPersonsSite.initView(self.resultData[idx]);
+            }
         });
     }
 
@@ -327,10 +330,6 @@ var ContactPersonsView = function(data)
     self.fieldEmailID       = 'contact-persons-view-email';
     self.fieldAddressID     = 'contact-persons-view-address';
     self.fieldNotesID       = 'contact-persons-view-notes';
-    self.fieldCreatedID     = 'contact-persons-view-created';
-    self.fieldUpdatedID     = 'contact-persons-view-updated';
-    self.fieldCreatedByID   = 'contact-persons-view-createdby';
-    self.fieldUpdatedByID   = 'contact-persons-view-updatedby';
     self.csrfID             = 'contact-persons-view-csrf';
 
     //buttons
@@ -380,11 +379,6 @@ var ContactPersonsView = function(data)
 
     self.renderData = function()
     {
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
-
         $(self.fieldNameID).set('html', data['name']);
         $(self.fieldCompanyID).set('html', data['company']);
         $(self.fieldPositionID).set('html', data['position']);
@@ -392,10 +386,6 @@ var ContactPersonsView = function(data)
         $(self.fieldEmailID).set('html', data['email']);
         $(self.fieldAddressID).set('html', '<pre>'+data['address']);
         $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
-        $(self.fieldCreatedID).set('html', created);
-        $(self.fieldUpdatedID).set('html', updated);
-        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
@@ -515,8 +505,6 @@ var ContactPersonsEdit = function(data)
                         data['email']           = response['data']['email'];
                         data['address']         = response['data']['address'];
                         data['notes']           = response['data']['notes'];
-                        data['date_updated']    = response['data']['date_updated'];
-                        data['updated_by']      = response['data']['updated_by'];
 
                         $(self.cancelButtonID).click();
                     }

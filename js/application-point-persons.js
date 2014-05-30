@@ -5,6 +5,7 @@ var AppPointPersonsList = function(application_id)
     self._request = null;
 
     self.containerID    = 'app-point-persons-list';
+    self.csrfID         = 'app-point-persons-list-csrf';
     
     //for pagination
     self.nextID         = 'app-point-persons-list-next';
@@ -20,7 +21,7 @@ var AppPointPersonsList = function(application_id)
     self.tableRowClass  = 'app-point-persons-list-row';
 
     //buttons
-    self.viewButtonID   = 'a[id^=app-point-persons-list-view_]';
+    self.viewButtonID   = 'tr[id^=app-point-persons-list-view_]';
     self.createButtonID = 'app-point-persons-list-create-button';
 
     self.init = function()
@@ -36,7 +37,8 @@ var AppPointPersonsList = function(application_id)
         {
             var params = {
                 'page'              : self.currentPage,
-                'application_id'    : application_id
+                'application_id'    : application_id,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -75,15 +77,13 @@ var AppPointPersonsList = function(application_id)
             {
                 var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
                 contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
-                            + '<td>'+val['user_group']+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="app-point-persons-list-view_' + idx + '" href="#" title="View Point Person"><span class="">View</span></a>&nbsp'
-                            + '</td>';
+                            + '<td>'+val['user_group']+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'app-point-persons-list-view_'+idx,
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -93,11 +93,12 @@ var AppPointPersonsList = function(application_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No point persons found</td><td></td><td></td>';
+            contentHTML = '<td>No point persons found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'app-point-persons-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -144,8 +145,11 @@ var AppPointPersonsList = function(application_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            AppPointPersonsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                AppPointPersonsSite.initView(self.resultData[idx]);
+            }
         });
     }
 
@@ -371,10 +375,6 @@ var AppPointPersonsView = function(data)
     self.fieldUsernameID    = 'app-point-persons-view-username';
     self.fieldUsergroupID   = 'app-point-persons-view-usergroup';
     self.fieldDescriptionID = 'app-point-persons-view-description';
-    self.fieldCreatedID     = 'app-point-persons-view-created';
-    self.fieldUpdatedID     = 'app-point-persons-view-updated';
-    self.fieldCreatedByID   = 'app-point-persons-view-createdby';
-    self.fieldUpdatedByID   = 'app-point-persons-view-updatedby';
     self.csrfID             = 'app-point-persons-view-csrf';
 
     //buttons
@@ -425,18 +425,10 @@ var AppPointPersonsView = function(data)
     self.renderData = function()
     {
         var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
         $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.fieldUsergroupID).set('html', data['user_group']);
         $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
-        $(self.fieldCreatedID).set('html', created);
-        $(self.fieldUpdatedID).set('html', updated);
-        $(self.fieldCreatedByID).set('html', createdby);
-        $(self.fieldUpdatedByID).set('html', updatedby);
     }
 
     self.addEvents = function()
@@ -528,8 +520,6 @@ var AppPointPersonsEdit = function(data)
                         });
                     } else if (response['type'] == 'success') {
                         data['description'] = response['data']['description'];
-                        data['date_updated'] = response['data']['date_updated'];
-                        data['updated_by'] = response['data']['updated_by'];
                         
                         $(self.cancelButtonID).click();
                     }

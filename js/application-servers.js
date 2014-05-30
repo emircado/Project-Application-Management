@@ -5,6 +5,7 @@ var AppServersList = function(application_id)
     self._request = null;
 
     self.containerID    = 'app-servers-list';
+    self.csrfID         = 'app-servers-list-csrf';
 
     //for pagination
     self.nextID         = 'app-servers-list-next';
@@ -20,7 +21,7 @@ var AppServersList = function(application_id)
     self.tableRowClass  = 'app-servers-list-row';
 
     //buttons
-    self.viewButtonID   = 'a[id^=app-servers-list-view_]';
+    self.viewButtonID   = 'tr[id^=app-servers-list-view_]';
     self.createButtonID = 'app-servers-list-create-button';
 
     self.init = function()
@@ -35,7 +36,8 @@ var AppServersList = function(application_id)
         {
             var params = {
                 'page'              : self.currentPage,
-                'application_id'    : application_id
+                'application_id'    : application_id,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -81,7 +83,8 @@ var AppServersList = function(application_id)
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'app-servers-list-view_'+idx,
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -95,7 +98,8 @@ var AppServersList = function(application_id)
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'app-servers-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -142,8 +146,11 @@ var AppServersList = function(application_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            AppServersSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                AppServersSite.initView(self.resultData[idx]);
+            }
         });
     }
 

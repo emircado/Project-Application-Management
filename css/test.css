@@ -1,48 +1,48 @@
 /* MAIN TEMPLATE */
 
 body  {
-	background-color: #E0D3CA;
+    background-color: #E0D3CA;
 }
 
 a, a:hover {
-	color: #249180;
+    color: #249180;
 }
 
 .small-scroller {
-	height:125px;
-	overflow-y: scroll;
+    height:125px;
+    overflow-y: scroll;
 }
 
 #page {
-	width: 1200px;
-	background: #F7F3E6;
+    width: 1200px;
+    background: #F7F3E6;
 }
 
 #header {
-	background: #2E454F;
-	height: 120px;
-	position: relative;
+    background: #2E454F;
+    height: 120px;
+    position: relative;
 }
 
 #logo {
-	color: #F7F3E6;
-	font-size: 45px;
-	position: absolute;
-	bottom: 20px;
-	left: 10px;
+    color: #F7F3E6;
+    font-size: 45px;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
 }
 
 .header-block-title hr {
-	border-top: 1px solid #EFE8D1;
+    border-top: 1px solid #EFE8D1;
 }
 
 #footer {
-	border-top: 1px solid #EFE8D1;
+    border-top: 1px solid #EFE8D1;
 }
 
 /* MAIN MENU */
 #mainmenu {
-	background: #249180;
+    background: #249180;
 }
 
 #mainmenu ul li a:hover, #mainmenu ul li.active a
@@ -54,15 +54,15 @@ a, a:hover {
 
 /* TABLES */
 thead th {
-	background-color: #AED5B5;
-	padding: 5px;
-	text-align: center;
+    background-color: #AED5B5;
+    padding: 5px;
+    text-align: center;
 }
 tbody td {
-	text-align: center;
+    text-align: center;
 }
 tbody tr {
-	min-height: 35px;
+    min-height: 35px;
 }
 
 table thead{
@@ -71,64 +71,63 @@ table thead{
 }
 
 .table-header-block {
-	margin: 0 0;
+    margin: 0 0;
 }
 
 #edit-primary-content table {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* SECTIONS AND FORMS */
 .contact-info-details {
-	background-color: #FFFFFF;
-	padding-bottom: 20px;
-	margin-bottom: 20px;
+    background-color: #FFFFFF;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .contact-info .contact-info-details .primary-info {
-	margin-bottom: 5px;
-	margin-top: 0;
+    margin-bottom: 5px;
+    margin-top: 0;
 }
 
 .contact-info .contact-info-details .section .header {
-	background: #DCEDDF;
-	cursor: default;
-	padding: 10px 20px;
+    background: #DCEDDF;
+    cursor: default;
+    padding: 10px 20px;
 }
-
 .plain-list .field {
-	border-bottom: 0;
-	padding: 0 0;
+    border-bottom: 0;
+    padding: 0 0;
 }
 
 .plain-list .field > .field-secondary {
-	width: 25%;
+    width: 25%;
 }
 
 .plain-list .field > .field-secondary .label {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 .plain-list .field > .field-primary {
-	width: 70%%;
+    width: 67.5%;
 }
 
 .field-primary .pseudo-field .text {
-	padding: 7px 5px;
+    padding: 7px 5px;
 }
 
 .pseudo-field select {
-	padding: 7px 5px;
-	width: 100%;
+    padding: 7px 5px;
+    width: 100%;
 }
 
 form .field {
-	margin: 8px 0;
+    margin: 8px 0;
 }
 
 pre {
-	margin: 0px;
-	font-family: inherit;
+    margin: 0px;
+    font-family: inherit;
 }
 
 .search-icon {
@@ -141,170 +140,173 @@ img.search {
 }
 
 /* SPECIFICS */
+#servers-create,
+#servers-edit,
+#servers-view,
 #projects-create,
 #projects-edit {
-	width: 47.5%;
+    width: 47.5%;
 }
 
 #applications-panel {
-	float: left;
-	width: 48.75%;
+    float: left;
+    width: 48.75%;
 }
 
 #details-projects-view {
-	width: 48.75%;
-	float: left;
-	margin-right: 2.5%;
+    width: 48.75%;
+    float: left;
+    margin-right: 2.5%;
 }
 
 #view-projects {
-	padding-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 #edit-primary-content {
-	padding-left: 15px;
-	padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #search-submit {
-	margin: 0px 0px;
+    margin: 0px 0px;
 }
 
 /* CONFIRMATION MODAL */
 #confirmation-modal .dialog-content .dialog-content-block {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .dialog-content .dialog-header-block {
-	padding: 7px 12px;
-	background: #2E454F;
+    padding: 7px 12px;
+    background: #2E454F;
 }
 
 #confirmation-modal {
-	min-width: 300px;
-	margin-top: 150px;
-	margin-left: 40%;
-	z-index: 1500;
+    min-width: 300px;
+    margin-top: 150px;
+    margin-left: 40%;
+    z-index: 1500;
 }
 
 .dialog-content .dialog-footer-block {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .dialog-box .field-action-content {
-	float: none;
-	width: 175px;
-	margin: auto;
+    float: none;
+    width: 175px;
+    margin: auto;
 }
 
 /* APPLICATION MODALS */
 
 #app-servers-search-modal,
 #application-type-modal {
-	min-width: 100px;
-	z-index: 1;
-	/*margin-right: auto;*/
-	margin-left: 400px;
+    min-width: 100px;
+    z-index: 1;
+    margin-right: auto;
+    margin-left: 400px;
 }
 
 #app-servers-search-modal .dialog-content .dialog-content-block,
 #application-type-modal .dialog-content .dialog-content-block {
-	padding: 8px;
-	width: 150px;
+    padding: 8px;
+    width: 150px;
 }
 
 #app-servers-search-modal input,
 #application-type-modal input {
-	padding: 3px;
-	border-radius: 5px;
-	border: 1px solid #CCC;
-	width: 95%;
-	font-size: 14px;
-	text-align: center;
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    width: 95%;
+    font-size: 14px;
+    text-align: center;
 }
 
 #app-servers-search-modal td,
 #application-type-modal td {
-	padding: 3px;
+    padding: 3px;
 }
 
 #app-servers-search-modal tr.selected td,
 #application-type-modal tr.selected td {
-	font-weight: bold;
-	background: #DCEDDF;
+    font-weight: bold;
+    background: #DCEDDF;
 }
 
 #app-servers-search-modal tr.selected td i,
 #application-type-modal tr.selected td i {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 #app-servers-search-modal-confirm-button,
 #app-servers-search-modal-cancel-button,
 #application-type-modal-confirm-button,
 #application-type-modal-cancel-button {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 #app-servers-search-modal .field-action-content,
 #application-type-modal .field-action-content {
-	width: 155px;
+    width: 155px;
 }
 
 #app-servers-search-modal-confirm-button:disabled,
 #application-type-modal-confirm-button:disabled {
-	background: #727070;
-	border: 1px solid #CCC;
-	color: #333;
-	font-weight: bold;
+    background: #727070;
+    border: 1px solid #CCC;
+    color: #333;
+    font-weight: bold;
 }
 
 #app-servers-list-modal {
-	background: #FFFFFF;
-	width: 900px;
-	margin-left: 26.5%;
-	margin-top: 100px;
+    background: #FFFFFF;
+    width: 900px;
+    margin-left: 26.5%;
+    margin-top: 100px;
 }
 
 #app-servers-list-modal .contact-info-details {
-	margin: 0px;
+    margin: 0px;
 }
 
 #app-servers-create-modal {
-	background: #FFFFFF;
-	width: 570px;
-	margin-top: 100px;
-	margin-left: 35%;
+    background: #FFFFFF;
+    width: 570px;
+    margin-top: 100px;
+    margin-left: 35%;
 }
 
 #app-servers-create-modal .dialog-content-block{
-	padding: 0px;
+    padding: 0px;
 }
 
 #app-servers-create-modal .contact-info-details {
-	margin-bottom: 5px;
-	padding: 0px;
+    margin-bottom: 5px;
+    padding: 0px;
 }
 
 #app-servers-create-modal form .field {
-	margin-top: 8px;
-	margin-bottom: 0px;
+    margin-top: 8px;
+    margin-bottom: 0px;
 }
 
 #app-servers-create-modal div.form input {
-	margin: 0px;
+    margin: 0px;
 }
 
 #modal-for-server {
-	padding-top: 20px;
-	padding-left: 10px;
-	margin-bottom: 150px;
+    padding-top: 20px;
+    padding-left: 10px;
+    margin-bottom: 150px;
 }
 
 #overlay2 {
-	z-index: 1000;
+    z-index: 1000;
 }
 
 #dialog-wrapper2 {
-	z-index: 1100;
+    z-index: 1100;
 }

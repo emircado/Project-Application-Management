@@ -44,14 +44,6 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field --> 
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Updated by</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="application-notes-view-updatedby"></span>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field --> 
                 <a id="application-notes-view-back-button" href="#">[Back]</a>
             </div>
         </div>

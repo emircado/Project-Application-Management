@@ -5,6 +5,7 @@ var ApplicationsList = function(project_id)
     self._request = null;
 
     self.containerID    = 'applications-list';
+    self.csrfID         = 'applications-list-csrf';
     
     //for pagination
     self.nextID         = 'applications-list-next';
@@ -20,7 +21,7 @@ var ApplicationsList = function(project_id)
     self.tableRowClass  = 'applications-list-row';
 
     //buttons
-    self.viewButtonID   = 'a[id^=applications-list-view_]';
+    self.viewButtonID   = 'tr[id^=applications-list-view_]';
     self.createButtonID = 'applications-list-create-button';
 
     self.init = function()
@@ -36,7 +37,8 @@ var ApplicationsList = function(project_id)
         {
             var params = {
                 'page'          : self.currentPage,
-                'project_id'    : project_id
+                'project_id'    : project_id,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -75,16 +77,13 @@ var ApplicationsList = function(project_id)
             {
                 var pointperson = ProjectsSite.ldapGroupsObj.ldapGroupsData.get('DEVELOPERS').get(val['rd_point_person']);
                 contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+ProjectsSite.appTypesObj.appTypes.keyOf(val['type_id'])+'</td>'
-                            + '<td>'+((pointperson == null)? '' : pointperson)+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="applications-list-view_' + idx + '" href="#" title="View Application"><span class="">View</span></a>&nbsp'
-                            + '</td>';
+                            + '<td>'+((pointperson == null)? '' : pointperson)+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'applications-list-view_'+idx
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -94,11 +93,12 @@ var ApplicationsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No applications found</td><td></td><td></td><td></td>';
+            contentHTML = '<td>No applications found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'applications-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -145,8 +145,11 @@ var ApplicationsList = function(project_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ApplicationsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                ApplicationsSite.initView(self.resultData[idx]);
+            }
         });
     }
 

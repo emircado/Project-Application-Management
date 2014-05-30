@@ -1,5 +1,6 @@
 <div id="point-persons-list">
     <form>
+        <input type="hidden" id="point-persons-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <!-- header -->
             <div class="section primary-info expanded">
@@ -15,7 +16,6 @@
                         <tr>                      
                             <th width=''>Name</th>
                             <th width=''>User Group</th>
-                            <th width=''>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="point-persons-list-table">

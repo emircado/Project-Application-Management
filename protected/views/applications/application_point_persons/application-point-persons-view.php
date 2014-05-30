@@ -36,38 +36,6 @@
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Date Created</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="app-point-persons-view-created"></span>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field --> 
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Created by</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="app-point-persons-view-createdby"></span>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field --> 
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Date Updated</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="app-point-persons-view-updated"></span>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field --> 
-                <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Updated by</span></div>
-                    <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="app-point-persons-view-updatedby"></span>
-                        </div>
-                    </div><!-- End Field Primary -->
-                </div><!-- End Field --> 
                 <a id="app-point-persons-back-button" href="#">[Back]</a>
             </div>
         </div>

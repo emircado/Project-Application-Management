@@ -28,3 +28,6 @@ INSERT INTO `projects` (`project_id`, `name`, `code`, `description`, `status`, `
 
 INSERT INTO `project_contact_persons` (`project_id`, `name`, `company`, `position`, `contact_numbers`, `email`, `address`, `notes`, `date_created`, `date_updated`) VALUES
 ('182', 'a', '', '', '', 'yo@yo.yo', '', '', '2014-05-05 19:05:03', '0000-00-00 00:00:00');
+
+INSERT INTO `projects` (`project_id`, `name`, `code`, `description`, `status`, `production_date`, `termination_date`, `date_created`, `date_updated`, `created_by`, `updated_by`) VALUES
+('187', 't', 'ASDFE', '', 'ACTIVE', '0000-00-00', '0000-00-00', '2014-05-26 10:58:04', '0000-00-00 00:00:00', 'ermercado', NULL);

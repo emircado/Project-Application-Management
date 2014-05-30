@@ -1,3 +1,43 @@
+var ProjectsData = function()
+{
+    var self = this;
+    self.getDataURL = baseURL + '/projects/list';
+    self._request = null;
+
+    self.getAjaxData = function(params, onRetrieve, onFail)
+    {
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON(
+            {
+                'url' : self.getDataURL,
+                'method' : 'get',
+                'data' : params,
+                'onSuccess' : function(data)
+                {
+                    if (params['project_id'] != null) {
+                        if (data.totalData == 0) {
+                            console.log('data not available');
+                            onFail();
+                        } else {
+                            console.log('displaying individual');
+                            onRetrieve(data.resultData[0]);
+                        }
+                    } else {
+                        console.log('displaying list');
+                        onRetrieve(data);
+                    }
+                },
+                'onError' : function(data)
+                {
+                    self._request.stop;
+                    console.log('Something went wrong!');
+                }
+            }).send();
+        }
+    }
+}
+
 var ProjectsList = function()
 {
     var self = this;
@@ -17,72 +57,58 @@ var ProjectsList = function()
     self.totalPage       = 1;
     self.currentPage     = 1;
     self.resultData      = [];
+    self.lookupData      = new Hash();
     self.tableRowClass   = 'projects-list-row';
 
     //fields
     self.fieldNameID     = 'projects-list-search-name';
     self.fieldCodeID     = 'projects-list-search-code';
     self.fieldStatusID   = 'projects-list-search-status';
+    self.csrfID          = 'projects-list-csrf';
+    self.searchParams = {
+        'name': '',
+        'code': '',
+        'status': '',
+    }
     
     //buttons
     self.createButtonID  = 'projects-list-create-button';
-    self.viewButtonID    = 'a[id^=projects-list-view_]';
+    self.viewButtonID    = 'tr[id^=projects-list-view_]';
     self.searchButtonID  = 'search-submit';
     self.clearButtonID   = 'projects-list-clear-button';
-    self.searchParams    = {
-        'name'      : '',
-        'code'      : '',
-        'status'    : ''
-    };
 
     self.init = function()
     {
+        ProjectsSite.dataObj.getAjaxData({
+            'page': self.currentPage,
+            'name': self.searchParams['name'],
+            'code': self.searchParams['code'],
+            'status': self.searchParams['status'],
+            'YII_CSRF_TOKEN': $(self.csrfID).value,
+        }, self.getData, function(){});
+        
+        $(ProjectsSite.titleID).set('html', 'Projects');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
-        self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        self.clearSearch();
+        $$('.'+self.tableRowClass).dispose();
     }
     
-    self.getAjaxData = function()
+    self.getData = function(data)
     {
-        if(!self._request || !self._request.isRunning())
-        {
-            var params = {
-                'page'      : self.currentPage,
-                'name'      : self.searchParams['name'].trim(),
-                'code'      : self.searchParams['code'].trim(),
-                'status'    : self.searchParams['status'].trim(),
-            };
-            
-            self._request = new Request.JSON(
-            {
-                'url' : self.getDataURL,
-                'method' : 'get',
-                'data' : params,
-                'onSuccess' : function(data)
-                {
-                    self.currentPage = data.page;
-                    self.totalPage = data.totalPage;
-                    self.resultData = data.resultData;
-                    self.pageLimit = data.limit;
-                    self.renderData(data.totalData);
+        self.currentPage = data.page;
+        self.totalPage = data.totalPage;
+        self.resultData = data.resultData;
+        self.pageLimit = data.limit;
 
-                    //callbacks
-                    self.paginationChecker();
-                    self.addEvents();
-                },
-                'onError' : function(data)
-                {
-                    self._request.stop;
-                    console.log('Something went wrong!');
-                }
-            }).send();
-        }
-    }
-
-    self.rowComparator = function(a,b) {
-        if (a['name'].toLowerCase() < b['name'].toLowerCase()) return -1;
-        if (a['name'].toLowerCase() > b['name'].toLowerCase()) return 1;
-        return 0;
+        self.renderData(data.totalData);
+        self.addEvents();
+        self.paginationChecker();
     }
 
     self.paginationChecker = function()
@@ -139,23 +165,22 @@ var ProjectsList = function()
         {
             $(self.totalDataID).set('html', ' of '+count);
 
+            self.lookupData = new Hash();
             Array.each(self.resultData, function(val, idx)
             {
-                var production = (val['production_date'] == null || val['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(val['production_date']);
+                self.lookupData.include(val['project_id'], idx);
+                var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
 
                 contentHTML = '<td>'+val['name']+'</td>'
                             + '<td>'+val['code']+'</td>'                        
-                            + '<td>'+val['description']+'</td>'
-                            + '<td>'+val['status']+'</td>'
-                            + '<td>'+production+'</td>'
-                            + '<td class="actions-col three-column">'
-                            + '<a id="projects-list-view_' + idx + '" href="#" title="View Project">View</a>&nbsp'
-                            + '</td>';
+                            + '<td>'+description+'</td>'
+                            + '<td>'+val['status']+'</td><td></td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'projects-list-view_'+val['project_id']
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -165,11 +190,12 @@ var ProjectsList = function()
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No results found</td>';
+            contentHTML = '<td>No results found</td><td></td><td></td><td></td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'projects-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -179,13 +205,29 @@ var ProjectsList = function()
     self.clearSearch = function()
     {
         self.currentPage = 1;
-        self.searchParams['name'] = '';
-        self.searchParams['code'] = '';
-        self.searchParams['status'] = '';
+
+        self.searchParams = {
+            'name': '',
+            'code': '',
+            'status': '',
+        }
 
         $(self.fieldNameID).value = '';
         $(self.fieldCodeID).value = '';
-        $(self.fieldStatusID).value = '';    
+        $(self.fieldStatusID).value = '';
+    }
+
+    self.makeView = function(pid)
+    {
+        // $(self.containerID).setStyle('display', 'none');
+        if (typeof pid==='number' && (pid%1)===0 && self.lookupData.has(pid)) {
+            console.log('data is from list');
+            ProjectsSite.initView(self.resultData[self.lookupData.get(pid)]);
+            // self.clearSearch();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     self.addEvents = function()
@@ -233,14 +275,6 @@ var ProjectsList = function()
         {
             e.preventDefault();
             $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
-            // e.preventDefault();
-            // if ($(this).value.length < 5)
-            // {   
-            //     var c = String.fromCharCode(e.event.charCode);
-            //     if (/[a-zA-Z0-9]/.test(c)) {
-            //         $(this).value+=c.toUpperCase();
-            //     }
-            // }
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
@@ -251,13 +285,13 @@ var ProjectsList = function()
             self.clearSearch();
         });
 
-        //EVENT FOR VIEWING A PROJECT
         $$(self.viewButtonID).removeEvents();
-        $$(self.viewButtonID).addEvent('click',function(e)
-        {
+        $$(self.viewButtonID).addEvent('click', function(e) {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ProjectsSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var pid = parseInt($(this).get('id').split('_')[1]);
+            if (typeof pid==='number' && (pid%1)===0 && self.lookupData.has(pid)) {
+                document.location.hash = "pid="+pid;
+            }
         });
 
         //EVENT FOR CREATING A NEW PROJECT
@@ -265,9 +299,12 @@ var ProjectsList = function()
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
+            // $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initCreate();
+            // self.clearSearch();
         });
+
+
     };
 };
 
@@ -295,8 +332,23 @@ var ProjectsCreate = function()
 
     self.init = function()
     {
+        $(ProjectsSite.titleID).set('html', 'Projects');
         $(self.containerID).setStyle('display', 'block');
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clear errors        
+        $(self.errorCodeID).setStyle('display', 'none');
+
+        //clear fields
+        $(self.fieldNameID).value = '';
+        $(self.fieldCodeID).value = '';
+        $(self.fieldDescriptionID).value = '';
+        $(self.fieldProductionID).value = '0000-00-00';
     }
 
     self.postAjaxData = function()
@@ -359,16 +411,10 @@ var ProjectsCreate = function()
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ProjectsSite.mainObj.clearSearch();
-            $(self.containerID).setStyle('display', 'none');
+            // $(self.containerID).setStyle('display', 'none');
+            self.hide();
 
-            //clear form
-            $(self.fieldNameID).value = '';
-            $(self.fieldCodeID).value = '';
-            $(self.fieldDescriptionID).value = '';
-            $(self.fieldProductionID).value = '0000-00-00';
-
-            ProjectsSite.mainObj.init();
+            ProjectsSite.initObj();
         });
 
         //EVENT FOR CODE FIELD INPUT
@@ -416,6 +462,7 @@ var ProjectsView = function(data)
     self.containerID            = 'projects-view';
 
     //fields
+    self.fieldIdentifierID      = 'projects-view-id';
     self.fieldNameID            = 'projects-view-name';
     self.fieldCodeID            = 'projects-view-code';
     self.fieldDescriptionID     = 'projects-view-description';
@@ -437,6 +484,7 @@ var ProjectsView = function(data)
 
     self.init = function()
     {
+        $(ProjectsSite.titleID).set('html', 'Projects/'+data['name']);
         $(self.containerID).setStyle('display', 'block');
 
         self.renderData();
@@ -445,7 +493,11 @@ var ProjectsView = function(data)
         ContactPersonsSite.init(data['project_id']);
         PointPersonsSite.init(data['project_id']);
         ApplicationsSite.init(data['project_id']);
+    }
 
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.changeStatus = function()
@@ -524,6 +576,7 @@ var ProjectsView = function(data)
         var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? 'mm' : DateFormatter.formatDate(data['termination_date']);
         var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['production_date']);
 
+        $(self.fieldIdentifierID).set('html', data['project_id']);
         $(self.fieldNameID).set('html', data['name']);
         $(self.fieldCodeID).set('html', data['code']);
         $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
@@ -549,10 +602,8 @@ var ProjectsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ProjectsSite.mainObj.clearSearch();
-
-            $(self.containerID).setStyle('display', 'none');
-            ProjectsSite.mainObj.init();
+            // $(self.containerID).setStyle('display', 'none');
+            document.location.hash = '';
         });
 
         //EVENT FOR EDITING A PROJECT
@@ -561,7 +612,7 @@ var ProjectsView = function(data)
         {
             e.preventDefault();            
 
-            $(self.containerID).setStyle('display', 'none');
+            // $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initEdit(data);
         });
 
@@ -617,9 +668,24 @@ var ProjectsEdit = function(data)
 
     self.init = function()
     {
+        $(ProjectsSite.titleID).set('html', 'Projects');
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clear errors
+        $(self.errorCodeID).setStyle('display', 'none');
+
+        //clear fields
+        $(self.fieldNameID).value = '';
+        $(self.fieldCodeID).value = '';
+        $(self.fieldDescriptionID).value = '';
+        $(self.fieldProductionID).value = '0000-00-00';
     }
 
     self.postAjaxData = function()
@@ -698,7 +764,7 @@ var ProjectsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
+            // $(self.containerID).setStyle('display', 'none');
             ProjectsSite.initView(data);
 
             //clear form
@@ -727,14 +793,18 @@ var ProjectsEdit = function(data)
 }
 
 var ProjectsSite = {
-    mainObj         : null,
-    createObj       : null,
+    titleID         : 'projects-title',
+    csrfID          : 'projects-csrf',
+    mainObj         : new ProjectsList(),
+    createObj       : new ProjectsCreate(),
+    editObj         : null,
+    viewObj         : null,
     // data objects
+    dataObj         : new ProjectsData(),
     ldapGroupsObj   : null,
     ldapUsersObj    : null,
     appTypesObj     : null,
     appServersObj   : null,
-
 
     init: function()
     {
@@ -743,13 +813,38 @@ var ProjectsSite = {
         self.initLDAPUsers();
         self.initAppTypes();
         self.initAppServers();
-        self.initObj();
+
+        // detect what view to initialize from hash
+        var hash = document.location.hash;
+        if (hash.indexOf('#pid=') == 0)
+        {
+            console.log('detected hash');
+            ProjectsSite.dataObj.getAjaxData({
+                'project_id': parseInt(hash.split('=')[1]),
+                'YII_CSRF_TOKEN': $(self.csrfID).value,
+            }, function(data){self.initView(data)}, function(){
+                document.location.hash = '';
+            });
+
+        // will go here if hash format is invalid
+        } else {
+            console.log('no hash');
+            self.initObj();
+        }
+
+        self.addEvents();
     },
 
     initObj: function()
     {
         var self = this;
-        self.mainObj = new ProjectsList();
+
+        self.createObj.hide();
+        if (self.editObj != null)
+            self.editObj.hide();
+        if (self.viewObj != null)
+            self.viewObj.hide();
+
         self.mainObj.init();
     },
 
@@ -757,51 +852,94 @@ var ProjectsSite = {
     {
         var self = this;
 
-        if (self.createObj == null)
-        {
-            self.createObj = new ProjectsCreate();
-        }
+        self.mainObj.hide();
+        if (self.editObj != null)
+            self.editObj.hide();
+        if (self.viewObj != null)
+            self.viewObj.hide();
+
         self.createObj.init();
     },
 
     initEdit: function(data)
     {
         var self = this;
-        new ProjectsEdit(data).init();
+
+        self.mainObj.hide();
+        self.createObj.hide();
+        if (self.viewObj != null)
+            self.viewObj.hide();
+
+        self.editObj = new ProjectsEdit(data)
+        self.editObj.init();
     },
 
     initView: function(data)
     {
         var self = this;
-        new ProjectsView(data).init();
+
+        self.mainObj.hide();
+        self.createObj.hide();
+        if (self.editObj != null)
+            self.editObj.hide();
+
+        self.viewObj = new ProjectsView(data)
+        self.viewObj.init();
     },
 
     initLDAPGroups: function()
     {
         var self = this;
-        self.ldapGroupsObj = new LDAPGroupsData();
+        self.ldapGroupsObj = new LDAPGroupsData($(self.csrfID).value);
         self.ldapGroupsObj.init();
     },
 
     initLDAPUsers: function()
     {
         var self = this;
-        self.ldapUsersObj = new LDAPUsersData();
+        self.ldapUsersObj = new LDAPUsersData($(self.csrfID).value);
         self.ldapUsersObj.init();
     },
 
     initAppTypes: function()
     {
         var self = this;
-        self.appTypesObj = new AppTypesData();
+        self.appTypesObj = new AppTypesData($(self.csrfID).value);
         self.appTypesObj.init();
     },
 
     initAppServers: function()
     {
         var self = this;
-        self.appServersObj = new AppServersData();
+        self.appServersObj = new AppServersData($(self.csrfID).value);
         self.appServersObj.init();
+    },
+
+    addEvents: function()
+    {
+        var self = this;
+        window.onhashchange = function() {
+            var hash = document.location.hash;
+
+            if (hash.length == 0) {
+                console.log('hash is empty');
+                self.initObj();
+            } else if (hash.indexOf('#pid=') == 0) {
+                var pid = parseInt(hash.split('=')[1]);
+                // if project info is not yet retrieved
+                if (!self.mainObj.makeView(pid)) {
+                    console.log('retrieve new');
+                    ProjectsSite.dataObj.getAjaxData({
+                        'project_id': parseInt(hash.split('=')[1]),
+                        'YII_CSRF_TOKEN': $(self.csrfID).value,
+                    }, function(data){self.initView(data)}, function(){
+                        document.location.hash = '';
+                    });
+                }
+            } else {
+                document.location.hash = '';
+            }
+        }
     }
 }
 

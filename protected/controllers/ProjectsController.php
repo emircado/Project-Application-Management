@@ -7,6 +7,9 @@ class ProjectsController extends Controller
     
     public function actionIndex()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $this->modals = array(
             'application-types-modal', 
             'application-servers-search-modal',
@@ -30,6 +33,14 @@ class ProjectsController extends Controller
 
     public function actionList()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
+        if (!isset($_GET['YII_CSRF_TOKEN']))
+            throw new CHttpException(400, 'Bad Request');
+        else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
+            throw new CHttpException(400, 'Bad Request');
+
         $begin_time = microtime(true);
 
         $limit = Yii::app()->params['projects_per_page'];
@@ -37,14 +48,21 @@ class ProjectsController extends Controller
         $offset = ($page-1)*$limit;
         $filter = array();
 
-        if (isset($_GET['name']) && (!empty($_GET['name']) || $_GET['name'] == '0'))
-            $filter['name'] = (string) $_GET['name'];
+        if (isset($_GET['project_id'])) 
+            if (!empty($_GET['project_id']) || $_GET['project_id'] == '0') 
+                $filter['project_id'] = (string) $_GET['project_id'];
 
-        if (isset($_GET['code']) && (!empty($_GET['code']) || $_GET['code'] == '0'))
-            $filter['code'] = (string) $_GET['code'];
+        if (isset($_GET['name'])) 
+            if (!empty($_GET['name']) || $_GET['name'] == '0') 
+                $filter['name'] = (string) $_GET['name'];
 
-        if (isset($_GET['status']) && !empty($_GET['status']))
-            $filter['status'] = (string) $_GET['status'];
+        if (isset($_GET['code'])) 
+            if (!empty($_GET['code']) || $_GET['code'] == '0') 
+                $filter['code'] = (string) $_GET['code'];
+
+        if (isset($_GET['status'])) 
+            if (!empty($_GET['status'])) 
+                $filter['status'] = (string) $_GET['status'];
 
         $projects = $this->get_data($filter, $limit, $offset);
 
@@ -79,7 +97,7 @@ class ProjectsController extends Controller
                 $criteria->compare('project_id', $filter['project_id']);
 
             if(isset($filter['name']))
-                $criteria->compare('name', $filter['name'], true, 'AND', true);
+                $criteria->compare('LOWER(name)', strtolower($filter['name']), true, 'AND', true);
 
             if(isset($filter['code']))
                 $criteria->compare('code', $filter['code'], true, 'AND', true);
@@ -129,6 +147,9 @@ class ProjectsController extends Controller
 
     public function actionUpdate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -190,6 +211,9 @@ class ProjectsController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -249,6 +273,9 @@ class ProjectsController extends Controller
 
     public function actionChangeStatus()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -276,6 +303,9 @@ class ProjectsController extends Controller
 
     public function actionDelete()
     {
+        if (Yii::app()->user->isGuest)
+            throw new CHttpException(404, 'The specified page cannot be found');
+
         $data = $_POST;
         $project = Projects::model()->findByPk($data['project_id']);
 

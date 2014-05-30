@@ -5,8 +5,9 @@
                 <div class="header-block">
                     <div class="header-block-content">
                         <div class="header-block-title">
-                            <h2 class="content-title">Projects</h2><hr>
-                        </div>  
+                            <h2 id="projects-title" class="content-title">Projects</h2><hr>
+                        </div> 
+                        <input type="hidden" id="projects-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                         <?php 
                             //RENDER VIEWS
                         	$this->renderPartial('//projects/projects-list');

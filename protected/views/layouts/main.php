@@ -20,7 +20,8 @@
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <script>
-        var baseURL = '<?= Yii::app()->request->baseUrl; ?>';
+        const baseURL = '<?= Yii::app()->request->baseUrl; ?>';
+        const username = '<?= Yii::app()->user->name; ?>';
     </script>
     
     <!--add mootools lib here-->
@@ -47,8 +48,8 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site')),
-				array('label'=>'Projects', 'url'=>array('/projects'), 'visible'=>!Yii::app()->user->isGuest),
-                array('label'=>'Servers', 'url'=>array('/servers'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Projects', 'url'=>array('/projects/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Servers', 'url'=>array('/servers/index'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/site/users'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Groups', 'url'=>array('/site/groups'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),

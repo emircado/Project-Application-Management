@@ -6,7 +6,7 @@
         <div class="contact-info-details">
             <div class="section primary-info expanded">
                 <div id="expand-primary" class="header">
-                    <h3><b>Details</b></h3>&nbsp&nbsp
+                    <h3><b>Application Details</b></h3>&nbsp&nbsp
                     <a id="applications-view-edit-button" href="#">[Edit]</a>
                     <a id="applications-view-delete-button" href="#" style="float:right;">[Delete]</a>
                 </div>
@@ -130,13 +130,6 @@
     </form>
 
     <?php
-        $this->renderPartial('//applications/application_notes/application-notes-list');
-        $this->renderPartial('//applications/application_notes/application-notes-create');
-        $this->renderPartial('//applications/application_notes/application-notes-view');
-        $this->renderPartial('//applications/application_notes/application-notes-edit');
-    ?>
-
-    <?php
         $this->renderPartial('//applications/application_servers/application-servers-list');
         $this->renderPartial('//applications/application_servers/application-servers-create');
         $this->renderPartial('//applications/application_servers/application-servers-view');
@@ -148,5 +141,12 @@
         $this->renderPartial('//applications/application_point_persons/application-point-persons-create');
         $this->renderPartial('//applications/application_point_persons/application-point-persons-view');
         $this->renderPartial('//applications/application_point_persons/application-point-persons-edit');
+    ?>
+
+    <?php
+        $this->renderPartial('//applications/application_notes/application-notes-list');
+        $this->renderPartial('//applications/application_notes/application-notes-create');
+        $this->renderPartial('//applications/application_notes/application-notes-view');
+        $this->renderPartial('//applications/application_notes/application-notes-edit');
     ?>
 </div><!--END view applications-->

@@ -4,7 +4,8 @@ var ProjectNotesList = function(project_id)
     self.getDataURL = baseURL + '/notes/list';
     self._request = null;
 
-    self.containerID = 'project-notes-list';
+    self.containerID    = 'project-notes-list';
+    self.csrfID         = 'project-notes-list-csrf';
     
     //for pagination
     self.prevID         = 'project-notes-list-prev';
@@ -20,7 +21,7 @@ var ProjectNotesList = function(project_id)
     self.tableRowClass  = 'project-notes-list-row';
     
     //buttons
-    self.viewButtonID   = 'a[id^=project-notes-list-view_]';
+    self.viewButtonID   = 'tr[id^=project-notes-list-view_]';
     self.createButtonID = 'project-notes-list-create-button';
 
     self.init = function()
@@ -36,7 +37,8 @@ var ProjectNotesList = function(project_id)
         {
             var params = {
                 'page'          : self.currentPage,
-                'project_id'    : project_id
+                'project_id'    : project_id,
+                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
             self._request = new Request.JSON(
@@ -74,19 +76,15 @@ var ProjectNotesList = function(project_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_created']);
-                var updated = (val['date_updated'] == null || val['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_updated']);
 
-                contentHTML = '<td>'+created+'</td>'
-                            + '<td>'+updated+'</td>'                        
-                            + '<td>'+val['notes']+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="project-notes-list-view_' + idx + '" href="#" title="View Note"><span class="">View</span></a>&nbsp'
-                            + '</td>';
+                contentHTML = '<td>'+created+'</td>'                
+                            + '<td>'+val['notes']+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html' : contentHTML
+                    'html'  : contentHTML,
+                    'id'    : 'project-notes-list-view_'+idx,
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -96,11 +94,12 @@ var ProjectNotesList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No notes found</td><td></td><td></td><td></td>';
+            contentHTML = '<td>No notes found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html' : contentHTML
+                'html'  : contentHTML,
+                'id'    : 'projects-notes-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -147,8 +146,11 @@ var ProjectNotesList = function(project_id)
         $$(self.viewButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initView(self.resultData[parseInt($(this).get('id').split('_')[1])]);
+            var idx = parseInt($(this).get('id').split('_')[1]);
+            if (typeof idx==='number' && (idx%1)===0) {
+                $(self.containerID).setStyle('display', 'none');
+                ProjectNotesSite.initView(self.resultData[idx]);
+            }
         });
     }
 
@@ -284,7 +286,6 @@ var ProjectNotesView = function(data)
     self.fieldCreatedID     = 'project-notes-view-created';
     self.fieldUpdatedID     = 'project-notes-view-updated';
     self.fieldCreatedByID   = 'project-notes-view-createdby';
-    self.fieldUpdatedByID   = 'project-notes-view-updatedby';
     self.csrfID             = 'project-notes-view-csrf';
 
     //buttons
@@ -297,6 +298,11 @@ var ProjectNotesView = function(data)
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+
+        // check if current user can edit
+        if (username != data['created_by']) {
+            $(self.editButtonID).setStyle('display', 'none');
+        }
     }
 
     self.postAjaxData = function()
@@ -335,7 +341,6 @@ var ProjectNotesView = function(data)
     {
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
@@ -343,19 +348,20 @@ var ProjectNotesView = function(data)
         $(self.fieldCreatedID).set('html', created);
         $(self.fieldUpdatedID).set('html', updated);
         $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-        $(self.fieldUpdatedByID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
     }
 
     self.addEvents = function()
     {
         //EDIT CONTACT PERSON
         $(self.editButtonID).removeEvents();
-        $(self.editButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ProjectNotesSite.initEdit(data);
-        });
+        if (username == data['created_by']) {
+            $(self.editButtonID).addEvent('click', function(e)
+            {
+                e.preventDefault();
+                $(self.containerID).setStyle('display', 'none');
+                ProjectNotesSite.initEdit(data);
+            });
+        }
 
         //DELETE CONTACT PERSON
         $(self.deleteButtonID).removeEvents();
