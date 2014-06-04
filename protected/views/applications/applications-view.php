@@ -55,16 +55,14 @@
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="applications-view-description"></span>
+                        <div id="applications-view-description" class="pseudo-field no-border">
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Instructions</span></div>
                     <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="applications-view-instructions"></span>
+                        <div id="applications-view-instructions" class="pseudo-field no-border">
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -126,27 +124,30 @@
                 </div><!-- End Field -->
                 <a id="applications-view-back-button" href="#">[Back]</a>
             </div>
+
+            <div style="padding:10px;">
+                <?php
+                    $this->renderPartial('//applications/application_servers/application-servers-list');
+                    $this->renderPartial('//applications/application_servers/application-servers-create');
+                    $this->renderPartial('//applications/application_servers/application-servers-view');
+                    $this->renderPartial('//applications/application_servers/application-servers-edit');
+                ?>
+
+                <?php
+                    $this->renderPartial('//applications/application_point_persons/application-point-persons-list');
+                    $this->renderPartial('//applications/application_point_persons/application-point-persons-create');
+                    $this->renderPartial('//applications/application_point_persons/application-point-persons-view');
+                    $this->renderPartial('//applications/application_point_persons/application-point-persons-edit');
+                ?>
+
+                <?php
+                    $this->renderPartial('//applications/application_notes/application-notes-list');
+                    $this->renderPartial('//applications/application_notes/application-notes-create');
+                    $this->renderPartial('//applications/application_notes/application-notes-view');
+                    $this->renderPartial('//applications/application_notes/application-notes-edit');
+                ?>
+            </div>
         </div>
     </form>
 
-    <?php
-        $this->renderPartial('//applications/application_servers/application-servers-list');
-        $this->renderPartial('//applications/application_servers/application-servers-create');
-        $this->renderPartial('//applications/application_servers/application-servers-view');
-        $this->renderPartial('//applications/application_servers/application-servers-edit');
-    ?>
-
-    <?php
-        $this->renderPartial('//applications/application_point_persons/application-point-persons-list');
-        $this->renderPartial('//applications/application_point_persons/application-point-persons-create');
-        $this->renderPartial('//applications/application_point_persons/application-point-persons-view');
-        $this->renderPartial('//applications/application_point_persons/application-point-persons-edit');
-    ?>
-
-    <?php
-        $this->renderPartial('//applications/application_notes/application-notes-list');
-        $this->renderPartial('//applications/application_notes/application-notes-create');
-        $this->renderPartial('//applications/application_notes/application-notes-view');
-        $this->renderPartial('//applications/application_notes/application-notes-edit');
-    ?>
 </div><!--END view applications-->

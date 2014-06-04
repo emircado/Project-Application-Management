@@ -26,9 +26,16 @@ var ContactPersonsList = function(project_id)
 
     self.init = function()
     {
+        ContactPersonsSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();    
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -72,7 +79,6 @@ var ContactPersonsList = function(project_id)
         if(count != 0)
         {
             $(self.totalDataID).set('html', ' of '+count);
-
             Array.each(self.resultData, function(val, idx)
             {
                 contentHTML = '<td>'+val['name']+'</td>'
@@ -136,7 +142,6 @@ var ContactPersonsList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initCreate(project_id);
         });
         
@@ -147,7 +152,6 @@ var ContactPersonsList = function(project_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 ContactPersonsSite.initView(self.resultData[idx]);
             }
         });
@@ -221,8 +225,27 @@ var ContactPersonsCreate = function(project_id)
 
     self.init = function()
     {
+        ContactPersonsSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        
+        //clear errors
+        $(self.errorNameID).setStyle('display', 'none');
+        $(self.errorEmailID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldNameID).value = '';
+        $(self.fieldCompanyID).value = '';
+        $(self.fieldPositionID).value = '';
+        $(self.fieldEmailID).value = '';
+        $(self.fieldContactsID).value = '';
+        $(self.fieldAddressID).value = '';
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -295,21 +318,7 @@ var ContactPersonsCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNameID).value = '';
-            $(self.fieldCompanyID).value = '';
-            $(self.fieldPositionID).value = '';
-            $(self.fieldEmailID).value = '';
-            $(self.fieldContactsID).value = '';
-            $(self.fieldAddressID).value = '';
-            $(self.fieldNotesID).value = '';
-
-            $(self.errorNameID).setStyle('display', 'none');
-            $(self.errorEmailID).setStyle('display', 'none');
-            
-            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initObj(project_id);
-
         });
     }
 }
@@ -339,9 +348,15 @@ var ContactPersonsView = function(data)
 
     self.init = function()
     {
+        ContactPersonsSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -385,7 +400,7 @@ var ContactPersonsView = function(data)
         $(self.fieldContactsID).set('html', data['contact_numbers']);
         $(self.fieldEmailID).set('html', data['email']);
         $(self.fieldAddressID).set('html', '<pre>'+data['address']);
-        $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
+        new ReadMore(self.fieldNotesID, data['notes']).renderData();
     }
 
     self.addEvents = function()
@@ -395,7 +410,6 @@ var ContactPersonsView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initEdit(data);
         });
 
@@ -417,7 +431,6 @@ var ContactPersonsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initObj(data['project_id']);
         });
     }
@@ -451,9 +464,28 @@ var ContactPersonsEdit = function(data)
 
     self.init = function()
     {
+        ContactPersonsSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clear errors
+        $(self.errorNameID).setStyle('display', 'none');
+        $(self.errorEmailID).setStyle('display', 'none');
+        
+        //clear fields
+        $(self.fieldNameID).value = '';
+        $(self.fieldCompanyID).value = '';
+        $(self.fieldPositionID).value = '';
+        $(self.fieldEmailID).value = '';
+        $(self.fieldContactsID).value = '';
+        $(self.fieldAddressID).value = '';
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -546,25 +578,19 @@ var ContactPersonsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNameID).value = '';
-            $(self.fieldCompanyID).value = '';
-            $(self.fieldPositionID).value = '';
-            $(self.fieldEmailID).value = '';
-            $(self.fieldContactsID).value = '';
-            $(self.fieldAddressID).value = '';
-            $(self.fieldNotesID).value = '';
-            
-            $(self.errorNameID).setStyle('display', 'none');
-            $(self.errorEmailID).setStyle('display', 'none');
-
-            $(self.containerID).setStyle('display', 'none');
             ContactPersonsSite.initView(data);
         });
     }
 }
 
 var ContactPersonsSite = {
+    mainObj     : null,
+    createObj   : null,
+    editObj     : null,
+    viewObj     : null, 
+
+    activeView  : '',
+
     init: function(project_id)
     {
         var self = this;
@@ -573,21 +599,57 @@ var ContactPersonsSite = {
 
     initObj: function(project_id)
     {
-        new ContactPersonsList(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new ContactPersonsList(project_id);
+        self.mainObj.init();
     },
 
     initCreate: function(project_id)
     {
-        new ContactPersonsCreate(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new ContactPersonsCreate(project_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new ContactPersonsEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new ContactPersonsEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new ContactPersonsView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new ContactPersonsView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

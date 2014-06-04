@@ -2,11 +2,31 @@
 
 class LdapController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'ajaxOnly + getgroups, getusers',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('getgroups','getusers'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionGetGroups()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -27,9 +47,6 @@ class LdapController extends Controller
 
     public function actionGetUsers()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)

@@ -11,7 +11,7 @@
             <!--CONTENT for CREATE PROJECT-->
             <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Name</span></div>
+                    <div class="field-secondary"><span class="label">Name*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <input type="text" id="projects-create-name" class="text"></input>

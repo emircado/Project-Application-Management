@@ -26,9 +26,16 @@ var ProjectNotesList = function(project_id)
 
     self.init = function()
     {
+        ProjectNotesSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -137,7 +144,6 @@ var ProjectNotesList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initCreate(project_id);
         });
         
@@ -148,7 +154,6 @@ var ProjectNotesList = function(project_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 ProjectNotesSite.initView(self.resultData[idx]);
             }
         });
@@ -212,8 +217,17 @@ var ProjectNotesCreate = function(project_id)
 
     self.init = function()
     {
+        ProjectNotesSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -264,10 +278,6 @@ var ProjectNotesCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNotesID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initObj(project_id);
         });
     }
@@ -295,14 +305,24 @@ var ProjectNotesView = function(data)
 
     self.init = function()
     {
+        ProjectNotesSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
 
         // check if current user can edit
         if (username != data['created_by']) {
-            $(self.editButtonID).setStyle('display', 'none');
+            $(self.editButtonID).set('html', '');
+            $(self.deleteButtonID).set('html', '');
+        } else {
+            $(self.editButtonID).set('html', '[Edit]');
+            $(self.deleteButtonID).set('html', '[Delete]');
         }
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -352,36 +372,36 @@ var ProjectNotesView = function(data)
 
     self.addEvents = function()
     {
-        //EDIT CONTACT PERSON
+        //EDIT BUTTON EVENT
         $(self.editButtonID).removeEvents();
         if (username == data['created_by']) {
             $(self.editButtonID).addEvent('click', function(e)
             {
                 e.preventDefault();
-                $(self.containerID).setStyle('display', 'none');
                 ProjectNotesSite.initEdit(data);
             });
         }
 
-        //DELETE CONTACT PERSON
+        //DELETE BUTTON EVENT
         $(self.deleteButtonID).removeEvents();
-        $(self.deleteButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            new ConfirmModal(
-                'Confirm Delete',
-                'Are you sure you want to delete this note from the list?',
-                'Delete',
-                self.postAjaxData)
-            .show();
-        });
+        if (username == data['created_by']) {
+            $(self.deleteButtonID).addEvent('click', function(e)
+            {
+                e.preventDefault();
+                new ConfirmModal(
+                    'Confirm Delete',
+                    'Are you sure you want to delete this note from the list?',
+                    'Delete',
+                    self.postAjaxData)
+                .show();
+            });
+        }
 
         //GO BACK TO THE LIST
         $(self.backButtonID).removeEvents();
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initObj(data['project_id']);
         });
     }
@@ -405,9 +425,18 @@ var ProjectNotesEdit = function(data)
 
     self.init = function()
     {
+        ProjectNotesSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -467,16 +496,19 @@ var ProjectNotesEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNotesID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             ProjectNotesSite.initView(data);
         });
     }
 }
 
 var ProjectNotesSite = {
+    mainObj     : null,
+    createObj   : null,
+    editObj     : null,
+    viewObj     : null,
+
+    activeView  : '',
+
     init: function(project_id)
     {
         var self = this;
@@ -485,21 +517,57 @@ var ProjectNotesSite = {
 
     initObj: function(project_id)
     {
-        new ProjectNotesList(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new ProjectNotesList(project_id);
+        self.mainObj.init();
     },
 
     initCreate: function(project_id)
     {
-        new ProjectNotesCreate(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new ProjectNotesCreate(project_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new ProjectNotesEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new ProjectNotesEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new ProjectNotesView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new ProjectNotesView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

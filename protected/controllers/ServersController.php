@@ -5,13 +5,32 @@ class ServersController extends Controller
     public $extraJS;
     public $modals;
 
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + update, create, delete',
+            'ajaxOnly + list, data, update, create, delete',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('index','list','data','update','create','delete'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionIndex()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
-
-
         $this->modals = array(
             'confirmation-modal',
         );
@@ -24,9 +43,6 @@ class ServersController extends Controller
 
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -68,9 +84,6 @@ class ServersController extends Controller
     // used for selecting application servers
     public function actionData()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -160,9 +173,6 @@ class ServersController extends Controller
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         $data['name']               = trim($data['name']);
@@ -262,9 +272,6 @@ class ServersController extends Controller
 
     public function actionUpdate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -326,9 +333,6 @@ class ServersController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         if (!empty($data)) {

@@ -18,7 +18,6 @@
                         <tr>                      
                             <th width=''>Name</th>
                             <th width=''>Type</th>
-                            <th width=''>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="app-servers-list-table">

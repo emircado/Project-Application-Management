@@ -26,9 +26,16 @@ var PointPersonsList = function(project_id)
 
     self.init = function()
     {
+        PointPersonsSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -136,7 +143,6 @@ var PointPersonsList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initCreate(project_id);
         });
         
@@ -147,7 +153,6 @@ var PointPersonsList = function(project_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 PointPersonsSite.initView(self.resultData[idx]);
             }
         });
@@ -219,9 +224,24 @@ var PointPersonsCreate = function(project_id)
 
     self.init = function()
     {
+        PointPersonsSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         self.initDropdown();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clear errors
+        $(self.errorUsernameID).setStyle('display', 'none');
+        $(self.errorUsergroupID).setStyle('display', 'none');
+     
+        //clear fields
+        $(self.fieldUsernameID).value = '';
+        $(self.fieldUsergroupID).set('html', '');
+        $(self.fieldDescriptionID).value = '';
     }
 
     self.postAjaxData = function()
@@ -317,15 +337,6 @@ var PointPersonsCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldUsernameID).value = '';
-            $(self.fieldUsergroupID).set('html', '');
-            $(self.fieldDescriptionID).value = '';
-
-            $(self.errorUsernameID).setStyle('display', 'none');
-            $(self.errorUsergroupID).setStyle('display', 'none');
-
-            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initObj(project_id);
         });
 
@@ -381,9 +392,15 @@ var PointPersonsView = function(data)
 
     self.init = function()
     {
+        PointPersonsSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -425,7 +442,7 @@ var PointPersonsView = function(data)
 
         $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.fieldUsergroupID).set('html', data['user_group']);
-        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        new ReadMore(self.fieldDescriptionID, data['description']).renderData();
     }
 
     self.addEvents = function()
@@ -435,7 +452,6 @@ var PointPersonsView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initEdit(data);
         });
 
@@ -457,7 +473,6 @@ var PointPersonsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initObj(data['project_id']);
         });
     }
@@ -483,9 +498,20 @@ var PointPersonsEdit = function(data)
 
     self.init = function()
     {
+        PointPersonsSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldUsernameID).set('html', '');
+        $(self.fieldUsergroupID).set('html', '');
+        $(self.fieldDescriptionID).value = '';
     }
 
     self.postAjaxData = function()
@@ -553,18 +579,19 @@ var PointPersonsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldUsernameID).set('html', '');
-            $(self.fieldUsergroupID).set('html', '');
-            $(self.fieldDescriptionID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             PointPersonsSite.initView(data);
         });
     }
 }
 
 var PointPersonsSite = {
+    mainObj     : null,
+    createObj   : null,
+    editObj     : null,
+    viewObj     : null,
+
+    activeView  : '',
+
     init: function(project_id)
     {
         var self = this;
@@ -573,21 +600,57 @@ var PointPersonsSite = {
 
     initObj: function(project_id)
     {
-        new PointPersonsList(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new PointPersonsList(project_id);
+        self.mainObj.init();
     },
 
     initCreate: function(project_id)
     {
-        new PointPersonsCreate(project_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new PointPersonsCreate(project_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new PointPersonsEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new PointPersonsEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new PointPersonsView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new PointPersonsView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

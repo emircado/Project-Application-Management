@@ -36,7 +36,7 @@
                 <div id="app-servers-create-more" style="display:none;">
                     <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Server</span></div>
-                        <div id="app-servers-create-modal-container" class="field-primary" style="width:340px;">
+                        <div id="app-servers-create-modal-container" class="field-primary" style="width:325px;">
                             <div class="pseudo-field">
                             <input id="app-servers-create-server" type="text" class="text" disabled/>
                             <span id="app-servers-create-server-error" class="field-input-name-error error-message" style="display: none;"></span>

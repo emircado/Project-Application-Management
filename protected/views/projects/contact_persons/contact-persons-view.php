@@ -63,8 +63,7 @@
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Notes</span></div>
                     <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="contact-persons-view-notes"></span>
+                        <div id="contact-persons-view-notes" class="pseudo-field no-border">
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

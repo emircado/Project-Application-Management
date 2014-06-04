@@ -2,27 +2,38 @@
 
 class SiteController extends Controller
 {
-    /**
-     * This is the default 'index' action that is invoked
-     * when an action is not explicitly requested by users.
-     */
-    public function actionIndex()
+    public function filters()
     {
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
-        
-        // no logged in user
-        if (Yii::app()->user->isGuest) {
-            $this->actionLogin();
-        // logged in user
-        } else {
-            $this->render('index');
-        }
+        return array(
+            'accessControl',
+        );
     }
 
-    /**
-     * This is the action to handle external exceptions.
-     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('index', 'groups', 'users', 'logout'),
+                'users'=>array('@'),
+            ),
+            array(
+                'allow',
+                'actions'=>array('login'),
+                'users'=>array('*'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
+    public function actionIndex()
+    {
+        $this->render('index');
+    }
+
     public function actionError()
     {
         if($error=Yii::app()->errorHandler->error)
@@ -34,14 +45,8 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays the users page
-     */
     public function actionUsers($username = NULL)
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         try {
             $model = new LDAPModel;
 
@@ -60,14 +65,8 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays the groups page
-     */
     public function actionGroups($groupname = NULL)
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         try {
             $model = new LDAPModel;
             $is_individual = False;
@@ -84,10 +83,7 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays the login page
-     */
-    private function actionLogin()
+    public function actionLogin()
     {
         $model=new LoginForm;
 
@@ -110,14 +106,8 @@ class SiteController extends Controller
         $this->render('login',array('model'=>$model));
     }
 
-    /**
-     * Logs out the current user and redirect to homepage.
-     */
     public function actionLogout()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         //close LDAP connection here
         Yii::app()->ldap->close();
 

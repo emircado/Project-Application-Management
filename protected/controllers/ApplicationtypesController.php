@@ -2,11 +2,32 @@
 
 class ApplicationtypesController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + create',
+            'ajaxOnly + list, create',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('list','create'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -15,21 +36,17 @@ class ApplicationtypesController extends Controller
         $data = ApplicationTypes::model()->findAll();
         $appTypes = array();
         foreach ($data as $d) {
-            $appTypes[$d->name] = $d->type_id;
-        }        
-        ksort($appTypes);
+            $appTypes[$d->type_id] = $d->name;
+        }
         echo CJSON::encode($appTypes);
     }
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         $data = $_POST;
 
         if (!empty($data['name'])) {
-            $data['name'] = substr(strtoupper(preg_replace("/[^a-zA-Z0-9\-\_]/", '', $data['name'])), 0, 5);
+            $data['name'] = substr(strtoupper(preg_replace("/[^a-zA-Z0-9\-\_]/", '', $data['name'])), 0, 12);
 
             if ($data['name'] != '') {
                 $type = ApplicationTypes::model()->find('name=:name', array(':name'=>$data['name']));

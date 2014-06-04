@@ -4,12 +4,33 @@ class ProjectsController extends Controller
 {
     public $extraJS;
     public $modals;
+
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + update, create, changestatus, delete',
+            'ajaxOnly + list, update, create, changestatus, delete',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('index','list','update','create','changestatus','delete'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
     
     public function actionIndex()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $this->modals = array(
             'application-types-modal', 
             'application-servers-search-modal',
@@ -33,9 +54,6 @@ class ProjectsController extends Controller
 
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -89,7 +107,7 @@ class ProjectsController extends Controller
         $criteria = new CDbCriteria;
         $criteria->limit = $limit;
         $criteria->offset = $offset;
-        $criteria->order = 'code';
+        $criteria->order = 'LOWER(name)';
 
         if(is_array($filter))
         {
@@ -147,9 +165,6 @@ class ProjectsController extends Controller
 
     public function actionUpdate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -161,6 +176,11 @@ class ProjectsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
+
             //code is required
             if (strlen($data['code']) == 0) {
                 array_push($errors, 'CODE_ERROR: Code is required');
@@ -181,12 +201,12 @@ class ProjectsController extends Controller
             //data is good
             if (count($errors) == 0) {
                 $updates = array(
-                    'name'              => $data['name'],
-                    'code'              => $data['code'],
-                    'description'       => $data['description'],
-                    'production_date'   => $data['production_date'],
-                    'date_updated'      => date("Y-m-d H:i:s"),
-                    'updated_by'        => Yii::app()->user->name,
+                    'name'             => $data['name'],
+                    'code'             => $data['code'],
+                    'description'      => $data['description'],
+                    'production_date'  => $data['production_date'],
+                    'date_updated'     => date("Y-m-d H:i:s"),
+                    'updated_by'       => Yii::app()->user->name,
                 );
 
                 Projects::model()->updateByPk((int) $data['project_id'], $updates);
@@ -211,9 +231,6 @@ class ProjectsController extends Controller
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -225,6 +242,11 @@ class ProjectsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
+
             //code is required
             if (strlen($data['code']) == 0) {
                 array_push($errors, 'CODE_ERROR: Code is required');
@@ -273,9 +295,6 @@ class ProjectsController extends Controller
 
     public function actionChangeStatus()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -303,9 +322,6 @@ class ProjectsController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
         $project = Projects::model()->findByPk($data['project_id']);
 

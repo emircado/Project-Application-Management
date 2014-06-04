@@ -26,9 +26,16 @@ var ApplicationNotesList = function(application_id)
 
     self.init = function()
     {
+        ApplicationNotesSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -137,7 +144,6 @@ var ApplicationNotesList = function(application_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initCreate(application_id);
         });
         
@@ -148,7 +154,6 @@ var ApplicationNotesList = function(application_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 ApplicationNotesSite.initView(self.resultData[idx]);
             }
         });
@@ -212,8 +217,17 @@ var ApplicationNotesCreate = function(application_id)
 
     self.init = function()
     {
+        ApplicationNotesSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -266,10 +280,6 @@ var ApplicationNotesCreate = function(application_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNotesID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initObj(application_id);
         });
     }
@@ -297,9 +307,24 @@ var ApplicationNotesView = function(data)
 
     self.init = function()
     {
+        ApplicationNotesSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    
+        // check if current user can edit
+        if (username != data['created_by']) {
+            $(self.editButtonID).set('html', '');
+            $(self.deleteButtonID).set('html', '');
+        } else {
+            $(self.editButtonID).set('html', '[Edit]');
+            $(self.deleteButtonID).set('html', '[Delete]');
+        }
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -349,34 +374,36 @@ var ApplicationNotesView = function(data)
 
     self.addEvents = function()
     {
-        //EDIT CONTACT PERSON
+        //EDIT BUTTON EVENT
         $(self.editButtonID).removeEvents();
-        $(self.editButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            ApplicationNotesSite.initEdit(data);
-        });
+        if (username == data['created_by']) {
+            $(self.editButtonID).addEvent('click', function(e)
+            {
+                e.preventDefault();
+                ApplicationNotesSite.initEdit(data);
+            });
+        }
 
-        //DELETE CONTACT PERSON
+        //DELETE BUTTON EVENT
         $(self.deleteButtonID).removeEvents();
-        $(self.deleteButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            new ConfirmModal(
-                'Confirm Delete',
-                'Are you sure you want to delete this note from the list?',
-                'Delete',
-                self.postAjaxData)
-            .show();
-        });
+        if (username == data['created_by']) {
+            $(self.deleteButtonID).addEvent('click', function(e)
+            {
+                e.preventDefault();
+                new ConfirmModal(
+                    'Confirm Delete',
+                    'Are you sure you want to delete this note from the list?',
+                    'Delete',
+                    self.postAjaxData)
+                .show();
+            });
+        }
 
         //GO BACK TO THE LIST
         $(self.backButtonID).removeEvents();
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initObj(data['application_id']);
         });
     }
@@ -400,9 +427,18 @@ var ApplicationNotesEdit = function(data)
 
     self.init = function()
     {
+        ApplicationNotesSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -462,16 +498,19 @@ var ApplicationNotesEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldNotesID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             ApplicationNotesSite.initView(data);
         });
     }
 }
 
 var ApplicationNotesSite = {
+    mainObj     : null,
+    createObj   : null,
+    editObj     : null,
+    viewObj     : null,
+
+    activeView  : '',
+
     init: function(application_id)
     {
         var self = this;
@@ -480,21 +519,57 @@ var ApplicationNotesSite = {
 
     initObj: function(application_id)
     {
-        new ApplicationNotesList(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new ApplicationNotesList(application_id);
+        self.mainObj.init();
     },
 
     initCreate: function(application_id)
     {
-        new ApplicationNotesCreate(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new ApplicationNotesCreate(application_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new ApplicationNotesEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new ApplicationNotesEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new ApplicationNotesView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new ApplicationNotesView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

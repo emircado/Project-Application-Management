@@ -2,11 +2,32 @@
 
 class ApplicationpointpersonsController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + update, create, delete',
+            'ajaxOnly + list, update, create, delete',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('list','update','create','delete'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -77,9 +98,6 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionUpdate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
@@ -109,9 +127,6 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -169,9 +184,6 @@ class ApplicationpointpersonsController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         if (!empty($data)) {

@@ -31,8 +31,7 @@
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Description</span></div>
                     <div class="field-primary">
-                        <div class="pseudo-field no-border">
-                            <span class="value" id="point-persons-view-description"></span>
+                        <div id="point-persons-view-description" class="pseudo-field no-border">
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

@@ -122,7 +122,7 @@ var ApplicationTypesModal = function(onConfirm)
                 {
                     if (response['type'] == 'success') {
                         var entry = response['data'];
-                        ProjectsSite.appTypesObj.appTypes.set(entry['name'], entry['type_id']);
+                        ProjectsSite.appTypesObj.appTypes.set(entry['type_id'], entry['name']);
                     } else if (response['type'] == 'error') {
                         self._request.stop;
                         console.log(response['data']);
@@ -146,7 +146,7 @@ var ApplicationTypesModal = function(onConfirm)
             var filtered = {};
             ProjectsSite.appTypesObj.appTypes.each(function(val, idx)
             {
-                if (idx.indexOf(filter) == 0) {
+                if (val.indexOf(filter) == 0) {
                     filtered[idx] = val;
                 }
             });
@@ -163,7 +163,7 @@ var ApplicationTypesModal = function(onConfirm)
     self.renderData = function()
     {
         var inputVal = $(self.inputID).value;
-        var inputKey = self.choices.get(inputVal);
+        var inputKey = self.choices.keyOf(inputVal);
         if (inputVal != '' && inputKey == null)
         {
             contentElem = new Element('<tr />',
@@ -176,13 +176,15 @@ var ApplicationTypesModal = function(onConfirm)
             self.rowSelected = 'create';
         }
 
-        self.choices.each(function(val, idx)
+        var sorted = self.choices.getValues().sort();
+
+        sorted.each(function(val, idx)
         {
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html'  : '<td>'+idx+'</td>',
-                'id'    : 'type_'+val
+                'html'  : '<td>'+val+'</td>',
+                'id'    : 'type_'+self.choices.keyOf(val)
             });
             contentElem.inject($(self.tableID), 'bottom');
         });
@@ -211,7 +213,7 @@ var ApplicationTypesModal = function(onConfirm)
             input: function(e)
             {
                 e.preventDefault();
-                $(this).value = $(this).value.replace(/[^a-zA-Z0-9\-\_]/gi, '').substr(0,5).toUpperCase();
+                $(this).value = $(this).value.replace(/[^a-zA-Z0-9\-\_]/gi, '').substr(0,12).toUpperCase();
                 self.filterChoices();
             }
         });
@@ -242,10 +244,10 @@ var ApplicationTypesModal = function(onConfirm)
         $$(self.tableRowID).addEvent('click', function(e)
         {
             e.preventDefault();
-            id = $(this).get('id').split('_')[1];
+            idx = $(this).get('id').split('_')[1];
 
             //unselect
-            if (id == self.rowSelected) {
+            if (idx == self.rowSelected) {
                 $(this).removeClass('selected');
                 self.rowSelected = '';
                 $(self.inputID).value = '';
@@ -258,8 +260,8 @@ var ApplicationTypesModal = function(onConfirm)
                     $('type_'+self.rowSelected).removeClass('selected');
                 }
                 $(this).addClass('selected');
-                self.rowSelected = id;
-                $(self.inputID).value = (id == 'create')? $(this).getChildren()[0].get('html').split('<i>')[0].trim() : self.choices.indexOf(self.rowSelected);
+                self.rowSelected = idx;
+                $(self.inputID).value = (idx == 'create')? $(this).getChildren()[0].get('html').split('<i>')[0].trim() : self.choices.get(self.rowSelected);
                 $(self.confirmButtonID).set('disabled', false);
             }
         });

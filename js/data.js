@@ -181,3 +181,60 @@ var DateFormatter = {
         return date.formatter(self.datetimeFormat);
     }
 }
+
+var ReadMore = function(containerID, text) {
+    var self = this;
+
+    self.fieldTextID = containerID+'-text';
+    self.fieldMoreID = containerID+'-more';
+    self.buttonID    = containerID+'-button';
+
+    self.moreSeen = false;
+
+    self.fieldTextHTML = '<span class="value" id="'+self.fieldTextID+'"></span>';
+    self.fieldMoreHTML = '<span class="value" id="'+self.fieldMoreID+'"></span>';
+    self.buttonHTML    = '<a href="#" id="'+self.buttonID+'"></a>';
+
+    self.renderData = function()
+    {
+        $(containerID).set('html', self.fieldTextHTML+self.fieldMoreHTML+self.buttonHTML);
+
+        var text_cut = '<pre>';
+        var text_more = '';
+
+        // if description needs to be cut
+        if (text.length > 20) {
+            text_cut += text.substr(0, 20);
+            text_more = '<pre>'+text.substr(20, text.length);
+            $(self.buttonID).set('html', 'Read more');
+        } else {
+            text_cut += text;
+            $(self.buttonID).set('html', '');    
+        }
+        $(self.fieldMoreID).setStyle('display', 'none');
+        self.moreSeen = false;
+
+        $(self.fieldTextID).set('html', text_cut);
+        $(self.fieldMoreID).set('html', text_more);
+
+        self.addEvents();
+    }
+
+    self.addEvents = function()
+    {
+        $(self.buttonID).removeEvents();
+        $(self.buttonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (self.moreSeen) {
+                $(self.fieldMoreID).setStyle('display', 'none');
+                $(self.buttonID).set('html', 'Read more');
+                self.moreSeen = false;
+            } else {
+                $(self.fieldMoreID).setStyle('display', 'block');
+                $(self.buttonID).set('html', 'Read less');
+                self.moreSeen = true;
+            }
+        });
+    }
+}

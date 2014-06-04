@@ -10,10 +10,11 @@
             <!--CONTENT for EDIT PROJECT-->
             <div id="edit-primary-content" class="content">
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Name</span></div>
+                    <div class="field-secondary"><span class="label">Name*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <input type="text" id="projects-edit-name" class="text"></input>
+                        <span id="projects-edit-name-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

@@ -10,10 +10,11 @@
             <div id="edit-primary-content" class="content">
                 <input type="hidden" id="applications-create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Name</span></div>
+                    <div class="field-secondary"><span class="label">Name*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <input id="applications-create-name" type="text" class="text"/>
+                        <span id="applications-create-name-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -27,7 +28,7 @@
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
-                    <div class="field-secondary"><span class="label">Accessibility</span></div>
+                    <div class="field-secondary"><span class="label">Accessibility*</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
                         <?php echo ZHtml::enumDropDownList(Applications::model(), 'accessibility', array(
@@ -48,7 +49,7 @@
                 </div><!-- End Field -->
                 <div class="field field-input-name">
                     <div class="field-secondary"><span class="label">Uses Mobile Patterns</span></div>
-                    <div class="field-primary">
+                    <div class="field-primary" style="padding-top:7px;">
                         <div class="pseudo-field">
                         <input id="applications-create-pattern" type="checkbox" style="margin-top:5px;"></input>
                         <span style="font-size:12px;"><i>(Check if Yes)</i></span>

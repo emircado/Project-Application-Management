@@ -2,11 +2,32 @@
 
 class ApplicationserversController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + update, create, delete',
+            'ajaxOnly + list, update, create, delete',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('list','update','create','delete'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -94,9 +115,6 @@ class ApplicationserversController extends Controller
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         // clean input here
@@ -116,17 +134,21 @@ class ApplicationserversController extends Controller
             } else if (!Servers::model()->exists('server_id=:server_id', array(':server_id'=>$data['server_id']))) {
                 array_push($errors, 'SERVER_ERROR: Server does not exist');
             // server is taken
-            } else {
-                $server = ApplicationServers::model()->findByPk(array(
-                    'server_id'         =>  $data['server_id'],
-                    'application_id'    =>  $data['application_id']
+            } else if (ApplicationServers::model()->findByPk(array(
+                'server_id'=>$data['server_id'],'application_id'=>$data['application_id'])) != null) {
+                array_push($errors, 'SERVER_ERROR: The application is already in this server');
+            // check if application is already in a server of the same type
+            } else if ($data['check_duplicate'] == 'true') {
+                $duplicate_type = Servers::model()->findAll(array(
+                    'join' => 'JOIN application_servers a ON t.server_id = a.server_id',
+                    'condition' => 'a.application_id=:application_id AND t.server_type=:server_type',
+                    'params' => array(
+                        'application_id' => $data['application_id'],
+                        'server_type' => $data['server_type'],
+                    ),
                 ));
-
-                if ($server != null) {
-                    array_push($errors, 'SERVER_ERROR: The application is already in this server');
-                // check if application is already in a server of the same type
-                } else if ($data['check_duplicate']) {
-            
+                if (count($duplicate_type) != 0) {
+                    array_push($errors, 'DUPLICATE_ERROR: The application is already in a server of the same type.');
                 }
             }
 
@@ -162,9 +184,6 @@ class ApplicationserversController extends Controller
 
     public function actionUpdate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         //will be empty if CSRF authentication fails
@@ -195,9 +214,6 @@ class ApplicationserversController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         $data = $_POST;
 
         if (!empty($data)) {

@@ -26,9 +26,16 @@ var AppPointPersonsList = function(application_id)
 
     self.init = function()
     {
+        AppPointPersonsSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -136,7 +143,6 @@ var AppPointPersonsList = function(application_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initCreate(application_id);
         });
         
@@ -147,7 +153,6 @@ var AppPointPersonsList = function(application_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 AppPointPersonsSite.initView(self.resultData[idx]);
             }
         });
@@ -221,9 +226,24 @@ var AppPointPersonsCreate = function(application_id)
 
     self.init = function()
     {
+        AppPointPersonsSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         self.initDropdown();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clear errors
+        $(self.errorUsernameID).setStyle('display', 'none');
+        $(self.errorUsergroupID).setStyle('display', 'none');
+
+        //clear fields
+        $(self.fieldUsernameID).value = '';
+        $(self.fieldUsergroupID).set('html', '');
+        $(self.fieldDescriptionID).value = '';
     }
 
     self.postAjaxData = function()
@@ -320,15 +340,6 @@ var AppPointPersonsCreate = function(application_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldUsernameID).value = '';
-            $(self.fieldUsergroupID).set('html', '');
-            $(self.fieldDescriptionID).value = '';
-
-            $(self.errorUsernameID).setStyle('display', 'none');
-            $(self.errorUsergroupID).setStyle('display', 'none');
-
-            $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initObj(application_id);
         });
 
@@ -384,9 +395,15 @@ var AppPointPersonsView = function(data)
 
     self.init = function()
     {
+        AppPointPersonsSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -428,7 +445,7 @@ var AppPointPersonsView = function(data)
 
         $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.fieldUsergroupID).set('html', data['user_group']);
-        $(self.fieldDescriptionID).set('html', '<pre>'+data['description']);
+        new ReadMore(self.fieldDescriptionID, data['description']).renderData();
     }
 
     self.addEvents = function()
@@ -438,7 +455,6 @@ var AppPointPersonsView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initEdit(data);
         });
 
@@ -460,7 +476,6 @@ var AppPointPersonsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initObj(data['application_id']);
         });
     }
@@ -486,9 +501,20 @@ var AppPointPersonsEdit = function(data)
 
     self.init = function()
     {
+        AppPointPersonsSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        //clean form
+        $(self.fieldUsernameID).set('html', '');
+        $(self.fieldUsergroupID).set('html', '');
+        $(self.fieldDescriptionID).value = '';
     }
 
     self.postAjaxData = function()
@@ -557,18 +583,19 @@ var AppPointPersonsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            //clean form
-            $(self.fieldUsernameID).set('html', '');
-            $(self.fieldUsergroupID).set('html', '');
-            $(self.fieldDescriptionID).value = '';
-
-            $(self.containerID).setStyle('display', 'none');
             AppPointPersonsSite.initView(data);
         });
     }
 }
 
 var AppPointPersonsSite = {
+    mainObj     : null,
+    createObj   : null,
+    editObj     : null,
+    viewObj     : null,
+
+    activeView  : '',
+
     init: function(application_id)
     {
         var self = this;
@@ -577,21 +604,57 @@ var AppPointPersonsSite = {
 
     initObj: function(application_id)
     {
-        new AppPointPersonsList(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new AppPointPersonsList(application_id);
+        self.mainObj.init();
     },
 
     initCreate: function(application_id)
     {
-        new AppPointPersonsCreate(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new AppPointPersonsCreate(application_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new AppPointPersonsEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new AppPointPersonsEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new AppPointPersonsView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new AppPointPersonsView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

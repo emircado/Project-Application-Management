@@ -28,7 +28,9 @@
     <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-core-1.4.5.js"></script>
 	<script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/mootools-more-1.4.0.1.js"></script>
     <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/datepicker.js"></script>
-    <script src="<?= Yii::app()->request->baseUrl; ?>/js/common.js"></script>
+    <!--<script src="<?= Yii::app()->request->baseUrl; ?>/js/common.js"></script>-->
+    <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/HashListener.js"></script>
+    <script src="<?= Yii::app()->request->baseUrl; ?>/js/lib/HistoryManager.js"></script>
     <!--add here the extra JS-->
     <?php
         if(isset($this->extraJS))

@@ -26,8 +26,15 @@ var AppServersList = function(application_id)
 
     self.init = function()
     {
+        AppServersSite.activeView = 'LIST';
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $$('.'+self.tableRowClass).dispose();
     }
 
     self.getAjaxData = function()
@@ -75,10 +82,7 @@ var AppServersList = function(application_id)
             Array.each(self.resultData, function(val, idx)
             {
                 contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+val['server_type']+'</td>'
-                            + '<td class="actions-col two-column">'
-                            + '<a id="app-servers-list-view_' + idx + '" href="#" title="View Server">View</a>'
-                            + '</td>';
+                            + '<td>'+val['server_type']+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
@@ -94,7 +98,7 @@ var AppServersList = function(application_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No servers found</td><td></td><td></td>';
+            contentHTML = '<td>No servers found</td><td></td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -137,7 +141,6 @@ var AppServersList = function(application_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initCreate(application_id);
         });
 
@@ -148,7 +151,6 @@ var AppServersList = function(application_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                $(self.containerID).setStyle('display', 'none');
                 AppServersSite.initView(self.resultData[idx]);
             }
         });
@@ -228,9 +230,27 @@ var AppServersCreate = function(application_id)
 
     self.init = function()
     {
+        AppServersSite.activeView = 'CREATE';
         $(self.containerID).setStyle('display', 'block');
         $(self.searchModalContainerID).grab($(self.searchModal.modalID), 'top');
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        
+        // clear errors
+        $(self.errorTypeID).set('html', 'Please chooose a server type');
+        $(self.errorTypeID).setStyle('display', 'block');
+
+        // clear fields
+        $(self.fieldTypeID).value = '';
+        $(self.fieldServerID).value = '';
+        $(self.fieldPathID).value = '';
+        $(self.fieldLogID).value = '';
+        self.selectedServer = '';
+        $(self.createMoreID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -240,6 +260,7 @@ var AppServersCreate = function(application_id)
             var params = {
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
                 'application_id'    : application_id,
+                'server_type'       : $(self.fieldTypeID).value,
                 'server_id'         : self.selectedServer,
                 'application_path'  : $(self.fieldPathID).value,
                 'application_log'   : $(self.fieldLogID).value,
@@ -260,7 +281,17 @@ var AppServersCreate = function(application_id)
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
-                            if (msg[0] == 'SERVER_ERROR') {
+                            if (msg[0] == 'DUPLICATE_ERROR') {
+                                new ConfirmModal(
+                                    'Confirm Add',
+                                    msg[1]+'<br>Do you want to proceed?',
+                                    'Add',
+                                    function(){
+                                        self.checkDuplicate = false;
+                                        self.postAjaxData();   
+                                    })
+                                .show();
+                            } else if (msg[0] == 'SERVER_ERROR') {
                                 $(self.errorServerID).set('html', msg[1]);
                                 $(self.errorServerID).setStyle('display', 'block');
                             } else if (msg[0] == 'CSRF_ERROR') {
@@ -317,15 +348,6 @@ var AppServersCreate = function(application_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-            
-            $(self.fieldTypeID).value = '';
-            $(self.fieldServerID).value = '';
-            $(self.fieldPathID).value = '';
-            $(self.fieldLogID).value = '';
-            self.selectedServer = '';
-            $(self.createMoreID).setStyle('display', 'none');
-
             AppServersSite.initObj(application_id);
         });
 
@@ -409,6 +431,7 @@ var AppServersView = function(data)
 
     self.init = function()
     {
+        AppServersSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         
         $(self.detailsContainerID).setStyle('display', 'none');
@@ -416,6 +439,13 @@ var AppServersView = function(data)
 
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $(self.detailsContainerID).setStyle('display', 'none');
+        $(self.detailsButtonID).set('html', '[server details]');
     }
 
     self.postAjaxData = function()
@@ -481,7 +511,6 @@ var AppServersView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initEdit(data);
         });
 
@@ -519,7 +548,6 @@ var AppServersView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
             AppServersSite.initObj(data['application_id']);
         });
     }
@@ -545,9 +573,20 @@ var AppServersEdit = function(data)
 
     self.init = function()
     {
+        AppServersSite.activeView = 'EDIT';
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
         self.addEvents();
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+
+        // clear form
+        $(self.fieldServerID).set('html', '');
+        $(self.fieldPathID).value = '';
+        $(self.fieldLogID).value = '';
     }
 
     self.postAjaxData = function()
@@ -612,19 +651,19 @@ var AppServersEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            $(self.containerID).setStyle('display', 'none');
-
-            // clear form
-            $(self.fieldServerID).set('html', '');
-            $(self.fieldPathID).value = '';
-            $(self.fieldLogID).value = '';
-
             AppServersSite.initView(data);
         });
     }
 }
 
 var AppServersSite = {
+    mainObj: null,
+    createObj: null,
+    editObj: null,
+    viewObj: null,
+
+    activeView: '',
+
     init: function(application_id)
     {
         var self = this;
@@ -633,21 +672,57 @@ var AppServersSite = {
 
     initObj: function(application_id)
     {
-        new AppServersList(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.mainObj = new AppServersList(application_id);
+        self.mainObj.init();
     },
 
     initCreate: function(application_id)
     {
-        new AppServersCreate(application_id).init();
+        var self = this;
+        self.closeActive();
+        self.createObj = new AppServersCreate(application_id);
+        self.createObj.init();
     },
 
     initEdit: function(data)
     {
-        new AppServersEdit(data).init();
+        var self = this;
+        self.closeActive();
+        self.editObj = new AppServersEdit(data);
+        self.editObj.init();
     },
 
     initView: function(data)
     {
-        new AppServersView(data).init();
+        var self = this;
+        self.closeActive();
+        self.viewObj = new AppServersView(data);
+        self.viewObj.init();
+    },
+
+    closeActive: function()
+    {
+        var self = this;
+        switch (self.activeView) {
+            case 'LIST':
+                if (self.mainObj != null)
+                    self.mainObj.hide();
+                break;
+            case 'CREATE':
+                if (self.createObj != null)
+                    self.createObj.hide();
+                break;
+            case 'VIEW':
+                if (self.viewObj != null)
+                    self.viewObj.hide();
+                break;
+            case 'EDIT':
+                if (self.editObj != null)
+                    self.editObj.hide();
+                break;
+        }
+        self.activeView = '';
     }
 }

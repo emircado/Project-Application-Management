@@ -38,6 +38,7 @@ return array(
         'user'=>array(
             // enable cookie-based authentication
             'allowAutoLogin'=>true,
+            'loginUrl'=>'login',
         ),
         // uncomment the following to enable URLs in path-format
         
@@ -46,6 +47,7 @@ return array(
             'showScriptName'=>false,
             'rules'=>array(
             	'' => 'site/',
+                'login' => 'site/login',
                 'users' => 'site/users',
                 'groups' => 'site/groups',
                 'logout' => 'site/logout',

@@ -2,11 +2,32 @@
 
 class ApplicationsController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl',
+            'postOnly + update, create, delete',
+            'ajaxOnly + list, update, create, delete',
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions'=>array('list','update','create','delete'),
+                'users'=>array('@'),
+            ),
+            array(
+                'deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
     public function actionList()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         if (!isset($_GET['YII_CSRF_TOKEN']))
             throw new CHttpException(400, 'Bad Request');
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
@@ -46,6 +67,7 @@ class ApplicationsController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->order = "LOWER(name)";
         
         $model = Applications::model()->findAll($criteria);
         $data  = array();
@@ -81,9 +103,6 @@ class ApplicationsController extends Controller
 
     public function actionUpdate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
@@ -98,10 +117,15 @@ class ApplicationsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
-            //code is required
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
+
+            //type is required
             if (strlen($data['type_name']) == 0) {
                 array_push($errors, 'TYPE_ERROR: Type is required');
-            //invalid code
+            //invalid type
             } else {
                 $app_type = ApplicationTypes::model()->find('name=:name', array(':name'=>$data['type_name']));
                 if ($app_type == null) {
@@ -158,9 +182,6 @@ class ApplicationsController extends Controller
 
     public function actionCreate()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-
         $data = $_POST;
 
         if (!empty($data)) {
@@ -176,10 +197,15 @@ class ApplicationsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
-            //code is required
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
+
+            //type is required
             if (strlen($data['type_name']) == 0) {
                 array_push($errors, 'TYPE_ERROR: Type is required');
-            //invalid code
+            //invalid type
             } else {
                 $app_type = ApplicationTypes::model()->find('name=:name', array(':name'=>$data['type_name']));
                 if ($app_type == null) {
@@ -236,9 +262,6 @@ class ApplicationsController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::app()->user->isGuest)
-            throw new CHttpException(404, 'The specified page cannot be found');
-        
         $data = $_POST;
 
         if (!empty($data)) {

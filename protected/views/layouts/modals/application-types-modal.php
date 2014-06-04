@@ -24,6 +24,9 @@
                                 </div><!-- End Field Action Content -->
                             </div><!-- End Field Action -->
                         </div><!-- End UI Dialog Footer Block -->
+                        <div style="font-size: 11px;line-height: 100%">
+                            application type must be 1-12 characters long, and may consist of A-Z, '-', and '_'.
+                        </div>
                     </div>
                 </div>
             </form>
