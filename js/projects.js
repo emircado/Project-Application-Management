@@ -806,7 +806,7 @@ var ProjectsSite = {
     // some more variables
     activeView      : '',
     // hashListener    : new HashListener(),
-    historyMngr     : new HistoryManager({delimiter:'!'}),
+    historyMngr     : new HistoryManager(),
 
     init: function()
     {
@@ -827,7 +827,7 @@ var ProjectsSite = {
         // if (hash.indexOf('pid=') == 0)
         if (hash.indexOf('pid') != -1)
         {
-            console.log('detected hash');
+            console.log('detected hash ');
             ProjectsSite.dataObj.getAjaxData({
                 'project_id': self.historyMngr.deserializeHash(hash)['pid'],
                 // 'project_id': parseInt(hash.split('=')[1]),
@@ -936,7 +936,7 @@ var ProjectsSite = {
         //     }
         // });
         
-        self.historyMngr.addEvent('pid:added', function(new_value)
+        var processPID = function(new_value)
         {
             var pid = parseInt(new_value);
             // if project info is not yet retrieved
@@ -953,28 +953,10 @@ var ProjectsSite = {
                     ProjectsSite.historyMngr.remove('pid');
                 });
             }
-        });
-
-        self.historyMngr.addEvent('pid:updated', function(new_value)
-        {
-            var pid = parseInt(new_value);
-            // if project info is not yet retrieved
-            if (!self.mainObj.makeView(pid)) {
-                console.log('retrieve new');
-                ProjectsSite.dataObj.getAjaxData({
-                    'project_id': pid,
-                    'YII_CSRF_TOKEN': $(self.csrfID).value,
-                // on success
-                }, function(data) {
-                    self.initView(data)
-                // on fail
-                }, function() {
-                    ProjectsSite.historyMngr.remove('pid');
-                });
-            }
-        });
-
-        self.historyMngr.addEvent('pid:removed', function(new_value)
+        }
+        self.historyMngr.addEvent('pid:added', processPID);
+        self.historyMngr.addEvent('pid:updated', processPID);
+        self.historyMngr.addEvent('pid:removed', function(removed)
         {
             self.initObj();
         });

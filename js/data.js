@@ -185,37 +185,29 @@ var DateFormatter = {
 var ReadMore = function(containerID, text) {
     var self = this;
 
-    self.fieldTextID = containerID+'-text';
-    self.fieldMoreID = containerID+'-more';
+    self.textID = containerID+'-text';
     self.buttonID    = containerID+'-button';
 
     self.moreSeen = false;
 
-    self.fieldTextHTML = '<span class="value" id="'+self.fieldTextID+'"></span>';
-    self.fieldMoreHTML = '<span class="value" id="'+self.fieldMoreID+'"></span>';
+    self.textHTML = '<div class="value" id="'+self.textID+'"></div>';
     self.buttonHTML    = '<a href="#" id="'+self.buttonID+'"></a>';
 
     self.renderData = function()
     {
-        $(containerID).set('html', self.fieldTextHTML+self.fieldMoreHTML+self.buttonHTML);
+        $(containerID).set('html', self.textHTML+self.buttonHTML);
+        $(self.textID).addClass('collapsible');
 
-        var text_cut = '<pre>';
-        var text_more = '';
+        self.moreSeen = false;
+        $(self.textID).set('html', '<pre>'+text);
 
-        // if description needs to be cut
-        if (text.length > 20) {
-            text_cut += text.substr(0, 20);
-            text_more = '<pre>'+text.substr(20, text.length);
+        //if overflow
+        if ($(self.textID).scrollHeight > $(self.textID).clientHeight) {
             $(self.buttonID).set('html', 'Read more');
+        //if not
         } else {
-            text_cut += text;
             $(self.buttonID).set('html', '');    
         }
-        $(self.fieldMoreID).setStyle('display', 'none');
-        self.moreSeen = false;
-
-        $(self.fieldTextID).set('html', text_cut);
-        $(self.fieldMoreID).set('html', text_more);
 
         self.addEvents();
     }
@@ -227,11 +219,11 @@ var ReadMore = function(containerID, text) {
         {
             e.preventDefault();
             if (self.moreSeen) {
-                $(self.fieldMoreID).setStyle('display', 'none');
+                $(self.textID).removeClass('expand');
                 $(self.buttonID).set('html', 'Read more');
                 self.moreSeen = false;
             } else {
-                $(self.fieldMoreID).setStyle('display', 'block');
+                $(self.textID).addClass('expand');
                 $(self.buttonID).set('html', 'Read less');
                 self.moreSeen = true;
             }

@@ -40,6 +40,17 @@ a, a:hover {
     border-top: 1px solid #EFE8D1;
 }
 
+div.collapsible {
+    overflow: hidden;
+    max-height: 96px;
+    margin-bottom:10px;
+}
+
+div.collapsible.expand {
+    overflow: auto;
+    max-height:none;
+}
+
 /* MAIN MENU */
 #mainmenu {
     background: #249180;
@@ -309,4 +320,29 @@ img.search {
 
 #dialog-wrapper2 {
     z-index: 1100;
+}
+
+/* FOR NOTES */
+.note {
+    text-align: left;
+    padding:5px;
+}
+
+.note-head {
+    margin-bottom: 5px;
+}
+
+.note-body {
+    overflow: hidden;
+    max-height: 72px;
+    margin-bottom:10px;
+}
+
+.note-body.expand {
+    overflow: auto;
+    max-height:none;
+}
+
+.note pre {
+    line-height: 125%;
 }

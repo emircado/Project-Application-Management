@@ -241,8 +241,8 @@ var AppServersCreate = function(application_id)
         $(self.containerID).setStyle('display', 'none');
         
         // clear errors
-        $(self.errorTypeID).set('html', 'Please chooose a server type');
-        $(self.errorTypeID).setStyle('display', 'block');
+        $(self.errorTypeID).setStyle('display', 'none');
+        $(self.errorServerID).setStyle('display', 'none');
 
         // clear fields
         $(self.fieldTypeID).value = '';

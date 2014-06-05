@@ -361,130 +361,6 @@ var ProjectNotesCreate = function(project_id)
     }
 }
 
-var ProjectNotesView = function(data)
-{
-    var self = this;
-    self.postDataURL = baseURL + '/notes/delete';
-    self._request = null;
-
-    self.containerID        = 'project-notes-view';
-
-    //fields
-    self.fieldNotesID       = 'project-notes-view-notes';
-    self.fieldCreatedID     = 'project-notes-view-created';
-    self.fieldUpdatedID     = 'project-notes-view-updated';
-    self.fieldCreatedByID   = 'project-notes-view-createdby';
-    self.csrfID             = 'project-notes-view-csrf';
-
-    //buttons
-    self.deleteButtonID     = 'project-notes-view-delete-button';
-    self.editButtonID       = 'project-notes-view-edit-button';
-    self.backButtonID       = 'project-notes-view-back-button';
-
-    self.init = function()
-    {
-        ProjectNotesSite.activeView = 'VIEW';
-        $(self.containerID).setStyle('display', 'block');
-        self.renderData();
-        self.addEvents();
-
-        // check if current user can edit
-        if (username != data['created_by']) {
-            $(self.editButtonID).set('html', '');
-            $(self.deleteButtonID).set('html', '');
-        } else {
-            $(self.editButtonID).set('html', '[Edit]');
-            $(self.deleteButtonID).set('html', '[Delete]');
-        }
-    }
-
-    self.hide = function()
-    {
-        $(self.containerID).setStyle('display', 'none');
-    }
-
-    self.postAjaxData = function()
-    {
-        if(!self._request || !self._request.isRunning())
-        {
-            var params = {
-                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-                'note_id'           : data['note_id'],
-            };
-
-            self._request = new Request.JSON(
-            {
-                'url' : self.postDataURL,
-                'method' : 'post',
-                'data' : params,
-                'onSuccess': function(response)
-                {
-                    if (response['type'] == 'error') {
-                        self._request.stop;
-                        console.log('error type 2');
-                    } else if (response['type'] == 'success') {
-                        $(self.backButtonID).click();
-                    }
-                },
-                'onError' : function(errors)
-                {
-                    self._request.stop;
-                    console.log('error type 1');
-                }
-            }).send();
-        }
-    }
-
-    self.renderData = function()
-    {
-        // format display data
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
-
-        $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
-        $(self.fieldCreatedID).set('html', created);
-        $(self.fieldUpdatedID).set('html', updated);
-        $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
-    }
-
-    self.addEvents = function()
-    {
-        //EDIT BUTTON EVENT
-        $(self.editButtonID).removeEvents();
-        if (username == data['created_by']) {
-            $(self.editButtonID).addEvent('click', function(e)
-            {
-                e.preventDefault();
-                ProjectNotesSite.initEdit(data);
-            });
-        }
-
-        //DELETE BUTTON EVENT
-        $(self.deleteButtonID).removeEvents();
-        if (username == data['created_by']) {
-            $(self.deleteButtonID).addEvent('click', function(e)
-            {
-                e.preventDefault();
-                new ConfirmModal(
-                    'Confirm Delete',
-                    'Are you sure you want to delete this note from the list?',
-                    'Delete',
-                    self.postAjaxData)
-                .show();
-            });
-        }
-
-        //GO BACK TO THE LIST
-        $(self.backButtonID).removeEvents();
-        $(self.backButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            ProjectNotesSite.initObj(data['project_id']);
-        });
-    }
-}
-
 var ProjectNotesEdit = function(data)
 {
     var self = this;
@@ -503,8 +379,8 @@ var ProjectNotesEdit = function(data)
 
     self.init = function()
     {
-        ProjectNotesSite.activeView = 'EDIT';
-        $(self.containerID).setStyle('display', 'block');
+        
+        
         self.renderData();
         self.addEvents();
     }
@@ -574,7 +450,7 @@ var ProjectNotesEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ProjectNotesSite.initView(data);
+            
         });
     }
 }
@@ -583,7 +459,6 @@ var ProjectNotesSite = {
     mainObj     : null,
     createObj   : null,
     editObj     : null,
-    viewObj     : null,
 
     activeView  : '',
 
@@ -617,14 +492,6 @@ var ProjectNotesSite = {
         self.editObj.init();
     },
 
-    initView: function(data)
-    {
-        var self = this;
-        self.closeActive();
-        self.viewObj = new ProjectNotesView(data);
-        self.viewObj.init();
-    },
-
     closeActive: function()
     {
         var self = this;
@@ -636,14 +503,6 @@ var ProjectNotesSite = {
             case 'CREATE':
                 if (self.createObj != null)
                     self.createObj.hide();
-                break;
-            case 'VIEW':
-                if (self.viewObj != null)
-                    self.viewObj.hide();
-                break;
-            case 'EDIT':
-                if (self.editObj != null)
-                    self.editObj.hide();
                 break;
         }
         self.activeView = '';

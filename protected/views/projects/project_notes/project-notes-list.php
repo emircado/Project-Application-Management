@@ -13,15 +13,10 @@
             <!-- body -->
             <div id="edit-primary-content" class="content">
                 <table>
-                    <thead>
-                        <tr>                      
-                            <th width='170px'>Date Created</th>
-                            <th width=''>Notes</th>
-                        </tr>
-                    </thead>
                     <tbody id="project-notes-list-table">
                     </tbody>
                 </table>
+                <a style="float:left;margin-top:5px;"></a>
                 <div class="page-nav">
                     <div class="page-count">
                         <span class="current-page" id="project-notes-list-part"></span>
