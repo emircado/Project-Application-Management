@@ -191,7 +191,7 @@ var ProjectsList = function()
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No results found</td><td></td><td></td><td></td><td></td>';
+            contentHTML = '<td colspan="5">No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,

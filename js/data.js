@@ -188,17 +188,14 @@ var ReadMore = function(containerID, text) {
     self.textID = containerID+'-text';
     self.buttonID    = containerID+'-button';
 
-    self.moreSeen = false;
-
     self.textHTML = '<div class="value" id="'+self.textID+'"></div>';
-    self.buttonHTML    = '<a href="#" id="'+self.buttonID+'"></a>';
+    self.buttonHTML    = '<a href="#" id="'+self.buttonID+'" class="small-text"></a>';
 
     self.renderData = function()
     {
         $(containerID).set('html', self.textHTML+self.buttonHTML);
         $(self.textID).addClass('collapsible');
 
-        self.moreSeen = false;
         $(self.textID).set('html', '<pre>'+text);
 
         //if overflow
@@ -218,14 +215,12 @@ var ReadMore = function(containerID, text) {
         $(self.buttonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (self.moreSeen) {
+            if ($(self.textID).hasClass('expand')) {
                 $(self.textID).removeClass('expand');
                 $(self.buttonID).set('html', 'Read more');
-                self.moreSeen = false;
             } else {
                 $(self.textID).addClass('expand');
                 $(self.buttonID).set('html', 'Read less');
-                self.moreSeen = true;
             }
         });
     }

@@ -100,7 +100,7 @@ var PointPersonsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No point persons found</td><td></td>';
+            contentHTML = '<td colspan="2">No point persons found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,

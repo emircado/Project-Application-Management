@@ -12,16 +12,18 @@
             </div>
             <!-- body -->
             <div id="edit-primary-content" class="content">
-                <table>
-                    <thead>
-                        <tr>                      
-                            <th width='160px'>Date Created</th>
-                            <th width=''>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="application-notes-list-table">
-                    </tbody>
-                </table>
+                <div class="height-limiter">
+                    <table>
+                        <thead>
+                            <tr>                      
+                                <th width='160px'>Date Created</th>
+                                <th width=''>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="application-notes-list-table">
+                        </tbody>
+                    </table>
+                </div>
                 <div class="page-nav">
                     <div class="page-count">
                         <span class="current-page" id="application-notes-list-part"></span>

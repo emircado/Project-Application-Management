@@ -100,7 +100,7 @@ var ApplicationsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No applications found</td><td></td>';
+            contentHTML = '<td colspan="2">No applications found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,

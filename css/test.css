@@ -8,6 +8,7 @@ a, a:hover {
     color: #249180;
 }
 
+/* used for application type modal*/
 .small-scroller {
     height:125px;
     overflow-y: scroll;
@@ -40,10 +41,18 @@ a, a:hover {
     border-top: 1px solid #EFE8D1;
 }
 
+.small-text {
+    font-size: 14px;
+}
+
+div.height-limiter {
+    min-height: 175px;
+}
+
+/* FOR READ MORE */
 div.collapsible {
     overflow: hidden;
     max-height: 96px;
-    margin-bottom:10px;
 }
 
 div.collapsible.expand {
@@ -83,6 +92,10 @@ table thead{
 
 .table-header-block {
     margin: 0 0;
+}
+
+.pseudo-field.no-border {
+    padding-bottom:0px;
 }
 
 #edit-primary-content table {
@@ -332,17 +345,24 @@ img.search {
     margin-bottom: 5px;
 }
 
-.note-body {
-    overflow: hidden;
+.note-body > .collapsible {
     max-height: 72px;
-    margin-bottom:10px;
 }
 
-.note-body.expand {
-    overflow: auto;
-    max-height:none;
+.note-body > .collapsible.expand {
+    overflow-y: scroll;
+    max-height: 175px;
+}
+
+.note-body > .edit {
+    overflow-y: auto;
+    max-height: none;
 }
 
 .note pre {
     line-height: 125%;
+}
+
+#project-notes-list-table tr:not(:first-child) {
+    border-top: 2px solid #E2E2E2;
 }

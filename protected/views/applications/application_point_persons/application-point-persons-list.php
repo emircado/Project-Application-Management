@@ -11,16 +11,18 @@
             </div>
             <!-- body -->
             <div id="edit-primary-content" class="content">
-                <table>
-                    <thead>
-                        <tr>                      
-                            <th width=''>Name</th>
-                            <th width=''>User Group</th>
-                        </tr>
-                    </thead>
-                    <tbody id="app-point-persons-list-table">
-                    </tbody>
-                </table>
+                <div class="height-limiter">
+                    <table>
+                        <thead>
+                            <tr>                      
+                                <th width=''>Name</th>
+                                <th width=''>User Group</th>
+                            </tr>
+                        </thead>
+                        <tbody id="app-point-persons-list-table">
+                        </tbody>
+                    </table>
+                </div>
                 <div class="page-nav">
                     <div class="page-count">
                         <span class="current-page" id="app-point-persons-list-part"></span>

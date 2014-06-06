@@ -12,16 +12,18 @@
             </div>
             <!-- body -->
             <div id="edit-primary-content" class="content">
-                <table>
-                    <thead>
-                        <tr>                      
-                            <th width=''>Name</th>
-                            <th width=''>R<?php echo htmlentities("&"); ?>D Point Person</th>
-                        </tr>
-                    </thead>
-                    <tbody id="applications-list-table">
-                    </tbody>
-                </table>
+                <div class="height-limiter">
+                    <table>
+                        <thead>
+                            <tr>                      
+                                <th width=''>Name</th>
+                                <th width=''>R<?php echo htmlentities("&"); ?>D Point Person</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applications-list-table">
+                        </tbody>
+                    </table>
+                </div>
                 <div class="page-nav">
                     <div class="page-count">
                         <span class="current-page" id="applications-list-part"></span>

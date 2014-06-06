@@ -33,11 +33,11 @@
             <table id="test">
                 <thead>
                     <tr>                      
-                        <th width='250'>Name</th>
-                        <th width='90'>Code</th>
-                        <th width=''>Description</th>
-                        <th width='115'>Status</th>
-                        <th></th>
+                        <th width="250">Name</th>
+                        <th width="90">Code</th>
+                        <th width="">Description</th>
+                        <th width="115">Status</th>
+                        <th width="50"></th>
                     </tr>
                     <tr>
                         <th><input id="projects-list-search-name" type="text" style="width:180px;"/></th>

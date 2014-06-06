@@ -8244,3 +8244,21 @@ Stack trace:
 REQUEST_URI=/pamgmt/notes/delete
 in /home/httpd/vhosts/pamgmt/protected/controllers/NotesController.php (189)
 in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/06/05 18:42:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "projectsasdf".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projectsasdf')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/projectsasdf
+---
+2014/06/05 18:42:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "asdf".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('asdf')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('asdf')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('projects/asdf')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/projects/asdf
+---

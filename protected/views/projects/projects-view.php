@@ -94,7 +94,7 @@
                         <div class="field-primary">
                             <div class="pseudo-field no-border">
                                 <span class="value" id="projects-view-status"></span>
-                                <a id="projects-view-change-button" href="#">[Change Status]</a>
+                                <a id="projects-view-change-button" href="#" class="small-text">[Change Status]</a>
                             </div>
                         </div><!-- End Field Primary -->
                     </div><!-- End Field --> 
@@ -110,29 +110,12 @@
             </div>
         </form>
 
-        <!-- CONTACT PERSONS HERE -->
         <?php 
-            $this->renderPartial('//projects/contact_persons/contact-persons-list');
-            $this->renderPartial('//projects/contact_persons/contact-persons-create'); 
-            $this->renderPartial('//projects/contact_persons/contact-persons-view');
-            $this->renderPartial('//projects/contact_persons/contact-persons-edit');
+            $this->renderPartial('//projects/contact-persons');
+            $this->renderPartial('//projects/point-persons');
+            $this->renderPartial('//projects/project-notes');
         ?>
 
-        <!-- POINT PERSONS HERE -->
-        <?php
-            $this->renderPartial('//projects/point_persons/point-persons-list');
-            $this->renderPartial('//projects/point_persons/point-persons-create');
-            $this->renderPartial('//projects/point_persons/point-persons-view');
-            $this->renderPartial('//projects/point_persons/point-persons-edit');
-        ?>
-
-        <!-- PROJECT NOTES HERE -->
-        <?php 
-            $this->renderPartial('//projects/project_notes/project-notes-list');
-            $this->renderPartial('//projects/project_notes/project-notes-create'); 
-            $this->renderPartial('//projects/project_notes/project-notes-view');
-            $this->renderPartial('//projects/project_notes/project-notes-edit');
-        ?>
         <a id="projects-view-delete-button" href="#">[Delete Project]</a>
     </div>
     

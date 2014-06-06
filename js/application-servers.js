@@ -98,7 +98,7 @@ var AppServersList = function(application_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No servers found</td><td></td>';
+            contentHTML = '<td colspan="2">No servers found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,

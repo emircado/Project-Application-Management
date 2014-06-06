@@ -163,7 +163,7 @@ var ServersList = function()
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td>No results found</td><td></td><td></td><td></td><td></td><td></td>';
+            contentHTML = '<td colspan="6">No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
