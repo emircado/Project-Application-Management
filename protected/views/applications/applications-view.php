@@ -127,27 +127,11 @@
 
             <div style="padding:10px;">
                 <?php
-                    $this->renderPartial('//applications/application_servers/application-servers-list');
-                    $this->renderPartial('//applications/application_servers/application-servers-create');
-                    $this->renderPartial('//applications/application_servers/application-servers-view');
-                    $this->renderPartial('//applications/application_servers/application-servers-edit');
-                ?>
-
-                <?php
-                    $this->renderPartial('//applications/application_point_persons/application-point-persons-list');
-                    $this->renderPartial('//applications/application_point_persons/application-point-persons-create');
-                    $this->renderPartial('//applications/application_point_persons/application-point-persons-view');
-                    $this->renderPartial('//applications/application_point_persons/application-point-persons-edit');
-                ?>
-
-                <?php
-                    $this->renderPartial('//applications/application_notes/application-notes-list');
-                    $this->renderPartial('//applications/application_notes/application-notes-create');
-                    $this->renderPartial('//applications/application_notes/application-notes-view');
-                    $this->renderPartial('//applications/application_notes/application-notes-edit');
+                    $this->renderPartial('//applications/application-servers');
+                    $this->renderPartial('//applications/application-point-persons');
+                    $this->renderPartial('//applications/application-notes');
                 ?>
             </div>
         </div>
     </form>
-
-</div><!--END view applications-->
+</div>

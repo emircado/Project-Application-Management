@@ -66,11 +66,13 @@ class NotesController extends Controller
 
         if(is_array($filter))
         {
-            if(isset($filter['project_id']))
-                $criteria->compare('project_id', $filter['project_id']);
-
             if(isset($filter['application_id']))
                 $criteria->compare('application_id', $filter['application_id']);
+            else
+                $criteria->addCondition('application_id IS NULL');
+
+            if(isset($filter['project_id']))
+                $criteria->compare('project_id', $filter['project_id']);
         }
 
         $count = Notes::model()->count($criteria);

@@ -351,6 +351,7 @@ img.search {
 
 .note-body > .collapsible.expand {
     overflow-y: scroll;
+    overflow-x: hidden;
     max-height: 175px;
 }
 
@@ -363,6 +364,6 @@ img.search {
     line-height: 125%;
 }
 
-#project-notes-list-table tr:not(:first-child) {
+.notes-table tr:not(:first-child) {
     border-top: 2px solid #E2E2E2;
 }

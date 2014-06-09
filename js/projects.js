@@ -40,6 +40,7 @@ var ProjectsData = function()
 
 var ProjectsList = function()
 {
+
     var self = this;
     self.getDataURL = baseURL + '/projects/list';
     self._request         = null;
@@ -54,8 +55,6 @@ var ProjectsList = function()
 
     //for table
     self.tableID         = 'projects-list-table';
-    self.totalPage       = 1;
-    self.currentPage     = 1;
     self.resultData      = [];
     self.lookupData      = new Hash();
     self.tableRowClass   = 'projects-list-row';
@@ -65,11 +64,7 @@ var ProjectsList = function()
     self.fieldCodeID     = 'projects-list-search-code';
     self.fieldStatusID   = 'projects-list-search-status';
     self.csrfID          = 'projects-list-csrf';
-    self.searchParams = {
-        'name': '',
-        'code': '',
-        'status': '',
-    }
+
     
     //buttons
     self.createButtonID  = 'projects-list-create-button';
@@ -79,24 +74,31 @@ var ProjectsList = function()
 
     self.init = function()
     {
+        console.log(ProjectsSite.searchParams);
         ProjectsSite.activeView = 'LIST';
         ProjectsSite.dataObj.getAjaxData({
-            'page': self.currentPage,
-            'name': self.searchParams['name'],
-            'code': self.searchParams['code'],
-            'status': self.searchParams['status'],
+            'page'  : ProjectsSite.searchParams['page'],
+            'name'  : ProjectsSite.searchParams['name'],
+            'code'  : ProjectsSite.searchParams['code'],
+            'status': ProjectsSite.searchParams['status'],
             'YII_CSRF_TOKEN': $(self.csrfID).value,
         }, self.getData, function(){});
         
         $(ProjectsSite.titleID).set('html', 'Projects');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
+
+        $(self.fieldNameID).value   = ProjectsSite.searchParams['name'];
+        $(self.fieldCodeID).value   = ProjectsSite.searchParams['code'];
+        $(self.fieldStatusID).value = ProjectsSite.searchParams['status'];
     }
 
     self.hide = function()
     {
         $(self.containerID).setStyle('display', 'none');
-        self.clearSearch();
+        $(self.fieldNameID).value = '';
+        $(self.fieldCodeID).value = '';
+        $(self.fieldStatusID).value = '';
         $$('.'+self.tableRowClass).dispose();
     }
     
@@ -203,21 +205,6 @@ var ProjectsList = function()
         }
     }
 
-    self.clearSearch = function()
-    {
-        self.currentPage = 1;
-
-        self.searchParams = {
-            'name': '',
-            'code': '',
-            'status': '',
-        }
-
-        $(self.fieldNameID).value = '';
-        $(self.fieldCodeID).value = '';
-        $(self.fieldStatusID).value = '';
-    }
-
     self.makeView = function(pid)
     {
         if (typeof pid==='number' && (pid%1)===0 && self.lookupData.has(pid)) {
@@ -238,8 +225,12 @@ var ProjectsList = function()
             e.preventDefault();
             
             if (self.currentPage != self.totalPage) {
-                self.currentPage++;
-                self.init();
+                ProjectsSite.historyMngr.set('search', {
+                    'page'  : ProjectsSite.searchParams['page']+1,
+                    'name'  : ProjectsSite.searchParams['name'],
+                    'code'  : ProjectsSite.searchParams['code'],
+                    'status': ProjectsSite.searchParams['status'],
+                });
             }
         });
         
@@ -250,8 +241,12 @@ var ProjectsList = function()
             e.preventDefault();
             
             if (self.currentPage != 1) {
-                self.currentPage--;
-                self.init();
+                ProjectsSite.historyMngr.set('search', {
+                    'page'  : ProjectsSite.searchParams['page']-1,
+                    'name'  : ProjectsSite.searchParams['name'],
+                    'code'  : ProjectsSite.searchParams['code'],
+                    'status': ProjectsSite.searchParams['status'],
+                });
             }
         });
 
@@ -260,12 +255,12 @@ var ProjectsList = function()
         $(self.searchButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-
-            self.currentPage = 1;
-            self.searchParams['name'] = $(self.fieldNameID).value.trim();
-            self.searchParams['code'] = $(self.fieldCodeID).value.trim();
-            self.searchParams['status'] = $(self.fieldStatusID).value;
-            self.init();
+            ProjectsSite.historyMngr.set('search', {
+                'page'  : 1,
+                'name'  : $(self.fieldNameID).value.trim(),
+                'code'  : $(self.fieldCodeID).value.trim(),
+                'status': $(self.fieldStatusID).value.trim(),
+            });
         });
 
         //EVENT FOR SEARCH CODE FIELD INPUT
@@ -281,7 +276,9 @@ var ProjectsList = function()
         $(self.clearButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            self.clearSearch();
+            $(self.fieldNameID).value = '';
+            $(self.fieldCodeID).value = '';
+            $(self.fieldStatusID).value = '';
         });
 
         $$(self.viewButtonID).removeEvents();
@@ -289,7 +286,6 @@ var ProjectsList = function()
             e.preventDefault();
             var pid = parseInt($(this).get('id').split('_')[1]);
             if (typeof pid==='number' && (pid%1)===0 && self.lookupData.has(pid)) {
-                // ProjectsSite.hashListener.updateHash("pid="+pid);
                 ProjectsSite.historyMngr.set('pid', pid);
             }
         });
@@ -301,8 +297,6 @@ var ProjectsList = function()
             e.preventDefault();
             ProjectsSite.initCreate();
         });
-
-
     };
 };
 
@@ -315,19 +309,19 @@ var ProjectsCreate = function()
     self.containerID = 'projects-create';
 
     //buttons
-    self.saveButtonID = 'projects-create-save-button';
-    self.cancelButtonID = 'projects-create-cancel-button';
+    self.saveButtonID       = 'projects-create-save-button';
+    self.cancelButtonID     = 'projects-create-cancel-button';
 
     //fields
-    self.fieldNameID = 'projects-create-name';
-    self.fieldCodeID = 'projects-create-code';
+    self.fieldNameID        = 'projects-create-name';
+    self.fieldCodeID        = 'projects-create-code';
     self.fieldDescriptionID = 'projects-create-description';
-    self.fieldProductionID = 'projects-create-production';
-    self.csrfID = 'projects-create-csrf';
+    self.fieldProductionID  = 'projects-create-production';
+    self.csrfID             = 'projects-create-csrf';
 
     //errors
-    self.errorNameID = 'projects-create-name-error';
-    self.errorCodeID = 'projects-create-code-error';
+    self.errorNameID        = 'projects-create-name-error';
+    self.errorCodeID        = 'projects-create-code-error';
 
     self.init = function()
     {
@@ -387,7 +381,12 @@ var ProjectsCreate = function()
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        $(self.cancelButtonID).click();
+                        ProjectsSite.historyMngr.set('search', {
+                            'page'  : 1,
+                            'name'  : '',
+                            'code'  : '',
+                            'status': '',
+                        });
                     }
                 },
                 'onError' : function(errors)
@@ -603,8 +602,6 @@ var ProjectsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            // ProjectsSite.hashListener.updateHash('');
-            // document.location.hash = '';
             ProjectsSite.historyMngr.remove('pid');
         });
 
@@ -805,8 +802,13 @@ var ProjectsSite = {
     appServersObj   : null,
     // some more variables
     activeView      : '',
-    // hashListener    : new HashListener(),
     historyMngr     : new HistoryManager(),
+    searchParams    : {
+        'page'  : 1,
+        'name'  : '',
+        'code'  : '',
+        'status': '',
+    },
 
     init: function()
     {
@@ -817,39 +819,45 @@ var ProjectsSite = {
         self.initAppServers();
 
         self.addEvents();
-        // self.hashListener.start();
         self.historyMngr.start();
 
         // detect what view to initialize from hash
-        // var hash = self.hashListener.getHash();
-        var hash = self.historyMngr.getHash();
+        var hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
 
-        // if (hash.indexOf('pid=') == 0)
-        if (hash.indexOf('pid') != -1)
-        {
-            console.log('detected hash ');
-            ProjectsSite.dataObj.getAjaxData({
-                'project_id': self.historyMngr.deserializeHash(hash)['pid'],
-                // 'project_id': parseInt(hash.split('=')[1]),
-                'YII_CSRF_TOKEN': $(self.csrfID).value,
-            }, function(data){self.initView(data)}, function(){
-                // self.hashListener.updateHash('');
-                self.historyMngr.remove('pid');
-            });
-
-        // will go here if hash format is invalid
-        } else {
+        if (hash == null || Object.keys(hash).length == 0) {
             console.log('no hash');
-            self.initObj();
-        }
+            self.historyMngr.set('search', self.searchParams);
+        } else {
+            // priority in viewing project details
+            if ('pid' in hash)
+            {
+                console.log('detected pid ');
+                ProjectsSite.dataObj.getAjaxData({
+                    'project_id': hash['pid'],
+                    'YII_CSRF_TOKEN': $(self.csrfID).value,
+                }, function(data){self.initView(data)}, function(){
+                    self.historyMngr.remove('pid');
+                });
 
+            } else if ('search' in hash) {
+                if ('page' in hash['search'])
+                    self.searchParams['page'] = hash['search']['page'];
+                if ('name' in hash['search'])
+                    self.searchParams['name'] = hash['search']['name'];
+                if ('code' in hash['search'])
+                    self.searchParams['code'] = hash['search']['code'];
+                if ('status' in hash['search'])
+                    self.searchParams['status'] = hash['search']['status'];
+                self.initObj();
+            }
+        }
     },
 
-    initObj: function()
+    initObj: function(search)
     {
         var self = this;
         self.closeActive();
-        self.mainObj.init();
+        self.mainObj.init(search);
     },
 
     initCreate: function()
@@ -906,36 +914,6 @@ var ProjectsSite = {
     addEvents: function()
     {
         var self = this;
-        // self.hashListener.addEvent('hashChanged', function(new_hash)
-        // {
-        //     console.log('hash changed');
-        //     var hash = self.hashListener.getHash();
-
-        //     if (hash.length == 0) {
-        //         console.log('hash is empty');
-        //         self.initObj();
-        //     } else if (hash.indexOf('pid=') == 0) {
-        //         var pid = parseInt(hash.split('=')[1]);
-        //         // if project info is not yet retrieved
-        //         if (!self.mainObj.makeView(pid)) {
-        //             console.log('retrieve new');
-        //             ProjectsSite.dataObj.getAjaxData({
-        //                 'project_id': parseInt(hash.split('=')[1]),
-        //                 'YII_CSRF_TOKEN': $(self.csrfID).value,
-        //             // on success
-        //             }, function(data) {
-        //                 self.initView(data)
-        //             // on fail
-        //             }, function() {
-        //                 ProjectsSite.hashListener.updateHash('');
-        //             });
-        //         }
-        //     } else {
-        //         console.log('test');
-        //         ProjectsSite.hashListener.updateHash('');
-        //     }
-        // });
-        
         var processPID = function(new_value)
         {
             var pid = parseInt(new_value);
@@ -958,14 +936,44 @@ var ProjectsSite = {
         self.historyMngr.addEvent('pid:updated', processPID);
         self.historyMngr.addEvent('pid:removed', function(removed)
         {
+            self.initObj({});
+        });
+
+        var processSearch = function(new_value)
+        {
+            if (new_value == undefined) {
+                new_value = {
+                    'page'  : 1,
+                    'name'  : '',
+                    'code'  : '',
+                    'status': '',
+                };
+            }
+            self.searchParams = new_value;
             self.initObj();
+        }
+        self.historyMngr.addEvent('search:added', processSearch);
+        self.historyMngr.addEvent('search:updated', processSearch);
+        self.historyMngr.addEvent('search:removed', function(removed)
+        {
+            hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
+            if (hash == null || !'pid' in hash)
+            {
+                self.historyMngr.set('search', {
+                    'page'  : 1,
+                    'name'  : '',
+                    'code'  : '',
+                    'status': '',
+                });
+            }
         });
     },
 
     closeActive: function()
     {
         var self = this;
-        switch (self.activeView) {
+        switch (self.activeView)
+        {
             case 'LIST':
                 self.mainObj.hide();
                 break;

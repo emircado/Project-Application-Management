@@ -42,8 +42,8 @@ var ProjectNotesList = function(project_id)
         if(!self._request || !self._request.isRunning())
         {
             var params = {
-                'page'          : self.currentPage,
-                'project_id'    : project_id,
+                'page'              : self.currentPage,
+                'project_id'        : project_id,
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
@@ -356,7 +356,7 @@ var ProjectNotesView = function(data)
 
         $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
         //if overflow
-        if ($(self.fieldNotesID).scrollHeight > $(self.fieldNotesID).clientHeight) {
+        if ($(self.fieldNotesID).scrollHeight > $(self.fieldNotesID).clientHeight+1) {
             $(self.fieldMoreID).set('html', 'Read more');
         //if not
         } else {

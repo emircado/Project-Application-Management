@@ -21,7 +21,6 @@ var ApplicationNotesList = function(application_id)
     self.tableRowClass  = 'application-notes-list-row';
 
     //buttons
-    self.viewButtonID   = 'tr[id^=application-notes-list-view_]';
     self.createButtonID = 'application-notes-list-create-button';
 
     self.init = function()
@@ -82,31 +81,26 @@ var ApplicationNotesList = function(application_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var created = (val['date_created'] == null || val['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(val['date_created']);
-
-                contentHTML = '<td>'+created+'</td>'                    
-                            + '<td>'+val['notes']+'</td>';
-
+                var note = new ApplicationNotesView(val);
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
-                    'html'  : contentHTML,
-                    'id'    : 'application-notes-list-view_'+idx,
+                    'html'  : note.contentHTML,
                 });
-                
+
                 contentElem.inject($(self.tableID), 'bottom');
+                note.init();
             });
         }
         else
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td colspan="2">No notes found</td>';
+            contentHTML = '<td>No notes found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
                 'html'  : contentHTML,
-                'id'    : 'application-notes-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -145,17 +139,6 @@ var ApplicationNotesList = function(application_id)
         {
             e.preventDefault();
             ApplicationNotesSite.initCreate(application_id);
-        });
-        
-        //VIEW CONTACT PERSON
-        $$(self.viewButtonID).removeEvents();
-        $$(self.viewButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            var idx = parseInt($(this).get('id').split('_')[1]);
-            if (typeof idx==='number' && (idx%1)===0) {
-                ApplicationNotesSite.initView(self.resultData[idx]);
-            }
         });
     }
 
@@ -212,7 +195,7 @@ var ApplicationNotesCreate = function(application_id)
     self.cancelButtonID = 'application-notes-create-cancel-button';
 
     //fields
-    self.fieldNotesID  = 'application-notes-create-notes';
+    self.fieldNotesID   = 'application-notes-create-notes';
     self.csrfID         = 'application-notes-create-csrf';
 
     self.init = function()
@@ -239,8 +222,6 @@ var ApplicationNotesCreate = function(application_id)
                 'application_id'    : application_id,
                 'notes'             : $(self.fieldNotesID).value.trim()
             };
-
-            console.log(params);
 
             self._request = new Request.JSON(
             {
@@ -291,40 +272,40 @@ var ApplicationNotesView = function(data)
     self.postDataURL = baseURL + '/notes/delete';
     self._request = null;
 
-    self.containerID = 'application-notes-view';
+    self.fieldNotesConID    = 'application-notes-view-notes-con_'+data['note_id'];
 
     //fields
-    self.fieldNotesID       = 'application-notes-view-notes';
-    self.fieldCreatedID     = 'application-notes-view-created';
-    self.fieldUpdatedID     = 'application-notes-view-updated';
-    self.fieldCreatedByID   = 'application-notes-view-createdby';
-    self.csrfID             = 'application-notes-view-csrf';
+    self.fieldNotesID       = 'application-notes-view-notes_'+data['note_id'];
+    self.fieldMoreID        = 'application-notes-view-more_'+data['note_id'];
+    self.fieldCreatedID     = 'application-notes-view-created_'+data['note_id'];
+    self.fieldCreatedByID   = 'application-notes-view-createdby_'+data['note_id'];
+    self.csrfID             = 'application-notes-list-csrf';
 
     //buttons
-    self.deleteButtonID     = 'application-notes-view-delete-button';
-    self.editButtonID       = 'application-notes-view-edit-button';
-    self.backButtonID       = 'application-notes-view-back-button';
+    self.deleteButtonID     = 'application-notes-view-delete_'+data['note_id'];
+    self.editButtonID       = 'application-notes-view-edit_'+data['note_id'];
+
+    self.contentHTML    = '<td class="note">'
+                        +   '<div class="note-head">'
+                        +       '<b id="'+self.fieldCreatedByID+'"></b>'
+                        +       '<div style="float:right;">'
+                        +           '<a id="'+self.editButtonID+'" href="#"></a> '
+                        +           '<a id="'+self.deleteButtonID+'" href="#"></a>'
+                        +       '</div>'
+                        +       '<div><i id="'+self.fieldCreatedID+'" style="font-size:12px;"></i></div>'
+                        +   '</div>'
+                        +   '<div id="'+self.fieldNotesConID+'" class="note-body">'
+                        +   '</div>'
+                        + '</td>';
+    
+    self.notesHTML  = '<div class="value collapsible" id="'+self.fieldNotesID+'"></div>'
+                    + '<a href="#" id="'+self.fieldMoreID+'" class="small-text"></a>'
 
     self.init = function()
     {
-        ApplicationNotesSite.activeView = 'VIEW';
-        $(self.containerID).setStyle('display', 'block');
+        $(self.fieldNotesConID).set('html', self.notesHTML);
         self.renderData();
         self.addEvents();
-    
-        // check if current user can edit
-        if (username != data['created_by']) {
-            $(self.editButtonID).set('html', '');
-            $(self.deleteButtonID).set('html', '');
-        } else {
-            $(self.editButtonID).set('html', '[Edit]');
-            $(self.deleteButtonID).set('html', '[Delete]');
-        }
-    }
-
-    self.hide = function()
-    {
-        $(self.containerID).setStyle('display', 'none');
     }
 
     self.postAjaxData = function()
@@ -347,7 +328,7 @@ var ApplicationNotesView = function(data)
                         self._request.stop;
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
-                        $(self.backButtonID).click();
+                        ApplicationNotesSite.initObj(data['application_id']);
                     }
                 },
                 'onError' : function(errors)
@@ -364,52 +345,83 @@ var ApplicationNotesView = function(data)
         // format display data
         var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
-        var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
+
+        if (username == data['created_by']) {
+            $(self.editButtonID).set('html', 'Edit');
+            $(self.deleteButtonID).set('html', 'Delete');
+        } else {
+            $(self.editButtonID).set('html', '');
+            $(self.deleteButtonID).set('html', '');
+        }
 
         $(self.fieldNotesID).set('html', '<pre>'+data['notes']);
+        //if overflow
+        if ($(self.fieldNotesID).scrollHeight > $(self.fieldNotesID).clientHeight+1) {
+            $(self.fieldMoreID).set('html', 'Read more');
+        //if not
+        } else {
+            $(self.fieldMoreID).set('html', '');    
+        }
         $(self.fieldCreatedID).set('html', created);
-        $(self.fieldUpdatedID).set('html', updated);
         $(self.fieldCreatedByID).set('html', (createdby == null)? data['created_by'] : createdby);
     }
 
     self.addEvents = function()
     {
+        //EXPAND NOTES
+        $(self.fieldMoreID).removeEvents();
+        $(self.fieldMoreID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            // toggle view
+            if (!$(self.fieldNotesID).hasClass('edit')) {
+                if ($(self.fieldNotesID).hasClass('expand')) {
+                    $(self.fieldNotesID).removeClass('expand');
+                    $(self.fieldMoreID).set('html', 'Read more');
+                } else {
+                    $(self.fieldNotesID).addClass('expand');
+                    $(self.fieldMoreID).set('html', 'Read less');
+                }
+            }
+        });
+
         //EDIT BUTTON EVENT
         $(self.editButtonID).removeEvents();
-        if (username == data['created_by']) {
-            $(self.editButtonID).addEvent('click', function(e)
-            {
-                e.preventDefault();
-                ApplicationNotesSite.initEdit(data);
-            });
-        }
+        $(self.editButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (username == data['created_by']) {
+                $(self.editButtonID).set('html', '');
+                $(self.deleteButtonID).set('html', '');
+                new ApplicationNotesEdit(data, self).init();
+            }
+        });
 
         //DELETE BUTTON EVENT
         $(self.deleteButtonID).removeEvents();
-        if (username == data['created_by']) {
-            $(self.deleteButtonID).addEvent('click', function(e)
-            {
-                e.preventDefault();
+        $(self.deleteButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (username == data['created_by']) {
                 new ConfirmModal(
                     'Confirm Delete',
                     'Are you sure you want to delete this note from the list?',
                     'Delete',
                     self.postAjaxData)
                 .show();
-            });
-        }
+            }
+        });
+    }
 
-        //GO BACK TO THE LIST
-        $(self.backButtonID).removeEvents();
-        $(self.backButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            ApplicationNotesSite.initObj(data['application_id']);
+    self.updateData = function(update)
+    {
+        update.each(function(val, key){
+            data[key] = val;
         });
     }
 }
 
-var ApplicationNotesEdit = function(data)
+var ApplicationNotesEdit = function(data, caller)
 {
     var self = this;
     self.postDataURL = baseURL + '/notes/update';
@@ -418,27 +430,30 @@ var ApplicationNotesEdit = function(data)
     self.containerID    = 'application-notes-edit';
 
     //fields
-    self.fieldNotesID   = 'application-notes-edit-notes';
-    self.csrfID         = 'application-notes-edit-csrf';
+    self.fieldNotesID   = 'application-notes-edit-notes_'+data['note_id'];
+    self.csrfID         = 'application-notes-list-csrf';
 
     //buttons
-    self.cancelButtonID = 'application-notes-edit-cancel-button';
-    self.saveButtonID   = 'application-notes-edit-save-button';
+    self.saveButtonID   = 'application-notes-edit-save_'+data['note_id'];
+    self.cancelButtonID = 'application-notes-edit-cancel_'+data['note_id'];
+
+    self.editHTML   = '<div style="text-align:center;">'
+                    +   '<textarea id="'+self.fieldNotesID+'" rows="8" style="width:95%; margin:auto;"></textarea>'
+                    +   '<div class="note-foot field-action-content">'
+                    +       '<div class="pseudo-field pseudo-button">'
+                    +           '<a id="'+self.cancelButtonID+'" class="cancel" href="#">Cancel</a>'
+                    +       '</div>'
+                    +       '<div class="pseudo-field pseudo-button primary-button">'
+                    +           '<button id="'+self.saveButtonID+'">Save Changes</button>'
+                    +       '</div>'
+                    +   '</div>'
+                    + '</div>';
 
     self.init = function()
     {
-        ApplicationNotesSite.activeView = 'EDIT';
-        $(self.containerID).setStyle('display', 'block');
+        $(caller.fieldNotesConID).set('html', self.editHTML);
         self.renderData();
         self.addEvents();
-    }
-
-    self.hide = function()
-    {
-        $(self.containerID).setStyle('display', 'none');
-
-        //clean form
-        $(self.fieldNotesID).value = '';
     }
 
     self.postAjaxData = function()
@@ -462,10 +477,7 @@ var ApplicationNotesEdit = function(data)
                         self._request.stop;
                         console.log(response['data']);
                     } else if (response['type'] == 'success') {
-                        data['notes']           = response['data']['notes'];
-                        data['date_updated']    = response['data']['date_updated']
-                        data['updated_by']      = response['data']['updated_by'];
-
+                        caller.updateData(new Hash(response['data']));
                         $(self.cancelButtonID).click();
                     }
                 },
@@ -498,7 +510,7 @@ var ApplicationNotesEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationNotesSite.initView(data);
+            caller.init();
         });
     }
 }
@@ -506,8 +518,6 @@ var ApplicationNotesEdit = function(data)
 var ApplicationNotesSite = {
     mainObj     : null,
     createObj   : null,
-    editObj     : null,
-    viewObj     : null,
 
     activeView  : '',
 
@@ -533,22 +543,6 @@ var ApplicationNotesSite = {
         self.createObj.init();
     },
 
-    initEdit: function(data)
-    {
-        var self = this;
-        self.closeActive();
-        self.editObj = new ApplicationNotesEdit(data);
-        self.editObj.init();
-    },
-
-    initView: function(data)
-    {
-        var self = this;
-        self.closeActive();
-        self.viewObj = new ApplicationNotesView(data);
-        self.viewObj.init();
-    },
-
     closeActive: function()
     {
         var self = this;
@@ -560,14 +554,6 @@ var ApplicationNotesSite = {
             case 'CREATE':
                 if (self.createObj != null)
                     self.createObj.hide();
-                break;
-            case 'VIEW':
-                if (self.viewObj != null)
-                    self.viewObj.hide();
-                break;
-            case 'EDIT':
-                if (self.editObj != null)
-                    self.editObj.hide();
                 break;
         }
         self.activeView = '';
