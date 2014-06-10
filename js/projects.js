@@ -74,7 +74,6 @@ var ProjectsList = function()
 
     self.init = function()
     {
-        console.log(ProjectsSite.searchParams);
         ProjectsSite.activeView = 'LIST';
         ProjectsSite.dataObj.getAjaxData({
             'page'  : ProjectsSite.searchParams['page'],
@@ -323,9 +322,20 @@ var ProjectsCreate = function()
     self.errorNameID        = 'projects-create-name-error';
     self.errorCodeID        = 'projects-create-code-error';
 
+    self.datePicker         = null;
+
     self.init = function()
     {
         ProjectsSite.activeView = 'CREATE';
+        self.datePicker = new DatePicker($(self.fieldProductionID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 370, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
         $(ProjectsSite.titleID).set('html', 'Projects');
         $(self.containerID).setStyle('display', 'block');
         self.addEvents();
@@ -343,7 +353,8 @@ var ProjectsCreate = function()
         $(self.fieldNameID).value = '';
         $(self.fieldCodeID).value = '';
         $(self.fieldDescriptionID).value = '';
-        $(self.fieldProductionID).value = '0000-00-00';
+        $(self.fieldProductionID).value = '';
+        $(self.fieldProductionID).getNext().value = '';
     }
 
     self.postAjaxData = function()
@@ -427,21 +438,13 @@ var ProjectsCreate = function()
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
-        // $(self.fieldProductionID).removeEvents();
-        // $(self.fieldProductionID).addEvent('focus', function(e) 
-        // {
-        //     e.preventDefault();
-        //     $(this).blur();
-
-        //     picker = new DatePicker('#'+self.fieldProductionID, {
-        //         timePicker: false,
-        //         pickerClass: 'datepicker_vista',
-        //         onSelect: function(date) {
-        //             $(self.fieldProductionID).value = date.formatter('%s');
-        //         }
-        //     });
-        //     picker.show();
-        // });
+        $(self.fieldProductionID).removeEvents();
+        $(self.fieldProductionID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePicker.show();
+        });
     }
 }
 
@@ -573,8 +576,8 @@ var ProjectsView = function(data)
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
-        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['termination_date']);
-        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['production_date']);
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
 
         $(self.fieldIdentifierID).set('html', data['project_id']);
         $(self.fieldNameID).set('html', data['name']);
@@ -664,9 +667,20 @@ var ProjectsEdit = function(data)
     self.saveButtonID       = 'projects-edit-save-button';
     self.cancelButtonID     = 'projects-edit-cancel-button';
 
+    self.datePicker         = null;
+
     self.init = function()
     {
         ProjectsSite.activeView = 'EDIT';
+        self.datePicker = new DatePicker($(self.fieldProductionID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 370, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
         $(ProjectsSite.titleID).set('html', 'Projects');
         $(self.containerID).setStyle('display', 'block');
         self.renderData();
@@ -685,7 +699,10 @@ var ProjectsEdit = function(data)
         $(self.fieldNameID).value = '';
         $(self.fieldCodeID).value = '';
         $(self.fieldDescriptionID).value = '';
-        $(self.fieldProductionID).value = '0000-00-00';
+        $(self.fieldProductionID).value = '';
+        $(self.fieldProductionID).getNext().value = '';
+
+        self.datePicker.close();
     }
 
     self.postAjaxData = function()
@@ -748,7 +765,15 @@ var ProjectsEdit = function(data)
         $(self.fieldNameID).value = data['name'];
         $(self.fieldCodeID).value = data['code'];
         $(self.fieldDescriptionID).value = data['description'];
-        $(self.fieldProductionID).value = data['production_date'];
+
+        if (data['production_date'] == '0000-00-00' || data['production_date'] == '') {
+            $(self.fieldProductionID).value = '';
+            $(self.fieldProductionID).getNext().value = '';
+        } else {
+            $(self.fieldProductionID).value = data['production_date'];
+            var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
+            $(self.fieldProductionID).getNext().value = production;
+        }
     }
 
     self.addEvents = function()
@@ -784,6 +809,15 @@ var ProjectsEdit = function(data)
             e.preventDefault();
             $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
         });
+
+        //EVENT FOR CHOOSE PRODUCTION DATE
+        $(self.fieldProductionID).removeEvents();
+        $(self.fieldProductionID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePicker.show();
+        });
     }
 }
 
@@ -818,38 +852,13 @@ var ProjectsSite = {
         self.initAppTypes();
         self.initAppServers();
 
-        self.addEvents();
         self.historyMngr.start();
+        self.addEvents();
 
-        // detect what view to initialize from hash
-        var hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
-
+        hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
         if (hash == null || Object.keys(hash).length == 0) {
             console.log('no hash');
             self.historyMngr.set('search', self.searchParams);
-        } else {
-            // priority in viewing project details
-            if ('pid' in hash)
-            {
-                console.log('detected pid ');
-                ProjectsSite.dataObj.getAjaxData({
-                    'project_id': hash['pid'],
-                    'YII_CSRF_TOKEN': $(self.csrfID).value,
-                }, function(data){self.initView(data)}, function(){
-                    self.historyMngr.remove('pid');
-                });
-
-            } else if ('search' in hash) {
-                if ('page' in hash['search'])
-                    self.searchParams['page'] = hash['search']['page'];
-                if ('name' in hash['search'])
-                    self.searchParams['name'] = hash['search']['name'];
-                if ('code' in hash['search'])
-                    self.searchParams['code'] = hash['search']['code'];
-                if ('status' in hash['search'])
-                    self.searchParams['status'] = hash['search']['status'];
-                self.initObj();
-            }
         }
     },
 
@@ -936,28 +945,34 @@ var ProjectsSite = {
         self.historyMngr.addEvent('pid:updated', processPID);
         self.historyMngr.addEvent('pid:removed', function(removed)
         {
-            self.initObj({});
+            self.initObj();
         });
 
-        var processSearch = function(new_value)
-        {
-            if (new_value == undefined) {
-                new_value = {
-                    'page'  : 1,
-                    'name'  : '',
-                    'code'  : '',
-                    'status': '',
-                };
+        self.historyMngr.addEvent('search:added', function(new_value){
+            console.log('search: added');
+            hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
+            if (!('pid' in hash)) {
+                self.searchParams = new_value;
+                self.initObj();
+            } else {
+                console.log('search doing nothing');
             }
+        });
+        self.historyMngr.addEvent('search:updated', function(new_value){
+            console.log('search: updated');
+            hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
             self.searchParams = new_value;
-            self.initObj();
-        }
-        self.historyMngr.addEvent('search:added', processSearch);
-        self.historyMngr.addEvent('search:updated', processSearch);
+
+            if (!('pid' in hash)) {
+                self.initObj();
+            } else {
+                self.historyMngr.remove('pid');
+            }
+        });
         self.historyMngr.addEvent('search:removed', function(removed)
         {
             hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
-            if (hash == null || !'pid' in hash)
+            if (hash == null || !('pid' in hash))
             {
                 self.historyMngr.set('search', {
                     'page'  : 1,
@@ -997,12 +1012,3 @@ window.addEvent('domready', function()
 {
     ProjectsSite.init();
 });
-
-//DETECT REFRESH
-// window.addEvent('keydown', function(e)
-// {
-//     if (e.code == 116) {
-//         e.preventDefault();
-//         e.keyCode = 0;
-//     }
-// })

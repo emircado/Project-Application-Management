@@ -487,25 +487,25 @@ var AppServersListModal = function(server_type, onSelected)
     var self = this;
 
     // modal
-    self.modalID = 'app-servers-list-modal';
-    self.overlayID = 'overlay';
+    self.modalID        = 'app-servers-list-modal';
+    self.overlayID      = 'overlay';
     self.dialogWrapperID = 'dialog-wrapper';
-    self.createModal = new AppServersCreateModal();
+    self.createModal    = new AppServersCreateModal();
 
     //title
-    self.titleID = 'app-servers-list-modal-title';
-    self.titles = {
-        'PRODUCTION': 'Production',
-        'STAGING'   : 'Staging',
+    self.titleID        = 'app-servers-list-modal-title';
+    self.titles         = {
+        'PRODUCTION' : 'Production',
+        'STAGING'    : 'Staging',
         'DEVELOPMENT': 'Development'
     }
 
     //search fields
-    self.searchNameID = 'app-servers-list-modal-name';
+    self.searchNameID   = 'app-servers-list-modal-name';
     self.searchNetworkID = 'app-servers-list-modal-network';
     self.searchPublicID = 'app-servers-list-modal-public';
     self.searchPrivateID = 'app-servers-list-modal-private';
-    self.searchParams = {
+    self.searchParams   = {
         'server_type': server_type,
         'name': '',
         'network': '',
@@ -514,31 +514,30 @@ var AppServersListModal = function(server_type, onSelected)
     };
 
     //table
-    self.tableID = 'app-servers-list-modal-table';
-    self.tableRowClass = 'app-servers-list-modal-row';
+    self.tableID        = 'app-servers-list-modal-table';
+    self.tableRowClass  = 'app-servers-list-modal-row';
 
     //for pagination
-    self.currentPage = 1;
-    self.totalPage = 1;
-    self.pageLimit = 5;
+    self.currentPage    = 1;
+    self.totalPage      = 1;
+    self.pageLimit      = 5;
 
-    self.prevID = 'app-servers-list-modal-prev';
-    self.nextID = 'app-servers-list-modal-next';
-    self.totalDataID = 'app-servers-list-modal-total';
-    self.totalPartID = 'app-servers-list-modal-part';
+    self.prevID         = 'app-servers-list-modal-prev';
+    self.nextID         = 'app-servers-list-modal-next';
+    self.totalDataID    = 'app-servers-list-modal-total';
+    self.totalPartID    = 'app-servers-list-modal-part';
 
     // buttons
-    self.selectID = 'a[id^=appserverslist-select_]';
-    self.closeID = 'app-servers-list-modal-close-button';
+    self.selectID       = 'a[id^=appserverslist-select_]';
+    self.closeID        = 'app-servers-list-modal-close-button';
     self.searchButtonID = 'app-servers-list-modal-search';
-    self.clearButtonID = 'app-servers-list-modal-clear';
+    self.clearButtonID  = 'app-servers-list-modal-clear';
 
     self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
 
     self.show = function()
     {
         $(self.titleID).set('html', self.titles[server_type]+' Servers');
-
         $(self.modalID).setStyle('display', 'block');
         $(self.overlayID).setStyle('display', 'block');
         $(self.dialogWrapperID).setStyle('display', 'block');
@@ -799,8 +798,29 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     self.cancelButtonID     = 'app-servers-create-modal-cancel-button';
     self.confirmButtonID    = 'app-servers-create-modal-save-button';
 
+    self.datePickerProd     = null;
+    self.datePickerTerm     = null;
+
     self.show = function()
     {
+        self.datePickerProd = new DatePicker($(self.fieldProductionID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
+        self.datePickerTerm = new DatePicker($(self.fieldTerminationID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
         $(self.modalID).setStyle('display', 'block');
         $(self.overlayID).setStyle('display', 'block');
         $(self.dialogWrapperID).setStyle('display', 'block');
@@ -839,6 +859,8 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.fieldDescriptionID).value = '';
         $(self.fieldProductionID).value = '';
         $(self.fieldTerminationID).value = '';
+        $(self.fieldProductionID).getNext().value = '';
+        $(self.fieldTerminationID).getNext().value = '';
     }
 
     self.postAjaxData = function()
@@ -937,6 +959,24 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
             e.preventDefault();
             self.closeModal();
             onCancel();
+        });
+
+        //EVENT FOR CHOOSE PRODUCTION DATE
+        $(self.fieldProductionID).removeEvents();
+        $(self.fieldProductionID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerProd.show();
+        });
+
+        //EVENT FOR CHOOSE TERMINATION DATE
+        $(self.fieldTerminationID).removeEvents();
+        $(self.fieldTerminationID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerTerm.show();
         });
     }
 }

@@ -399,7 +399,7 @@ var ContactPersonsView = function(data)
         $(self.fieldPositionID).set('html', data['position']);
         $(self.fieldContactsID).set('html', data['contact_numbers']);
         $(self.fieldEmailID).set('html', data['email']);
-        $(self.fieldAddressID).set('html', '<pre>'+data['address']);
+        new ReadMore(self.fieldAddressID, data['address']).renderData();
         new ReadMore(self.fieldNotesID, data['notes']).renderData();
     }
 

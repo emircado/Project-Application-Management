@@ -8262,3 +8262,84 @@ Stack trace:
 #5 {main}
 REQUEST_URI=/pamgmt/projects/asdf
 ---
+2014/06/10 11:51:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/frame.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/frame.pn...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/frame.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/days.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/days.png')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/days.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/buttons.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/buttons....')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/buttons.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/days.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/days.png')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/days.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/months.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/months.p...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/months.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/months.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/months.p...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/months.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/frame.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/frame.pn...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/frame.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/buttons.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/buttons....')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/buttons.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---
+2014/06/10 11:51:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/days.png".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('images/days.png')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/images/days.png
+HTTP_REFERER=http://10.11.7.11/pamgmt/css/datepicker_vista.css
+---

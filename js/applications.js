@@ -233,9 +233,31 @@ var ApplicationsCreate = function(project_id)
     self.createButtonID        = 'applications-create-save-button';
     self.cancelButtonID        = 'applications-create-cancel-button';
 
+    self.datePickerProd        = null;
+    self.datePickerTerm        = null;
+
     self.init = function()
     {
         ApplicationsSite.activeView = 'CREATE';
+
+        self.datePickerProd = new DatePicker($(self.fieldProductionID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
+        self.datePickerTerm = new DatePicker($(self.fieldTerminationID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
         $(self.containerID).setStyle('display', 'block');
         $(self.modalContainerID).grab($(self.typeModal.modalID), 'top');
         self.initDropdown();
@@ -262,8 +284,10 @@ var ApplicationsCreate = function(project_id)
         $(self.fieldDescriptionID).value = '';
         $(self.fieldInstructionsID).value = '';
         $(self.fieldPointPersonID).set('html', '');
-        $(self.fieldProductionID).value = '0000-00-00';
-        $(self.fieldTerminationID).value = '0000-00-00';
+        $(self.fieldProductionID).value = '';
+        $(self.fieldTerminationID).value = '';
+        $(self.fieldProductionID).getNext().value = '';
+        $(self.fieldTerminationID).getNext().value = '';
     }
 
     self.postAjaxData = function()
@@ -357,6 +381,24 @@ var ApplicationsCreate = function(project_id)
         {
             e.preventDefault();
             ApplicationsSite.initObj(project_id);
+        });
+
+        //EVENT FOR CHOOSE PRODUCTION DATE
+        $(self.fieldProductionID).removeEvents();
+        $(self.fieldProductionID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerProd.show();
+        });
+
+        //EVENT FOR CHOOSE TERMINATION DATE
+        $(self.fieldTerminationID).removeEvents();
+        $(self.fieldTerminationID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerTerm.show();
         });
     }
 
@@ -476,8 +518,8 @@ var ApplicationsView = function(data)
         var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
-        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['termination_date']);
-        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00')? '' : DateFormatter.formatDate(data['production_date']);
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
 
         $(self.fieldNameID).set('html', data['name']);
         $(self.fieldTypeID).set('html', ProjectsSite.appTypesObj.appTypes.get(data['type_id']));
@@ -552,20 +594,42 @@ var ApplicationsEdit = function(data)
     self.csrfID                 = 'applications-edit-csrf';
 
     //dropdown class
-    self.pointPersonRowClass = 'applications-edit-pointperson-row';
+    self.pointPersonRowClass    = 'applications-edit-pointperson-row';
 
     //error fields
-    self.errorNameID = 'applications-edit-name-error';
-    self.errorTypeID = 'applications-edit-type-error';
-    self.errorAccessibilityID = 'applications-edit-accessibility-error';
+    self.errorNameID            = 'applications-edit-name-error';
+    self.errorTypeID            = 'applications-edit-type-error';
+    self.errorAccessibilityID   = 'applications-edit-accessibility-error';
 
     //buttons
-    self.saveButtonID = 'applications-edit-save-button';
-    self.cancelButtonID = 'applications-edit-cancel-button';
+    self.saveButtonID           = 'applications-edit-save-button';
+    self.cancelButtonID         = 'applications-edit-cancel-button';
+
+    self.datePickerProd         = null;
+    self.datePickerTerm         = null;
 
     self.init = function()
     {
         ApplicationsSite.activeView = 'EDIT';
+
+        self.datePickerProd = new DatePicker($(self.fieldProductionID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
+        self.datePickerTerm = new DatePicker($(self.fieldTerminationID), {
+            allowEmpty: true,
+            timePicker: false,
+            pickerClass: 'datepicker_vista',
+            positionOffset: {x: 380, y:-40},
+            format: 'M j, Y',
+            inputOutputFormat: 'Y-m-d',
+        });
+
         $(self.containerID).setStyle('display', 'block');
         $(self.modalContainerID).grab($(self.typeModal.modalID), 'top');
         self.initDropdown();
@@ -593,8 +657,8 @@ var ApplicationsEdit = function(data)
         $(self.fieldDescriptionID).value = '';
         $(self.fieldInstructionsID).value = '';
         $(self.fieldPointPersonID).set('html', '');
-        $(self.fieldProductionID).value = '0000-00-00';
-        $(self.fieldTerminationID).value = '0000-00-00';
+        $(self.fieldProductionID).value = '';
+        $(self.fieldTerminationID).value = '';
     }
 
     self.postAjaxData = function()
@@ -670,6 +734,9 @@ var ApplicationsEdit = function(data)
 
     self.renderData = function()
     {
+        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
+        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
+
         $(self.fieldNameID).value            = data['name'];
         $(self.fieldTypeID).value            = ProjectsSite.appTypesObj.appTypes.get(data['type_id']);
         $(self.fieldAccessibilityID).value   = data['accessibility'];
@@ -680,6 +747,8 @@ var ApplicationsEdit = function(data)
         $(self.fieldPointPersonID).value     = data['rd_point_person'];
         $(self.fieldProductionID).value      = data['production_date'];
         $(self.fieldTerminationID).value     = data['termination_date'];
+        $(self.fieldProductionID).getNext().value   = production;
+        $(self.fieldTerminationID).getNext().value  = termination;
     }
 
     self.addEvents = function()
@@ -716,6 +785,24 @@ var ApplicationsEdit = function(data)
         {
             e.preventDefault();
             ApplicationsSite.initView(data);
+        });
+
+        //EVENT FOR CHOOSE PRODUCTION DATE
+        $(self.fieldProductionID).removeEvents();
+        $(self.fieldProductionID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerProd.show();
+        });
+
+        //EVENT FOR CHOOSE TERMINATION DATE
+        $(self.fieldTerminationID).removeEvents();
+        $(self.fieldTerminationID).addEvent('focus', function(e) 
+        {
+            e.preventDefault();
+            $(this).blur();
+            self.datePickerTerm.show();
         });
     }
 
