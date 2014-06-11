@@ -40,7 +40,7 @@
                     <div class="field-secondary"><span class="label">Production Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input type="date" id="projects-edit-production" class="text"></input>
+                        <input type="text" id="projects-edit-production" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->

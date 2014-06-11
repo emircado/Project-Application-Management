@@ -85,7 +85,7 @@ class ProjectsController extends Controller
         $projects = $this->get_data($filter, $limit, $offset);
 
         $return_data = array(
-            'page'=>$page,
+            'page'=>($projects['offset']/$limit)+1,
             'totalPage'=> ($projects['total_count'] == 0) ? 1 : ceil($projects['total_count']/$limit),
             'totalData'=>$projects['total_count'],
             'limit'=>$limit,
@@ -124,10 +124,23 @@ class ProjectsController extends Controller
                 $criteria->compare('status', $filter['status']);
         }
         
+        // $count = 0;
         if($filter)
             $count = Projects::model()->count($criteria);
         else
             $count = Projects::model()->count();
+
+        // detect page overflow
+        if ($offset >= $count)
+        {
+            $criteria->offset = 0;
+
+            // redo counting
+            if($filter)
+                $count = Projects::model()->count($criteria);
+            else
+                $count = Projects::model()->count();
+        }
 
         $model = Projects::model()->findAll($criteria);
         $data  = array();
@@ -160,6 +173,7 @@ class ProjectsController extends Controller
             'data'=>$data,
             'data_count'=>count($data),
             'total_count'=>$count,          
+            'offset'=>$criteria->offset,
         );
     }
 

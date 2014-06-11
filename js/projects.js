@@ -103,6 +103,13 @@ var ProjectsList = function()
     
     self.getData = function(data)
     {
+        if (data.page != ProjectsSite.searchParams['page']) {
+            ProjectsSite.processChange = false;
+            console.log('invalid page detected');
+            ProjectsSite.searchParams['page'] = data.page;
+            ProjectsSite.historyMngr.set('search', ProjectsSite.searchParams);
+            ProjectsSite.processChange = true;
+        }
         self.currentPage = data.page;
         self.totalPage = data.totalPage;
         self.resultData = data.resultData;
@@ -843,6 +850,7 @@ var ProjectsSite = {
         'code'  : '',
         'status': '',
     },
+    processChange : true,  //used for invalid page number in the hash
 
     init: function()
     {
@@ -948,39 +956,74 @@ var ProjectsSite = {
             self.initObj();
         });
 
-        self.historyMngr.addEvent('search:added', function(new_value){
-            console.log('search: added');
-            hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
-            if (!('pid' in hash)) {
-                self.searchParams = new_value;
-                self.initObj();
-            } else {
-                console.log('search doing nothing');
-            }
-        });
-        self.historyMngr.addEvent('search:updated', function(new_value){
-            console.log('search: updated');
-            hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
-            self.searchParams = new_value;
+        var processSearch = function(new_value)
+        {
+            console.log(self.processChange);
+            if (self.processChange) {
+                console.log('processing');
+                hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
+                
+                // FIX HASH IF NEEDED
+                var hasInvalid = false;
+                if (!('page' in hash['search'])) {
+                    new_value['page'] = 1;
+                    hasInvalid = true;
+                } else if ((typeof hash['search']['page']) != "number") {
+                    new_value['page'] = 1;
+                    hasInvalid = true;
+                }
+                
+                if (!('name' in hash['search'])) {
+                    new_value['name'] = '';
+                    hasInvalid = true;
+                }
+                
+                if (!('code' in hash['search'])) {
+                    new_value['code'] = '';
+                    hasInvalid = true;
+                } else {
+                    var code = hash['search']['code'].substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
+                    if (code != hash['search']['code'] || ![0,5].contains(hash['search']['code'].length)) {
+                        new_value['code'] = '';
+                        hasInvalid = true;
+                    }
+                }
+                
+                if (!('status' in hash['search'])) {
+                    new_value['status'] = '';
+                    hasInvalid = true;
+                } else if (!['', 'ACTIVE', 'TERMINATED'].contains(hash['search']['status'])) {
+                    new_value['status'] = '';
+                    hasInvalid = true;
+                }
 
-            if (!('pid' in hash)) {
-                self.initObj();
+                self.searchParams = new_value;
+
+                if (hasInvalid) {
+                    self.historyMngr.set('search', self.searchParams);
+                } else {
+                    if (!('pid' in hash)) {
+                        self.initObj();
+                    } else {
+                        console.log('search doing nothing');
+                    }
+                }
             } else {
-                self.historyMngr.remove('pid');
+                console.log('ignored');
             }
-        });
+        }
+        self.historyMngr.addEvent('search:added', processSearch);
+        self.historyMngr.addEvent('search:updated', processSearch);
         self.historyMngr.addEvent('search:removed', function(removed)
         {
             hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
-            if (hash == null || !('pid' in hash))
-            {
-                self.historyMngr.set('search', {
-                    'page'  : 1,
-                    'name'  : '',
-                    'code'  : '',
-                    'status': '',
-                });
-            }
+            self.searchParams = {
+                'page'  : 1,
+                'name'  : '',
+                'code'  : '',
+                'status': '',
+            };
+            self.historyMngr.set('search', self.searchParams);
         });
     },
 

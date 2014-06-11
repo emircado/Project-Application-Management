@@ -85,7 +85,7 @@
                     <div class="field-secondary"><span class="label">Production Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="applications-create-production" type="date" class="text"></input>
+                        <input id="applications-create-production" type="text" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -93,7 +93,7 @@
                     <div class="field-secondary"><span class="label">Termination Date</span></div>
                     <div class="field-primary">
                         <div class="pseudo-field">
-                        <input id="applications-create-termination" type="date" class="text"></input>
+                        <input id="applications-create-termination" type="text" class="text"></input>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
