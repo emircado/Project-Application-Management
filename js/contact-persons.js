@@ -552,13 +552,13 @@ var ContactPersonsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.fieldNameID).value = data['name'];
-        $(self.fieldCompanyID).value = data['company'];
-        $(self.fieldPositionID).value = data['position'];
-        $(self.fieldEmailID).value = data['email'];
-        $(self.fieldContactsID).value = data['contact_numbers'];
-        $(self.fieldAddressID).value = data['address'];
-        $(self.fieldNotesID).value = data['notes'];
+        $(self.fieldNameID).value       = data['name'].replace(/&lt/g, '<');
+        $(self.fieldCompanyID).value    = data['company'].replace(/&lt/g, '<');
+        $(self.fieldPositionID).value   = data['position'].replace(/&lt/g, '<');
+        $(self.fieldEmailID).value      = data['email'].replace(/&lt/g, '<');
+        $(self.fieldContactsID).value   = data['contact_numbers'].replace(/&lt/g, '<');
+        $(self.fieldAddressID).value    = data['address'].replace(/&lt/g, '<');
+        $(self.fieldNotesID).value      = data['notes'].replace(/&lt/g, '<');
     }
 
     self.addEvents = function()

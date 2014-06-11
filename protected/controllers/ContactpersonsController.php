@@ -85,13 +85,13 @@ class ContactpersonsController extends Controller
         {
             $data[] = array(
                 'project_id'      => $row->project_id,
-                'name'            => $row->name,
-                'company'         => $row->company,
-                'position'        => $row->position,
-                'contact_numbers' => $row->contact_numbers,
-                'email'           => $row->email,
-                'address'         => $row->address,
-                'notes'           => $row->notes,
+                'name'            => str_replace('<', '&lt', $row->name),
+                'company'         => str_replace('<', '&lt', $row->company),
+                'position'        => str_replace('<', '&lt', $row->position),
+                'contact_numbers' => str_replace('<', '&lt', $row->contact_numbers),
+                'email'           => str_replace('<', '&lt', $row->email),
+                'address'         => str_replace('<', '&lt', $row->address),
+                'notes'           => str_replace('<', '&lt', $row->notes),
             );
         }
 
@@ -158,6 +158,14 @@ class ContactpersonsController extends Controller
                     'project_id' => (int) $data['project_id'],
                     'email' => (string) $data['email'],
                 ), $updates);
+
+                $updates['name']            = str_replace('<', '&lt', $updates['name']);
+                $updates['company']         = str_replace('<', '&lt', $updates['company']);
+                $updates['position']        = str_replace('<', '&lt', $updates['position']);
+                $updates['contact_numbers'] = str_replace('<', '&lt', $updates['contact_numbers']);
+                $updates['address']         = str_replace('<', '&lt', $updates['address']);
+                $updates['email']           = str_replace('<', '&lt', $updates['email']);
+                $updates['notes']           = str_replace('<', '&lt', $updates['notes']);
                 
                 echo CJSON::encode(array(
                     'type' => 'success',
@@ -220,8 +228,8 @@ class ContactpersonsController extends Controller
                 $contact_person->position           = $data['position'];
                 $contact_person->contact_numbers    = $data['contact_numbers'];
                 $contact_person->email              = $data['email'];
-                $contact_person->address            = $data['address'];
-                $contact_person->notes              = $data['notes'];
+                $contact_person->address            = substr($data['address'], 0, 255);
+                $contact_person->notes              = substr($data['notes'], 0, 255);
                 $contact_person->date_created       = date("Y-m-d H:i:s");
                 $contact_person->date_updated       = '0000-00-00 00:00:00';
                 $contact_person->created_by         = Yii::app()->user->name;

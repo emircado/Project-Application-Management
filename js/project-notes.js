@@ -490,7 +490,7 @@ var ProjectNotesEdit = function(data, caller)
 
     self.renderData = function()
     {
-        $(self.fieldNotesID).value = data['notes'];
+        $(self.fieldNotesID).value = data['notes'].replace(/&lt/g, '<');
     }
 
     self.addEvents = function()

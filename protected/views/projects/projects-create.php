@@ -26,7 +26,7 @@
                         <input type="text" id="projects-create-code" class="text"></input>
                         <span id="projects-create-code-error" class="field-input-name-error error-message" style="display: none;"></span>
                         </div>
-                        <div style="font-size:12px;padding-top:3px;"><i>(must be 5 characters long, consisting of A-Z, 0-9)</i></div>
+                        <div class="form-note"><i>(must be 5 characters long, consisting of A-Z, 0-9)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
@@ -35,6 +35,7 @@
                         <div class="pseudo-field">
                         <textarea rows="4" id="projects-create-description" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">

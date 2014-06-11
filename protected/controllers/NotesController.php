@@ -97,7 +97,7 @@ class NotesController extends Controller
                 'note_id'           => $row->note_id,
                 'project_id'        => $row->project_id,
                 'application_id'    => $row->application_id,
-                'notes'             => $row->notes,
+                'notes'             => str_replace('<', '&lt', $row->notes),
                 'date_created'      => $row->date_created,
                 'date_updated'      => $row->date_updated,
                 'created_by'        => $row->created_by,
@@ -161,6 +161,7 @@ class NotesController extends Controller
                 );
 
                 Notes::model()->updateByPk($data['note_id'], $updates);
+                $updates['notes'] = str_replace('<', '&lt', $updates['notes']);
                 
                 echo CJSON::encode(array(
                     'type' => 'success',

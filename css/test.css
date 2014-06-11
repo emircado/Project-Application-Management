@@ -49,6 +49,11 @@ div.height-limiter {
     min-height: 175px;
 }
 
+.form-note {
+    font-size: 12px;
+    padding-top: 3px;
+}
+
 /* FOR READ MORE */
 div.collapsible {
     overflow: hidden;

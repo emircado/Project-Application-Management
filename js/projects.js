@@ -65,7 +65,6 @@ var ProjectsList = function()
     self.fieldStatusID   = 'projects-list-search-status';
     self.csrfID          = 'projects-list-csrf';
 
-    
     //buttons
     self.createButtonID  = 'projects-list-create-button';
     self.viewButtonID    = 'tr[id^=projects-list-view_]';
@@ -103,12 +102,11 @@ var ProjectsList = function()
     
     self.getData = function(data)
     {
+        // detects if page requested is invalid
         if (data.page != ProjectsSite.searchParams['page']) {
             ProjectsSite.processChange = false;
-            console.log('invalid page detected');
             ProjectsSite.searchParams['page'] = data.page;
             ProjectsSite.historyMngr.set('search', ProjectsSite.searchParams);
-            ProjectsSite.processChange = true;
         }
         self.currentPage = data.page;
         self.totalPage = data.totalPage;
@@ -769,9 +767,9 @@ var ProjectsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.fieldNameID).value = data['name'];
+        $(self.fieldNameID).value = data['name'].replace(/&lt/g, '<');
         $(self.fieldCodeID).value = data['code'];
-        $(self.fieldDescriptionID).value = data['description'];
+        $(self.fieldDescriptionID).value = data['description'].replace(/&lt/g, '<');
 
         if (data['production_date'] == '0000-00-00' || data['production_date'] == '') {
             $(self.fieldProductionID).value = '';
@@ -850,7 +848,7 @@ var ProjectsSite = {
         'code'  : '',
         'status': '',
     },
-    processChange : true,  //used for invalid page number in the hash
+    processChange   : true,     //allow or prevent prevent action on hash change in search
 
     init: function()
     {
@@ -958,9 +956,7 @@ var ProjectsSite = {
 
         var processSearch = function(new_value)
         {
-            console.log(self.processChange);
             if (self.processChange) {
-                console.log('processing');
                 hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
                 
                 // FIX HASH IF NEEDED
@@ -1009,7 +1005,7 @@ var ProjectsSite = {
                     }
                 }
             } else {
-                console.log('ignored');
+                self.processChange = true;
             }
         }
         self.historyMngr.addEvent('search:added', processSearch);

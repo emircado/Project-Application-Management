@@ -155,15 +155,15 @@ class ProjectsController extends Controller
         foreach($model as $row)
         {
             $data[] = array(
-                'project_id'        => $row->project_id/*$p->purify($row->project_id)*/,
-                'name'              => $row->name/*$p->purify($row->name)*/,
-                'code'              => $row->code/*$p->purify($row->code)*/,
-                'description'       => $row->description/*$p->purify($row->description)*/,
-                'status'            => $row->status/*$p->purify($row->status)*/,
-                'production_date'   => $row->production_date/*$p->purify($row->production_date)*/,
-                'termination_date'  => $row->termination_date/*$p->purify($row->termination_date)*/,
-                'date_created'      => $row->date_created/*$p->purify($row->date_created)*/,
-                'date_updated'      => $row->date_updated/*$p->purify($row->date_updated)*/,
+                'project_id'        => $row->project_id,
+                'name'              => str_replace('<', '&lt', $row->name),
+                'code'              => $row->code,
+                'description'       => str_replace('<', '&lt', $row->description),
+                'status'            => $row->status,
+                'production_date'   => $row->production_date,
+                'termination_date'  => $row->termination_date,
+                'date_created'      => $row->date_created,
+                'date_updated'      => $row->date_updated,
                 'created_by'        => $row->created_by,
                 'updated_by'        => $row->updated_by,
             );
@@ -217,13 +217,16 @@ class ProjectsController extends Controller
                 $updates = array(
                     'name'             => $data['name'],
                     'code'             => $data['code'],
-                    'description'      => $data['description'],
+                    'description'      => substr($data['description'], 0, 255),
                     'production_date'  => $data['production_date'],
                     'date_updated'     => date("Y-m-d H:i:s"),
                     'updated_by'       => Yii::app()->user->name,
                 );
 
                 Projects::model()->updateByPk((int) $data['project_id'], $updates);
+
+                $updates['description'] = str_replace('<', '&lt', $updates['description']);
+                $updates['name'] = str_replace('<', '&lt', $updates['name']);
 
                 echo CJSON::encode(array(
                     'type' => 'success',
@@ -280,7 +283,7 @@ class ProjectsController extends Controller
                 $project = new Projects;
                 $project->name = $data['name'];
                 $project->code = strtoupper($data['code']);
-                $project->description = $data['description'];
+                $project->description = substr($data['description'], 0, 255);
                 $project->status = 'ACTIVE';
                 $project->production_date = $data['production_date'];
                 $project->termination_date = '0000-00-00';
