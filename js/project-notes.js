@@ -343,7 +343,7 @@ var ProjectNotesView = function(data)
     self.renderData = function()
     {
         // format display data
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
+        var createdby = LDAPUsersData.get(data['created_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
 
         if (username == data['created_by']) {

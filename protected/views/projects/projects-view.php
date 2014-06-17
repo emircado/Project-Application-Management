@@ -119,7 +119,7 @@
         <a id="projects-view-delete-button" href="#">[Delete Project]</a>
     </div>
     
-    <div id="applications-panel">
+    <div class="right-panel">
         <?php
             $this->renderPartial('//applications/applications-list');
             $this->renderPartial('//applications/applications-create');

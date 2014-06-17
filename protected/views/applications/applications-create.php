@@ -52,7 +52,7 @@
                     <div class="field-primary" style="padding-top:7px;">
                         <div class="pseudo-field">
                         <input id="applications-create-pattern" type="checkbox" style="margin-top:5px;"></input>
-                        <span style="font-size:12px;"><i>(Check if Yes)</i></span>
+                        <span class="form-note"><i>(Check if Yes)</i></span>
                         </div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
@@ -62,6 +62,7 @@
                         <div class="pseudo-field">
                         <textarea id="applications-create-description" rows="4" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">

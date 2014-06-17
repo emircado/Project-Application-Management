@@ -485,8 +485,8 @@ var AppServersView = function(data)
     self.renderData = function()
     {
         // format display data
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var createdby = LDAPUsersData.get(data['created_by']);
+        var updatedby = LDAPUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
 
@@ -632,8 +632,8 @@ var AppServersEdit = function(data)
     self.renderData = function()
     {
         $(self.fieldServerID).set('html', data['name']);
-        $(self.fieldPathID).value = data['application_path'];
-        $(self.fieldLogID).value = data['application_log'];
+        $(self.fieldPathID).value = data['application_path'].replace(/&lt/g, '<');;
+        $(self.fieldLogID).value = data['application_log'].replace(/&lt/g, '<');;
     }
 
     self.addEvents = function()

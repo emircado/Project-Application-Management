@@ -82,7 +82,7 @@ var PointPersonsList = function(project_id)
 
             Array.each(self.resultData, function(val, idx)
             {
-                var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(val['username']);
+                var displayname = LDAPUsersData.get(val['username']);
                 contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
                             + '<td>'+val['user_group']+'</td>';
 
@@ -308,7 +308,7 @@ var PointPersonsCreate = function(project_id)
     	});
     	contentElem.inject($(self.fieldUsergroupID), 'bottom');
 
-    	ProjectsSite.ldapGroupsObj.ldapGroupsData.each(function(val, idx)
+    	LDAPGroupsData.resultData.each(function(val, idx)
         {
             contentElem = new Element('<option />',
 	    	{
@@ -357,7 +357,7 @@ var PointPersonsCreate = function(project_id)
 			contentElem.inject($(self.fieldUsernameID), 'bottom');
 
             if (usergroup != '') {
-                ProjectsSite.ldapGroupsObj.ldapGroupsData.get(usergroup).each(function(val, idx) {
+                LDAPGroupsData.get(usergroup).each(function(val, idx) {
                     contentElem = new Element('<option />',
                     {
                         'class' : self.usernameRowClass,
@@ -438,7 +438,7 @@ var PointPersonsView = function(data)
 
     self.renderData = function()
     {
-        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
+        var displayname = LDAPUsersData.get(data['username']);
 
         $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.fieldUsergroupID).set('html', data['user_group']);
@@ -557,11 +557,11 @@ var PointPersonsEdit = function(data)
 
     self.renderData = function()
     {
-        var displayname = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['username']);
+        var displayname = LDAPUsersData.get(data['username']);
 
         $(self.fieldUsernameID).set('html', (displayname == null)? data['username'] : displayname);
         $(self.fieldUsergroupID).set('html', data['user_group']);
-        $(self.fieldDescriptionID).value = data['description'];
+        $(self.fieldDescriptionID).value = data['description'].replace(/&lt/g, '<');
     }
 
     self.addEvents = function()

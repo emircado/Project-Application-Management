@@ -85,7 +85,7 @@ class ApplicationpointpersonsController extends Controller
                 'application_id'    => $row->application_id,
                 'username'          => $row->username,
                 'user_group'        => $row->user_group,
-                'description'       => $row->description,
+                'description'       => str_replace('<', '&lt', $row->description),
             );
         }
 
@@ -102,7 +102,7 @@ class ApplicationpointpersonsController extends Controller
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
             $updates = array(
-                'description'   => trim($data['description']),
+                'description'   => str_replace('<', '&lt', trim($data['description'])),
                 'date_updated'  => date("Y-m-d H:i:s"),
                 'updated_by'    => Yii::app()->user->name,
             );

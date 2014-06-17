@@ -1,19 +1,18 @@
 // contains group => members dictionary
-var LDAPGroupsData = function(csrf_token)
-{
-    var self = this;
-    self.getDataURL = baseURL + '/ldap/getgroups';
-    self._request = null;
+var LDAPGroupsData = {
+    getDataURL  : baseURL + '/ldap/getgroups',
+    _request    : null,
+    resultData  : null,
 
-    self.ldapGroupsData = new Hash();
-
-    self.init = function()
+    init: function(csrf_token)
     {
-        self.getAjaxData();
-    }
+        var self = this;
+        self.getAjaxData(csrf_token)
+    },
 
-    self.getAjaxData = function()
+    getAjaxData: function(csrf_token)
     {
+        var self = this;
         if(!self._request || !self._request.isRunning())
         {
             var params = {
@@ -27,10 +26,10 @@ var LDAPGroupsData = function(csrf_token)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    self.ldapGroupsData = new Hash(response);
-                    self.ldapGroupsData.each(function(val, idx)
+                    self.resultData = new Hash(response);
+                    self.resultData.each(function(val, idx)
                     {
-                        self.ldapGroupsData.set(idx, new Hash(val));
+                        self.resultData.set(idx, new Hash(val));
                     });
                 },
                 'onError' : function(errors)
@@ -40,25 +39,31 @@ var LDAPGroupsData = function(csrf_token)
                 }
             }).send();
         }
+    },
+
+    get: function(key)
+    {
+        var self = this;
+        return self.resultData.get(key);
     }
 }
 
+
 // contains username => displayname dictionary
-var LDAPUsersData = function(csrf_token)
-{
-    var self = this;
-    self.getDataURL = baseURL + '/ldap/getusers';
-    self._request = null;
+var LDAPUsersData = {
+    getDataURL  : baseURL + '/ldap/getusers',
+    _request    : null,
+    resultData  : null,
 
-    self.ldapUsersData = new Hash();
-
-    self.init = function()
+    init: function(csrf_token)
     {
-        self.getAjaxData();
-    }
+        var self = this;
+        self.getAjaxData(csrf_token)
+    },
 
-    self.getAjaxData = function()
+    getAjaxData: function(csrf_token)
     {
+        var self = this;
         if(!self._request || !self._request.isRunning())
         {
             var params = {
@@ -72,33 +77,38 @@ var LDAPUsersData = function(csrf_token)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    self.ldapUsersData = new Hash(response);
+                    self.resultData = new Hash(response);
                 },
                 'onError' : function(errors)
                 {
                     self._request.stop;
                     console.log('something went wrong');
-                }
+                },
             }).send();
         }
+    },
+
+    get: function(key)
+    {
+        var self = this;
+        return self.resultData.get(key);
     }
 }
 
-var AppTypesData = function(csrf_token)
-{
-    var self = this;
-    self.getDataURL = baseURL + '/applicationtypes/list';
-    self._request = null;
+var AppTypesData = {
+    getDataURL  : baseURL + '/applicationtypes/list',
+    _request    : null,
+    resultData  : null,
 
-    self.appTypes = new Hash();
-
-    self.init = function()
+    init: function(csrf_token)
     {
-        self.getAjaxData();
-    }
+        var self = this;
+        self.getAjaxData(csrf_token)
+    },
 
-    self.getAjaxData = function()
+    getAjaxData: function(csrf_token)
     {
+        var self = this;
         if(!self._request || !self._request.isRunning())
         {
             var params = {
@@ -111,7 +121,7 @@ var AppTypesData = function(csrf_token)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    self.appTypes = new Hash(response);
+                    self.resultData = new Hash(response);
                 },
                 'onError' : function(errors)
                 {
@@ -120,24 +130,29 @@ var AppTypesData = function(csrf_token)
                 }
             }).send();
         }
+    },
+
+    get: function(key)
+    {
+        var self = this;
+        return self.resultData.get(key);
     }
 }
 
-var AppServersData = function(csrf_token)
-{
-    var self = this;
-    self.getDataURL = baseURL + '/servers/data';
-    self._request = null;
+var AppServersData = {
+    getDataURL  : baseURL + '/servers/data',
+    _request    : null,
+    resultData  : null,
 
-    self.appServers = null;
-
-    self.init = function()
+    init: function(csrf_token)
     {
-        self.getAjaxData();
-    }
+        var self = this;
+        self.getAjaxData(csrf_token)
+    },
 
-    self.getAjaxData = function()
+    getAjaxData: function(csrf_token)
     {
+        var self = this;
         if(!self._request || !self._request.isRunning())
         {
             var params = {
@@ -150,7 +165,7 @@ var AppServersData = function(csrf_token)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    self.appServers = new Hash(response);
+                    self.resultData = new Hash(response);
                 },
                 'onError' : function(errors)
                 {
@@ -159,6 +174,12 @@ var AppServersData = function(csrf_token)
                 }
             }).send();
         }
+    },
+
+    get: function(key)
+    {
+        var self = this;
+        return self.resultData.get(key);
     }
 }
 

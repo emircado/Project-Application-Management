@@ -40,36 +40,32 @@ var ProjectsData = function()
 
 var ProjectsList = function()
 {
-
-    var self = this;
-    self.getDataURL = baseURL + '/projects/list';
-    self._request         = null;
-    
-    self.containerID      = 'projects-list';
+    var self            = this;
+    self.containerID    = 'projects-list';
 
     //for pagination
-    self.prevID          = 'projects-list-prev';
-    self.nextID          = 'projects-list-next';
-    self.totalDataID     = 'projects-list-total';
-    self.totalPartID     = 'projects-list-part';
+    self.prevID         = 'projects-list-prev';
+    self.nextID         = 'projects-list-next';
+    self.totalDataID    = 'projects-list-total';
+    self.totalPartID    = 'projects-list-part';
 
     //for table
-    self.tableID         = 'projects-list-table';
-    self.resultData      = [];
-    self.lookupData      = new Hash();
-    self.tableRowClass   = 'projects-list-row';
+    self.tableID        = 'projects-list-table';
+    self.resultData     = [];
+    self.lookupData     = new Hash();
+    self.tableRowClass  = 'projects-list-row';
 
     //fields
-    self.fieldNameID     = 'projects-list-search-name';
-    self.fieldCodeID     = 'projects-list-search-code';
-    self.fieldStatusID   = 'projects-list-search-status';
-    self.csrfID          = 'projects-list-csrf';
+    self.fieldNameID    = 'projects-list-search-name';
+    self.fieldCodeID    = 'projects-list-search-code';
+    self.fieldStatusID  = 'projects-list-search-status';
+    self.csrfID         = 'projects-list-csrf';
 
     //buttons
-    self.createButtonID  = 'projects-list-create-button';
-    self.viewButtonID    = 'tr[id^=projects-list-view_]';
-    self.searchButtonID  = 'search-submit';
-    self.clearButtonID   = 'projects-list-clear-button';
+    self.createButtonID = 'projects-list-create-button';
+    self.viewButtonID   = 'tr[id^=projects-list-view_]';
+    self.searchButtonID = 'search-submit';
+    self.clearButtonID  = 'projects-list-clear-button';
 
     self.init = function()
     {
@@ -164,7 +160,7 @@ var ProjectsList = function()
             $(self.prevID).addClass('disable');
             $(self.nextID).addClass('disable');
         }
-    };
+    }
     
     self.renderData = function(count)
     {
@@ -202,7 +198,6 @@ var ProjectsList = function()
             {
                 'class' : self.tableRowClass,
                 'html'  : contentHTML,
-                'id'    : 'projects-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -307,10 +302,10 @@ var ProjectsList = function()
 var ProjectsCreate = function()
 {
     var self = this;
-    self.postDataURL = baseURL + '/projects/create';
-    self._request = null;
+    self.postDataURL        = baseURL + '/projects/create';
+    self._request           = null;
 
-    self.containerID = 'projects-create';
+    self.containerID        = 'projects-create';
 
     //buttons
     self.saveButtonID       = 'projects-create-save-button';
@@ -482,8 +477,6 @@ var ProjectsView = function(data)
     self.editButtonID           = 'projects-view-edit-button';
     self.deleteButtonID         = 'projects-view-delete-button';
     self.changeButtonID         = 'projects-view-change-button';
-    
-    self.moreSeen = false;
 
     self.init = function()
     {
@@ -577,8 +570,8 @@ var ProjectsView = function(data)
     self.renderData = function()
     {
         // format display data
-        var createdby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['created_by']);
-        var updatedby = ProjectsSite.ldapUsersObj.ldapUsersData.get(data['updated_by']);
+        var createdby = LDAPUsersData.get(data['created_by']);
+        var updatedby = LDAPUsersData.get(data['updated_by']);
         var created = (data['date_created'] == null || data['date_created'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_created']);
         var updated = (data['date_updated'] == null || data['date_updated'] == '0000-00-00 00:00:00')? '' : DateFormatter.formatDateTime(data['date_updated']);
         var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
@@ -833,12 +826,7 @@ var ProjectsSite = {
     createObj       : new ProjectsCreate(),
     editObj         : null,
     viewObj         : null,
-    // data objects
     dataObj         : new ProjectsData(),
-    ldapGroupsObj   : null,
-    ldapUsersObj    : null,
-    appTypesObj     : null,
-    appServersObj   : null,
     // some more variables
     activeView      : '',
     historyMngr     : new HistoryManager(),
@@ -853,10 +841,10 @@ var ProjectsSite = {
     init: function()
     {
         var self = this;
-        self.initLDAPGroups();
-        self.initLDAPUsers();
-        self.initAppTypes();
-        self.initAppServers();
+        LDAPUsersData.init($(self.csrfID).value);
+        LDAPGroupsData.init($(self.csrfID).value);
+        AppTypesData.init($(self.csrfID).value);
+        AppServersData.init($(self.csrfID).value);
 
         self.historyMngr.start();
         self.addEvents();
@@ -896,34 +884,6 @@ var ProjectsSite = {
         self.closeActive();
         self.viewObj = new ProjectsView(data)
         self.viewObj.init();
-    },
-
-    initLDAPGroups: function()
-    {
-        var self = this;
-        self.ldapGroupsObj = new LDAPGroupsData($(self.csrfID).value);
-        self.ldapGroupsObj.init();
-    },
-
-    initLDAPUsers: function()
-    {
-        var self = this;
-        self.ldapUsersObj = new LDAPUsersData($(self.csrfID).value);
-        self.ldapUsersObj.init();
-    },
-
-    initAppTypes: function()
-    {
-        var self = this;
-        self.appTypesObj = new AppTypesData($(self.csrfID).value);
-        self.appTypesObj.init();
-    },
-
-    initAppServers: function()
-    {
-        var self = this;
-        self.appServersObj = new AppServersData($(self.csrfID).value);
-        self.appServersObj.init();
     },
 
     addEvents: function()
@@ -979,7 +939,7 @@ var ProjectsSite = {
                     hasInvalid = true;
                 } else {
                     var code = hash['search']['code'].substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
-                    if (code != hash['search']['code'] || ![0,5].contains(hash['search']['code'].length)) {
+                    if (code != hash['search']['code']) {
                         new_value['code'] = '';
                         hasInvalid = true;
                     }

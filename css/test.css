@@ -172,12 +172,14 @@ img.search {
 #servers-create,
 #servers-edit,
 #servers-view,
+#app-main-create,
+#app-main-edit,
 #projects-create,
 #projects-edit {
-    width: 47.5%;
+    width: 48.75%;
 }
 
-#applications-panel {
+.right-panel {
     float: left;
     width: 48.75%;
 }

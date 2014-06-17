@@ -1,53 +1,13 @@
-var ApplicationsList = function(project_id)
+var AppMainData = function()
 {
     var self = this;
     self.getDataURL = baseURL + '/applications/list';
     self._request = null;
 
-    self.containerID    = 'applications-list';
-    self.csrfID         = 'applications-list-csrf';
-    
-    //for pagination
-    self.nextID         = 'applications-list-next';
-    self.prevID         = 'applications-list-prev';
-    self.totalDataID    = 'applications-list-total';
-    self.totalPartID    = 'applications-list-part';
-
-    //for table
-    self.tableID        = 'applications-list-table';
-    self.totalPage      = 1;
-    self.currentPage    = 1;
-    self.resultData     = [];
-    self.tableRowClass  = 'applications-list-row';
-
-    //buttons
-    self.viewButtonID   = 'tr[id^=applications-list-view_]';
-    self.createButtonID = 'applications-list-create-button';
-
-    self.init = function()
-    {
-        ApplicationsSite.activeView = 'LIST';   
-        $$('.'+self.tableRowClass).dispose();
-        $(self.containerID).setStyle('display', 'block');
-        self.getAjaxData();
-    }
-
-    self.hide = function()
-    {
-        $(self.containerID).setStyle('display', 'none');
-        $$('.'+self.tableRowClass).dispose();
-    }
-
-    self.getAjaxData = function()
+    self.getAjaxData = function(params, onRetrieve, onFail)
     {
         if(!self._request || !self._request.isRunning())
         {
-            var params = {
-                'page'          : self.currentPage,
-                'project_id'    : project_id,
-                'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-            };
-
             self._request = new Request.JSON(
             {
                 'url' : self.getDataURL,
@@ -55,15 +15,7 @@ var ApplicationsList = function(project_id)
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    self.currentPage  = data.page;
-                    self.totalPage    = data.totalPage;
-                    self.resultData   = data.resultData;
-                    self.pageLimit    = data.limit;
-                    self.renderData(data.totalData);
-
-                    //callbacks
-                    self.paginationChecker();
-                    self.addEvents();
+                    onRetrieve(data);
                 },
                 'onError' : function(data)
                 {
@@ -73,6 +25,122 @@ var ApplicationsList = function(project_id)
             }).send();
         }
     }
+}
+
+var AppMainList = function()
+{
+    var self            = this;
+    self.containerID    = 'app-main-list';
+
+    //for pagination
+    self.prevID         = 'app-main-list-prev';
+    self.nextID         = 'app-main-list-next';
+    self.totalDataID    = 'app-main-list-total';
+    self.totalPartID    = 'app-main-list-part';
+
+    //for table
+    self.tableID        = 'app-main-list-table';
+    self.resultData     = [];
+    self.lookupData     = new Hash();
+    self.tableRowClass  = 'app-main-list-row';
+
+    //fields
+    self.fieldNameID    = 'app-main-list-search-name';
+    self.fieldProjectID = 'app-main-list-search-project';
+    self.csrfID         = 'app-main-list-csrf';
+
+    //buttons
+    self.createButtonID = 'app-main-list-create-button';
+    self.viewButtonID   = 'tr[id^=app-main-list-view_]';
+    self.searchButtonID = 'search-submit';
+    self.clearButtonID  = 'app-main-list-clear-button';
+
+    self.init = function()
+    {
+        AppMainSite.activeView = 'LIST';
+        AppMainSite.dataObj.getAjaxData({
+            'page'      : AppMainSite.searchParams['page'],
+            'name'      : AppMainSite.searchParams['name'],
+            'project'   : AppMainSite.searchParams['project'],
+            'is_main'   : true,
+            'YII_CSRF_TOKEN': $(self.csrfID).value,
+        }, self.getData, function(){});
+
+        $(AppMainSite.titleID).set('html', 'Projects');
+        $$('.'+self.tableRowClass).dispose();
+        $(self.containerID).setStyle('display', 'block');
+
+        $(self.fieldNameID).value    = AppMainSite.searchParams['name'];
+        $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
+    }
+
+    self.hide = function()
+    {
+        $(self.containerID).setStyle('display', 'none');
+        $(self.fieldNameID).value = '';
+        $(self.fieldProjectID).value = '';
+        $$('.'+self.tableRowClass).dispose();
+    }
+
+    self.getData = function(data)
+    {
+        self.currentPage = data.page;
+        self.totalPage = data.totalPage;
+        self.resultData = data.resultData;
+        self.pageLimit = data.limit;
+
+        self.renderData(data.totalData);
+        self.addEvents();
+        self.paginationChecker();
+    }
+
+    self.paginationChecker = function()
+    {
+        //display the NEXT and PREV
+        $(self.prevID).setStyle('display', 'block');
+        $(self.nextID).setStyle('display', 'block');
+        
+        //first check the preview button whether it will be disable or not
+        if(self.currentPage == 1)
+        {
+            /*disable on prevID*/
+            $(self.prevID).addClass('disable');
+        }
+        else
+        {
+            // remove disable on prevID
+            $(self.prevID).removeClass('disable');
+        }
+
+        //second check the next button whether it will be disable or not
+        if(self.currentPage < self.totalPage)
+        {
+            /*remove disable on nextID*/
+            $(self.nextID).removeClass('disable');
+        }
+        else
+        {
+            /*disable nextID*/
+            $(self.nextID).addClass('disable');
+        }
+
+        //below will be the calcutaion and displaying for the total data results
+        var start = (self.pageLimit * self.currentPage) - self.pageLimit + 1;
+        var end   = (start + self.resultData.length) - 1;
+
+        if(self.resultData.length)
+        {
+            $(self.totalPartID).set('html', start+'-'+end);
+        }
+        else
+        {
+            $(self.totalPartID).set('html', '');
+            /*disable both prev and next ID*/
+
+            $(self.prevID).addClass('disable');
+            $(self.nextID).addClass('disable');
+        }
+    }
 
     self.renderData = function(count)
     {
@@ -80,17 +148,21 @@ var ApplicationsList = function(project_id)
         {
             $(self.totalDataID).set('html', ' of '+count);
 
+            self.lookupData = new Hash();
             Array.each(self.resultData, function(val, idx)
             {
-                var pointperson = LDAPGroupsData.get('DEVELOPERS').get(val['rd_point_person']);
+                self.lookupData.include(val['application_id'], idx);
+                var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
+
                 contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+((pointperson == null)? '' : pointperson)+'</td>';
+                            + '<td>'+val['project_name']+'</td>'                        
+                            + '<td>'+description+'</td><td></td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
                     'html'  : contentHTML,
-                    'id'    : 'applications-list-view_'+idx
+                    'id'    : 'app-main-list-view_'+val['application_id']
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -100,12 +172,11 @@ var ApplicationsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td colspan="2">No applications found</td>';
+            contentHTML = '<td colspan="4">No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
                 'html'  : contentHTML,
-                'id'    : 'applications-list-view_none',
             });
 
             contentElem.inject($(self.tableID), 'bottom');
@@ -121,7 +192,14 @@ var ApplicationsList = function(project_id)
             e.preventDefault();
             
             if (self.currentPage != self.totalPage) {
-                self.currentPage++;
+                // ProjectsSite.historyMngr.set('search', {
+                //     'page'  : ProjectsSite.searchParams['page']+1,
+                //     'name'  : ProjectsSite.searchParams['name'],
+                //     'code'  : ProjectsSite.searchParams['code'],
+                //     'status': ProjectsSite.searchParams['status'],
+                // });
+
+                AppMainSite.searchParams['page']++;
                 self.init();
             }
         });
@@ -133,112 +211,109 @@ var ApplicationsList = function(project_id)
             e.preventDefault();
             
             if (self.currentPage != 1) {
-                self.currentPage--;
+                // ProjectsSite.historyMngr.set('search', {
+                //     'page'  : ProjectsSite.searchParams['page']-1,
+                //     'name'  : ProjectsSite.searchParams['name'],
+                //     'code'  : ProjectsSite.searchParams['code'],
+                //     'status': ProjectsSite.searchParams['status'],
+                // });
+
+                AppMainSite.searchParams['page']--;
                 self.init();
             }
         });
 
-        //CREATE AN APPLICATION
+        //EVENT FOR SEARCH BUTTON
+        $(self.searchButtonID).removeEvents();
+        $(self.searchButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            // ProjectsSite.historyMngr.set('search', {
+            //     'page'  : 1,
+            //     'name'  : $(self.fieldNameID).value.trim(),
+            //     'code'  : $(self.fieldCodeID).value.trim(),
+            //     'status': $(self.fieldStatusID).value.trim(),
+            // });
+
+            AppMainSite.searchParams['page'] = 1;
+            AppMainSite.searchParams['name'] = $(self.fieldNameID).value.trim();
+            AppMainSite.searchParams['project'] = $(self.fieldProjectID).value.trim();
+            self.init();
+        });
+
+        //EVENT FOR CLEAR SEARCH FIELDS
+        $(self.clearButtonID).removeEvents();
+        $(self.clearButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            $(self.fieldNameID).value = '';
+            $(self.fieldCodeID).value = '';
+            $(self.fieldStatusID).value = '';
+        });
+
+        $$(self.viewButtonID).removeEvents();
+        $$(self.viewButtonID).addEvent('click', function(e) {
+            e.preventDefault();
+            var aid = parseInt($(this).get('id').split('_')[1]);
+            if (typeof aid==='number' && (aid%1)===0 && self.lookupData.has(aid)) {
+                // ProjectsSite.historyMngr.set('pid', pid);
+                AppMainSite.initView(self.resultData[self.lookupData.get(aid)]);
+            }
+        });
+
+        //EVENT FOR CREATING A NEW PROJECT
         $(self.createButtonID).removeEvents();
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initCreate(project_id);
+            AppMainSite.initCreate();
         });
-
-        //VIEW CONTACT PERSON
-        $$(self.viewButtonID).removeEvents();
-        $$(self.viewButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            var idx = parseInt($(this).get('id').split('_')[1]);
-            if (typeof idx==='number' && (idx%1)===0) {
-                ApplicationsSite.initView(self.resultData[idx]);
-            }
-        });
-    }
-
-    self.paginationChecker = function()
-    {
-        //display the NEXT and PREV
-        $(self.prevID).setStyle('display', 'block');
-        $(self.nextID).setStyle('display', 'block');
-        
-        if(self.currentPage == 1)
-        {
-            $(self.prevID).addClass('disable');
-        }
-        else
-        {
-            $(self.prevID).removeClass('disable');
-        }
-        if(self.currentPage < self.totalPage)
-        {
-            $(self.nextID).removeClass('disable');
-        }
-        else
-        {
-            $(self.nextID).addClass('disable');
-        }
-
-        //below will be the calcutaion and displaying for the total data results
-        var start   = (self.pageLimit * self.currentPage) - self.pageLimit + 1;
-        var end   = (start + self.resultData.length) - 1;
-
-        if(self.resultData.length)
-        {
-            $(self.totalPartID).set('html', start+'-'+end);
-        }
-        else
-        {
-            $(self.totalPartID).set('html', '');
-            $(self.prevID).addClass('disable');
-            $(self.nextID).addClass('disable');
-        }
     }
 }
 
-var ApplicationsCreate = function(project_id)
+var AppMainCreate = function()
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/create';
     self._request = null;
 
-    self.containerID = 'applications-create';
-    self.modalContainerID = 'applications-create-modal-container';
+    self.containerID = 'app-main-create';
+    self.modalContainerID = 'app-main-create-modal-container';
     self.typeModal = new ApplicationTypesModal();
 
     //fields
-    self.fieldNameID           = 'applications-create-name';
-    self.fieldTypeID           = 'applications-create-type';
-    self.fieldAccessibilityID  = 'applications-create-accessibility';
-    self.fieldRepositoryID     = 'applications-create-repository';
-    self.fieldDescriptionID    = 'applications-create-description';
-    self.fieldInstructionsID   = 'applications-create-instructions';
-    self.fieldPointPersonID    = 'applications-create-pointperson';
-    self.fieldProductionID     = 'applications-create-production';
-    self.fieldTerminationID    = 'applications-create-termination';
-    self.fieldPatternID        = 'applications-create-pattern';
-    self.csrfID                = 'applications-create-csrf';
+    self.fieldProjectID        = 'app-main-create-project';
+    self.fieldNameID           = 'app-main-create-name';
+    self.fieldTypeID           = 'app-main-create-type';
+    self.fieldAccessibilityID  = 'app-main-create-accessibility';
+    self.fieldRepositoryID     = 'app-main-create-repository';
+    self.fieldDescriptionID    = 'app-main-create-description';
+    self.fieldInstructionsID   = 'app-main-create-instructions';
+    self.fieldPointPersonID    = 'app-main-create-pointperson';
+    self.fieldProductionID     = 'app-main-create-production';
+    self.fieldTerminationID    = 'app-main-create-termination';
+    self.fieldPatternID        = 'app-main-create-pattern';
+    self.csrfID                = 'app-main-create-csrf';
 
     //dropdown class
-    self.pointPersonRowClass   = 'applications-create-pointperson-row';
+    self.pointPersonRowClass   = 'app-main-create-pointperson-row';
     
     //error fields
-    self.errorNameID           = 'applications-create-name-error';
-    self.errorTypeID           = 'applications-create-type-error';
-    self.errorAccessibilityID  = 'applications-create-accessibility-error';
+    self.errorProjectID        = 'app-main-create-project-error'
+    self.errorNameID           = 'app-main-create-name-error';
+    self.errorTypeID           = 'app-main-create-type-error';
+    self.errorAccessibilityID  = 'app-main-create-accessibility-error';
 
     //buttons
-    self.createButtonID        = 'applications-create-save-button';
-    self.cancelButtonID        = 'applications-create-cancel-button';
+    self.createButtonID        = 'app-main-create-save-button';
+    self.cancelButtonID        = 'app-main-create-cancel-button';
 
     self.datePickerProd        = null;
     self.datePickerTerm        = null;
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'CREATE';
+        AppMainSite.activeView = 'CREATE';
 
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
@@ -272,11 +347,13 @@ var ApplicationsCreate = function(project_id)
         self.typeModal.closeModal();
 
         // clear errors
+        $(self.errorProjectID).setStyle('display', 'none');
         $(self.errorNameID).setStyle('display', 'none');
         $(self.errorTypeID).setStyle('display', 'none');
         $(self.errorAccessibilityID).setStyle('display', 'none');
 
         // clear fields
+        $(self.fieldProjectID).value = '';
         $(self.fieldNameID).value = '';
         $(self.fieldTypeID).value = '';
         $(self.fieldAccessibilityID).value = 'PUBLIC';
@@ -296,7 +373,7 @@ var ApplicationsCreate = function(project_id)
         {
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
-                'project_id':           project_id,
+                'project_id':           $(self.fieldProjectID).value,
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -321,7 +398,10 @@ var ApplicationsCreate = function(project_id)
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
-                            if (msg[0] == 'NAME_ERROR') {
+                            if (msg[0] == 'PROJECT_ERROR') {
+                                $(self.errorProjectID).set('html', msg[1]);
+                                $(self.errorProjectID).setStyle('display', 'block');
+                            } else if (msg[0] == 'NAME_ERROR') {
                                 $(self.errorNameID).set('html', msg[1]);
                                 $(self.errorNameID).setStyle('display', 'block');
                             } else if (msg[0] == 'TYPE_ERROR') {
@@ -369,6 +449,7 @@ var ApplicationsCreate = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorProjectID).setStyle('display', 'none');
             $(self.errorNameID).setStyle('display', 'none');
             $(self.errorTypeID).setStyle('display', 'none');
             $(self.errorAccessibilityID).setStyle('display', 'none');
@@ -380,7 +461,7 @@ var ApplicationsCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initObj(project_id);
+            AppMainSite.initObj();
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
@@ -427,46 +508,48 @@ var ApplicationsCreate = function(project_id)
     }
 }
 
-var ApplicationsView = function(data)
+var AppMainView = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/delete';
     self._request = null;
 
     //display
-    self.containerID            = 'applications-view';
+    self.containerID            = 'app-main-view';
 
     //fields
-    self.fieldNameID            = 'applications-view-name';
-    self.fieldTypeID            = 'applications-view-type';
-    self.fieldAccessibilityID   = 'applications-view-accessibility';
-    self.fieldRepositoryID      = 'applications-view-repository';
-    self.fieldPatternID         = 'applications-view-pattern';
-    self.fieldDescriptionID     = 'applications-view-description';
-    self.fieldInstructionsID    = 'applications-view-instructions';
-    self.fieldPointPersonID     = 'applications-view-pointperson';
-    self.fieldProductionID      = 'applications-view-production';
-    self.fieldTerminationID     = 'applications-view-termination';
-    self.fieldCreatedID         = 'applications-view-created';
-    self.fieldCreatedbyID       = 'applications-view-createdby';
-    self.fieldUpdatedID         = 'applications-view-updated';
-    self.fieldUpdatedbyID       = 'applications-view-updatedby';
-    self.csrfID                 = 'applications-view-csrf';
+    self.fieldProjectID         = 'app-main-view-project';
+    self.fieldNameID            = 'app-main-view-name';
+    self.fieldTypeID            = 'app-main-view-type';
+    self.fieldAccessibilityID   = 'app-main-view-accessibility';
+    self.fieldRepositoryID      = 'app-main-view-repository';
+    self.fieldPatternID         = 'app-main-view-pattern';
+    self.fieldDescriptionID     = 'app-main-view-description';
+    self.fieldInstructionsID    = 'app-main-view-instructions';
+    self.fieldPointPersonID     = 'app-main-view-pointperson';
+    self.fieldProductionID      = 'app-main-view-production';
+    self.fieldTerminationID     = 'app-main-view-termination';
+    self.fieldCreatedID         = 'app-main-view-created';
+    self.fieldCreatedbyID       = 'app-main-view-createdby';
+    self.fieldUpdatedID         = 'app-main-view-updated';
+    self.fieldUpdatedbyID       = 'app-main-view-updatedby';
+    self.csrfID                 = 'app-main-view-csrf';
     
     //buttons
-    self.editButtonID           = 'applications-view-edit-button';
-    self.deleteButtonID         = 'applications-view-delete-button';
-    self.backButtonID           = 'applications-view-back-button';
+    self.editButtonID           = 'app-main-view-edit-button';
+    self.deleteButtonID         = 'app-main-view-delete-button';
+    self.backButtonID           = 'app-main-view-back-button';
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'VIEW';
+        AppMainSite.activeView = 'VIEW';
+        $(AppMainSite.titleID).set('html', 'Projects/'+data['name']);
         $(self.containerID).setStyle('display', 'block');
         
         ApplicationNotesSite.init(data['application_id']);
         AppServersSite.init(data['application_id']);
         AppPointPersonsSite.init(data['application_id']);
-        
+
         self.renderData();
         self.addEvents();
     }
@@ -521,6 +604,7 @@ var ApplicationsView = function(data)
         var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
         var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
 
+        $(self.fieldProjectID).set('html', '(ID: '+data['project_id']+') '+data['project_name']);
         $(self.fieldNameID).set('html', data['name']);
         $(self.fieldTypeID).set('html', AppTypesData.get(data['type_id']));
         $(self.fieldAccessibilityID).set('html', data['accessibility']);
@@ -544,7 +628,7 @@ var ApplicationsView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initEdit(data);
+            AppMainSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
@@ -565,52 +649,54 @@ var ApplicationsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initObj(data['project_id']);
+            AppMainSite.initObj();
         });
     }
 }
 
-var ApplicationsEdit = function(data)
+var AppMainEdit = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/update';
     self._request = null;
 
-    self.containerID            = 'applications-edit';
-    self.modalContainerID       = 'applications-edit-modal-container';
+    self.containerID            = 'app-main-edit';
+    self.modalContainerID       = 'app-main-edit-modal-container';
     self.typeModal              = new ApplicationTypesModal();
 
     //fields
-    self.fieldNameID            = 'applications-edit-name';
-    self.fieldTypeID            = 'applications-edit-type';
-    self.fieldAccessibilityID   = 'applications-edit-accessibility';
-    self.fieldRepositoryID      = 'applications-edit-repository';
-    self.fieldDescriptionID     = 'applications-edit-description';
-    self.fieldInstructionsID    = 'applications-edit-instructions';
-    self.fieldPointPersonID     = 'applications-edit-pointperson';
-    self.fieldProductionID      = 'applications-edit-production';
-    self.fieldTerminationID     = 'applications-edit-termination';
-    self.fieldPatternID         = 'applications-edit-pattern';
-    self.csrfID                 = 'applications-edit-csrf';
+    self.fieldProjectID         = 'app-main-edit-project';
+    self.fieldNameID            = 'app-main-edit-name';
+    self.fieldTypeID            = 'app-main-edit-type';
+    self.fieldAccessibilityID   = 'app-main-edit-accessibility';
+    self.fieldRepositoryID      = 'app-main-edit-repository';
+    self.fieldDescriptionID     = 'app-main-edit-description';
+    self.fieldInstructionsID    = 'app-main-edit-instructions';
+    self.fieldPointPersonID     = 'app-main-edit-pointperson';
+    self.fieldProductionID      = 'app-main-edit-production';
+    self.fieldTerminationID     = 'app-main-edit-termination';
+    self.fieldPatternID         = 'app-main-edit-pattern';
+    self.csrfID                 = 'app-main-edit-csrf';
 
     //dropdown class
-    self.pointPersonRowClass    = 'applications-edit-pointperson-row';
+    self.pointPersonRowClass    = 'app-main-edit-pointperson-row';
 
     //error fields
-    self.errorNameID            = 'applications-edit-name-error';
-    self.errorTypeID            = 'applications-edit-type-error';
-    self.errorAccessibilityID   = 'applications-edit-accessibility-error';
+    self.errorProjectID         = 'app-main-edit-project-error';
+    self.errorNameID            = 'app-main-edit-name-error';
+    self.errorTypeID            = 'app-main-edit-type-error';
+    self.errorAccessibilityID   = 'app-main-edit-accessibility-error';
 
     //buttons
-    self.saveButtonID           = 'applications-edit-save-button';
-    self.cancelButtonID         = 'applications-edit-cancel-button';
+    self.saveButtonID           = 'app-main-edit-save-button';
+    self.cancelButtonID         = 'app-main-edit-cancel-button';
 
     self.datePickerProd         = null;
     self.datePickerTerm         = null;
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'EDIT';
+        AppMainSite.activeView = 'EDIT';
 
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
@@ -645,11 +731,13 @@ var ApplicationsEdit = function(data)
         self.typeModal.closeModal();
         
         // clear errors
+        $(self.errorProjectID).setStyle('display', 'none');
         $(self.errorNameID).setStyle('display', 'none');
         $(self.errorTypeID).setStyle('display', 'none');
         $(self.errorAccessibilityID).setStyle('display', 'none');
 
         // clear fields
+        $(self.fieldProjectID).value = '';
         $(self.fieldNameID).value = '';
         $(self.fieldTypeID).value = '';
         $(self.fieldAccessibilityID).value = 'PUBLIC';
@@ -668,7 +756,7 @@ var ApplicationsEdit = function(data)
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
                 'application_id':       data['application_id'],
-                'project_id':           data['project_id'],
+                'project_id':           $(self.fieldProjectID).value.trim(),
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -693,7 +781,10 @@ var ApplicationsEdit = function(data)
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
-                            if (msg[0] == 'NAME_ERROR') {
+                            if (msg[0] == 'PROJECT_ERROR') {
+                                $(self.errorProjectID).set('html', msg[1]);
+                                $(self.errorProjectID).setStyle('display', 'block');
+                            } else if (msg[0] == 'NAME_ERROR') {
                                 $(self.errorNameID).set('html', msg[1]);
                                 $(self.errorNameID).setStyle('display', 'block');
                             } else if (msg[0] == 'TYPE_ERROR') {
@@ -707,6 +798,7 @@ var ApplicationsEdit = function(data)
                             }
                         });
                     } else if (response['type'] == 'success') {
+                        data['project_id']           = response['data']['project_id'];
                         data['type_id']              = response['data']['type_id'];
                         data['name']                 = response['data']['name'];
                         data['description']          = response['data']['description'];
@@ -737,6 +829,7 @@ var ApplicationsEdit = function(data)
         var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
         var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
 
+        $(self.fieldProjectID).value         = data['project_id'];
         $(self.fieldNameID).value            = data['name'].replace(/&lt/g, '<');;
         $(self.fieldTypeID).value            = AppTypesData.get(data['type_id']);
         $(self.fieldAccessibilityID).value   = data['accessibility'];
@@ -773,6 +866,7 @@ var ApplicationsEdit = function(data)
         $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorProjectID).setStyle('display', 'none');
             $(self.errorNameID).setStyle('display', 'none');
             $(self.errorTypeID).setStyle('display', 'none');
             $(self.errorAccessibilityID).setStyle('display', 'none');
@@ -784,7 +878,7 @@ var ApplicationsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initView(data);
+            AppMainSite.initView(data);
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
@@ -831,63 +925,78 @@ var ApplicationsEdit = function(data)
     }
 }
 
-var ApplicationsSite = {
-    mainObj     : null,
-    createObj   : null,
-    editObj     : null,
-    viewObj     : null,
-
-    activeView  : '',
-
-    init: function(project_id)
-    {
-        var self = this;
-        self.initObj(project_id);
+var AppMainSite = {
+    titleID         : 'app-main-title',
+    csrfID          : 'app-main-csrf',
+    mainObj         : new AppMainList(),
+    createObj       : new AppMainCreate(),
+    viewObj         : null,
+    editObj         : null,
+    // data objects
+    dataObj         : new AppMainData(),
+    ldapGroupsObj   : null,
+    ldapUsersObj    : null,
+    appTypesObj     : null,
+    appServersObj   : null,
+    //some more variables
+    activeView      : '',
+    searchParams    : {
+        'page'    : 1,
+        'name'    : '',
+        'project' : '',
     },
 
-    initObj: function(project_id)
+    init: function()
+    {
+        var self = this;
+        LDAPUsersData.init($(self.csrfID).value);
+        LDAPGroupsData.init($(self.csrfID).value);
+        AppTypesData.init($(self.csrfID).value);
+        AppServersData.init($(self.csrfID).value);
+
+        self.initObj();
+    },
+
+    initObj: function()
     {
         var self = this;
         self.closeActive();
-        self.mainObj = new ApplicationsList(project_id);
         self.mainObj.init();
     },
 
-    initCreate: function(project_id)
+    initCreate: function()
     {
         var self = this;
         self.closeActive();
-        self.createObj = new ApplicationsCreate(project_id);
         self.createObj.init();
-    },
-
-    initEdit: function(data)
-    {
-        var self = this;
-        self.closeActive();
-        self.editObj = new ApplicationsEdit(data);
-        self.editObj.init();
     },
 
     initView: function(data)
     {
         var self = this;
         self.closeActive();
-        self.viewObj = new ApplicationsView(data);
+        self.viewObj = new AppMainView(data);
         self.viewObj.init();
+    },
+
+    initEdit: function(data)
+    {
+        var self = this;
+        self.closeActive();
+        self.editObj = new AppMainEdit(data);
+        self.editObj.init();
     },
 
     closeActive: function()
     {
         var self = this;
-        switch (self.activeView) {
+        switch (self.activeView)
+        {
             case 'LIST':
-                if (self.mainObj != null)
-                    self.mainObj.hide();
+                self.mainObj.hide();
                 break;
             case 'CREATE':
-                if (self.createObj != null)
-                    self.createObj.hide();
+                self.createObj.hide();
                 break;
             case 'VIEW':
                 if (self.viewObj != null)
@@ -901,3 +1010,8 @@ var ApplicationsSite = {
         self.activeView = '';
     }
 }
+
+window.addEvent('domready', function()
+{
+    AppMainSite.init();
+});

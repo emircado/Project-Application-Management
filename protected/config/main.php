@@ -52,6 +52,7 @@ return array(
                 'groups' => 'site/groups',
                 'logout' => 'site/logout',
                 'projects' => 'projects/index',
+                'applications' => 'applications/index',
                 'servers' => 'servers/index',
                 // '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 // '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -118,6 +119,7 @@ return array(
         'point_persons_per_page'=>5,
         'applications_per_page'=>5,
         'app_servers_per_page'=>5,
+        'app_main_per_page'=>20,
         'notes_per_page'=>5,
         'servers_per_page'=>20,
 

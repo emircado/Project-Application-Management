@@ -2,6 +2,9 @@
 
 class ApplicationsController extends Controller
 {
+    public $extraJS;
+    public $modals;
+    
     public function filters()
     {
         return array(
@@ -16,7 +19,7 @@ class ApplicationsController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('list','update','create','delete'),
+                'actions'=>array('index','list','update','create','delete'),
                 'users'=>array('@'),
             ),
             array(
@@ -26,6 +29,25 @@ class ApplicationsController extends Controller
         );
     }
 
+    public function actionIndex()
+    {
+        $this->modals = array(
+            'application-types-modal', 
+            'application-servers-search-modal',
+            'application-servers-list-modal',
+            'application-servers-create-modal',
+            'confirmation-modal',
+        );
+        
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-notes.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-point-persons.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/applications-main.js"></script>';
+        $this->render('applications');
+    }
+
     public function actionList()
     {
         if (!isset($_GET['YII_CSRF_TOKEN']))
@@ -33,13 +55,21 @@ class ApplicationsController extends Controller
         else if ($_GET['YII_CSRF_TOKEN'] !=  Yii::app()->request->csrfToken)
             throw new CHttpException(400, 'Bad Request');
 
-        $limit = Yii::app()->params['applications_per_page'];
+        $limit = (isset($_GET['is_main']) && $_GET['is_main'] == 'true')? Yii::app()->params['app_main_per_page'] : Yii::app()->params['applications_per_page'];
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
         $filter = array();
 
         if (isset($_GET['project_id']) && !empty($_GET['project_id']))
             $filter['project_id'] = (string) $_GET['project_id'];
+
+        if (isset($_GET['name'])) 
+            if (!empty($_GET['name']) || $_GET['name'] == '0') 
+                $filter['name'] = (string) $_GET['name'];
+
+        if (isset($_GET['project'])) 
+            if (!empty($_GET['project']) || $_GET['project'] == '0') 
+                $filter['project'] = (string) $_GET['project'];
 
         $applications = $this->get_data($filter, $limit, $offset);
 
@@ -57,18 +87,30 @@ class ApplicationsController extends Controller
     private function get_data($filter='', $limit=5, $offset=0)
     {
         $criteria = new CDbCriteria;
+        $criteria->join = "JOIN projects p ON p.project_id=t.project_id";
 
         if(is_array($filter))
         {
             if(isset($filter['project_id']))
-                $criteria->compare('project_id', $filter['project_id']);
+                $criteria->compare('t.project_id', $filter['project_id']);
+
+            if(isset($filter['name']))
+                $criteria->compare('LOWER(t.name)', strtolower($filter['name']), true, 'AND', true);
+
+            if(isset($filter['project']))
+                $criteria->compare('LOWER(p.name)', $filter['project'], true, 'AND', true);
         }
         $count = Applications::model()->count($criteria);
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
-        $criteria->order = "LOWER(name)";
-        
+        $criteria->order = 'LOWER(t.name)';
+
+        // if request is from applications main page
+        if ($limit == Yii::app()->params['app_main_per_page']) {
+            $criteria->order = 'LOWER(p.name), '.$criteria->order;
+        }
+
         $model = Applications::model()->findAll($criteria);
         $data  = array();
 
@@ -78,12 +120,12 @@ class ApplicationsController extends Controller
                 'application_id'        => $row->application_id,
                 'project_id'            => $row->project_id,
                 'type_id'               => $row->type_id,
-                'name'                  => $row->name,
-                'description'           => $row->description,
+                'name'                  => str_replace('<', '&lt', $row->name),
+                'description'           => str_replace('<', '&lt', $row->description),
                 'accessibility'         => $row->accessibility,
-                'repository_url'        => $row->repository_url,
+                'repository_url'        => str_replace('<', '&lt', $row->repository_url),
                 'uses_mobile_patterns'  => $row->uses_mobile_patterns,
-                'instructions'          => $row->instructions,
+                'instructions'          => str_replace('<', '&lt', $row->instructions),
                 'rd_point_person'       => $row->rd_point_person,
                 'production_date'       => $row->production_date,
                 'termination_date'      => $row->termination_date,
@@ -91,6 +133,7 @@ class ApplicationsController extends Controller
                 'date_updated'          => $row->date_updated,
                 'created_by'            => $row->created_by,
                 'updated_by'            => $row->updated_by,
+                'project_name'          => $row->project->name,
             );
         }
 
@@ -106,6 +149,7 @@ class ApplicationsController extends Controller
         $data = $_POST;
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
+            $data['project_id']             = trim($data['project_id']);
             $data['name']                   = trim($data['name']);
             $data['description']            = trim($data['description']);
             $data['accessibility']          = trim($data['accessibility']);
@@ -117,6 +161,13 @@ class ApplicationsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
+            //project id is required
+            if (strlen($data['project_id']) == 0) {
+                array_push($errors, 'PROJECT_ERROR: Project ID is required');
+            } else if (!Projects::model()->exists('project_id=:project_id', array(':project_id'=>$data['project_id']))) {
+                array_push($errors, 'PROJECT_ERROR: Project ID does not exist');
+            }
+
             //name is required
             if (strlen($data['name']) == 0) {
                 array_push($errors, 'NAME_ERROR: Name is required');
@@ -145,15 +196,15 @@ class ApplicationsController extends Controller
 
             if (count($errors) == 0) {
                 $updates = array(
-                    'name'                  => $data['name'],
+                    'project_id'            => (int) $data['project_id'],
+                    'name'                  => str_replace('<', '&lt', $data['name']),
                     'type_id'               => $data['type_id'],
                     'accessibility'         => $data['accessibility'],
-                    'description'           => $data['description'],
+                    'description'           => str_replace('<', '&lt', $data['description']),
                     'accessibility'         => $data['accessibility'],
-                    'repository_url'        => $data['repository_url'],
+                    'repository_url'        => str_replace('<', '&lt', $data['repository_url']),
                     'uses_mobile_patterns'  => $data['uses_mobile_patterns'],
-                    'description'           => $data['description'],
-                    'instructions'          => $data['instructions'],
+                    'instructions'          => str_replace('<', '&lt', $data['instructions']),
                     'rd_point_person'       => $data['rd_point_person'],
                     'production_date'       => $data['production_date'],
                     'termination_date'      => $data['termination_date'],
@@ -185,6 +236,7 @@ class ApplicationsController extends Controller
         $data = $_POST;
 
         if (!empty($data)) {
+            $data['project_id']             = trim($data['project_id']);
             $data['name']                   = trim($data['name']);
             $data['description']            = trim($data['description']);
             $data['accessibility']          = trim($data['accessibility']);
@@ -197,6 +249,13 @@ class ApplicationsController extends Controller
 
             //FORM VALIDATION HERE
             $errors = array();
+            //project id is required
+            if (strlen($data['project_id']) == 0) {
+                array_push($errors, 'PROJECT_ERROR: Project ID is required');
+            } else if (!Projects::model()->exists('project_id=:project_id', array(':project_id'=>$data['project_id']))) {
+                array_push($errors, 'PROJECT_ERROR: Project ID does not exist');
+            }
+
             //name is required
             if (strlen($data['name']) == 0) {
                 array_push($errors, 'NAME_ERROR: Name is required');
@@ -226,7 +285,7 @@ class ApplicationsController extends Controller
             //data is good
             if (count($errors) == 0) {
                 $application = new Applications;
-                $application->project_id            = $data['project_id'];
+                $application->project_id            = (int) $data['project_id'];
                 $application->type_id               = $data['type_id'];
                 $application->name                  = $data['name'];
                 $application->description           = $data['description'];

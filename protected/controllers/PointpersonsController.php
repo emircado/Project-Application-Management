@@ -85,7 +85,7 @@ class PointpersonsController extends Controller
                 'project_id'    => $row->project_id,
                 'username'      => $row->username,
                 'user_group'    => $row->user_group,
-                'description'   => $row->description,
+                'description'   => str_replace('<', '&lt', $row->description),
             );
         }
 
@@ -111,6 +111,8 @@ class PointpersonsController extends Controller
                 'project_id' => (int) $data['project_id'],
                 'username' => (string) $data['username'],
             ), $updates);
+
+            $updates['description'] = str_replace('<', '&lt', $updates['description']);
 
             echo CJSON::encode(array(
                 'type' => 'success',

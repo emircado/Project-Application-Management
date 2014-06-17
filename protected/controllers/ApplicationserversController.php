@@ -7,7 +7,7 @@ class ApplicationserversController extends Controller
         return array(
             'accessControl',
             'postOnly + update, create, delete',
-            'ajaxOnly + list, update, create, delete',
+            'ajaxOnly + update, create, delete',
         );
     }
 
@@ -16,7 +16,7 @@ class ApplicationserversController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('list','update','create','delete'),
+                'actions'=>array('list','update','create','delete','test'),
                 'users'=>array('@'),
             ),
             array(
@@ -53,6 +53,18 @@ class ApplicationserversController extends Controller
 
         echo CJSON::encode($return_data);
     }
+
+    public function actionTest()
+    {    
+        $criteria = new CDbCriteria;
+        // $criteria->select = 't.application_id, s.server_type';
+        // $criteria->condition = "s.server_type='PRODUCTION'";
+        // $criteria->join = "JOIN servers s ON t.server_id=s.server_id";
+
+        $model = ApplicationServers::model()->findAll($criteria);
+        
+        echo CJSON::encode($model);
+    }
     
     private function get_data($filter='', $limit=5, $offset=0)
     {
@@ -67,6 +79,8 @@ class ApplicationserversController extends Controller
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
+        $criteria->join = "JOIN servers s ON s.server_id=t.server_id";
+        $criteria->order = 's.server_type, s.name';
 
         $model = ApplicationServers::model()->findAll($criteria);
         $data  = array();
@@ -83,25 +97,20 @@ class ApplicationserversController extends Controller
             $app_server = array(
                 'application_id'    => $row->application_id,
                 'server_id'         => $row->server_id,
-                'application_path'  => $row->application_path,
-                'application_log'   => $row->application_log,
+                'application_path'  => str_replace('<', '&lt', $row->application_path),
+                'application_log'   => str_replace('<', '&lt', $row->application_log),
                 'date_created'      => $row->date_created,
                 'date_updated'      => $row->date_updated,
                 'created_by'        => $row->created_by,
                 'updated_by'        => $row->updated_by,
-            );
 
-            $server = Servers::model()->findByPk($row->server_id);
-            if ($server != null) {
-                $app_server += array(
-                    'server_type'       => $server->server_type,
-                    'name'              => $server->name,
-                    'private_ip'        => $server->private_ip,
-                    'public_ip'         => $server->public_ip,
-                    'hostname'          => $server->hostname,
-                    'network'           => $server->network,
-                );
-            }
+                'server_type'       => $row->server->server_type,
+                'name'              => $row->server->name,
+                'private_ip'        => $row->server->private_ip,
+                'public_ip'         => $row->server->public_ip,
+                'hostname'          => $row->server->hostname,
+                'network'           => $row->server->network,
+            );
 
             $data[] = $app_server;
         }
@@ -189,8 +198,8 @@ class ApplicationserversController extends Controller
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
             $updates = array(
-                'application_path' => trim($data['application_path']),
-                'application_log'  => trim($data['application_log']),
+                'application_path' => str_replace('<', '&lt', trim($data['application_path'])),
+                'application_log'  => str_replace('<', '&lt', trim($data['application_log'])),
                 'date_updated'     => date("Y-m-d H:i:s"),
                 'updated_by'       => Yii::app()->user->name,
             );

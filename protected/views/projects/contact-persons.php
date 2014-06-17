@@ -96,6 +96,7 @@
                         <div class="pseudo-field">
                         <textarea rows="4" id="contact-persons-create-address" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
@@ -104,6 +105,7 @@
                         <div class="pseudo-field">
                         <textarea rows="4" id="contact-persons-create-notes" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="dialog-footer-block">
@@ -254,6 +256,7 @@
                         <div class="pseudo-field">
                         <textarea rows="4" id="contact-persons-edit-address" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="field field-input-name">
@@ -262,6 +265,7 @@
                         <div class="pseudo-field">
                         <textarea rows="4" id="contact-persons-edit-notes" class="text"></textarea>
                         </div>
+                        <div class="form-note"><i>(255 characters maximum)</i></div>
                     </div><!-- End Field Primary -->
                 </div><!-- End Field -->
                 <div class="dialog-footer-block">

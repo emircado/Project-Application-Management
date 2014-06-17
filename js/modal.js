@@ -84,7 +84,7 @@ var ApplicationTypesModal = function(onConfirm)
     self.tableRowClass = 'application-type-row';
     self.tableRowID = 'tr[id^=type_]';
     self.rowSelected = '';
-    self.choices = ProjectsSite.appTypesObj.appTypes;
+    self.choices = AppTypesData.resultData;
 
     //buttons
     self.cancelButtonID = 'application-type-modal-cancel-button';
@@ -122,7 +122,7 @@ var ApplicationTypesModal = function(onConfirm)
                 {
                     if (response['type'] == 'success') {
                         var entry = response['data'];
-                        ProjectsSite.appTypesObj.appTypes.set(entry['type_id'], entry['name']);
+                        AppTypesData.set(entry['type_id'], entry['name']);
                     } else if (response['type'] == 'error') {
                         self._request.stop;
                         console.log(response['data']);
@@ -144,7 +144,7 @@ var ApplicationTypesModal = function(onConfirm)
 
         if (filter != '') {
             var filtered = {};
-            ProjectsSite.appTypesObj.appTypes.each(function(val, idx)
+            AppTypesData.resultData.each(function(val, idx)
             {
                 if (val.indexOf(filter) == 0) {
                     filtered[idx] = val;
@@ -155,7 +155,7 @@ var ApplicationTypesModal = function(onConfirm)
             self.choices = new Hash(filtered);
         } else {
             $(self.confirmButtonID).set('disabled', true);
-            self.choices = ProjectsSite.appTypesObj.appTypes;
+            self.choices = AppTypesData.resultData;
         }
         self.renderData();
     }
@@ -288,7 +288,7 @@ var AppServersSearchModal = function(server_type, onConfirm)
 
     self.tableRowID = 'tr[id^=appserver_]';
     self.rowSelected = '';
-    self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
+    self.choices = AppServersData.get(server_type);
 
     self.show = function()
     {
@@ -311,7 +311,7 @@ var AppServersSearchModal = function(server_type, onConfirm)
 
         if (filter != '') {
             var filtered = [];
-            ProjectsSite.appServersObj.appServers.get(server_type).each(function(val)
+            AppServersData.get(server_type).each(function(val)
             {
                 if (val['name'].toLowerCase().indexOf(filter.toLowerCase()) == 0) {
                     filtered.include(val);
@@ -322,7 +322,7 @@ var AppServersSearchModal = function(server_type, onConfirm)
             self.choices = filtered;
         } else {
             $(self.confirmButtonID).set('disabled', true);
-            self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
+            self.choices = AppServersData.get(server_type);
         }
         // sort elements first
         self.choices = self.choices.sort(self.rowComparator);
@@ -533,7 +533,7 @@ var AppServersListModal = function(server_type, onSelected)
     self.searchButtonID = 'app-servers-list-modal-search';
     self.clearButtonID  = 'app-servers-list-modal-clear';
 
-    self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
+    self.choices = AppServersData.get(server_type);
 
     self.show = function()
     {
@@ -564,10 +564,10 @@ var AppServersListModal = function(server_type, onSelected)
         self.searchParams['private_ip'] = $(self.searchPrivateID).value.trim();
 
         if (self.searchParams['name'] == '' && self.searchParams['network'] == '' && self.searchParams['public_ip'] == '' && self.searchParams['private_ip'] == '') {
-            self.choices = ProjectsSite.appServersObj.appServers.get(server_type);
+            self.choices = AppServersData.get(server_type);
         } else {
             var filtered = [];
-            ProjectsSite.appServersObj.appServers.get(server_type).each(function(val, idx)
+            AppServersData.get(server_type).each(function(val, idx)
             {
                 // filter name
                 if (self.searchParams['name'].length > 0 && val['name'].toLowerCase().indexOf(self.searchParams['name'].toLowerCase()) != -1) {
@@ -890,7 +890,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
                 {
                     if (response['type'] == 'success') {    
                         var entry = response['data'];
-                        ProjectsSite.appServersObj.appServers.get(entry['server_type']).include(entry['server']);
+                        AppServersData.get(entry['server_type']).include(entry['server']);
                         self.closeModal();
                         onCreate(entry['server']);
                     } else if (response['type'] == 'error') {

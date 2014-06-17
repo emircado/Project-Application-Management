@@ -40,7 +40,7 @@ class ProjectsController extends Controller
         );
         
         $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/project-notes.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/contact-persons.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/point-persons.js"></script>'.
@@ -48,7 +48,7 @@ class ProjectsController extends Controller
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-notes.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
                          '<script src="' . Yii::app()->request->baseUrl . '/js/application-point-persons.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>';
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/projects.js"></script>';
         $this->render('projects');
     }
 
