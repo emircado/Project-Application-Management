@@ -487,25 +487,25 @@ var AppServersListModal = function(server_type, onSelected)
     var self = this;
 
     // modal
-    self.modalID        = 'app-servers-list-modal';
-    self.overlayID      = 'overlay';
+    self.modalID         = 'app-servers-list-modal';
+    self.overlayID       = 'overlay';
     self.dialogWrapperID = 'dialog-wrapper';
-    self.createModal    = new AppServersCreateModal();
+    self.createModal     = new AppServersCreateModal();
 
     //title
-    self.titleID        = 'app-servers-list-modal-title';
-    self.titles         = {
+    self.titleID         = 'app-servers-list-modal-title';
+    self.titles          = {
         'PRODUCTION' : 'Production',
         'STAGING'    : 'Staging',
         'DEVELOPMENT': 'Development'
     }
 
     //search fields
-    self.searchNameID   = 'app-servers-list-modal-name';
+    self.searchNameID    = 'app-servers-list-modal-name';
     self.searchNetworkID = 'app-servers-list-modal-network';
-    self.searchPublicID = 'app-servers-list-modal-public';
+    self.searchPublicID  = 'app-servers-list-modal-public';
     self.searchPrivateID = 'app-servers-list-modal-private';
-    self.searchParams   = {
+    self.searchParams    = {
         'server_type': server_type,
         'name': '',
         'network': '',
@@ -1073,6 +1073,259 @@ var AppServersNoticeModal = function(title, message, duplicate, confirm, onConfi
             e.preventDefault();
             onConfirm();
             self.closeModal();
+        });
+    }
+}
+
+var ProjectsListModal = function(onSelected)
+{
+    var self = this;
+    self.getDataURL      = baseURL + '/projects/list';
+    self._request        = null;
+
+    // containers
+    self.modalID         = 'projects-list-modal';
+    self.overlayID       = 'overlay';
+    self.dialogWrapperID = 'dialog-wrapper';
+
+    // search fields
+    self.searchNameID    = 'projects-list-modal-name';
+    self.searchCodeID    = 'projects-list-modal-code';
+
+    // table
+    self.tableID         = 'projects-list-modal-table';
+    self.tableRowClass   = 'projects-list-modal-row';
+
+    // for pagination
+    self.currentPage     = 1;
+    self.totalPage       = 1;
+    self.pageLimit       = 10;
+    self.resultData      = [];
+
+    self.prevID          = 'projects-list-modal-prev';
+    self.nextID          = 'projects-list-modal-next';
+    self.totalDataID     = 'projects-list-modal-total';
+    self.totalPartID     = 'projects-list-modal-part';
+
+    // buttons
+    self.selectID        = 'a[id^=projects-list-modal-select_]';
+    self.closeID         = 'projects-list-modal-close-button';
+    self.searchButtonID  = 'projects-list-modal-search-button';
+    self.clearButtonID   = 'projects-list-modal-clear-button';
+
+    self.csrfID          = 'projects-list-modal-csrf';
+    self.searchParams    = {
+        'name'  : '',
+        'code'  : '',
+        'limit' : 10,
+    }
+
+    self.show = function()
+    {
+        $(self.modalID).setStyle('display', 'block');
+        $(self.overlayID).setStyle('display', 'block');
+        $(self.dialogWrapperID).setStyle('display', 'block');
+        self.init();
+    }
+
+    self.closeModal = function()
+    {
+        $(self.modalID).setStyle('display', 'none');
+        $(self.overlayID).setStyle('display', 'none');
+        $(self.dialogWrapperID).setStyle('display', 'none');
+
+        $(self.searchNameID).value = '';
+        $(self.searchCodeID).value = '';
+    }
+
+    self.init = function()
+    {
+        $$('.'+self.tableRowClass).dispose();
+        ProjectsData.getAjaxData({
+            'page'  : self.currentPage,
+            'name'  : self.searchParams['name'],
+            'code'  : self.searchParams['code'],
+            'limit' : self.searchParams['limit'],
+            'YII_CSRF_TOKEN' : $(self.csrfID).value,
+        }, self.getData, function(){});
+    }
+
+    self.getData = function(data)
+    {
+        self.currentPage = data.page;
+        self.totalPage = data.totalPage;
+        self.resultData = data.resultData;
+        self.pageLimit = data.limit;
+
+        self.renderData(data.totalData);
+        self.addEvents();
+        self.paginationChecker();
+    }
+
+    self.paginationChecker = function()
+    {
+        //display the NEXT and PREV
+        $(self.prevID).setStyle('display', 'block');
+        $(self.nextID).setStyle('display', 'block');
+        
+        //first check the preview button whether it will be disable or not
+        if(self.currentPage == 1)
+        {
+            /*disable on prevID*/
+            $(self.prevID).addClass('disable');
+        }
+        else
+        {
+            // remove disable on prevID
+            $(self.prevID).removeClass('disable');
+        }
+
+        //second check the next button whether it will be disable or not
+        if(self.currentPage < self.totalPage)
+        {
+            /*remove disable on nextID*/
+            $(self.nextID).removeClass('disable');
+        }
+        else
+        {
+            /*disable nextID*/
+            $(self.nextID).addClass('disable');
+        }
+
+        //below will be the calcutaion and displaying for the total data results
+        var start = (self.pageLimit * self.currentPage) - self.pageLimit + 1;
+        var end   = (start + self.resultData.length) - 1;
+
+        if(self.resultData.length)
+        {
+            $(self.totalPartID).set('html', start+'-'+end);
+        }
+        else
+        {
+            $(self.totalPartID).set('html', '');
+            /*disable both prev and next ID*/
+
+            $(self.prevID).addClass('disable');
+            $(self.nextID).addClass('disable');
+        }
+    }
+
+    self.renderData = function(count)
+    {
+        if(count != 0)
+        {
+            $(self.totalDataID).set('html', ' of '+count);
+
+            self.lookupData = new Hash();
+            Array.each(self.resultData, function(val, idx)
+            {
+                self.lookupData.include(val['project_id'], idx);
+                // var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
+
+                contentHTML = '<td>'+val['project_id']+'</td>'
+                            + '<td>'+val['name']+'</td>'
+                            + '<td>'+val['code']+'</td>'
+                            + '<td><a href="#" id="projects-list-modal-select_'+val['project_id']+'">Select</a></td>';
+
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass,
+                    'html'  : contentHTML,
+                    'id'    : 'projects-list-modal-view_'+val['project_id']
+                });
+                
+                contentElem.inject($(self.tableID), 'bottom');
+            });
+        }
+        else
+        {
+            $(self.totalDataID).set('html', '');
+            
+            contentHTML = '<td colspan="4">No results found</td>';
+            contentElem = new Element('<tr />',
+            {
+                'class' : self.tableRowClass,
+                'html'  : contentHTML,
+            });
+
+            contentElem.inject($(self.tableID), 'bottom');
+        }
+    }
+
+    self.addEvents = function()
+    {
+        //EVENT FOR NEXT PAGE
+        $(self.nextID).removeEvents();
+        $(self.nextID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            if (self.currentPage != self.totalPage) {
+                self.currentPage++;
+                self.init();
+            }
+        });
+        
+        //EVENT FOR PREVIOUS PAGE
+        $(self.prevID).removeEvents();
+        $(self.prevID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            
+            if (self.currentPage != 1) {
+                self.currentPage--;
+                self.init();
+            }
+        });
+
+        // SELECT SERVER EVENT
+        $$(self.selectID).removeEvents()
+        $$(self.selectID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            var id = $(this).get('id').split('_')[1];
+
+            self.closeModal();
+            onSelected({
+                'project_id': id,
+                'name'      : self.resultData[self.lookupData.get(id)]['name'],
+            });
+        });
+
+
+        // CLOSE SERVER EVENT
+        $(self.closeID).removeEvents();
+        $(self.closeID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.closeModal();
+        });
+
+        // SEARCH EVENT
+        $(self.searchButtonID).removeEvents();
+        $(self.searchButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.currentPage = 1
+            self.searchParams['name'] = $(self.searchNameID).value;
+            self.searchParams['code'] = $(self.searchCodeID).value;
+            self.init();
+        });
+
+        // CLEAR EVENT
+        $(self.clearButtonID).removeEvents();
+        $(self.clearButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            $(self.searchNameID).value = '';
+            $(self.searchCodeID).value = '';
+        });
+
+        //EVENT FOR SEARCH CODE FIELD INPUT
+        $(self.searchCodeID).removeEvents();
+        $(self.searchCodeID).addEvent('input', function(e)
+        {
+            e.preventDefault();
+            $(this).value = $(this).value.substr(0,5).toUpperCase().replace(/[^a-zA-Z0-9]/i, '');
         });
     }
 }

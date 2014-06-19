@@ -25,22 +25,27 @@
             <table id="test">
                 <thead>
                     <tr>                      
-                        <th width="250">Name</th>
-                        <th width="250">Project</th>
+                        <th width="200">Name</th>
+                        <th width="200">Project</th>
+                        <th width="200">R&D Point Person</th>
                         <th>Description</th>
                         <th width="50"></th>
                     </tr>
                     <tr>
                         <th><input id="app-main-list-search-name" type="text" style="width:180px;"/></th>
                         <th><input id="app-main-list-search-project" type="text" style="width:180px;"/></th>
+                        <th><input id="app-main-list-search-point" type="text" style="width:180px;"/></th>
                         <th></th>
-                        <th><div><button id="search-submit">Search</button></div><a href="#" id="app-main-list-clear-button">Clear</a></th>
+                        <th>
+                            <div><button id="app-main-list-search-button" class="red-button">Search</button></div>
+                            <a href="#" id="app-main-list-clear-button">Clear</a>
+                            <a href="#" id="app-main-list-advanced-button">Advanced Search</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="app-main-list-table"></tbody>
             </table>
         </div>
-        
     </fieldset>
     </form> <!--this is for the CHtml form-->
     <div class="loader-container" id="loader">

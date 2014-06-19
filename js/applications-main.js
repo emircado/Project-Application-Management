@@ -1,32 +1,3 @@
-var AppMainData = function()
-{
-    var self = this;
-    self.getDataURL = baseURL + '/applications/list';
-    self._request = null;
-
-    self.getAjaxData = function(params, onRetrieve, onFail)
-    {
-        if(!self._request || !self._request.isRunning())
-        {
-            self._request = new Request.JSON(
-            {
-                'url' : self.getDataURL,
-                'method' : 'get',
-                'data' : params,
-                'onSuccess' : function(data)
-                {
-                    onRetrieve(data);
-                },
-                'onError' : function(data)
-                {
-                    self._request.stop;
-                    console.log('Something went wrong!');
-                }
-            }).send();
-        }
-    }
-}
-
 var AppMainList = function()
 {
     var self            = this;
@@ -45,33 +16,36 @@ var AppMainList = function()
     self.tableRowClass  = 'app-main-list-row';
 
     //fields
-    self.fieldNameID    = 'app-main-list-search-name';
-    self.fieldProjectID = 'app-main-list-search-project';
-    self.csrfID         = 'app-main-list-csrf';
+    self.fieldNameID        = 'app-main-list-search-name';
+    self.fieldProjectID     = 'app-main-list-search-project';
+    self.fieldPointPersonID = 'app-main-list-search-point';
+    self.csrfID             = 'app-main-list-csrf';
 
     //buttons
     self.createButtonID = 'app-main-list-create-button';
     self.viewButtonID   = 'tr[id^=app-main-list-view_]';
-    self.searchButtonID = 'search-submit';
+    self.searchButtonID = 'app-main-list-search-button';
     self.clearButtonID  = 'app-main-list-clear-button';
 
     self.init = function()
     {
         AppMainSite.activeView = 'LIST';
-        AppMainSite.dataObj.getAjaxData({
-            'page'      : AppMainSite.searchParams['page'],
-            'name'      : AppMainSite.searchParams['name'],
-            'project'   : AppMainSite.searchParams['project'],
-            'is_main'   : true,
+        AppMainData.getAjaxData({
+            'page'          : AppMainSite.searchParams['page'],
+            'name'          : AppMainSite.searchParams['name'],
+            'project'       : AppMainSite.searchParams['project'],
+            'point_person'  : AppMainSite.searchParams['point_person'],
+            'is_main'       : true,
             'YII_CSRF_TOKEN': $(self.csrfID).value,
         }, self.getData, function(){});
 
-        $(AppMainSite.titleID).set('html', 'Projects');
+        $(AppMainSite.titleID).set('html', 'Applications');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
 
         $(self.fieldNameID).value    = AppMainSite.searchParams['name'];
         $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
+        $(self.fieldPointPersonID).value = AppMainSite.searchParams['point_person'];
     }
 
     self.hide = function()
@@ -79,6 +53,7 @@ var AppMainList = function()
         $(self.containerID).setStyle('display', 'none');
         $(self.fieldNameID).value = '';
         $(self.fieldProjectID).value = '';
+        $(self.fieldPointPersonID).value = '';
         $$('.'+self.tableRowClass).dispose();
     }
 
@@ -153,9 +128,11 @@ var AppMainList = function()
             {
                 self.lookupData.include(val['application_id'], idx);
                 var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
+                var displayname = LDAPUsersData.get(val['rd_point_person']);
 
                 contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+val['project_name']+'</td>'                        
+                            + '<td>'+val['project_name']+'</td>'
+                            + '<td>'+((displayname == null)? '' : displayname)+'</td>'            
                             + '<td>'+description+'</td><td></td>';
 
                 contentElem = new Element('<tr />',
@@ -238,6 +215,7 @@ var AppMainList = function()
             AppMainSite.searchParams['page'] = 1;
             AppMainSite.searchParams['name'] = $(self.fieldNameID).value.trim();
             AppMainSite.searchParams['project'] = $(self.fieldProjectID).value.trim();
+            AppMainSite.searchParams['point_person'] = $(self.fieldPointPersonID).value.trim();
             self.init();
         });
 
@@ -280,6 +258,7 @@ var AppMainCreate = function()
     self.containerID = 'app-main-create';
     self.modalContainerID = 'app-main-create-modal-container';
     self.typeModal = new ApplicationTypesModal();
+    self.projectModal = new ProjectsListModal();
 
     //fields
     self.fieldProjectID        = 'app-main-create-project';
@@ -294,6 +273,7 @@ var AppMainCreate = function()
     self.fieldTerminationID    = 'app-main-create-termination';
     self.fieldPatternID        = 'app-main-create-pattern';
     self.csrfID                = 'app-main-create-csrf';
+    self.project_id            = '';
 
     //dropdown class
     self.pointPersonRowClass   = 'app-main-create-pointperson-row';
@@ -345,6 +325,7 @@ var AppMainCreate = function()
 
         // close modals
         self.typeModal.closeModal();
+        self.projectModal.closeModal();
 
         // clear errors
         $(self.errorProjectID).setStyle('display', 'none');
@@ -373,7 +354,7 @@ var AppMainCreate = function()
         {
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
-                'project_id':           $(self.fieldProjectID).value,
+                'project_id':           self.project_id,
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -429,7 +410,7 @@ var AppMainCreate = function()
 
     self.addEvents = function()
     {
-        // prevent focus on type field
+        // event for application type
         $(self.fieldTypeID).removeEvents();
         $(self.fieldTypeID).addEvent('focus', function(e)
         {
@@ -439,9 +420,27 @@ var AppMainCreate = function()
             self.typeModal = new ApplicationTypesModal(
                 function(app_type) {
                     $(self.fieldTypeID).value = app_type;
+                    $(self.errorTypeID).setStyle('display', 'none');
                 }
             );
             self.typeModal.show();
+        });
+
+        // event for project id
+        $(self.fieldProjectID).removeEvents();
+        $(self.fieldProjectID).addEvent('focus', function(e)
+        {
+            e.preventDefault();
+            $(this).blur();
+
+            self.projectModal = new ProjectsListModal(
+                function(project) {
+                    self.project_id = project['project_id']
+                    $(self.fieldProjectID).value = project['name'];
+                    $(self.errorProjectID).setStyle('display', 'none');
+                }
+            );
+            self.projectModal.show();
         });
 
         // event for create button
@@ -543,7 +542,7 @@ var AppMainView = function(data)
     self.init = function()
     {
         AppMainSite.activeView = 'VIEW';
-        $(AppMainSite.titleID).set('html', 'Projects/'+data['name']);
+        $(AppMainSite.titleID).set('html', 'Applications/'+data['name']);
         $(self.containerID).setStyle('display', 'block');
         
         ApplicationNotesSite.init(data['application_id']);
@@ -612,7 +611,7 @@ var AppMainView = function(data)
         $(self.fieldPatternID).set('html', (data['uses_mobile_patterns'] == 1)? 'YES' : 'NO');
         new ReadMore(self.fieldDescriptionID, data['description']).renderData();
         new ReadMore(self.fieldInstructionsID, data['instructions']).renderData();
-        $(self.fieldPointPersonID).set('html', LDAPGroupsData.get('DEVELOPERS').get(data['rd_point_person']));
+        $(self.fieldPointPersonID).set('html', LDAPUsersData.get(data['rd_point_person']));
         $(self.fieldProductionID).set('html', production);
         $(self.fieldTerminationID).set('html', termination);
         $(self.fieldCreatedID).set('html', created);
@@ -663,6 +662,7 @@ var AppMainEdit = function(data)
     self.containerID            = 'app-main-edit';
     self.modalContainerID       = 'app-main-edit-modal-container';
     self.typeModal              = new ApplicationTypesModal();
+    self.projectModal           = new ProjectsListModal();
 
     //fields
     self.fieldProjectID         = 'app-main-edit-project';
@@ -677,6 +677,7 @@ var AppMainEdit = function(data)
     self.fieldTerminationID     = 'app-main-edit-termination';
     self.fieldPatternID         = 'app-main-edit-pattern';
     self.csrfID                 = 'app-main-edit-csrf';
+    self.project_id             = '';
 
     //dropdown class
     self.pointPersonRowClass    = 'app-main-edit-pointperson-row';
@@ -697,7 +698,6 @@ var AppMainEdit = function(data)
     self.init = function()
     {
         AppMainSite.activeView = 'EDIT';
-
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
             timePicker: false,
@@ -756,7 +756,7 @@ var AppMainEdit = function(data)
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
                 'application_id':       data['application_id'],
-                'project_id':           $(self.fieldProjectID).value.trim(),
+                'project_id':           self.project_id,
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -799,6 +799,7 @@ var AppMainEdit = function(data)
                         });
                     } else if (response['type'] == 'success') {
                         data['project_id']           = response['data']['project_id'];
+                        data['project_name']         = $(self.fieldProjectID).value.trim();
                         data['type_id']              = response['data']['type_id'];
                         data['name']                 = response['data']['name'];
                         data['description']          = response['data']['description'];
@@ -829,7 +830,8 @@ var AppMainEdit = function(data)
         var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
         var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
 
-        $(self.fieldProjectID).value         = data['project_id'];
+        self.project_id                      = data['project_id'];
+        $(self.fieldProjectID).value         = data['project_name'];
         $(self.fieldNameID).value            = data['name'].replace(/&lt/g, '<');;
         $(self.fieldTypeID).value            = AppTypesData.get(data['type_id']);
         $(self.fieldAccessibilityID).value   = data['accessibility'];
@@ -859,6 +861,23 @@ var AppMainEdit = function(data)
                 }
             );
             self.typeModal.show();
+        });
+
+        // event for project id
+        $(self.fieldProjectID).removeEvents();
+        $(self.fieldProjectID).addEvent('focus', function(e)
+        {
+            e.preventDefault();
+            $(this).blur();
+
+            self.projectModal = new ProjectsListModal(
+                function(project) {
+                    self.project_id = project['project_id']
+                    $(self.fieldProjectID).value = project['name'];
+                    $(self.errorProjectID).setStyle('display', 'none');
+                }
+            );
+            self.projectModal.show();
         });
 
         // event for edit button
@@ -932,18 +951,13 @@ var AppMainSite = {
     createObj       : new AppMainCreate(),
     viewObj         : null,
     editObj         : null,
-    // data objects
-    dataObj         : new AppMainData(),
-    ldapGroupsObj   : null,
-    ldapUsersObj    : null,
-    appTypesObj     : null,
-    appServersObj   : null,
     //some more variables
     activeView      : '',
     searchParams    : {
-        'page'    : 1,
-        'name'    : '',
-        'project' : '',
+        'page'         : 1,
+        'name'         : '',
+        'project'      : '',
+        'point_person' : '',
     },
 
     init: function()

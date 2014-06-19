@@ -1,43 +1,3 @@
-var ProjectsData = function()
-{
-    var self = this;
-    self.getDataURL = baseURL + '/projects/list';
-    self._request = null;
-
-    self.getAjaxData = function(params, onRetrieve, onFail)
-    {
-        if(!self._request || !self._request.isRunning())
-        {
-            self._request = new Request.JSON(
-            {
-                'url' : self.getDataURL,
-                'method' : 'get',
-                'data' : params,
-                'onSuccess' : function(data)
-                {
-                    if (params['project_id'] != null) {
-                        if (data.totalData == 0) {
-                            console.log('data not available');
-                            onFail();
-                        } else {
-                            console.log('displaying individual');
-                            onRetrieve(data.resultData[0]);
-                        }
-                    } else {
-                        console.log('displaying list');
-                        onRetrieve(data);
-                    }
-                },
-                'onError' : function(data)
-                {
-                    self._request.stop;
-                    console.log('Something went wrong!');
-                }
-            }).send();
-        }
-    }
-}
-
 var ProjectsList = function()
 {
     var self            = this;
@@ -64,13 +24,13 @@ var ProjectsList = function()
     //buttons
     self.createButtonID = 'projects-list-create-button';
     self.viewButtonID   = 'tr[id^=projects-list-view_]';
-    self.searchButtonID = 'search-submit';
+    self.searchButtonID = 'projects-list-search-button';
     self.clearButtonID  = 'projects-list-clear-button';
 
     self.init = function()
     {
         ProjectsSite.activeView = 'LIST';
-        ProjectsSite.dataObj.getAjaxData({
+        ProjectsData.getAjaxData({
             'page'  : ProjectsSite.searchParams['page'],
             'name'  : ProjectsSite.searchParams['name'],
             'code'  : ProjectsSite.searchParams['code'],
@@ -826,7 +786,6 @@ var ProjectsSite = {
     createObj       : new ProjectsCreate(),
     editObj         : null,
     viewObj         : null,
-    dataObj         : new ProjectsData(),
     // some more variables
     activeView      : '',
     historyMngr     : new HistoryManager(),
@@ -895,7 +854,7 @@ var ProjectsSite = {
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(pid)) {
                 console.log('retrieve new');
-                ProjectsSite.dataObj.getAjaxData({
+                ProjectsSite.getAjaxData({
                     'project_id': pid,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
                 // on success

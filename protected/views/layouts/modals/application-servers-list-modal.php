@@ -9,26 +9,28 @@
                 <div class="contact-info-details">
                     <!-- body -->
                     <div id="edit-primary-content" class="content" style="padding:10px;">
-                        <table>
-                            <thead>
-                                <tr>                      
-                                    <th>Name</th>
-                                    <th>Network</th>
-                                    <th>Public IP</th>
-                                    <th>Private IP</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <th><input id="app-servers-list-modal-name" type="text"/></th>
-                                    <th><input id="app-servers-list-modal-network" type="text"/></th>
-                                    <th><input id="app-servers-list-modal-public" type="text"/></th>
-                                    <th><input id="app-servers-list-modal-private" type="text"/></th>
-                                    <th><div><button id="app-servers-list-modal-search">Search</button></div><a id="app-servers-list-modal-clear" href="#">Clear</a></th>
-                                </tr>
-                            </thead>
-                            <tbody id="app-servers-list-modal-table">
-                            </tbody>
-                        </table>
+                        <div class="height-limiter">
+                            <table>
+                                <thead>
+                                    <tr>                      
+                                        <th>Name</th>
+                                        <th>Network</th>
+                                        <th>Public IP</th>
+                                        <th>Private IP</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr>
+                                        <th><input id="app-servers-list-modal-name" type="text"/></th>
+                                        <th><input id="app-servers-list-modal-network" type="text"/></th>
+                                        <th><input id="app-servers-list-modal-public" type="text"/></th>
+                                        <th><input id="app-servers-list-modal-private" type="text"/></th>
+                                        <th><div><button id="app-servers-list-modal-search" class="red-button">Search</button></div><a id="app-servers-list-modal-clear" href="#">Clear</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="app-servers-list-modal-table">
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="page-nav">
                             <div class="page-count">
                                 <span class="current-page" id="app-servers-list-modal-part"></span>

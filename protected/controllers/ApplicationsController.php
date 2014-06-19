@@ -5,6 +5,8 @@ class ApplicationsController extends Controller
     public $extraJS;
     public $modals;
     
+    private $point_person_filter;
+
     public function filters()
     {
         return array(
@@ -19,7 +21,7 @@ class ApplicationsController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('index','list','update','create','delete'),
+                'actions'=>array('index','list','update','create','delete', 'test'),
                 'users'=>array('@'),
             ),
             array(
@@ -36,6 +38,7 @@ class ApplicationsController extends Controller
             'application-servers-search-modal',
             'application-servers-list-modal',
             'application-servers-create-modal',
+            'projects-list-modal',
             'confirmation-modal',
         );
         
@@ -71,6 +74,10 @@ class ApplicationsController extends Controller
             if (!empty($_GET['project']) || $_GET['project'] == '0') 
                 $filter['project'] = (string) $_GET['project'];
 
+        if (isset($_GET['point_person']))
+            if (!empty($_GET['point_person']) || $_GET['point_person'] == '0')
+                $filter['point_person'] = (string) $_GET['point_person'];
+
         $applications = $this->get_data($filter, $limit, $offset);
 
         $return_data = array(
@@ -99,6 +106,17 @@ class ApplicationsController extends Controller
 
             if(isset($filter['project']))
                 $criteria->compare('LOWER(p.name)', $filter['project'], true, 'AND', true);
+
+            if(isset($filter['point_person'])) {
+                $this->point_person_filter = $filter['point_person'];
+                $point_persons = array_filter($this->get_point_persons(), array($this, 'is_substring'));
+                if (count($point_persons) > 0) {
+                    $criteria->compare('t.rd_point_person', array_keys($point_persons));
+                // might be searching for username
+                } else {
+                    $criteria->compare('t.rd_point_person', $this->point_person_filter, true, 'AND', true);
+                }
+            }
         }
         $count = Applications::model()->count($criteria);
         
@@ -142,6 +160,24 @@ class ApplicationsController extends Controller
             'data_count'=>count($data),
             'total_count'=>$count,          
         );
+    }
+
+    private function get_point_persons()
+    {
+        try {
+            $model = new LDAPModel;
+            $model->get_selection();
+            return $model->entries['DEVELOPERS'];
+        } catch (LDAPModelException $e) {
+            return array();
+        }
+    }
+
+    public function is_substring($str)
+    {
+        if (strpos(strtolower($str), strtolower($this->point_person_filter)) !== false) {
+           return true;
+        }
     }
 
     public function actionUpdate()

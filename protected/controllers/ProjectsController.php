@@ -61,7 +61,7 @@ class ProjectsController extends Controller
 
         $begin_time = microtime(true);
 
-        $limit = Yii::app()->params['projects_per_page'];
+        $limit = (isset($_GET['limit']))? (int) $_GET['limit'] : Yii::app()->params['projects_per_page'];
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page-1)*$limit;
         $filter = array();

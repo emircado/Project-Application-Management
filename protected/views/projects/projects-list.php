@@ -30,7 +30,7 @@
         </div><!-- End Table Header Block -->
         
         <div id="content-div">
-            <table id="test">
+            <table>
                 <thead>
                     <tr>                      
                         <th width="250">Name</th>
@@ -55,7 +55,7 @@
                                 ?>
                             </select>
                         </th>
-                        <th><div><button id="search-submit">Search</button></div><a href="#" id="projects-list-clear-button">Clear</a></th>
+                        <th><div><button id="projects-list-search-button" class="red-button">Search</button></div><a href="#" id="projects-list-clear-button">Clear</a></th>
                     </tr>
                 </thead>
                 <tbody id="projects-list-table"></tbody>
