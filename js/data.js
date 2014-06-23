@@ -271,13 +271,11 @@ var DateFormatter = {
 }
 
 var ReadMore = function(containerID, text) {
-    var self = this;
-
-    self.textID = containerID+'-text';
-    self.buttonID    = containerID+'-button';
-
-    self.textHTML = '<div class="value" id="'+self.textID+'"></div>';
-    self.buttonHTML    = '<a href="#" id="'+self.buttonID+'" class="small-text"></a>';
+    var self        = this;
+    self.textID     = containerID+'-text';
+    self.buttonID   = containerID+'-button';
+    self.textHTML   = '<div class="value" id="'+self.textID+'"></div>';
+    self.buttonHTML = '<a href="#" id="'+self.buttonID+'" class="small-text"></a>';
 
     self.renderData = function()
     {

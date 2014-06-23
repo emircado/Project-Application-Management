@@ -46,6 +46,7 @@
                                             <input id="app-servers-create-modal-public" type="text" class="text"/>
                                             <span id="app-servers-create-modal-public-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
+                                            <div class="form-note"><i>(Public IP must be unique)</i></div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->
                                     <div class="field field-input-name">
@@ -55,10 +56,11 @@
                                             <input id="app-servers-create-modal-private" type="text" class="text"/>
                                             <span id="app-servers-create-modal-private-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
+                                            <div class="form-note"><i>(Private IP + Network combination must be unique)</i></div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->
                                     <div class="field field-input-name">
-                                        <div class="field-secondary"><span class="label">Network</span></div>
+                                        <div class="field-secondary"><span class="label">Network*</span></div>
                                         <div class="field-primary">
                                             <div class="pseudo-field">
                                             <input id="app-servers-create-modal-network" type="text" class="text"/>

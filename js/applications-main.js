@@ -2,6 +2,7 @@ var AppMainList = function()
 {
     var self            = this;
     self.containerID    = 'app-main-list';
+    self.basicConID     = 'app-main-list-basic';
 
     //for pagination
     self.prevID         = 'app-main-list-prev';
@@ -26,26 +27,53 @@ var AppMainList = function()
     self.viewButtonID   = 'tr[id^=app-main-list-view_]';
     self.searchButtonID = 'app-main-list-search-button';
     self.clearButtonID  = 'app-main-list-clear-button';
+    self.switchButtonID = 'app-main-list-advanced-button';
+
+    self.advancedSearch = null;
 
     self.init = function()
     {
         AppMainSite.activeView = 'LIST';
-        AppMainData.getAjaxData({
-            'page'          : AppMainSite.searchParams['page'],
-            'name'          : AppMainSite.searchParams['name'],
-            'project'       : AppMainSite.searchParams['project'],
-            'point_person'  : AppMainSite.searchParams['point_person'],
-            'is_main'       : true,
-            'YII_CSRF_TOKEN': $(self.csrfID).value,
-        }, self.getData, function(){});
+
+        var params = {
+            'page'              : AppMainSite.searchParams['page'],
+            'name'              : AppMainSite.searchParams['name'],
+            'project'           : AppMainSite.searchParams['project'],
+            'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
+            'is_main'           : true,
+            'YII_CSRF_TOKEN'    : $(self.csrfID).value,
+        };
+
+        if (AppMainSite.activeSearch == 'ADVANCED')
+        {
+            params['server_type']   = AppMainSite.searchParams['server_type'];
+            params['server_id']     = AppMainSite.searchParams['server_id'];
+            params['usergroup']     = AppMainSite.searchParams['usergroup'];
+            params['point_person']  = AppMainSite.searchParams['point_person'];
+
+            if (self.advancedSearch == null)
+            {
+                self.advancedSearch = new AppMainSearch(self.init, function(){
+                    $(self.basicConID).setStyle('display', 'table-row');
+                    AppMainSite.activeSearch = 'BASIC';
+                });
+                self.advancedSearch.init();
+            }
+            self.advancedSearch.show();
+            $(self.basicConID).setStyle('display', 'none');
+        }
+
+        AppMainData.getAjaxData(params, self.getData, function(){});
 
         $(AppMainSite.titleID).set('html', 'Applications');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
 
-        $(self.fieldNameID).value    = AppMainSite.searchParams['name'];
-        $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
-        $(self.fieldPointPersonID).value = AppMainSite.searchParams['point_person'];
+        if (AppMainSite.activeSearch == 'BASIC') {
+            $(self.fieldNameID).value    = AppMainSite.searchParams['name'];
+            $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
+            $(self.fieldPointPersonID).value = AppMainSite.searchParams['point_person'];
+        }
     }
 
     self.hide = function()
@@ -205,18 +233,24 @@ var AppMainList = function()
         $(self.searchButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            // ProjectsSite.historyMngr.set('search', {
-            //     'page'  : 1,
-            //     'name'  : $(self.fieldNameID).value.trim(),
-            //     'code'  : $(self.fieldCodeID).value.trim(),
-            //     'status': $(self.fieldStatusID).value.trim(),
-            // });
+            if (AppMainSite.activeSearch == 'BASIC') {
+                // ProjectsSite.historyMngr.set('search', {
+                //     'page'  : 1,
+                //     'name'  : $(self.fieldNameID).value.trim(),
+                //     'code'  : $(self.fieldCodeID).value.trim(),
+                //     'status': $(self.fieldStatusID).value.trim(),
+                // });
 
-            AppMainSite.searchParams['page'] = 1;
-            AppMainSite.searchParams['name'] = $(self.fieldNameID).value.trim();
-            AppMainSite.searchParams['project'] = $(self.fieldProjectID).value.trim();
-            AppMainSite.searchParams['point_person'] = $(self.fieldPointPersonID).value.trim();
-            self.init();
+                AppMainSite.searchParams['page'] = 1;
+                AppMainSite.searchParams['name'] = $(self.fieldNameID).value.trim();
+                AppMainSite.searchParams['project'] = $(self.fieldProjectID).value.trim();
+                AppMainSite.searchParams['rd_point_person'] = $(self.fieldPointPersonID).value.trim();
+                AppMainSite.searchParams['server_id'] = '';
+                AppMainSite.searchParams['server_type'] = '';
+                AppMainSite.searchParams['point_person'] = '';
+                AppMainSite.searchParams['usergroup'] = '';
+                self.init();
+            }
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
@@ -246,6 +280,231 @@ var AppMainList = function()
             e.preventDefault();
             AppMainSite.initCreate();
         });
+
+        //EVENT FOR ADVANCED SEARCH
+        $(self.switchButtonID).removeEvents();
+        $(self.switchButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+
+            if (self.advancedSearch == null)
+            {
+                self.advancedSearch = new AppMainSearch(self.init, function(){
+                    $(self.basicConID).setStyle('display', 'table-row');
+                    AppMainSite.activeSearch = 'BASIC';
+                });
+                self.advancedSearch.init();
+            }
+            self.advancedSearch.show();
+            $(self.basicConID).setStyle('display', 'none');
+        });
+    }
+}
+
+var AppMainSearch = function(onSearch, onHide)
+{
+    var self = this;
+
+    self.containerID = 'app-main-advanced';
+    
+    // search by server
+    self.serverModal = new AppServersListModal();
+    self.selectedServer = '';
+
+    //fields
+    self.fieldNameID = 'app-main-advanced-application';
+    self.fieldProjectID = 'app-main-advanced-project';
+    self.fieldPointPersonID = 'app-main-advanced-pointperson';
+    self.fieldServerTypeID = 'app-main-advanced-servertype';
+    self.fieldServerNameID = 'app-main-advanced-servername';
+    self.fieldUserGroupID = 'app-main-advanced-usergroup';
+    self.fieldUserNameID = 'app-main-advanced-username';
+
+    //buttons
+    self.searchButtonID = 'app-main-advanced-search-button';
+    self.clearButtonID = 'app-main-advanced-clear-button';
+    self.closeButtonID = 'app-main-advanced-close-button';
+    self.serverclearButtonID = 'app-main-advanced-serverclear-button';
+
+    self.usernameRowClass = 'app-main-advanced-username-row';
+    self.usergroupRowClass = 'app-main-advanced-usergroup-row';
+
+    self.init = function()
+    {
+        AppMainSite.activeSearch = 'ADVANCED';
+        self.addEvents();
+        self.initDropdown();
+    }
+
+    self.show = function()
+    {
+        $(self.containerID).setStyle('display', 'block');
+
+        $(self.fieldNameID).value = AppMainSite.searchParams['name'];
+        $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
+        $(self.fieldPointPersonID).value = AppMainSite.searchParams['rd_point_person'];        
+    }
+
+    self.hide = function()
+    {
+        AppMainSite.activeSearch = 'BASIC';
+        $(self.containerID).setStyle('display', 'none');
+        onHide();
+    }
+
+    self.clearSearch = function()
+    {
+        $(self.fieldNameID).value = '';
+        $(self.fieldProjectID).value = '';
+
+        $(self.fieldServerTypeID).value = '';
+        $(self.fieldServerNameID).value = '';
+        $(self.fieldServerNameID).set('disabled', true);
+        self.selectedServer = '';
+
+        $$('.'+self.usernameRowClass).dispose();
+        $$('.'+self.usergroupRowClass).dispose();
+        self.initDropdown();
+    }
+
+    self.initDropdown = function()
+    {
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usernameRowClass,
+            'value' : '',
+            'html'  : '--Select Username--'
+        });
+        contentElem.inject($(self.fieldUserNameID), 'bottom');
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usergroupRowClass,
+            'value' : '',
+            'html'  : '--Select User Group--'
+        });
+        contentElem.inject($(self.fieldUserGroupID), 'bottom');
+
+        LDAPGroupsData.resultData.each(function(val, idx)
+        {
+            contentElem = new Element('<option />',
+            {
+                'class' : self.usergroupRowClass,
+                'value' : idx,
+                'html'  : idx
+            });
+            contentElem.inject($(self.fieldUserGroupID), 'bottom');
+        });
+    }
+
+    self.addEvents = function()
+    {
+        // SERVER FIELD
+        $(self.fieldServerNameID).removeEvents();
+        $(self.fieldServerNameID).addEvent('focus', function(e)
+        {
+            e.preventDefault();
+            $(this).blur();
+            var servertype = $(self.fieldServerTypeID).value;
+
+            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
+                self.serverModal = new AppServersListModal(servertype, self.setSelectedServer, false);
+                self.serverModal.show();
+            } else {
+                $(self.fieldServerNameID).set('disabled', true);
+            }
+        });
+
+        // CLOSE BUTTON EVENT
+        $(self.closeButtonID).removeEvents();
+        $(self.closeButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.hide();
+        });
+
+        // CLEAR BUTTON EVENT
+        $(self.clearButtonID).removeEvents();
+        $(self.clearButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            self.clearSearch();
+        });
+
+        // SERVER CLEAR BUTTON EVENT
+        $(self.serverclearButtonID).removeEvents();
+        $(self.serverclearButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            $(self.fieldServerNameID).value = '';
+            self.selectedServer = '';
+        });
+
+        // SEARCH BUTTON EVENT
+        $(self.searchButtonID).removeEvents();
+        $(self.searchButtonID).addEvent('click', function(e)
+        {
+            e.preventDefault();
+            AppMainSite.searchParams['page'] = 1;
+            AppMainSite.searchParams['name'] = $(self.fieldNameID).value.trim();
+            AppMainSite.searchParams['project'] = $(self.fieldProjectID).value.trim();
+            AppMainSite.searchParams['rd_point_person'] = $(self.fieldPointPersonID).value.trim();
+            AppMainSite.searchParams['server_type'] = $(self.fieldServerTypeID).value;
+            AppMainSite.searchParams['server_id'] = self.selectedServer;
+            AppMainSite.searchParams['usergroup'] = $(self.fieldUserGroupID).value;
+            AppMainSite.searchParams['point_person'] = $(self.fieldUserNameID).value;
+            onSearch();
+        });
+
+        //USER GROUP DROPDOWN
+        $(self.fieldUserGroupID).removeEvents();
+        $(self.fieldUserGroupID).addEvent('change', function(e)
+        {
+            var usergroup = this.getElement(':selected').value;
+
+            $$('.'+self.usernameRowClass).dispose();
+
+            contentElem = new Element('<option />',
+            {
+                'class' : self.usernameRowClass,
+                'value' : '',
+                'html'  : '--Select Username--'
+            });
+            contentElem.inject($(self.fieldUserNameID), 'bottom');
+
+            if (usergroup != '') {
+                LDAPGroupsData.get(usergroup).each(function(val, idx) {
+                    contentElem = new Element('<option />',
+                    {
+                        'class' : self.usernameRowClass,
+                        'value' : idx,
+                        'html'  : val
+                    });
+                    contentElem.inject($(self.fieldUserNameID), 'bottom');
+                });
+            }
+        });
+
+        // SELECT SERVER TYPE DROPDOWN
+        $(self.fieldServerTypeID).removeEvents();
+        $(self.fieldServerTypeID).addEvent('change', function(e)
+        {
+            e.preventDefault();
+            var servertype = this.getElement(':selected').value;
+
+            $(self.fieldServerNameID).value = '';
+            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
+                $(self.fieldServerNameID).set('disabled', false);
+                self.selectedServer = '';
+            } else {
+                $(self.fieldServerNameID).set('disabled', true);
+                self.selectedServer = '';
+            }
+        });
+    }
+
+    self.setSelectedServer = function(server) {
+        $(self.fieldServerNameID).value = server['name'];
+        self.selectedServer = server['server_id'];
     }
 }
 
@@ -951,13 +1210,19 @@ var AppMainSite = {
     createObj       : new AppMainCreate(),
     viewObj         : null,
     editObj         : null,
+    searchObj       : null,
     //some more variables
     activeView      : '',
+    activeSearch    : 'BASIC',
     searchParams    : {
-        'page'         : 1,
-        'name'         : '',
-        'project'      : '',
-        'point_person' : '',
+        'page'              : 1,
+        'name'              : '',
+        'project'           : '',
+        'rd_point_person'   : '',
+        'server_type'       : '',
+        'server_id'         : '',
+        'usergroup'         : '',
+        'point_person'      : '',
     },
 
     init: function()

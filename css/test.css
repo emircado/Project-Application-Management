@@ -159,10 +159,6 @@ pre {
     font-family: inherit;
 }
 
-.search-icon {
-    background: url('search.png');
-}
-
 img.search {
     width: 30px;
     height: 30px;
@@ -214,9 +210,11 @@ img.search {
 }
 
 #confirmation-modal {
-    min-width: 300px;
+    position: fixed;
+    width: 430px;
+    left:50%;
     margin-top: 150px;
-    margin-left: 40%;
+    margin-left: -215px;
     z-index: 1500;
 }
 
@@ -292,10 +290,16 @@ img.search {
 }
 
 #app-servers-list-modal {
+    position: fixed;
     background: #FFFFFF;
     width: 900px;
-    margin-left: 26.5%;
+    left: 50%;
+    margin-left: -450px;
     margin-top: 100px;
+}
+
+#app-servers-list-modal .height-limiter {
+    min-height: 300px;
 }
 
 #app-servers-list-modal .contact-info-details ,
@@ -304,10 +308,12 @@ img.search {
 }
 
 #app-servers-create-modal {
+    position: fixed;
     background: #FFFFFF;
     width: 570px;
+    left: 50%;
     margin-top: 100px;
-    margin-left: 35%;
+    margin-left: -285px;
 }
 
 #app-servers-create-modal .dialog-content-block{
@@ -334,10 +340,12 @@ img.search {
 
 /* PROJECTS MODAL */
 #projects-list-modal {
+    position: fixed;
     background: #FFFFFF;
     width: 500px;
+    left: 50%;
     margin-top: 100px;
-    margin-left: 35%;
+    margin-left: -250px;
 }
 
 #projects-list-modal .height-limiter {
@@ -375,4 +383,43 @@ img.search {
 
 .notes-table tr:not(:first-child) {
     border-top: 2px solid #E2E2E2;
+}
+
+/* APPLICATIONS ADVANCED SEARCH */
+#app-main-advanced .header {
+    padding: 8px 10px;
+    background-color: #AED5B5;
+}
+
+#app-main-advanced input, 
+#app-main-advanced select {
+    width: 210px;
+}
+
+#app-main-advanced label {
+    padding: 5px 0px;
+    cursor: default;
+}
+
+.search-box {
+    float: left;
+    margin-right: 20px;
+}
+
+#app-main-advanced img.close {
+    width:22px;
+    height:22px;
+}
+
+.half-box {
+    width:50%;
+    float:left;
+}
+
+.search-by {
+    background: #dceddf;
+    padding: 10px;
+    height: 80px;
+    width: 90%;
+    margin: auto;
 }

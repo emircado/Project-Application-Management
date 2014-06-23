@@ -74,9 +74,25 @@ class ApplicationsController extends Controller
             if (!empty($_GET['project']) || $_GET['project'] == '0') 
                 $filter['project'] = (string) $_GET['project'];
 
+        if (isset($_GET['rd_point_person']))
+            if (!empty($_GET['rd_point_person']) || $_GET['rd_point_person'] == '0')
+                $filter['rd_point_person'] = (string) $_GET['rd_point_person'];
+
+        if (isset($_GET['server_type']))
+            if (!empty($_GET['server_type']) || $_GET['server_type'] == '0')
+                $filter['server_type'] = (string) $_GET['server_type'];
+
+        if (isset($_GET['server_id']))
+            if (!empty($_GET['server_id']) || $_GET['server_id'] == '0')
+                $filter['server_id'] = (int) $_GET['server_id'];
+
         if (isset($_GET['point_person']))
             if (!empty($_GET['point_person']) || $_GET['point_person'] == '0')
                 $filter['point_person'] = (string) $_GET['point_person'];
+
+        if (isset($_GET['usergroup']))
+            if (!empty($_GET['usergroup']) || $_GET['usergroup'] == '0')
+                $filter['usergroup'] = (string) $_GET['usergroup'];
 
         $applications = $this->get_data($filter, $limit, $offset);
 
@@ -94,6 +110,7 @@ class ApplicationsController extends Controller
     private function get_data($filter='', $limit=5, $offset=0)
     {
         $criteria = new CDbCriteria;
+        $criteria->distinct = true;
         $criteria->join = "JOIN projects p ON p.project_id=t.project_id";
 
         if(is_array($filter))
@@ -107,8 +124,8 @@ class ApplicationsController extends Controller
             if(isset($filter['project']))
                 $criteria->compare('LOWER(p.name)', $filter['project'], true, 'AND', true);
 
-            if(isset($filter['point_person'])) {
-                $this->point_person_filter = $filter['point_person'];
+            if(isset($filter['rd_point_person'])) {
+                $this->point_person_filter = $filter['rd_point_person'];
                 $point_persons = array_filter($this->get_point_persons(), array($this, 'is_substring'));
                 if (count($point_persons) > 0) {
                     $criteria->compare('t.rd_point_person', array_keys($point_persons));
@@ -117,6 +134,34 @@ class ApplicationsController extends Controller
                     $criteria->compare('t.rd_point_person', $this->point_person_filter, true, 'AND', true);
                 }
             }
+
+            if(isset($filter['server_type']) || isset($filter['server_id'])) {
+                $criteria->join .= " LEFT JOIN (application_servers s";
+                
+                if(isset($filter['server_type'])) {
+                    $criteria->join .= " JOIN servers r ON r.server_id=s.server_id";
+                    $criteria->compare('r.server_type', $filter['server_type']);
+                }
+
+                $criteria->join .= ") ON s.application_id=t.application_id";
+
+                if(isset($filter['server_id'])) {
+                    $criteria->compare('s.server_id', $filter['server_id']);
+                }
+            }
+
+            if(isset($filter['point_person']) || isset($filter['usergroup'])) {
+                $criteria->join .= " LEFT JOIN application_point_persons o ON o.application_id=t.application_id";
+                
+                if(isset($filter['point_person'])) {
+                    $criteria->compare('o.username', $filter['point_person']);
+                }
+
+                if(isset($filter['usergroup'])) {
+                    $criteria->compare('o.user_group', $filter['usergroup']);
+                }
+            }
+
         }
         $count = Applications::model()->count($criteria);
         

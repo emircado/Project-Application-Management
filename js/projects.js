@@ -854,7 +854,7 @@ var ProjectsSite = {
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(pid)) {
                 console.log('retrieve new');
-                ProjectsSite.getAjaxData({
+                ProjectsData.getAjaxData({
                     'project_id': pid,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
                 // on success

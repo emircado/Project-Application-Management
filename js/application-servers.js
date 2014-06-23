@@ -359,7 +359,7 @@ var AppServersCreate = function(application_id)
             var servertype = $(self.fieldTypeID).value;
 
             if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
-                self.listModal = new AppServersListModal(servertype, self.setSelectedServer);
+                self.listModal = new AppServersListModal(servertype, self.setSelectedServer, true);
                 self.searchModal.closeModal();
                 self.listModal.show();
             } else {
@@ -389,11 +389,12 @@ var AppServersCreate = function(application_id)
             }
         });
 
-        self.setSelectedServer = function(server) {
-            $(self.fieldServerID).value = server['name'];
-            self.selectedServer = server['server_id'];
-            $(self.errorServerID).setStyle('display', 'none');
-        }
+    }
+    
+    self.setSelectedServer = function(server) {
+        $(self.fieldServerID).value = server['name'];
+        self.selectedServer = server['server_id'];
+        $(self.errorServerID).setStyle('display', 'none');
     }
 }
 

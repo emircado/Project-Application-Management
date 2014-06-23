@@ -482,7 +482,7 @@ var AppServersSearchModal = function(server_type, onConfirm)
     }
 }
 
-var AppServersListModal = function(server_type, onSelected)
+var AppServersListModal = function(server_type, onSelected, hasCreate)
 {
     var self = this;
 
@@ -569,18 +569,25 @@ var AppServersListModal = function(server_type, onSelected)
             var filtered = [];
             AppServersData.get(server_type).each(function(val, idx)
             {
+                var toInclude = true;
                 // filter name
-                if (self.searchParams['name'].length > 0 && val['name'].toLowerCase().indexOf(self.searchParams['name'].toLowerCase()) != -1) {
-                    // filter network
-                    if (self.searchParams['network'].length > 0 && val['network'].toLowerCase().indexOf(self.searchParams['network'].toLowerCase()) != -1) {
-                        // filter public ip
-                        if (self.searchParams['public_ip'].length > 0 && val['public_ip'].toLowerCase().indexOf(self.searchParams['public_ip'].toLowerCase()) != -1) {
-                            // filter private ip
-                            if (self.searchParams['private_ip'].length > 0 && val['private_ip'].toLowerCase().indexOf(self.searchParams['private_ip'].toLowerCase()) != -1) {
-                                filtered.include(val);
-                            }
-                        }
-                    } 
+                if (self.searchParams['name'].length > 0 && (val['name'] == null || val['name'].toLowerCase().indexOf(self.searchParams['name'].toLowerCase()) == -1)) {
+                    toInclude = false;
+                }
+                // filter network
+                if (self.searchParams['network'].length > 0 && (val['network'] == null || val['network'].toLowerCase().indexOf(self.searchParams['network'].toLowerCase()) == -1)) {
+                    toInclude = false;
+                } 
+                // filter public ip
+                if (self.searchParams['public_ip'].length > 0 && (val['public_ip'] == null || val['public_ip'].toLowerCase().indexOf(self.searchParams['public_ip'].toLowerCase()) == -1)) {
+                    toInclude = false;
+                }
+                // filter private ip
+                if (self.searchParams['private_ip'].length > 0 && (val['private_ip'] == null || val['private_ip'].toLowerCase().indexOf(self.searchParams['private_ip'].toLowerCase()) == -1)) {
+                    toInclude = false;                    
+                }
+                if (toInclude) {
+                    filtered.include(val);
                 }
             });
             self.choices = filtered;
@@ -644,11 +651,17 @@ var AppServersListModal = function(server_type, onSelected)
             $(self.prevID).addClass('disable');
             $(self.nextID).addClass('disable');
 
-            var contentHTML = '<td><b>'+self.searchParams['name']+'</b> <i>(Create)</i></td>'
-                + '<td>'+self.searchParams['network']+'</td>'
-                + '<td>'+self.searchParams['public_ip']+'</td>'
-                + '<td>'+self.searchParams['private_ip']+'</td>'
-                + '<td><a href="#" id="appserverslist-select_create">Create</a></td>';
+            var contentHTML = '';
+
+            if (hasCreate) {
+                contentHTML = '<td><b>'+self.searchParams['name']+'</b> <i>(Create)</i></td>'
+                    + '<td>'+self.searchParams['network']+'</td>'
+                    + '<td>'+self.searchParams['public_ip']+'</td>'
+                    + '<td>'+self.searchParams['private_ip']+'</td>'
+                    + '<td><a href="#" id="appserverslist-select_create">Create</a></td>';
+            } else {
+                contentHTML = '<td colspan="5">No servers found</td>';
+            }
 
             contentElem = new Element('<tr />',
             {

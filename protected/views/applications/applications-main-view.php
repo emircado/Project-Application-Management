@@ -15,7 +15,6 @@
                     <div id="expand-primary" class="header">
                         <h3><b>Application Details</b></h3>&nbsp&nbsp
                         <a id="app-main-view-edit-button" href="#">[Edit]</a>
-                        <a id="app-main-view-delete-button" href="#" style="float:right;">[Delete]</a>
                     </div>
                 </div>
                 <div id="edit-primary-content" class="content">
@@ -145,7 +144,7 @@
             $this->renderPartial('//applications/application-notes');
         ?>
 
-        <a id="app-main-view-delete-button" href="#">[Delete Project]</a>
+        <a id="app-main-view-delete-button" href="#">[Delete Application]</a>
     </div>
     <div class="right-panel">
         <?php
