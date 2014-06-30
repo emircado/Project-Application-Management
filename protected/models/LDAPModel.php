@@ -73,6 +73,7 @@ class LDAPModel extends CFormModel {
                     $d = Yii::app()->ldap->user()->info($mem, array("samaccountname", "dn"));
                     $name = explode(',', $d[0]['dn']);
 
+                    // username -> display name
                     $members[$d[0]['samaccountname'][0]] = substr($name[0], 3);
                 }
                 asort($members);

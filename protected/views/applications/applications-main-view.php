@@ -19,6 +19,14 @@
                 </div>
                 <div id="edit-primary-content" class="content">
                     <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">ID</span></div>
+                        <div class="field-primary">
+                            <div class="pseudo-field no-border">
+                                <span class="value" id="app-main-view-id"></span>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->
+                    <div class="field field-input-name">
                         <div class="field-secondary"><span class="label">Name</span></div>
                         <div class="field-primary">
                             <div class="pseudo-field no-border">
@@ -27,10 +35,18 @@
                         </div><!-- End Field Primary -->
                     </div><!-- End Field -->
                     <div class="field field-input-name">
-                        <div class="field-secondary"><span class="label">Project</span></div>
+                        <div class="field-secondary"><span class="label">Project ID</span></div>
                         <div class="field-primary">
                             <div class="pseudo-field no-border">
-                                <span class="value" id="app-main-view-project"></span>
+                                <span class="value" id="app-main-view-projectid"></span>
+                            </div>
+                        </div><!-- End Field Primary -->
+                    </div><!-- End Field -->
+                    <div class="field field-input-name">
+                        <div class="field-secondary"><span class="label">Project Name</span></div>
+                        <div class="field-primary">
+                            <div class="pseudo-field no-border">
+                                <span class="value" id="app-main-view-projectname"></span>
                             </div>
                         </div><!-- End Field Primary -->
                     </div><!-- End Field -->

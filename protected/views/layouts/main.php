@@ -52,7 +52,6 @@
 				array('label'=>'Home', 'url'=>array('/site')),
 				array('label'=>'Projects', 'url'=>array('/projects/index'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Applications', 'url'=>array('/applications/index'), 'visible'=>!Yii::app()->user->isGuest),
-                array('label'=>'Servers', 'url'=>array('/servers/index'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/site/users'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Groups', 'url'=>array('/site/groups'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),

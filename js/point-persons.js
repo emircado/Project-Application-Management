@@ -293,30 +293,30 @@ var PointPersonsCreate = function(project_id)
 
     self.initDropdown = function()
     {
-    	contentElem = new Element('<option />',
-    	{
-    		'class' : self.usernameRowClass,
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usernameRowClass,
             'value' : '',
-    		'html'  : '--Select Username--'
-    	});
-    	contentElem.inject($(self.fieldUsernameID), 'bottom');
-    	contentElem = new Element('<option />',
-    	{
-    		'class' : self.usergroupRowClass,
+            'html'  : '--Select Username--'
+        });
+        contentElem.inject($(self.fieldUsernameID), 'bottom');
+        contentElem = new Element('<option />',
+        {
+            'class' : self.usergroupRowClass,
             'value' : '',
-    		'html'  : '--Select User Group--'
-    	});
-    	contentElem.inject($(self.fieldUsergroupID), 'bottom');
+            'html'  : '--Select User Group--'
+        });
+        contentElem.inject($(self.fieldUsergroupID), 'bottom');
 
-    	LDAPGroupsData.resultData.each(function(val, idx)
+        LDAPGroupsData.resultData.each(function(val, idx)
         {
             contentElem = new Element('<option />',
-	    	{
-	    		'class' : self.usergroupRowClass,
+            {
+                'class' : self.usergroupRowClass,
                 'value' : idx,
-	    		'html'  : idx
-	    	});
-	    	contentElem.inject($(self.fieldUsergroupID), 'bottom');
+                'html'  : idx
+            });
+            contentElem.inject($(self.fieldUsergroupID), 'bottom');
         });
     }
 
@@ -344,17 +344,17 @@ var PointPersonsCreate = function(project_id)
         $(self.fieldUsergroupID).removeEvents();
         $(self.fieldUsergroupID).addEvent('change', function(e)
         {
-        	var usergroup = this.getElement(':selected').value;
+            var usergroup = this.getElement(':selected').value;
 
-        	$$('.'+self.usernameRowClass).dispose();
+            $$('.'+self.usernameRowClass).dispose();
 
-        	contentElem = new Element('<option />',
-			{
-				'class' : self.usernameRowClass,
-				'value' : '',
-				'html'  : '--Select Username--'
-			});
-			contentElem.inject($(self.fieldUsernameID), 'bottom');
+            contentElem = new Element('<option />',
+            {
+                'class' : self.usernameRowClass,
+                'value' : '',
+                'html'  : '--Select Username--'
+            });
+            contentElem.inject($(self.fieldUsernameID), 'bottom');
 
             if (usergroup != '') {
                 LDAPGroupsData.get(usergroup).each(function(val, idx) {

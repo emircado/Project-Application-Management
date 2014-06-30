@@ -2,6 +2,9 @@
 
 class SiteController extends Controller
 {
+    public $extraJS;
+    public $modals;
+
     public function filters()
     {
         return array(
@@ -45,24 +48,11 @@ class SiteController extends Controller
         }
     }
 
-    public function actionUsers($username = NULL)
+    public function actionUsers()
     {
-        try {
-            $model = new LDAPModel;
-
-            $is_individual = False;
-
-            if ($username == NULL) {
-                $model->get_users();
-            } else {
-                $model->get_userinfo($username);
-                $is_individual = True;
-            }
-            $this->render('users', array('model'=>$model, 'is_individual'=>$is_individual));
-
-        } catch (LDAPModelException $e) {
-            throw new CHttpException(404, 'The specified page cannot be found');
-        }
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/users.js"></script>';
+        $this->render('users');
     }
 
     public function actionGroups($groupname = NULL)

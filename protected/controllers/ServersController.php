@@ -2,9 +2,6 @@
 
 class ServersController extends Controller
 {
-    public $extraJS;
-    public $modals;
-
     public function filters()
     {
         return array(
@@ -27,18 +24,6 @@ class ServersController extends Controller
                 'users'=>array('*'),
             ),
         );
-    }
-
-    public function actionIndex()
-    {
-        $this->modals = array(
-            'confirmation-modal',
-        );
-
-        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/servers.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>';
-        $this->render('servers');
     }
 
     public function actionList()

@@ -68,7 +68,7 @@ class ProjectsController extends Controller
 
         if (isset($_GET['project_id'])) 
             if (!empty($_GET['project_id']) || $_GET['project_id'] == '0') 
-                $filter['project_id'] = (string) $_GET['project_id'];
+                $filter['project_id'] = (int) $_GET['project_id'];
 
         if (isset($_GET['name'])) 
             if (!empty($_GET['name']) || $_GET['name'] == '0') 

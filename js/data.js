@@ -53,7 +53,18 @@ var AppMainData = {
                 'data' : params,
                 'onSuccess' : function(data)
                 {
-                    onRetrieve(data);
+                    if (params['application_id'] != null) {
+                        if (data.totalData == 0) {
+                            console.log('data not available');
+                            onFail();
+                        } else {
+                            console.log('displaying individual');
+                            onRetrieve(data.resultData[0]);
+                        }
+                    } else {
+                        console.log('displaying list');
+                        onRetrieve(data);
+                    }
                 },
                 'onError' : function(data)
                 {
@@ -98,6 +109,7 @@ var LDAPGroupsData = {
                     {
                         self.resultData.set(idx, new Hash(val));
                     });
+                    // onRetrieve(self.resultData);
                 },
                 'onError' : function(errors)
                 {
@@ -105,6 +117,8 @@ var LDAPGroupsData = {
                     console.log('something went wrong');
                 }
             }).send();
+        } else {
+            console.log('is running');
         }
     },
 
@@ -114,7 +128,6 @@ var LDAPGroupsData = {
         return self.resultData.get(key);
     }
 }
-
 
 // contains username => displayname dictionary
 var LDAPUsersData = {

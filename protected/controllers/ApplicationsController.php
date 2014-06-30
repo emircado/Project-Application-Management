@@ -63,8 +63,13 @@ class ApplicationsController extends Controller
         $offset = ($page-1)*$limit;
         $filter = array();
 
-        if (isset($_GET['project_id']) && !empty($_GET['project_id']))
-            $filter['project_id'] = (string) $_GET['project_id'];
+        if (isset($_GET['application_id'])) 
+            if (!empty($_GET['application_id']) || $_GET['application_id'] == '0') 
+                $filter['application_id'] = (string) $_GET['application_id'];
+
+        if (isset($_GET['project_id'])) 
+            if (!empty($_GET['project_id']) || $_GET['project_id'] == '0') 
+                $filter['project_id'] = (int) $_GET['project_id'];
 
         if (isset($_GET['name'])) 
             if (!empty($_GET['name']) || $_GET['name'] == '0') 
@@ -115,6 +120,9 @@ class ApplicationsController extends Controller
 
         if(is_array($filter))
         {
+            if(isset($filter['application_id']))
+                $criteria->compare('t.application_id', $filter['application_id']);
+
             if(isset($filter['project_id']))
                 $criteria->compare('t.project_id', $filter['project_id']);
 
@@ -122,17 +130,11 @@ class ApplicationsController extends Controller
                 $criteria->compare('LOWER(t.name)', strtolower($filter['name']), true, 'AND', true);
 
             if(isset($filter['project']))
-                $criteria->compare('LOWER(p.name)', $filter['project'], true, 'AND', true);
+                $criteria->compare('LOWER(p.name)', strtolower($filter['project']), true, 'AND', true);
 
             if(isset($filter['rd_point_person'])) {
-                $this->point_person_filter = $filter['rd_point_person'];
-                $point_persons = array_filter($this->get_point_persons(), array($this, 'is_substring'));
-                if (count($point_persons) > 0) {
-                    $criteria->compare('t.rd_point_person', array_keys($point_persons));
-                // might be searching for username
-                } else {
-                    $criteria->compare('t.rd_point_person', $this->point_person_filter, true, 'AND', true);
-                }
+                $criteria->join .= " LEFT JOIN ldap_users l ON l.username=t.rd_point_person";
+                $criteria->compare('LOWER(l.name)', strtolower($filter['rd_point_person']), true, 'AND', true);
             }
 
             if(isset($filter['server_type']) || isset($filter['server_id'])) {
@@ -205,24 +207,6 @@ class ApplicationsController extends Controller
             'data_count'=>count($data),
             'total_count'=>$count,          
         );
-    }
-
-    private function get_point_persons()
-    {
-        try {
-            $model = new LDAPModel;
-            $model->get_selection();
-            return $model->entries['DEVELOPERS'];
-        } catch (LDAPModelException $e) {
-            return array();
-        }
-    }
-
-    public function is_substring($str)
-    {
-        if (strpos(strtolower($str), strtolower($this->point_person_filter)) !== false) {
-           return true;
-        }
     }
 
     public function actionUpdate()
