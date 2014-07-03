@@ -2,6 +2,8 @@
 
 class LdapController extends Controller
 {
+    public $extraJS;
+
     public function filters()
     {
         return array(
@@ -16,7 +18,7 @@ class LdapController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('sync', 'getgroups','getusers'),
+                'actions'=>array('index', 'sync', 'getgroups','getusers'),
                 'users'=>array('@'),
             ),
             array(
@@ -24,6 +26,13 @@ class LdapController extends Controller
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionIndex()
+    {
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/ldap.js"></script>';
+        $this->render('//site/ldap');
     }
 
     public function actionSync()
@@ -35,40 +44,62 @@ class LdapController extends Controller
             $model->get_users_list();
             $users = $model->entries;
 
-            LdapUserGroups::model()->deleteAll();
-
-            LdapUsers::model()->deleteAll();
             foreach ($users as $username => $name)
             {
-                $user = new LdapUsers;
-                $user->username = $username;
-                $user->name = $name;
-                $user->save();
+                $user = LdapUsers::model()->findByPk($username);
+                // create user when nonexistent
+                if ($user == null) {
+                    $user = new LdapUsers;
+                    $user->username = $username;
+                    $user->name = $name;
+                    $user->save();
+                // update user display name if exists
+                } else {
+                    $user->name = $name;
+                    $user->save();
+                }
             }
 
             // update groups table and relations
             $model->get_selection();
             $groups = $model->entries;
 
-            LdapGroups::model()->deleteAll();
             foreach ($groups as $name => $members)
             {
-                $group = new LdapGroups;
-                $group->name = $name;
-                $group->save();
+                $group = LdapGroups::model()->find('name=:name', array(':name'=>$name));
+                // create group when nonexistent
+                if ($group == null) {
+                    $group = new LdapGroups;
+                    $group->name = $name;
+                    $group->save();
+                }
 
+                $saved_member = LdapUserGroups::model()->findAll('group_id=:group_id', array(':group_id'=>$group->group_id));
                 foreach ($members as $username => $displayname)
                 {
-                    $member = new LdapUserGroups;
-                    $member->username = $username;
-                    $member->group_id = $group->group_id;
-                    $member->save();
+                    $in_db = false;
+                    foreach ($saved_member as $smem) {
+                        if ($smem->username == $username) {
+                            $in_db = true;
+                            break;
+                        }
+                    }
+
+                    if ($in_db == false) {
+                        $member = new LdapUserGroups;
+                        $member->username = $username;
+                        $member->group_id = $group->group_id;
+                        $member->save();
+                    }
                 }
             }
 
+            $date_updated = date("Y-m-d H:i:s");
+            file_put_contents('ldap_sync.txt', $date_updated);
+
             echo CJSON::encode(array(
                 'type'  => 'success',
-                'data'  => '',
+                'data'  => $date_updated,
             ));
         } catch (LDAPModelException $e) {
             echo CJSON::encode(array(

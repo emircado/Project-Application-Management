@@ -34,7 +34,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->render('index');
+        $this->redirect('projects');
     }
 
     public function actionError()
@@ -48,33 +48,12 @@ class SiteController extends Controller
         }
     }
 
-    public function actionUsers()
-    {
-        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
-                         '<script src="' . Yii::app()->request->baseUrl . '/js/users.js"></script>';
-        $this->render('users');
-    }
-
-    public function actionGroups($groupname = NULL)
-    {
-        try {
-            $model = new LDAPModel;
-            $is_individual = False;
-
-            if ($groupname == NULL) {
-                $model->get_groups();
-            } else {
-                $model->get_groupinfo($groupname);
-                $is_individual = True;
-            }
-            $this->render('groups', array('model'=>$model, 'is_individual'=>$is_individual));
-        } catch (LDAPModelException $e) {
-            throw new CHttpException(404, 'The specified page cannot be found');
-        }
-    }
-
     public function actionLogin()
     {
+        if (!Yii::app()->user->isGuest) {
+            $this->redirect('projects');
+        }
+
         $model=new LoginForm;
 
         // if it is ajax validation request

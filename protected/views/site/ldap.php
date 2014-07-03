@@ -2,6 +2,8 @@
 /* @var $this SiteController */
 
 $this->pageTitle=Yii::app()->name . ' - Users';
+$date = file_get_contents('ldap_sync.txt');
+
 ?>
 
 <div class="primary">
@@ -20,7 +22,7 @@ $this->pageTitle=Yii::app()->name . ' - Users';
 				            </div><!-- End Header Block Button -->
 				            <div style="float:left;padding:8px;">
 					            <span>Last Updated</span>
-					            <span id="users-updated">August 1, 2014</span>
+					            <span><b id="users-updated"><?= $date ?></b></span>
 				        	</div>
 				        </div><!-- End Table Header Block -->
                         <div id="users-lists-container"></div>

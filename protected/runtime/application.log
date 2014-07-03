@@ -9651,3 +9651,326 @@ Stack trace:
 REQUEST_URI=/pamgmt/ldap/getgroups?YII_CSRF_TOKEN=
 HTTP_REFERER=http://10.11.7.11/pamgmt/users
 ---
+2014/07/03 10:58:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "groups".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('groups')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('groups')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site/groups')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/groups?groupname=RND1
+HTTP_REFERER=http://10.11.7.11/pamgmt/groups
+---
+2014/07/03 10:58:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/index')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/ldap/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 10:58:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/index')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/ldap/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 10:58:30 [error] [exception.CException] exception 'CException' with message 'Property "LdapController.extraJS" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php(31): CComponent->__set('extraJS', '<script src="/p...')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionIndex()
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/index')
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#13 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#14 {main}
+REQUEST_URI=/pamgmt/ldap/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 10:58:51 [error] [exception.CException] exception 'CException' with message 'LdapController cannot find the requested view "users".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:878
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): CController->renderPartial('users', NULL, true)
+#1 /home/httpd/vhosts/pamgmt/protected/controllers/LdapController.php(35): CController->render('users')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): LdapController->actionIndex()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('index')
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('ldap/index')
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#15 {main}
+REQUEST_URI=/pamgmt/ldap/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:01:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:02:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:02:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/
+---
+2014/07/03 11:02:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php:483
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(270): CController->missingAction('')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap/index
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/projects
+---
+2014/07/03 11:07:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/login
+---
+2014/07/03 11:07:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/login
+---
+2014/07/03 11:07:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/login
+---
+2014/07/03 11:07:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/login
+---
+2014/07/03 11:07:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/login
+---
+2014/07/03 11:09:08 [error] [exception.CException] exception 'CException' with message 'Property "CAccessRule.action" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/auth/CAccessControlFilter.php(115): CComponent->__set('action', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1144): CAccessControlFilter->setRules(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('login')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/login
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
+---
+2014/07/03 11:09:23 [error] [exception.CException] exception 'CException' with message 'Property "CAccessRule.action" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/auth/CAccessControlFilter.php(115): CComponent->__set('action', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1144): CAccessControlFilter->setRules(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('login')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/login
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
+---
+2014/07/03 11:09:23 [error] [exception.CException] exception 'CException' with message 'Property "CAccessRule.action" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/auth/CAccessControlFilter.php(115): CComponent->__set('action', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1144): CAccessControlFilter->setRules(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('login')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/login
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
+---
+2014/07/03 11:09:24 [error] [exception.CException] exception 'CException' with message 'Property "CAccessRule.action" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/auth/CAccessControlFilter.php(115): CComponent->__set('action', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1144): CAccessControlFilter->setRules(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('login')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/login
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
+---
+2014/07/03 11:09:40 [error] [exception.CException] exception 'CException' with message 'Property "CAccessRule.action" is not defined.' in /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CComponent.php:173
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/auth/CAccessControlFilter.php(115): CComponent->__set('action', Array)
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1144): CAccessControlFilter->setRules(Array)
+#2 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): CController->run('')
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('site')
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/pamgmt/
+HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
+---

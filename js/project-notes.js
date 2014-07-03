@@ -405,7 +405,7 @@ var ProjectNotesView = function(data)
             if (username == data['created_by']) {
                 new ConfirmModal(
                     'Confirm Delete',
-                    'Are you sure you want to delete this note from the list?',
+                    'Are you sure you want to delete this note?',
                     'Delete',
                     self.postAjaxData)
                 .show();

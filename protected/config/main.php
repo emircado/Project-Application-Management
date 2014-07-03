@@ -48,12 +48,10 @@ return array(
             'rules'=>array(
             	'' => 'site/',
                 'login' => 'site/login',
-                'users' => 'site/users',
-                'groups' => 'site/groups',
                 'logout' => 'site/logout',
                 'projects' => 'projects/index',
                 'applications' => 'applications/index',
-                'servers' => 'servers/index',
+                'ldap' => 'ldap/index',
                 // '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 // '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 // '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

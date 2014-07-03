@@ -1,4 +1,4 @@
-var UsersList = function()
+var LDAPList = function()
 {
     var self = this;
     self._request           = null;
@@ -11,6 +11,7 @@ var UsersList = function()
 
     self.init = function()
     {
+        $(self.fieldUpdated).set('html', DateFormatter.formatDateTime($(self.fieldUpdated).get('html')));
         self.addEvents();
     }
 
@@ -31,6 +32,8 @@ var UsersList = function()
                 {
                     if (response['type'] == 'error') {
                         console.log('something went wrong');
+                    } else if (response['type'] == 'success') {
+                        $(self.fieldUpdated).set('html', DateFormatter.formatDateTime(response['data']));
                     }
                 },
                 'onError' : function(errors)
@@ -52,8 +55,8 @@ var UsersList = function()
     }
 }
 
-var UsersSite = {
-    mainObj : new UsersList(),
+var LDAPSite = {
+    mainObj : new LDAPList(),
 
     init: function()
     {
@@ -64,5 +67,5 @@ var UsersSite = {
 
 window.addEvent('domready', function()
 {
-    UsersSite.init();
+    LDAPSite.init();
 });

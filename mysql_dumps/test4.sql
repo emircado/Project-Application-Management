@@ -62,7 +62,8 @@ CREATE TABLE `application_servers` (
   `date_updated` datetime NOT NULL,
   `created_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `updated_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`application_id`,`server_id`)
+  PRIMARY KEY (`application_id`,`server_id`),
+  KEY `appserversFKservers` (`server_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -127,7 +128,9 @@ CREATE TABLE `applications` (
   `date_updated` datetime NOT NULL,
   `created_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `updated_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`application_id`)
+  PRIMARY KEY (`application_id`),
+  KEY `applicationsFKprojects` (`project_id`),
+  KEY `applicationsFKtype` (`type_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -264,7 +267,9 @@ CREATE TABLE `project_notes` (
   `date_updated` datetime NOT NULL,
   `created_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `updated_by` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`note_id`)
+  PRIMARY KEY (`note_id`),
+  KEY `notesFKproject` (`project_id`),
+  KEY `notesFKapplication` (`application_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -392,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-30 19:29:41
+-- Dump completed on 2014-07-01 13:21:35
