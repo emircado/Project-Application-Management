@@ -4,10 +4,10 @@ var LDAPList = function()
     self._request           = null;
     self.postDataURL        = baseURL + '/ldap/sync';
 
-    self.syncButton         = 'users-sync-button';
-    self.fieldUpdated       = 'users-updated';
-    self.groupContainers    = 'users-lists-container';
-    self.csrfID             = 'users-csrf', 
+    self.syncButton         = 'ldap-sync-button';
+    self.fieldUpdated       = 'ldap-updated';
+    self.groupContainers    = 'ldap-lists-container';
+    self.csrfID             = 'ldap-csrf', 
 
     self.init = function()
     {

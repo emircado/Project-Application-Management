@@ -76,6 +76,45 @@ var AppMainData = {
     }
 }
 
+var UsersData = {
+    getDataURL  : baseURL + '/users/list',
+    _request    : null,
+
+    getAjaxData: function(params, onRetrieve, onFail)
+    {
+        var self = this;
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON(
+            {
+                'url' : self.getDataURL,
+                'method' : 'get',
+                'data' : params,
+                'onSuccess' : function(data)
+                {
+                    if (params['application_id'] != null) {
+                        if (data.totalData == 0) {
+                            console.log('data not available');
+                            onFail();
+                        } else {
+                            console.log('displaying individual');
+                            onRetrieve(data.resultData[0]);
+                        }
+                    } else {
+                        console.log('displaying list');
+                        onRetrieve(data);
+                    }
+                },
+                'onError' : function(data)
+                {
+                    self._request.stop;
+                    console.log('Something went wrong!');
+                }
+            }).send();
+        }
+    }
+}
+
 // contains group => members dictionary
 var LDAPGroupsData = {
     getDataURL  : baseURL + '/ldap/getgroups',

@@ -9974,3 +9974,74 @@ Stack trace:
 REQUEST_URI=/pamgmt/
 HTTP_REFERER=http://10.11.7.11/pamgmt/ldap
 ---
+2014/07/03 15:02:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "users/index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('users/index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/users/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/applications
+---
+2014/07/03 15:02:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "users/index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('users/index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/users/index
+HTTP_REFERER=http://10.11.7.11/pamgmt/applications
+---
+2014/07/03 15:03:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "users/index".' in /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController('users/index')
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/httpd/vhosts/pamgmt/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pamgmt/users
+HTTP_REFERER=http://10.11.7.11/pamgmt/applications
+---
+2014/07/03 15:07:08 [error] [php] Undefined variable: search_status (/home/httpd/vhosts/pamgmt/protected/views/users/users.php:50)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): UsersController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): UsersController->renderPartial()
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/UsersController.php(36): UsersController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): UsersController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(133): UsersController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): UsersController->filterAccessControl()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): UsersController->runActionWithFilters()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): UsersController->run()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/users
+in /home/httpd/vhosts/pamgmt/protected/views/users/users.php (50)
+in /home/httpd/vhosts/pamgmt/protected/controllers/UsersController.php (36)
+in /home/httpd/vhosts/pamgmt/index.php (15)
+2014/07/03 15:09:05 [error] [php] Undefined variable: search_status (/home/httpd/vhosts/pamgmt/protected/views/users/users.php:53)
+Stack trace:
+#0 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(869): UsersController->renderFile()
+#1 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(782): UsersController->renderPartial()
+#2 /home/httpd/vhosts/pamgmt/protected/controllers/UsersController.php(36): UsersController->render()
+#3 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/actions/CInlineAction.php(49): UsersController->actionIndex()
+#4 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(133): UsersController->runAction()
+#6 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CInlineFilter.php(58): UsersController->filterAccessControl()
+#9 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(291): CFilterChain->run()
+#11 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CController.php(265): UsersController->runActionWithFilters()
+#12 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(282): UsersController->run()
+#13 /home/httpd/vhosts/yiiframework/1.1.14/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /home/httpd/vhosts/yiiframework/1.1.14/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /home/httpd/vhosts/pamgmt/index.php(15): CWebApplication->run()
+REQUEST_URI=/pamgmt/users
+in /home/httpd/vhosts/pamgmt/protected/views/users/users.php (53)
+in /home/httpd/vhosts/pamgmt/protected/controllers/UsersController.php (36)
+in /home/httpd/vhosts/pamgmt/index.php (15)

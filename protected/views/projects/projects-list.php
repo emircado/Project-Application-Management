@@ -6,7 +6,7 @@
     $search_status = array(''=>'') + $status;
 ?>
 
-<div id="projects-list" class="table-main" style="display:none";>
+<div id="projects-list" class="table-main" style="display:none">
     <?php echo CHtml::form('', 'post', array('id'=>'export-form', 'enctype'=>'multipart/form-data')); ?>
     <fieldset>
         <input type="hidden" id="projects-list-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />

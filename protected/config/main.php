@@ -27,7 +27,6 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters'=>array('127.0.0.1','::1', '10.11.3.28'),
         ),
-        
     ),
 
     // application components
@@ -51,6 +50,7 @@ return array(
                 'logout' => 'site/logout',
                 'projects' => 'projects/index',
                 'applications' => 'applications/index',
+                'users' => 'users/index',
                 'ldap' => 'ldap/index',
                 // '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 // '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -119,7 +119,7 @@ return array(
         'app_servers_per_page'=>5,
         'app_main_per_page'=>20,
         'notes_per_page'=>5,
-        'servers_per_page'=>20,
+        'users_per_page'=>20,
 
         'graphite_server_ip'=>'10.11.2.29',
         'graphite_server_port_udp'=>2023,

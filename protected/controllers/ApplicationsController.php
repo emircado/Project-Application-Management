@@ -5,8 +5,6 @@ class ApplicationsController extends Controller
     public $extraJS;
     public $modals;
     
-    private $point_person_filter;
-
     public function filters()
     {
         return array(
@@ -135,6 +133,7 @@ class ApplicationsController extends Controller
             if(isset($filter['rd_point_person'])) {
                 $criteria->join .= " LEFT JOIN ldap_users l ON l.username=t.rd_point_person";
                 $criteria->compare('LOWER(l.name)', strtolower($filter['rd_point_person']), true, 'AND', true);
+                $criteria->compare('LOWER(l.username)', strtolower($filter['rd_point_person']), true, 'OR', true);
             }
 
             if(isset($filter['server_type']) || isset($filter['server_id'])) {

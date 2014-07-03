@@ -51,6 +51,8 @@
                 array('label'=>'Home', 'url'=>array('/site'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Projects', 'url'=>array('/projects/index'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Applications', 'url'=>array('/applications/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Users', 'url'=>array('/users/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Servers', 'url'=>array('/servers/index'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'LDAP', 'url'=>array('/ldap/index'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
             ),

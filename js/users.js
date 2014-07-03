@@ -1,88 +1,54 @@
-var AppMainList = function()
+var UsersList = function()
 {
     var self            = this;
-    self.containerID    = 'app-main-list';
-    self.basicConID     = 'app-main-list-basic';
+    self.containerID    = 'users-list';
 
     //for pagination
-    self.prevID         = 'app-main-list-prev';
-    self.nextID         = 'app-main-list-next';
-    self.totalDataID    = 'app-main-list-total';
-    self.totalPartID    = 'app-main-list-part';
+    self.prevID         = 'users-list-prev';
+    self.nextID         = 'users-list-next';
+    self.totalDataID    = 'users-list-total';
+    self.totalPartID    = 'users-list-part';
 
     //for table
-    self.tableID        = 'app-main-list-table';
+    self.tableID        = 'users-list-table';
     self.resultData     = [];
     self.lookupData     = new Hash();
-    self.tableRowClass  = 'app-main-list-row';
+    self.tableRowClass  = 'users-list-row';
 
     //fields
-    self.fieldNameID        = 'app-main-list-search-name';
-    self.fieldProjectID     = 'app-main-list-search-project';
-    self.fieldPointPersonID = 'app-main-list-search-point';
-    self.csrfID             = 'app-main-list-csrf';
+    self.fieldNameID        = 'users-list-search-name';
+    self.fieldPointPersonID = 'users-list-search-pointperson';
+    self.csrfID             = 'users-list-csrf';
 
     //buttons
-    self.createButtonID = 'app-main-list-create-button';
-    self.viewButtonID   = 'tr[id^=app-main-list-view_]';
-    self.searchButtonID = 'app-main-list-search-button';
-    self.clearButtonID  = 'app-main-list-clear-button';
-    self.switchButtonID = 'app-main-list-advanced-button';
-
-    self.advancedSearch = null;
+    self.viewButtonID   = 'tr[id^=users-list-view_]';
+    self.searchButtonID = 'users-list-search-button';
+    self.clearButtonID  = 'users-list-clear-button';
 
     self.init = function()
     {
-        AppMainSite.activeView = 'LIST';
-        var params = {
-            'page'              : AppMainSite.searchParams['page'],
-            'name'              : AppMainSite.searchParams['name'],
-            'project'           : AppMainSite.searchParams['project'],
-            'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
-            'server_type'       : AppMainSite.searchParams['server_type'],
-            'server_id'         : AppMainSite.searchParams['server_id'],
-            'usergroup'         : AppMainSite.searchParams['usergroup'],
-            'point_person'      : AppMainSite.searchParams['point_person'],
-            'is_main'           : true,
+        UsersSite.activeView = 'LIST';
+        UsersData.getAjaxData({
+            'page'              : UsersSite.searchParams['page'],
+            'name'              : UsersSite.searchParams['name'],
+            'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
             'YII_CSRF_TOKEN'    : $(self.csrfID).value,
-        };
+        }, self.getData, function(){});
 
-        AppMainData.getAjaxData(params, self.getData, function(){});
-
-        $(AppMainSite.titleID).set('html', 'Applications');
+        $(UsersSite.titleID).set('html', 'Users');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
-        
-        self.switchSearch();
+
+        $(self.fieldNameID).value = UsersSite.searchParams['name'];
+        $(self.fieldPointPersonID).value = UsersSite.searchParams['rd_point_person'];
     }
 
     self.hide = function()
     {
         $(self.containerID).setStyle('display', 'none');
         $(self.fieldNameID).value = '';
-        $(self.fieldProjectID).value = '';
         $(self.fieldPointPersonID).value = '';
         $$('.'+self.tableRowClass).dispose();
-    }
-
-    self.switchSearch = function()
-    {
-        if (AppMainSite.searchParams['type'] == 'BASIC') {
-            $(self.basicConID).setStyle('display', 'table-row');
-
-            $(self.fieldNameID).value    = AppMainSite.searchParams['name'];
-            $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
-            $(self.fieldPointPersonID).value = AppMainSite.searchParams['rd_point_person'];
-
-        } else if (AppMainSite.searchParams['type'] == 'ADVANCED') {
-            if (self.advancedSearch == null)
-            {
-                self.advancedSearch = new AppMainSearch();
-                self.advancedSearch.init();
-            }
-            self.advancedSearch.show();
-            $(self.basicConID).setStyle('display', 'none');
-        }
     }
 
     self.getData = function(data)
@@ -149,7 +115,7 @@ var AppMainList = function()
     {
         if (typeof aid==='number' && (aid%1)===0 && self.lookupData.has(aid)) {
             console.log('data is from list');
-            AppMainSite.initView(self.resultData[self.lookupData.get(aid)]);
+            UsersSite.initView(self.resultData[self.lookupData.get(aid)]);
             return true;
         } else {
             return false;
@@ -169,16 +135,15 @@ var AppMainList = function()
                 var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
                 var displayname = LDAPUsersData.get(val['rd_point_person']);
 
-                contentHTML = '<td>'+val['name']+'</td>'
-                            + '<td>'+val['project_name']+'</td>'
-                            + '<td>'+((displayname == null)? '' : displayname)+'</td>'            
+                contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
+                            + '<td>'+val['name']+'</td>'        
                             + '<td>'+description+'</td><td></td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
                     'html'  : contentHTML,
-                    'id'    : 'app-main-list-view_'+val['application_id']
+                    'id'    : 'users-list-view_'+val['application_id']
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -188,7 +153,7 @@ var AppMainList = function()
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td colspan="4">No results found</td>';
+            contentHTML = '<td colspan="3">No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -208,20 +173,11 @@ var AppMainList = function()
             e.preventDefault();
             
             if (self.currentPage != self.totalPage) {
-                var h = {
-                    'type'              : AppMainSite.searchParams['type'],
-                    'page'              : AppMainSite.searchParams['page']+1,
-                    'name'              : AppMainSite.searchParams['name'],
-                    'project'           : AppMainSite.searchParams['project'],
-                    'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
-                }
-                if (h['type'] == 'ADVANCED') {
-                    h['server_type']    = AppMainSite.searchParams['server_type'];
-                    h['server_id']      = AppMainSite.searchParams['server_id'];
-                    h['usergroup']      = AppMainSite.searchParams['usergroup'];
-                    h['point_person']   = AppMainSite.searchParams['point_person'];
-                }
-                AppMainSite.historyMngr.set('search', h);
+                UsersSite.historyMngr.set('search', {
+                    'page'              : UsersSite.searchParams['page']+1,
+                    'name'              : UsersSite.searchParams['name'],
+                    'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
+                });
             }
         });
         
@@ -232,20 +188,11 @@ var AppMainList = function()
             e.preventDefault();
             
             if (self.currentPage != 1) {
-                var h = {
-                    'type'              : AppMainSite.searchParams['type'],
-                    'page'              : AppMainSite.searchParams['page']-1,
-                    'name'              : AppMainSite.searchParams['name'],
-                    'project'           : AppMainSite.searchParams['project'],
-                    'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
-                }
-                if (h['type'] == 'ADVANCED') {
-                    h['server_type']    = AppMainSite.searchParams['server_type'];
-                    h['server_id']      = AppMainSite.searchParams['server_id'];
-                    h['usergroup']      = AppMainSite.searchParams['usergroup'];
-                    h['point_person']   = AppMainSite.searchParams['point_person'];
-                }
-                AppMainSite.historyMngr.set('search', h);
+                UsersSite.historyMngr.set('search', {
+                    'page'              : UsersSite.searchParams['page']-1,
+                    'name'              : UsersSite.searchParams['name'],
+                    'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
+                });
             }
         });
 
@@ -254,16 +201,11 @@ var AppMainList = function()
         $(self.searchButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            if (AppMainSite.searchParams['type'] == 'BASIC')
-            {
-                AppMainSite.historyMngr.set('search', {
-                    'type'              : 'BASIC',
+                UsersSite.historyMngr.set('search', {
                     'page'              : 1,
                     'name'              : $(self.fieldNameID).value.trim(),
-                    'project'           : $(self.fieldProjectID).value.trim(),
                     'rd_point_person'   : $(self.fieldPointPersonID).value.trim(),
                 });
-            }
         });
 
         //EVENT FOR CLEAR SEARCH FIELDS
@@ -272,8 +214,7 @@ var AppMainList = function()
         {
             e.preventDefault();
             $(self.fieldNameID).value = '';
-            $(self.fieldCodeID).value = '';
-            $(self.fieldStatusID).value = '';
+            $(self.fieldPointPersonID).value = '';
         });
 
         $$(self.viewButtonID).removeEvents();
@@ -281,535 +222,13 @@ var AppMainList = function()
             e.preventDefault();
             var aid = parseInt($(this).get('id').split('_')[1]);
             if (typeof aid==='number' && (aid%1)===0 && self.lookupData.has(aid)) {
-                AppMainSite.historyMngr.set('id', aid);
+                UsersSite.historyMngr.set('id', aid);
             }
-        });
-
-        //EVENT FOR CREATING A NEW PROJECT
-        $(self.createButtonID).removeEvents();
-        $(self.createButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            AppMainSite.initCreate();
-        });
-
-        //EVENT FOR ADVANCED SEARCH
-        $(self.switchButtonID).removeEvents();
-        $(self.switchButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();        
-            AppMainSite.historyMngr.set('search', {
-                'type'              : 'ADVANCED',
-                'page'              : AppMainSite.searchParams['page'],
-                'name'              : AppMainSite.searchParams['name'],
-                'project'           : AppMainSite.searchParams['project'],
-                'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
-                'server_type'       : AppMainSite.searchParams['server_type'],
-                'server_id'         : AppMainSite.searchParams['server_id'],
-                'usergroup'         : AppMainSite.searchParams['usergroup'],
-                'point_person'      : AppMainSite.searchParams['point_person'],
-            });
         });
     }
 }
 
-var AppMainSearch = function(onHide)
-{
-    var self = this;
-
-    self.containerID        = 'app-main-advanced';
-    
-    // search by server
-    self.serverModal        = new AppServersListModal();
-    self.selectedServer     = '';
-
-    //fields
-    self.fieldNameID        = 'app-main-advanced-application';
-    self.fieldProjectID     = 'app-main-advanced-project';
-    self.fieldPointPersonID = 'app-main-advanced-pointperson';
-    self.fieldServerTypeID  = 'app-main-advanced-servertype';
-    self.fieldServerNameID  = 'app-main-advanced-servername';
-    self.fieldUserGroupID   = 'app-main-advanced-usergroup';
-    self.fieldUserNameID    = 'app-main-advanced-username';
-
-    //buttons
-    self.searchButtonID     = 'app-main-advanced-search-button';
-    self.clearButtonID      = 'app-main-advanced-clear-button';
-    self.closeButtonID      = 'app-main-advanced-close-button';
-    self.serverclearButtonID = 'app-main-advanced-serverclear-button';
-
-    self.usernameRowClass   = 'app-main-advanced-username-row';
-    self.usergroupRowClass  = 'app-main-advanced-usergroup-row';
-
-    self.init = function()
-    {
-        self.addEvents();
-        self.initDropdown();
-    }
-
-    self.show = function()
-    {
-        $(self.containerID).setStyle('display', 'block');
-        $(self.fieldNameID).value = AppMainSite.searchParams['name'];
-        $(self.fieldProjectID).value = AppMainSite.searchParams['project'];
-        $(self.fieldPointPersonID).value = AppMainSite.searchParams['rd_point_person'];  
-        
-        $(self.fieldServerTypeID).value = AppMainSite.searchParams['server_type'];
-        self.selectedServer = AppMainSite.searchParams['server_id'];
-        if (AppMainSite.searchParams['server_type'] != '')
-        {
-            $(self.fieldServerNameID).set('disabled', false);
-            if (self.selectedServer != '') {
-                for (server in AppServersData.get(AppMainSite.searchParams['server_type'])) {
-                    if (server['server_id'] == self.selectedServer) {
-                        $(self.fieldServerNameID).value = server['name'];
-                        break;
-                    }
-                }
-            } else {
-                $(self.fieldServerNameID).value = '';
-            }
-        } else {
-            $(self.fieldServerNameID).set('disabled', 'true');
-        }
-
-        $(self.fieldUserGroupID).value = AppMainSite.searchParams['usergroup'];
-        if (AppMainSite.searchParams['usergroup'] != '') {
-            $(self.fieldUserGroupID).fireEvent('change');
-        }
-        $(self.fieldUserNameID).value = AppMainSite.searchParams['point_person'];
-    }
-
-    self.hide = function()
-    {
-        AppMainSite.searchParams['type'] = 'BASIC'
-        $(self.containerID).setStyle('display', 'none');
-        AppMainSite.historyMngr.set('search', {
-            'type'              : 'BASIC',
-            'page'              : AppMainSite.searchParams['page'],
-            'name'              : AppMainSite.searchParams['name'],
-            'project'           : AppMainSite.searchParams['project'],
-            'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
-        });
-    }
-
-    self.clearSearch = function()
-    {
-        $(self.fieldNameID).value = '';
-        $(self.fieldProjectID).value = '';
-
-        $(self.fieldServerTypeID).value = '';
-        $(self.fieldServerNameID).value = '';
-        $(self.fieldServerNameID).set('disabled', true);
-        self.selectedServer = '';
-
-        $$('.'+self.usernameRowClass).dispose();
-        $$('.'+self.usergroupRowClass).dispose();
-        self.initDropdown();
-    }
-
-    self.initDropdown = function()
-    {
-        contentElem = new Element('<option />',
-        {
-            'class' : self.usernameRowClass,
-            'value' : '',
-            'html'  : '--Select Username--'
-        });
-        contentElem.inject($(self.fieldUserNameID), 'bottom');
-        contentElem = new Element('<option />',
-        {
-            'class' : self.usergroupRowClass,
-            'value' : '',
-            'html'  : '--Select User Group--'
-        });
-        contentElem.inject($(self.fieldUserGroupID), 'bottom');
-
-        LDAPGroupsData.resultData.each(function(val, idx)
-        {
-            contentElem = new Element('<option />',
-            {
-                'class' : self.usergroupRowClass,
-                'value' : idx,
-                'html'  : idx
-            });
-            contentElem.inject($(self.fieldUserGroupID), 'bottom');
-        });
-    }
-
-    self.addEvents = function()
-    {
-        // SERVER FIELD
-        $(self.fieldServerNameID).removeEvents();
-        $(self.fieldServerNameID).addEvent('focus', function(e)
-        {
-            e.preventDefault();
-            $(this).blur();
-            var servertype = $(self.fieldServerTypeID).value;
-
-            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
-                self.serverModal = new AppServersListModal(servertype, self.setSelectedServer, false);
-                self.serverModal.show();
-            } else {
-                $(self.fieldServerNameID).set('disabled', true);
-            }
-        });
-
-        // CLOSE BUTTON EVENT
-        $(self.closeButtonID).removeEvents();
-        $(self.closeButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            self.hide();
-        });
-
-        // CLEAR BUTTON EVENT
-        $(self.clearButtonID).removeEvents();
-        $(self.clearButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            self.clearSearch();
-        });
-
-        // SERVER CLEAR BUTTON EVENT
-        $(self.serverclearButtonID).removeEvents();
-        $(self.serverclearButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            $(self.fieldServerNameID).value = '';
-            self.selectedServer = '';
-        });
-
-        // SEARCH BUTTON EVENT
-        $(self.searchButtonID).removeEvents();
-        $(self.searchButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            AppMainSite.historyMngr.set('search', {
-                'type'              : 'ADVANCED',
-                'page'              : 1,
-                'name'              : $(self.fieldNameID).value.trim(),
-                'project'           : $(self.fieldProjectID).value.trim(),
-                'rd_point_person'   : $(self.fieldPointPersonID).value.trim(),
-                'server_type'       : $(self.fieldServerTypeID).value,
-                'server_id'         : self.selectedServer,
-                'usergroup'         : $(self.fieldUserGroupID).value,
-                'point_person'      : $(self.fieldUserNameID).value,
-            })
-        });
-
-        //USER GROUP DROPDOWN
-        $(self.fieldUserGroupID).removeEvents();
-        $(self.fieldUserGroupID).addEvent('change', function(e)
-        {
-            var usergroup = this.getElement(':selected').value;
-
-            $$('.'+self.usernameRowClass).dispose();
-
-            contentElem = new Element('<option />',
-            {
-                'class' : self.usernameRowClass,
-                'value' : '',
-                'html'  : '--Select Username--'
-            });
-            contentElem.inject($(self.fieldUserNameID), 'bottom');
-
-            if (usergroup != '') {
-                LDAPGroupsData.get(usergroup).each(function(val, idx) {
-                    contentElem = new Element('<option />',
-                    {
-                        'class' : self.usernameRowClass,
-                        'value' : idx,
-                        'html'  : val
-                    });
-                    contentElem.inject($(self.fieldUserNameID), 'bottom');
-                });
-            }
-        });
-
-        // SELECT SERVER TYPE DROPDOWN
-        $(self.fieldServerTypeID).removeEvents();
-        $(self.fieldServerTypeID).addEvent('change', function(e)
-        {
-            e.preventDefault();
-            var servertype = this.getElement(':selected').value;
-
-            $(self.fieldServerNameID).value = '';
-            if (['PRODUCTION', 'DEVELOPMENT', 'STAGING'].contains(servertype)) {
-                $(self.fieldServerNameID).set('disabled', false);
-                self.selectedServer = '';
-            } else {
-                $(self.fieldServerNameID).set('disabled', true);
-                self.selectedServer = '';
-            }
-        });
-    }
-
-    self.setSelectedServer = function(server) {
-        $(self.fieldServerNameID).value = server['name'];
-        self.selectedServer = server['server_id'];
-    }
-}
-
-var AppMainCreate = function()
-{
-    var self = this;
-    self.postDataURL = baseURL + '/applications/create';
-    self._request = null;
-
-    self.containerID = 'app-main-create';
-    self.modalContainerID = 'app-main-create-modal-container';
-    self.typeModal = new ApplicationTypesModal();
-    self.projectModal = new ProjectsListModal();
-
-    //fields
-    self.fieldProjectID        = 'app-main-create-project';
-    self.fieldNameID           = 'app-main-create-name';
-    self.fieldTypeID           = 'app-main-create-type';
-    self.fieldAccessibilityID  = 'app-main-create-accessibility';
-    self.fieldRepositoryID     = 'app-main-create-repository';
-    self.fieldDescriptionID    = 'app-main-create-description';
-    self.fieldInstructionsID   = 'app-main-create-instructions';
-    self.fieldPointPersonID    = 'app-main-create-pointperson';
-    self.fieldProductionID     = 'app-main-create-production';
-    self.fieldTerminationID    = 'app-main-create-termination';
-    self.fieldPatternID        = 'app-main-create-pattern';
-    self.csrfID                = 'app-main-create-csrf';
-    self.project_id            = '';
-
-    //dropdown class
-    self.pointPersonRowClass   = 'app-main-create-pointperson-row';
-    
-    //error fields
-    self.errorProjectID        = 'app-main-create-project-error'
-    self.errorNameID           = 'app-main-create-name-error';
-    self.errorTypeID           = 'app-main-create-type-error';
-    self.errorAccessibilityID  = 'app-main-create-accessibility-error';
-
-    //buttons
-    self.createButtonID        = 'app-main-create-save-button';
-    self.cancelButtonID        = 'app-main-create-cancel-button';
-
-    self.datePickerProd        = null;
-    self.datePickerTerm        = null;
-
-    self.init = function()
-    {
-        AppMainSite.activeView = 'CREATE';
-
-        self.datePickerProd = new DatePicker($(self.fieldProductionID), {
-            allowEmpty: true,
-            timePicker: false,
-            pickerClass: 'datepicker_vista',
-            positionOffset: {x: 380, y:-40},
-            format: 'M j, Y',
-            inputOutputFormat: 'Y-m-d',
-        });
-
-        self.datePickerTerm = new DatePicker($(self.fieldTerminationID), {
-            allowEmpty: true,
-            timePicker: false,
-            pickerClass: 'datepicker_vista',
-            positionOffset: {x: 380, y:-40},
-            format: 'M j, Y',
-            inputOutputFormat: 'Y-m-d',
-        });
-
-        $(self.containerID).setStyle('display', 'block');
-        $(self.modalContainerID).grab($(self.typeModal.modalID), 'top');
-        self.initDropdown();
-        self.addEvents();
-    }
-
-    self.hide = function()
-    {
-        $(self.containerID).setStyle('display', 'none');
-
-        // close modals
-        self.typeModal.closeModal();
-        self.projectModal.closeModal();
-
-        // clear errors
-        $(self.errorProjectID).setStyle('display', 'none');
-        $(self.errorNameID).setStyle('display', 'none');
-        $(self.errorTypeID).setStyle('display', 'none');
-        $(self.errorAccessibilityID).setStyle('display', 'none');
-
-        // clear fields
-        $(self.fieldProjectID).value = '';
-        $(self.fieldNameID).value = '';
-        $(self.fieldTypeID).value = '';
-        $(self.fieldAccessibilityID).value = 'PUBLIC';
-        $(self.fieldRepositoryID).value = '';
-        $(self.fieldDescriptionID).value = '';
-        $(self.fieldInstructionsID).value = '';
-        $(self.fieldPointPersonID).set('html', '');
-        $(self.fieldProductionID).value = '';
-        $(self.fieldTerminationID).value = '';
-        $(self.fieldProductionID).getNext().value = '';
-        $(self.fieldTerminationID).getNext().value = '';
-    }
-
-    self.postAjaxData = function()
-    {
-        if(!self._request || !self._request.isRunning())
-        {
-            var params = {
-                'YII_CSRF_TOKEN':       $(self.csrfID).value,
-                'project_id':           self.project_id,
-                'name':                 $(self.fieldNameID).value.trim(),
-                'type_name':            $(self.fieldTypeID).value.trim(),
-                'accessibility':        $(self.fieldAccessibilityID).value.trim(),
-                'repository_url':       $(self.fieldRepositoryID).value.trim(),
-                'uses_mobile_patterns': $(self.fieldPatternID).checked,
-                'description':          $(self.fieldDescriptionID).value.trim(),
-                'instructions':         $(self.fieldInstructionsID).value.trim(),
-                'rd_point_person':      $(self.fieldPointPersonID).value.trim(),
-                'production_date':      $(self.fieldProductionID).value.trim(),
-                'termination_date':     $(self.fieldTerminationID).value.trim()
-            };
-
-            self._request = new Request.JSON(
-            {
-                'url' : self.postDataURL,
-                'method' : 'post',
-                'data' : params,
-                'onSuccess': function(response)
-                {
-                    if (response['type'] == 'error') {
-                        self._request.stop;
-                        Array.each(response['data'].split(','), function(error, idx)
-                        {
-                            var msg = error.split(': ');
-                            if (msg[0] == 'PROJECT_ERROR') {
-                                $(self.errorProjectID).set('html', msg[1]);
-                                $(self.errorProjectID).setStyle('display', 'block');
-                            } else if (msg[0] == 'NAME_ERROR') {
-                                $(self.errorNameID).set('html', msg[1]);
-                                $(self.errorNameID).setStyle('display', 'block');
-                            } else if (msg[0] == 'TYPE_ERROR') {
-                                $(self.errorTypeID).set('html', msg[1]);
-                                $(self.errorTypeID).setStyle('display', 'block');
-                            } else if (msg[0] == 'ACCESSIBILITY_ERROR') {
-                                $(self.errorAccessibilityID).set('html', msg[1]);
-                                $(self.errorAccessibilityID).setStyle('display', 'block');
-                            } else if (msg[0] == 'CSRF_ERROR') {
-                                console.log(msg[1]);
-                            }
-                        });
-                    } else if (response['type'] == 'success') {
-                        $(self.cancelButtonID).click();
-                    }
-                },
-                'onError' : function(errors)
-                {
-                    self._request.stop;
-                    console.log('error type 1');
-                }
-            }).send();
-        }
-    }
-
-    self.addEvents = function()
-    {
-        // event for application type
-        $(self.fieldTypeID).removeEvents();
-        $(self.fieldTypeID).addEvent('focus', function(e)
-        {
-            e.preventDefault();
-            $(this).blur();
-
-            self.typeModal = new ApplicationTypesModal(
-                function(app_type) {
-                    $(self.fieldTypeID).value = app_type;
-                    $(self.errorTypeID).setStyle('display', 'none');
-                }
-            );
-            self.typeModal.show();
-        });
-
-        // event for project id
-        $(self.fieldProjectID).removeEvents();
-        $(self.fieldProjectID).addEvent('focus', function(e)
-        {
-            e.preventDefault();
-            $(this).blur();
-
-            self.projectModal = new ProjectsListModal(
-                function(project) {
-                    self.project_id = project['project_id']
-                    $(self.fieldProjectID).value = project['name'];
-                    $(self.errorProjectID).setStyle('display', 'none');
-                }
-            );
-            self.projectModal.show();
-        });
-
-        // event for create button
-        $(self.createButtonID).removeEvents();
-        $(self.createButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            $(self.errorProjectID).setStyle('display', 'none');
-            $(self.errorNameID).setStyle('display', 'none');
-            $(self.errorTypeID).setStyle('display', 'none');
-            $(self.errorAccessibilityID).setStyle('display', 'none');
-            self.postAjaxData();
-        });
-    
-        // event for cancel button
-        $(self.cancelButtonID).removeEvents();
-        $(self.cancelButtonID).addEvent('click', function(e)
-        {
-            e.preventDefault();
-            AppMainSite.initObj();
-        });
-
-        //EVENT FOR CHOOSE PRODUCTION DATE
-        $(self.fieldProductionID).removeEvents();
-        $(self.fieldProductionID).addEvent('focus', function(e) 
-        {
-            e.preventDefault();
-            $(this).blur();
-            self.datePickerProd.show();
-        });
-
-        //EVENT FOR CHOOSE TERMINATION DATE
-        $(self.fieldTerminationID).removeEvents();
-        $(self.fieldTerminationID).addEvent('focus', function(e) 
-        {
-            e.preventDefault();
-            $(this).blur();
-            self.datePickerTerm.show();
-        });
-    }
-
-    self.initDropdown = function()
-    {
-        $$('.'+self.pointPersonRowClass).dispose();
-
-        contentElem = new Element('<option />',
-        {
-            'class' : self.pointPersonRowClass,
-            'value' : '',
-            'html'  : '--Select Point Person--'
-        });
-        contentElem.inject($(self.fieldPointPersonID), 'bottom');
-
-        hash = new Hash(LDAPGroupsData.get('DEVELOPERS'));
-        hash.each(function(val, idx) {
-            contentElem = new Element('<option />',
-            {
-                'class' : self.pointPersonRowClass,
-                'value' : idx,
-                'html'  : val
-            });
-            contentElem.inject($(self.fieldPointPersonID), 'bottom');
-        });
-    }
-}
-
-var AppMainView = function(data)
+var UsersView = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/delete';
@@ -845,8 +264,8 @@ var AppMainView = function(data)
 
     self.init = function()
     {
-        AppMainSite.activeView = 'VIEW';
-        $(AppMainSite.titleID).set('html', 'Applications/'+data['name']);
+        UsersSite.activeView = 'VIEW';
+        $(UsersSite.titleID).set('html', 'Applications/'+data['name']);
         $(self.containerID).setStyle('display', 'block');
         
         ApplicationNotesSite.init(data['application_id']);
@@ -933,7 +352,7 @@ var AppMainView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            AppMainSite.initEdit(data);
+            UsersSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
@@ -954,13 +373,13 @@ var AppMainView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            AppMainSite.historyMngr.remove('id');
-            AppMainSite.initObj();
+            UsersSite.historyMngr.remove('id');
+            UsersSite.initObj();
         });
     }
 }
 
-var AppMainEdit = function(data)
+var UsersEdit = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/update';
@@ -1004,7 +423,7 @@ var AppMainEdit = function(data)
 
     self.init = function()
     {
-        AppMainSite.activeView = 'EDIT';
+        UsersSite.activeView = 'EDIT';
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
             timePicker: false,
@@ -1204,7 +623,7 @@ var AppMainEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            AppMainSite.initView(data);
+            UsersSite.initView(data);
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
@@ -1251,26 +670,19 @@ var AppMainEdit = function(data)
     }
 }
 
-var AppMainSite = {
-    titleID         : 'app-main-title',
-    csrfID          : 'app-main-csrf',
-    mainObj         : new AppMainList(),
-    createObj       : new AppMainCreate(),
+var UsersSite = {
+    titleID         : 'users-title',
+    csrfID          : 'users-csrf',
+    mainObj         : new UsersList(),
     viewObj         : null,
     editObj         : null,
     //some more variables
     activeView      : '',
     historyMngr     : new HistoryManager(),
     searchParams    : {
-        'type'              : 'BASIC',
         'page'              : 1,
         'name'              : '',
-        'project'           : '',
         'rd_point_person'   : '',
-        'server_type'       : '',
-        'server_id'         : '',
-        'usergroup'         : '',
-        'point_person'      : '',
     },
     processChange   : true,     //allow or prevent prevent action on hash change in search
 
@@ -1289,10 +701,8 @@ var AppMainSite = {
         if (hash == null || Object.keys(hash).length == 0) {
             console.log('no hash');
             self.historyMngr.set('search', {
-                'type'              : self.searchParams['type'],
                 'page'              : self.searchParams['page'],
                 'name'              : self.searchParams['name'],
-                'project'           : self.searchParams['project'],
                 'rd_point_person'   : self.searchParams['rd_point_person'],
             });
         }
@@ -1305,18 +715,11 @@ var AppMainSite = {
         self.mainObj.init();
     },
 
-    initCreate: function()
-    {
-        var self = this;
-        self.closeActive();
-        self.createObj.init();
-    },
-
     initView: function(data)
     {
         var self = this;
         self.closeActive();
-        self.viewObj = new AppMainView(data);
+        self.viewObj = new UsersView(data);
         self.viewObj.init();
     },
 
@@ -1324,7 +727,7 @@ var AppMainSite = {
     {
         var self = this;
         self.closeActive();
-        self.editObj = new AppMainEdit(data);
+        self.editObj = new UsersEdit(data);
         self.editObj.init();
     },
 
@@ -1338,16 +741,15 @@ var AppMainSite = {
             if (!self.mainObj.makeView(aid)) {
                 console.log('retrieve new');
                 
-                AppMainData.getAjaxData({
+                UsersData.getAjaxData({
                     'application_id': aid,
-                    'is_main'       : true,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
                 // on success
                 }, function(data) {
                     self.initView(data)
                 // on fail
                 }, function() {
-                    AppMainSite.historyMngr.remove('id');
+                    AppMainData.historyMngr.remove('id');
                 });
             }
         }
@@ -1365,31 +767,17 @@ var AppMainSite = {
                 
                 // FIX HASH IF NEEDED
                 var hasInvalid = false;
-                self.searchParams['type']               = ('type' in new_value)? new_value['type'] : 'BASIC';
                 self.searchParams['page']               = ('page' in new_value)? new_value['page'] : 1;
                 self.searchParams['name']               = ('name' in new_value)? new_value['name'] : '';
-                self.searchParams['project']            = ('project' in new_value)? new_value['project'] : '';
                 self.searchParams['rd_point_person']    = ('rd_point_person' in new_value)? new_value['rd_point_person'] : '';
-                self.searchParams['server_type']        = ('server_type' in new_value)? new_value['server_type'] : '';
-                self.searchParams['server_id']          = ('server_id' in new_value)? new_value['server_id'] : '';
-                self.searchParams['usergroup']          = ('usergroup' in new_value)? new_value['usergroup'] : '';
-                self.searchParams['point_person']       = ('point_person' in new_value)? new_value['point_person'] : '';
 
                 if (hasInvalid) {
                     var h = {
-                        'type'              : AppMainSite.searchParams['type'],
-                        'page'              : AppMainSite.searchParams['page'],
-                        'name'              : AppMainSite.searchParams['name'],
-                        'project'           : AppMainSite.searchParams['project'],
-                        'rd_point_person'   : AppMainSite.searchParams['rd_point_person'],
+                        'page'              : UsersSite.searchParams['page'],
+                        'name'              : UsersSite.searchParams['name'],
+                        'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
                     }
-                    if (h['type'] == 'ADVANCED') {
-                        h['server_type']    = AppMainSite.searchParams['server_type'];
-                        h['server_id']      = AppMainSite.searchParams['server_id'];
-                        h['usergroup']      = AppMainSite.searchParams['usergroup'];
-                        h['point_person']   = AppMainSite.searchParams['point_person'];
-                    }
-                    AppMainSite.historyMngr.set('search', h);
+                    UsersSite.historyMngr.set('search', h);
                 } else {
                     if (!('id' in hash)) {
                         self.initObj();
@@ -1407,10 +795,8 @@ var AppMainSite = {
         {
             hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
             self.searchParams = {
-                'type'      : 'BASIC',
                 'page'      : 1,
                 'name'      : '',
-                'project'   : '',
                 'rd_point_person': '',
             };
             self.historyMngr.set('search', self.searchParams);
@@ -1424,9 +810,6 @@ var AppMainSite = {
         {
             case 'LIST':
                 self.mainObj.hide();
-                break;
-            case 'CREATE':
-                self.createObj.hide();
                 break;
             case 'VIEW':
                 if (self.viewObj != null)
@@ -1443,5 +826,5 @@ var AppMainSite = {
 
 window.addEvent('domready', function()
 {
-    AppMainSite.init();
+    UsersSite.init();
 });
