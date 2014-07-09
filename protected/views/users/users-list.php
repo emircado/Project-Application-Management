@@ -21,14 +21,14 @@
             <table>
                 <thead>
                     <tr>                      
-                        <th width="250">R&D Point Person</th>
-                        <th width="250">Application</th>
+                        <th width="200">Name</th>
+                        <th width="200">Application</th>
                         <th width="">Description</th>
                         <th width="50"></th>
                     </tr>
                     <tr>
-                        <th><input id="users-list-search-pointperson" type="text" style="width:230px;"/></th>
-                        <th><input id="users-list-search-name" type="text" style="width:230px;"/></th>
+                        <th><input id="users-list-username" type="text" style="width:180px;"/></th>
+                        <th><input id="users-list-name" type="text" style="width:180px"/></th>
                         <th></th>
                         <th><div><button id="users-list-search-button" class="red-button">Search</button></div><a href="#" id="users-list-clear-button">Clear</a></th>
                     </tr>

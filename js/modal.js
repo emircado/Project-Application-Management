@@ -122,7 +122,7 @@ var ApplicationTypesModal = function(onConfirm)
                 {
                     if (response['type'] == 'success') {
                         var entry = response['data'];
-                        AppTypesData.set(entry['type_id'], entry['name']);
+                        AppTypesData.resultData.set(entry['type_id'], entry['name']);
                     } else if (response['type'] == 'error') {
                         self._request.stop;
                         console.log(response['data']);
@@ -752,8 +752,6 @@ var AppServersListModal = function(server_type, onSelected, hasCreate)
     self.setNewServer = function(new_server)
     {
         self.show();
-        console.log(new_server);
-
         self.clearTable();
         self.filterChoices();
     }
@@ -801,6 +799,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
     self.csrfID             = 'app-servers-create-modal-csrf';
 
     // errors
+    self.errorNameID        = 'app-servers-create-modal-name-error';
     self.errorTypeID        = 'app-servers-create-modal-type-error';
     self.errorNetworkID     = 'app-servers-create-modal-network-error';
     self.errorPublicID      = 'app-servers-create-modal-public-error';
@@ -857,6 +856,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.dialogWrapperID).setStyle('display', 'none');
 
         // clear form
+        $(self.errorNameID).setStyle('display', 'none');
         $(self.errorTypeID).setStyle('display', 'none');
         $(self.errorNetworkID).setStyle('display', 'none');
         $(self.errorPublicID).setStyle('display', 'none');
@@ -911,7 +911,10 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
-                            if (msg[0] == 'NETWORK_ERROR') {
+                            if (msg[0] == 'NAME_ERROR') {
+                                $(self.errorNameID).set('html', msg[1]);
+                                $(self.errorNameID).setStyle('display', 'block');
+                            } else if (msg[0] == 'NETWORK_ERROR') {
                                 $(self.errorNetworkID).set('html', msg[1]);
                                 $(self.errorNetworkID).setStyle('display', 'block');
                             } else if (msg[0] == 'TYPE_ERROR') {
@@ -958,6 +961,7 @@ var AppServersCreateModal = function(data, onCreate, onCancel)
         $(self.confirmButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorNameID).setStyle('display', 'none');
             $(self.errorNetworkID).setStyle('display', 'none');
             $(self.errorTypeID).setStyle('display', 'none');
             $(self.errorPrivateID).setStyle('display', 'none');

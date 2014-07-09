@@ -1134,9 +1134,6 @@ var AppMainEdit = function(data)
 
     self.renderData = function()
     {
-        var termination = (data['termination_date'] == null || data['termination_date'] == '0000-00-00' || data['termination_date'] == '')? '' : DateFormatter.formatDate(data['termination_date']);
-        var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
-
         self.project_id                      = data['project_id'];
         $(self.fieldProjectID).value         = data['project_name'];
         $(self.fieldNameID).value            = data['name'].replace(/&lt/g, '<');;
@@ -1147,10 +1144,22 @@ var AppMainEdit = function(data)
         $(self.fieldDescriptionID).value     = data['description'].replace(/&lt/g, '<');;
         $(self.fieldInstructionsID).value    = data['instructions'].replace(/&lt/g, '<');;
         $(self.fieldPointPersonID).value     = data['rd_point_person'];
-        $(self.fieldProductionID).value      = data['production_date'];
-        $(self.fieldTerminationID).value     = data['termination_date'];
-        $(self.fieldProductionID).getNext().value   = production;
-        $(self.fieldTerminationID).getNext().value  = termination;
+  
+        if ([null, '0000-00-00', ''].contains(data['production_date'])) {
+            $(self.fieldProductionID).value = '';
+            $(self.fieldProductionID).getNext().value = '';
+        } else {
+            $(self.fieldProductionID).value = data['production_date'];
+            $(self.fieldProductionID).getNext().value = DateFormatter.formatDate(data['production_date']);
+        }
+
+        if ([null, '0000-00-00', ''].contains(data['termination_date'])) {
+            $(self.fieldTerminationID).value = '';
+            $(self.fieldTerminationID).getNext().value = '';
+        } else {
+            $(self.fieldTerminationID).value = data['termination_date'];
+            $(self.fieldTerminationID).getNext().value = DateFormatter.formatDate(data['termination_date']);
+        }
     }
 
     self.addEvents = function()

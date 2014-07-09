@@ -6,7 +6,7 @@
                     <div class="header-block-content">
                         <div class="header-block-title">
                             <h2 id="users-title" class="content-title">Users</h2>
-                            <div class="form-note"><i>List of users who are main point persons of applications.</i></div>
+                            <div class="form-note"><i id="users-note">Point persons of applications.</i></div>
                             <hr>
                         </div> 
                         <input type="hidden" id="users-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />

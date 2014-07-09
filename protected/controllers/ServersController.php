@@ -2,6 +2,9 @@
 
 class ServersController extends Controller
 {
+    public $extraJS;
+    public $modals;
+
     public function filters()
     {
         return array(
@@ -26,6 +29,27 @@ class ServersController extends Controller
         );
     }
 
+    public function actionIndex()
+    {
+        $this->modals = array(
+            'application-types-modal', 
+            'application-servers-search-modal',
+            'application-servers-list-modal',
+            'application-servers-create-modal',
+            'projects-list-modal',
+            'confirmation-modal',
+        );
+        
+        $this->extraJS = '<script src="' . Yii::app()->request->baseUrl . '/js/data.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/modal.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-notes.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-servers.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/application-point-persons.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/server-apps.js"></script>'.
+                         '<script src="' . Yii::app()->request->baseUrl . '/js/servers.js"></script>';
+        $this->render('servers');
+    }
+
     public function actionList()
     {
         if (!isset($_GET['YII_CSRF_TOKEN']))
@@ -38,20 +62,29 @@ class ServersController extends Controller
         $offset = ($page-1)*$limit;
         $filter = array();
 
-        if (isset($_GET['name']) && (!empty($_GET['name']) || $_GET['name'] == '0'))
-            $filter['name'] = (string) $_GET['name'];
+        if (isset($_GET['server_id'])) 
+            if (!empty($_GET['server_id']) || $_GET['server_id'] == '0') 
+                $filter['server_id'] = (int) $_GET['server_id'];
 
-        if (isset($_GET['server_type']) && !empty($_GET['server_type']))
-            $filter['server_type'] = (string) $_GET['server_type'];
+        if (isset($_GET['name']))
+            if (!empty($_GET['name']) || $_GET['name'] == '0')
+                $filter['name'] = (string) $_GET['name'];
 
-        if (isset($_GET['hostname']) && (!empty($_GET['hostname']) || $_GET['hostname'] == '0'))
-            $filter['hostname'] = (string) $_GET['hostname'];
+        if (isset($_GET['type']))
+            if (!empty($_GET['type']))
+                $filter['server_type'] = (string) $_GET['type'];
 
-        if (isset($_GET['private_ip']) && (!empty($_GET['private_ip']) || $_GET['private_ip'] == '0'))
-            $filter['private_ip'] = (string) $_GET['private_ip'];
+        if (isset($_GET['public_ip']))
+            if (!empty($_GET['public_ip']) || $_GET['public_ip'] == '0')
+                $filter['public_ip'] = (string) $_GET['public_ip'];
 
-        if (isset($_GET['network']) && (!empty($_GET['network']) || $_GET['network'] == '0'))
-            $filter['network'] = (string) $_GET['network'];
+        if (isset($_GET['private_ip']))
+            if (!empty($_GET['private_ip']) || $_GET['private_ip'] == '0')
+                $filter['private_ip'] = (string) $_GET['private_ip'];
+
+        if (isset($_GET['network']))
+            if (!empty($_GET['network']) || $_GET['network'] == '0')
+                $filter['network'] = (string) $_GET['network'];
 
         $servers = $this->get_data($filter, $limit, $offset);
 
@@ -104,17 +137,20 @@ class ServersController extends Controller
 
         if(is_array($filter))
         {
+            if(isset($filter['server_id']))
+                $criteria->compare('server_id', $filter['server_id']);
+
             if(isset($filter['name']))
                 $criteria->compare('LOWER(name)', strtolower($filter['name']), true, 'AND', true);
 
-            if(isset($filter['hostname']))
-                $criteria->compare('hostname', $filter['hostname'], true, 'AND', true);
+            if(isset($filter['public_ip']))
+                $criteria->compare('public_ip', $filter['public_ip'], true, 'AND', true);
 
             if(isset($filter['private_ip']))
                 $criteria->compare('private_ip', $filter['private_ip'], true, 'AND', true);
 
             if(isset($filter['network']))
-                $criteria->compare('network', $filter['network'], true, 'AND', true);
+                $criteria->compare('LOWER(network)', strtolower($filter['network']), true, 'AND', true);
 
             if(isset($filter['server_type']))
                 $criteria->compare('server_type', $filter['server_type']);
@@ -160,21 +196,35 @@ class ServersController extends Controller
     {
         $data = $_POST;
 
-        $data['name']               = trim($data['name']);
-        $data['server_type']        = trim($data['server_type']);
-        $data['hostname']           = trim($data['hostname']);
-        $data['public_ip']          = trim($data['public_ip']);
-        $data['private_ip']         = trim($data['private_ip']);
-        $data['network']            = trim($data['network']);
-        $data['location']           = trim($data['location']);
-        $data['description']        = trim($data['description']);
-        $data['production_date']    = trim($data['production_date']);
-        $data['termination_date']   = trim($data['termination_date']);
-
         if (!empty($data)) {
+            $data['name']               = trim($data['name']);
+            $data['server_type']        = trim($data['server_type']);
+            $data['hostname']           = trim($data['hostname']);
+            $data['public_ip']          = trim($data['public_ip']);
+            $data['private_ip']         = trim($data['private_ip']);
+            $data['network']            = trim($data['network']);
+            $data['location']           = trim($data['location']);
+            $data['description']        = trim($data['description']);
+            $data['production_date']    = trim($data['production_date']);
+            $data['termination_date']   = trim($data['termination_date']);
+
+            // making it null instead of an empty string will evade integrity constraint errors
+            if (strlen($data['public_ip']) == 0) {
+                $data['public_ip'] = null;
+            }
+
+            if (strlen($data['private_ip']) == 0) {
+                $data['private_ip'] = null;
+            }
+
             //FORM VALIDATION HERE
             $errors = array();
             $duplicate = NULL;
+
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
 
             //network is required
             if (strlen($data['network']) == 0) {
@@ -261,27 +311,63 @@ class ServersController extends Controller
 
         //will be empty if CSRF authentication fails
         if (!empty($data)) {
-            $data['name'] = trim($data['name']);
-            $data['code'] = trim($data['code']);
-            $data['description'] = trim($data['description']);
-            $data['production_date'] = trim($data['production_date']);
+            $data['name']               = trim($data['name']);
+            $data['server_type']        = trim($data['server_type']);
+            $data['hostname']           = trim($data['hostname']);
+            $data['public_ip']          = trim($data['public_ip']);
+            $data['private_ip']         = trim($data['private_ip']);
+            $data['network']            = trim($data['network']);
+            $data['location']           = trim($data['location']);
+            $data['description']        = trim($data['description']);
+            $data['production_date']    = trim($data['production_date']);
+            $data['termination_date']   = trim($data['termination_date']);
+
+            // making it null instead of an empty string will evade integrity constraint errors
+            if (strlen($data['public_ip']) == 0) {
+                $data['public_ip'] = null;
+            }
+
+            if (strlen($data['private_ip']) == 0) {
+                $data['private_ip'] = null;
+            }
 
             //FORM VALIDATION HERE
             $errors = array();
-            //code is required
-            if (strlen($data['code']) == 0) {
-                array_push($errors, 'CODE_ERROR: Code is required');
-            //code must be at least 5 characters long
-            } else if (strlen($data['code']) != 5) {
-                array_push($errors, 'CODE_ERROR: Project code must be 5 characters');
-            //check if code is alphanumeric
-            } else if (!ctype_alnum($data['code'])) {
-                array_push($errors, 'CODE_ERROR: Code must be alphanumeric');
-            } else {
-                //check if project code already exists
-                $existing = Projects::model()->find('code = :code', array(":code"=>$data['code']));
-                if ($existing != NULL && $existing->project_id != $data['project_id']) {
-                    array_push($errors, 'CODE_ERROR: Code already taken');
+            $duplicate = NULL;
+
+            //name is required
+            if (strlen($data['name']) == 0) {
+                array_push($errors, 'NAME_ERROR: Name is required');
+            }
+
+            //network is required
+            if (strlen($data['network']) == 0) {
+                array_push($errors, 'NETWORK_ERROR: Network is required');
+            }
+
+            $server_types = ZHtml::enumItem(Servers::model(), 'server_type');
+            //server type is required
+            if (strlen($data['server_type']) == 0) {
+                array_push($errors, 'TYPE_ERROR: Type is required');
+            //server type should be valid
+            } else if (!in_array($data['server_type'], $server_types)) {
+                array_push($errors, 'TYPE_ERROR: Type is invalid');
+            }
+
+            //public IP must be unique
+            if (strlen($data['public_ip']) != 0) {
+                $duplicate = Servers::model()->find('public_ip=:public_ip', array(':public_ip'=>$data['public_ip']));
+                if ($duplicate != NULL && $duplicate->server_id != $data['server_id']) {
+                    array_push($errors, 'PUBLIC_ERROR: Public IP is already assigned');
+                }
+            }
+
+            //private IP + network must be unique
+            if (strlen($data['private_ip']) != 0 && strlen($data['network']) != 0) {
+                $duplicate = Servers::model()->find('private_ip=:private_ip AND network=:network',
+                    array(':private_ip'=>$data['private_ip'], ':network'=>$data['network']));
+                if ($duplicate != NULL && $duplicate->server_id != $data['server_id']) {
+                    array_push($errors, 'PRIVATE_ERROR: Private IP is already assigned');
                 }
             }
 
@@ -289,14 +375,28 @@ class ServersController extends Controller
             if (count($errors) == 0) {
                 $updates = array(
                     'name'              => $data['name'],
-                    'code'              => $data['code'],
+                    'server_type'       => $data['server_type'],
+                    'hostname'          => $data['hostname'],
+                    'public_ip'         => $data['public_ip'],
+                    'private_ip'        => $data['private_ip'],
+                    'network'           => $data['network'],
+                    'location'          => $data['location'],
                     'description'       => $data['description'],
                     'production_date'   => $data['production_date'],
+                    'termination_date'  => $data['termination_date'],
                     'date_updated'      => date("Y-m-d H:i:s"),
                     'updated_by'        => Yii::app()->user->name,
                 );
 
-                Projects::model()->updateByPk((int) $data['project_id'], $updates);
+                Servers::model()->updateByPk((int) $data['server_id'], $updates);
+
+                $updates['name']        = str_replace('<', '&lt', $updates['name']);
+                $updates['hostname']    = str_replace('<', '&lt', $updates['hostname']);
+                $updates['public_ip']   = str_replace('<', '&lt', $updates['public_ip']);
+                $updates['private_ip']  = str_replace('<', '&lt', $updates['private_ip']);
+                $updates['network']     = str_replace('<', '&lt', $updates['network']);
+                $updates['location']    = str_replace('<', '&lt', $updates['location']);
+                $updates['description'] = str_replace('<', '&lt', $updates['description']);
 
                 echo CJSON::encode(array(
                     'type' => 'success',
@@ -306,6 +406,7 @@ class ServersController extends Controller
                 echo CJSON::encode(array(
                     'type' => 'error',
                     'data' => implode(',', $errors),
+                    'duplicate' => $duplicate,
                 ));
             }
         } else {
@@ -322,6 +423,7 @@ class ServersController extends Controller
 
         if (!empty($data)) {
             Servers::model()->deleteByPk($data['server_id']);
+            ApplicationServers::model()->deleteAll('server_id=:server_id', array(':server_id'=>$data['server_id']));
 
             echo CJSON::encode(array(
                 'type' => 'success',

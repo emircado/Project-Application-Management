@@ -115,6 +115,47 @@ var UsersData = {
     }
 }
 
+var ServersData = {
+    getDataURL  : baseURL + '/servers/list',
+    _request    : null,
+
+    getAjaxData: function(params, onRetrieve, onFail)
+    {
+        var self = this;
+        if(!self._request || !self._request.isRunning())
+        {
+            self._request = new Request.JSON(
+            {
+                'url' : self.getDataURL,
+                'method' : 'get',
+                'data' : params,
+                'onSuccess' : function(data)
+                {
+                    if (params['server_id'] != null) {
+                        if (data.totalData == 0) {
+                            console.log('data not available');
+                            onFail();
+                        } else {
+                            console.log('displaying individual');
+                            onRetrieve(data.resultData[0]);
+                        }
+                    } else {
+                        console.log('displaying list');
+                        onRetrieve(data);
+                    }
+                },
+                'onError' : function(data)
+                {
+                    self._request.stop;
+                    console.log('Something went wrong!');
+                }
+            }).send();
+        } else {
+            console.log('hehe');
+        }
+    }
+}
+
 // contains group => members dictionary
 var LDAPGroupsData = {
     getDataURL  : baseURL + '/ldap/getgroups',
@@ -334,7 +375,7 @@ var ReadMore = function(containerID, text) {
         $(containerID).set('html', self.textHTML+self.buttonHTML);
         $(self.textID).addClass('collapsible');
 
-        $(self.textID).set('html', '<pre>'+text);
+        $(self.textID).set('html', (text == null)? '' : '<pre>'+text);
 
         //if overflow
         if ($(self.textID).scrollHeight > $(self.textID).clientHeight) {

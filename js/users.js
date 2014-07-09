@@ -16,8 +16,8 @@ var UsersList = function()
     self.tableRowClass  = 'users-list-row';
 
     //fields
-    self.fieldNameID        = 'users-list-search-name';
-    self.fieldPointPersonID = 'users-list-search-pointperson';
+    self.fieldUserNameID    = 'users-list-username';
+    self.fieldNameID        = 'users-list-name';
     self.csrfID             = 'users-list-csrf';
 
     //buttons
@@ -31,23 +31,23 @@ var UsersList = function()
         UsersData.getAjaxData({
             'page'              : UsersSite.searchParams['page'],
             'name'              : UsersSite.searchParams['name'],
-            'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
+            'point_person'      : UsersSite.searchParams['point_person'],
             'YII_CSRF_TOKEN'    : $(self.csrfID).value,
         }, self.getData, function(){});
 
         $(UsersSite.titleID).set('html', 'Users');
+        $(UsersSite.noteID).setStyle('display', 'block');
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
 
         $(self.fieldNameID).value = UsersSite.searchParams['name'];
-        $(self.fieldPointPersonID).value = UsersSite.searchParams['rd_point_person'];
+        $(self.fieldUserNameID).value = UsersSite.searchParams['point_person'];
     }
 
     self.hide = function()
     {
         $(self.containerID).setStyle('display', 'none');
         $(self.fieldNameID).value = '';
-        $(self.fieldPointPersonID).value = '';
         $$('.'+self.tableRowClass).dispose();
     }
 
@@ -133,10 +133,8 @@ var UsersList = function()
             {
                 self.lookupData.include(val['application_id'], idx);
                 var description = (val['description'].length > 65)? val['description'].substr(0, 65)+'...' : val['description']; 
-                var displayname = LDAPUsersData.get(val['rd_point_person']);
-
-                contentHTML = '<td>'+((displayname == null)? '' : displayname)+'</td>'
-                            + '<td>'+val['name']+'</td>'        
+                contentHTML = '<td>'+val['point_person']+'</td>'
+                            + '<td>'+val['name']+'</td>'
                             + '<td>'+description+'</td><td></td>';
 
                 contentElem = new Element('<tr />',
@@ -153,7 +151,7 @@ var UsersList = function()
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td colspan="3">No results found</td>';
+            contentHTML = '<td colspan="4">No results found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -174,9 +172,9 @@ var UsersList = function()
             
             if (self.currentPage != self.totalPage) {
                 UsersSite.historyMngr.set('search', {
-                    'page'              : UsersSite.searchParams['page']+1,
-                    'name'              : UsersSite.searchParams['name'],
-                    'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
+                    'page'          : UsersSite.searchParams['page']+1,
+                    'name'          : UsersSite.searchParams['name'],
+                    'point_person'  : UsersSite.searchParams['point_person'],
                 });
             }
         });
@@ -189,9 +187,9 @@ var UsersList = function()
             
             if (self.currentPage != 1) {
                 UsersSite.historyMngr.set('search', {
-                    'page'              : UsersSite.searchParams['page']-1,
-                    'name'              : UsersSite.searchParams['name'],
-                    'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
+                    'page'          : UsersSite.searchParams['page']-1,
+                    'name'          : UsersSite.searchParams['name'],
+                    'point_person'  : UsersSite.searchParams['point_person'],
                 });
             }
         });
@@ -202,9 +200,9 @@ var UsersList = function()
         {
             e.preventDefault();
                 UsersSite.historyMngr.set('search', {
-                    'page'              : 1,
-                    'name'              : $(self.fieldNameID).value.trim(),
-                    'rd_point_person'   : $(self.fieldPointPersonID).value.trim(),
+                    'page'          : 1,
+                    'name'          : $(self.fieldNameID).value.trim(),
+                    'point_person'  : $(self.fieldUserNameID).value,
                 });
         });
 
@@ -214,7 +212,8 @@ var UsersList = function()
         {
             e.preventDefault();
             $(self.fieldNameID).value = '';
-            $(self.fieldPointPersonID).value = '';
+            $(self.fieldUserNameID).value = '';
+            self.fieldUserGroupID
         });
 
         $$(self.viewButtonID).removeEvents();
@@ -266,6 +265,7 @@ var UsersView = function(data)
     {
         UsersSite.activeView = 'VIEW';
         $(UsersSite.titleID).set('html', 'Applications/'+data['name']);
+        $(UsersSite.noteID).setStyle('display', 'none');
         $(self.containerID).setStyle('display', 'block');
         
         ApplicationNotesSite.init(data['application_id']);
@@ -672,6 +672,7 @@ var UsersEdit = function(data)
 
 var UsersSite = {
     titleID         : 'users-title',
+    noteID          : 'users-note',
     csrfID          : 'users-csrf',
     mainObj         : new UsersList(),
     viewObj         : null,
@@ -680,9 +681,9 @@ var UsersSite = {
     activeView      : '',
     historyMngr     : new HistoryManager(),
     searchParams    : {
-        'page'              : 1,
-        'name'              : '',
-        'rd_point_person'   : '',
+        'page'          : 1,
+        'name'          : '',
+        'point_person'  : '',
     },
     processChange   : true,     //allow or prevent prevent action on hash change in search
 
@@ -701,9 +702,9 @@ var UsersSite = {
         if (hash == null || Object.keys(hash).length == 0) {
             console.log('no hash');
             self.historyMngr.set('search', {
-                'page'              : self.searchParams['page'],
-                'name'              : self.searchParams['name'],
-                'rd_point_person'   : self.searchParams['rd_point_person'],
+                'page'          : self.searchParams['page'],
+                'name'          : self.searchParams['name'],
+                'point_person'  : self.searchParams['point_person'],
             });
         }
     },
@@ -767,17 +768,16 @@ var UsersSite = {
                 
                 // FIX HASH IF NEEDED
                 var hasInvalid = false;
-                self.searchParams['page']               = ('page' in new_value)? new_value['page'] : 1;
-                self.searchParams['name']               = ('name' in new_value)? new_value['name'] : '';
-                self.searchParams['rd_point_person']    = ('rd_point_person' in new_value)? new_value['rd_point_person'] : '';
+                self.searchParams['page']           = ('page' in new_value)? new_value['page'] : 1;
+                self.searchParams['name']           = ('name' in new_value)? new_value['name'] : '';
+                self.searchParams['point_person']   = ('point_person' in new_value)? new_value['point_person'] : '';
 
                 if (hasInvalid) {
-                    var h = {
-                        'page'              : UsersSite.searchParams['page'],
-                        'name'              : UsersSite.searchParams['name'],
-                        'rd_point_person'   : UsersSite.searchParams['rd_point_person'],
-                    }
-                    UsersSite.historyMngr.set('search', h);
+                    UsersSite.historyMngr.set('search', {
+                        'page'          : UsersSite.searchParams['page'],
+                        'name'          : UsersSite.searchParams['name'],
+                        'point_person'  : UsersSite.searchParams['point_person'],
+                    });
                 } else {
                     if (!('id' in hash)) {
                         self.initObj();
@@ -795,9 +795,9 @@ var UsersSite = {
         {
             hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
             self.searchParams = {
-                'page'      : 1,
-                'name'      : '',
-                'rd_point_person': '',
+                'page'          : 1,
+                'name'          : '',
+                'point_person'  : '',
             };
             self.historyMngr.set('search', self.searchParams);
         });

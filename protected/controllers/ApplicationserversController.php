@@ -16,7 +16,7 @@ class ApplicationserversController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('list','update','create','delete','test'),
+                'actions'=>array('list','update','create','delete'),
                 'users'=>array('@'),
             ),
             array(
@@ -52,18 +52,6 @@ class ApplicationserversController extends Controller
         );
 
         echo CJSON::encode($return_data);
-    }
-
-    public function actionTest()
-    {    
-        $criteria = new CDbCriteria;
-        // $criteria->select = 't.application_id, s.server_type';
-        // $criteria->condition = "s.server_type='PRODUCTION'";
-        // $criteria->join = "JOIN servers s ON t.server_id=s.server_id";
-
-        $model = ApplicationServers::model()->findAll($criteria);
-        
-        echo CJSON::encode($model);
     }
     
     private function get_data($filter='', $limit=5, $offset=0)

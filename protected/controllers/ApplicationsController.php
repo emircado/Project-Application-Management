@@ -19,7 +19,7 @@ class ApplicationsController extends Controller
         return array(
             array(
                 'allow',
-                'actions'=>array('index','list','update','create','delete', 'test'),
+                'actions'=>array('index','list','update','create','delete'),
                 'users'=>array('@'),
             ),
             array(
@@ -180,7 +180,7 @@ class ApplicationsController extends Controller
 
         foreach($model as $row)
         {
-            $data[] = array(
+            $entry = array(
                 'application_id'        => $row->application_id,
                 'project_id'            => $row->project_id,
                 'type_id'               => $row->type_id,
@@ -199,6 +199,19 @@ class ApplicationsController extends Controller
                 'updated_by'            => $row->updated_by,
                 'project_name'          => $row->project->name,
             );
+
+            // data for the server module
+            if (isset($filter['server_id']) && !isset($filter['server_type']))
+            {
+                $appserver = ApplicationServers::model()->findByPk(array(
+                    'application_id' => $row->application_id,
+                    'server_id'      => $filter['server_id'],
+                ));
+                $entry['server_id'] = $appserver->server_id;
+                $entry['application_path'] = $appserver->application_path;
+                $entry['application_log'] = $appserver->application_log;
+            }
+            array_push($data, $entry);
         }
 
         return array(
@@ -277,9 +290,27 @@ class ApplicationsController extends Controller
                 );
                 Applications::model()->updateByPk($data['application_id'], $updates);
 
+                //update appserver details if necessary
+                if (isset($data['server_id']))
+                {
+                    $updates2 = array(
+                        'application_path' => str_replace('<', '&lt', trim($data['application_path'])),
+                        'application_log'  => str_replace('<', '&lt', trim($data['application_log'])),
+                        'date_updated'     => date("Y-m-d H:i:s"),
+                        'updated_by'       => Yii::app()->user->name,
+                    );
+
+                    ApplicationServers::model()->updateByPk(array(
+                        'application_id' => (int) $data['application_id'],
+                        'server_id' => (int) $data['server_id'],
+                    ), $updates2);
+                }
+                $updates['application_path'] = $updates2['application_path'];
+                $updates['application_log'] = $updates2['application_log'];
+
                 echo CJSON::encode(array(
                     'type' => 'success',
-                    'data' => $updates
+                    'data' => $updates,
                 ));
             } else {
                 echo CJSON::encode(array(
@@ -364,6 +395,20 @@ class ApplicationsController extends Controller
                 $application->date_updated          = '0000-00-00 00:00:00';
                 $application->created_by            = Yii::app()->user->name;
                 $application->save();
+
+                // add to server if necessary
+                if (isset($data['server_id']))
+                {
+                    $app_server = new ApplicationServers;
+                    $app_server->application_id = $application->application_id;
+                    $app_server->server_id = $data['server_id'];
+                    $app_server->application_path = $data['application_path'];
+                    $app_server->application_log = $data['application_log'];
+                    $app_server->date_created = date("Y-m-d H:i:s");
+                    $app_server->date_updated = '0000-00-00 00:00:00';
+                    $app_server->created_by = Yii::app()->user->name;
+                    $app_server->save();
+                }
 
                 echo CJSON::encode(array(
                     'type' => 'success',

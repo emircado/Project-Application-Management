@@ -352,12 +352,7 @@ var ProjectsCreate = function()
                             }
                         });
                     } else if (response['type'] == 'success') {
-                        ProjectsSite.historyMngr.set('search', {
-                            'page'  : 1,
-                            'name'  : '',
-                            'code'  : '',
-                            'status': '',
-                        });
+                        $(self.cancelButtonID).click();
                     }
                 },
                 'onError' : function(errors)
@@ -515,7 +510,6 @@ var ProjectsView = function(data)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    console.log(response);
                     $(self.backButtonID).click();
                 },
                 'onError' : function(errors)
@@ -724,13 +718,12 @@ var ProjectsEdit = function(data)
         $(self.fieldCodeID).value = data['code'];
         $(self.fieldDescriptionID).value = data['description'].replace(/&lt/g, '<');
 
-        if (data['production_date'] == '0000-00-00' || data['production_date'] == '') {
+        if ([null, '0000-00-00', ''].contains(data['production_date'])) {
             $(self.fieldProductionID).value = '';
             $(self.fieldProductionID).getNext().value = '';
         } else {
             $(self.fieldProductionID).value = data['production_date'];
-            var production = (data['production_date'] == null || data['production_date'] == '0000-00-00' || data['production_date'] == '')? '' : DateFormatter.formatDate(data['production_date']);
-            $(self.fieldProductionID).getNext().value = production;
+            $(self.fieldProductionID).getNext().value = DateFormatter.formatDate(data['production_date']);
         }
     }
 
@@ -760,7 +753,7 @@ var ProjectsEdit = function(data)
             $(self.fieldProductionID).value = '0000-00-00';
         });
 
-        //EVENT FOR SEARCH CODE FIELD INPUT
+        //EVENT FOR CODE FIELD INPUT
         $(self.fieldCodeID).removeEvents();
         $(self.fieldCodeID).addEvent('input', function(e)
         {
@@ -815,11 +808,11 @@ var ProjectsSite = {
         }
     },
 
-    initObj: function(search)
+    initObj: function()
     {
         var self = this;
         self.closeActive();
-        self.mainObj.init(search);
+        self.mainObj.init();
     },
 
     initCreate: function()

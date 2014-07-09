@@ -67,9 +67,9 @@ class UsersController extends Controller
             if (!empty($_GET['name']) || $_GET['name'] == '0') 
                 $filter['name'] = (string) $_GET['name'];
 
-        if (isset($_GET['rd_point_person']))
-            if (!empty($_GET['rd_point_person']) || $_GET['rd_point_person'] == '0')
-                $filter['rd_point_person'] = (string) $_GET['rd_point_person'];
+        if (isset($_GET['point_person']))
+            if (!empty($_GET['point_person']) || $_GET['point_person'] == '0')
+                $filter['point_person'] = (string) $_GET['point_person'];
 
         $applications = $this->get_data($filter, $limit, $offset);
 
@@ -87,53 +87,63 @@ class UsersController extends Controller
     private function get_data($filter='', $limit=5, $offset=0)
     {
         $criteria = new CDbCriteria;
-        $criteria->distinct = true;
-        $criteria->join = "LEFT JOIN ldap_users l ON l.username=t.rd_point_person";
-        $criteria->condition = "t.rd_point_person!=''";
+        $criteria->join = "JOIN (application_point_persons o JOIN applications a on o.application_id=a.application_id) ON o.username=t.username";
 
         if(is_array($filter))
         {
             if(isset($filter['application_id']))
-                $criteria->compare('t.application_id', $filter['application_id']);
+                $criteria->compare('o.application_id', $filter['application_id']);
 
             if(isset($filter['name']))
-                $criteria->compare('LOWER(t.name)', strtolower($filter['name']), true, 'AND', true);
+                $criteria->compare('LOWER(a.name)', strtolower($filter['name']), true, 'AND', true);
 
-            if(isset($filter['rd_point_person'])) {
-                $criteria->compare('LOWER(l.name)', strtolower($filter['rd_point_person']), true, 'AND', true);
-                $criteria->compare('LOWER(l.username)', strtolower($filter['rd_point_person']), true, 'OR', true);
-            }
+            if(isset($filter['point_person']))
+                $criteria->compare('LOWER(t.name)', strtolower($filter['point_person']), true, 'AND', true);
         }
-        $count = Applications::model()->count($criteria);
+
+        $count = LdapUsers::model()->count($criteria);
         
         $criteria->limit = $limit;
         $criteria->offset = $offset;
-        $criteria->order = 'LOWER(l.name), LOWER(t.name)';
+        $criteria->order = 'LOWER(t.name)';
 
-        $model = Applications::model()->findAll($criteria);
-        $data  = array();
+        $model = LdapUsers::model()->findAll($criteria);
+        
+        $curr_user = '';
+        $index = 0;
+        $application = null;
 
+        $data = array();
         foreach($model as $row)
         {
+            // if new
+            if ($row->name != $curr_user) {
+                $curr_user = $row->name;
+                $index = 0;
+            }
+            $application = $row->applications[$index];
+
             $data[] = array(
-                'application_id'        => $row->application_id,
-                'project_id'            => $row->project_id,
-                'type_id'               => $row->type_id,
-                'name'                  => str_replace('<', '&lt', $row->name),
-                'description'           => str_replace('<', '&lt', $row->description),
-                'accessibility'         => $row->accessibility,
-                'repository_url'        => str_replace('<', '&lt', $row->repository_url),
-                'uses_mobile_patterns'  => $row->uses_mobile_patterns,
-                'instructions'          => str_replace('<', '&lt', $row->instructions),
-                'rd_point_person'       => $row->rd_point_person,
-                'production_date'       => $row->production_date,
-                'termination_date'      => $row->termination_date,
-                'date_created'          => $row->date_created,
-                'date_updated'          => $row->date_updated,
-                'created_by'            => $row->created_by,
-                'updated_by'            => $row->updated_by,
-                'project_name'          => $row->project->name,
+                'application_id'        => $application->application_id,
+                'project_id'            => $application->project_id,
+                'type_id'               => $application->type_id,
+                'name'                  => str_replace('<', '&lt', $application->name),
+                'description'           => str_replace('<', '&lt', $application->description),
+                'accessibility'         => $application->accessibility,
+                'repository_url'        => str_replace('<', '&lt', $application->repository_url),
+                'uses_mobile_patterns'  => $application->uses_mobile_patterns,
+                'instructions'          => str_replace('<', '&lt', $application->instructions),
+                'rd_point_person'       => $application->rd_point_person,
+                'production_date'       => $application->production_date,
+                'termination_date'      => $application->termination_date,
+                'date_created'          => $application->date_created,
+                'date_updated'          => $application->date_updated,
+                'created_by'            => $application->created_by,
+                'updated_by'            => $application->updated_by,
+                'project_name'          => $application->project->name,
+                'point_person'          => $row->name,
             );
+            $index++;
         }
 
         return array(

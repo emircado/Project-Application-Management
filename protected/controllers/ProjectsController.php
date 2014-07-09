@@ -92,6 +92,7 @@ class ProjectsController extends Controller
             'resultData'=>$projects['data'],
         );
 
+        // GRAPHITE MODULE CODE HERE
         $time = floor((microtime(true) - $begin_time) * 1000);
         //send time to graphite
         $sender = new GraphiteSender('statsd');
@@ -451,7 +452,7 @@ class ProjectsController extends Controller
             $query .= $keys.$values.";\n";
         }
 
-        if (file_put_contents('deleted_projects.sql', $query, FILE_APPEND) === false) {
+        if (file_put_contents('db_files/deleted_projects.sql', $query, FILE_APPEND) === false) {
             echo CJSON::encode(array(
                 'type' => 'error',
                 'data' => '',

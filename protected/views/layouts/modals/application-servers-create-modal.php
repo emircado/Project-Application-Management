@@ -19,6 +19,7 @@
                                         <div class="field-primary">
                                             <div class="pseudo-field">
                                             <input id="app-servers-create-modal-name" type="text" class="text"/>
+                                            <span id="app-servers-create-modal-name-error" class="field-input-name-error error-message" style="display: none;"></span>
                                             </div>
                                         </div><!-- End Field Primary -->
                                     </div><!-- End Field -->

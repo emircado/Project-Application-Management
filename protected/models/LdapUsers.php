@@ -42,6 +42,7 @@ class LdapUsers extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			// 'groups' => array(self::MANY_MANY, 'LdapGroups', 'ldap_user_groups(username, group_id)'),
+			'applications' => array(self::MANY_MANY, 'Applications', 'application_point_persons(username, application_id)')
 		);
 	}
 

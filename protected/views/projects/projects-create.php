@@ -6,7 +6,7 @@
         <input type="hidden" id="projects-create-csrf" value="<?php echo Yii::app()->request->csrfToken ?>" />
         <div class="contact-info-details">
             <div class="section primary-info expanded">
-                <div id="expand-primary" class="header"><h3><b>Project Details</b></h3></div>
+                <div id="expand-primary" class="header"><h3><b>Add Project</b></h3></div>
             </div>
             <!--CONTENT for CREATE PROJECT-->
             <div id="edit-primary-content" class="content">

@@ -50,6 +50,7 @@ return array(
                 'logout' => 'site/logout',
                 'projects' => 'projects/index',
                 'applications' => 'applications/index',
+                'servers' => 'servers/index',
                 'users' => 'users/index',
                 'ldap' => 'ldap/index',
                 // '<controller:\w+>/<id:\d+>'=>'<controller>/view',
@@ -120,6 +121,7 @@ return array(
         'app_main_per_page'=>20,
         'notes_per_page'=>5,
         'users_per_page'=>20,
+        'servers_per_page'=>20,
 
         'graphite_server_ip'=>'10.11.2.29',
         'graphite_server_port_udp'=>2023,

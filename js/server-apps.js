@@ -1,32 +1,32 @@
-var ApplicationsList = function(project_id)
+var ServerAppsList = function(server_id)
 {
     var self = this;
     self.getDataURL = baseURL + '/applications/list';
     self._request = null;
 
-    self.containerID    = 'applications-list';
-    self.csrfID         = 'applications-list-csrf';
+    self.containerID    = 'server-apps-list';
+    self.csrfID         = 'server-apps-list-csrf';
     
     //for pagination
-    self.nextID         = 'applications-list-next';
-    self.prevID         = 'applications-list-prev';
-    self.totalDataID    = 'applications-list-total';
-    self.totalPartID    = 'applications-list-part';
+    self.nextID         = 'server-apps-list-next';
+    self.prevID         = 'server-apps-list-prev';
+    self.totalDataID    = 'server-apps-list-total';
+    self.totalPartID    = 'server-apps-list-part';
 
     //for table
-    self.tableID        = 'applications-list-table';
+    self.tableID        = 'server-apps-list-table';
     self.totalPage      = 1;
     self.currentPage    = 1;
     self.resultData     = [];
-    self.tableRowClass  = 'applications-list-row';
+    self.tableRowClass  = 'server-apps-list-row';
 
     //buttons
-    self.viewButtonID   = 'tr[id^=applications-list-view_]';
-    self.createButtonID = 'applications-list-create-button';
+    self.viewButtonID   = 'tr[id^=server-apps-list-view_]';
+    self.createButtonID = 'server-apps-list-create-button';
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'LIST';   
+        ServerAppsSite.activeView = 'LIST';
         $$('.'+self.tableRowClass).dispose();
         $(self.containerID).setStyle('display', 'block');
         self.getAjaxData();
@@ -44,7 +44,7 @@ var ApplicationsList = function(project_id)
         {
             var params = {
                 'page'          : self.currentPage,
-                'project_id'    : project_id,
+                'server_id'     : server_id,
                 'YII_CSRF_TOKEN'    : $(self.csrfID).value,
             };
 
@@ -83,14 +83,15 @@ var ApplicationsList = function(project_id)
             Array.each(self.resultData, function(val, idx)
             {
                 var pointperson = LDAPGroupsData.get('DEVELOPERS').get(val['rd_point_person']);
-                contentHTML = '<td>'+val['name']+'</td>'
+                contentHTML = '<td>'+val['project_name']+'</td>'
+                            + '<td>'+val['name']+'</td>'
                             + '<td>'+((pointperson == null)? '' : pointperson)+'</td>';
 
                 contentElem = new Element('<tr />',
                 {
                     'class' : self.tableRowClass,
                     'html'  : contentHTML,
-                    'id'    : 'applications-list-view_'+idx
+                    'id'    : 'server-apps-list-view_'+idx
                 });
                 
                 contentElem.inject($(self.tableID), 'bottom');
@@ -100,7 +101,7 @@ var ApplicationsList = function(project_id)
         {
             $(self.totalDataID).set('html', '');
             
-            contentHTML = '<td colspan="2">No applications found</td>';
+            contentHTML = '<td colspan="3">No applications found</td>';
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
@@ -142,7 +143,7 @@ var ApplicationsList = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initCreate(project_id);
+            ServerAppsSite.initCreate(server_id);
         });
 
         //VIEW CONTACT PERSON
@@ -152,7 +153,7 @@ var ApplicationsList = function(project_id)
             e.preventDefault();
             var idx = parseInt($(this).get('id').split('_')[1]);
             if (typeof idx==='number' && (idx%1)===0) {
-                ApplicationsSite.initView(self.resultData[idx]);
+                ServerAppsSite.initView(self.resultData[idx]);
             }
         });
     }
@@ -197,47 +198,53 @@ var ApplicationsList = function(project_id)
     }
 }
 
-var ApplicationsCreate = function(project_id)
+var ServerAppsCreate = function(server_id)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/create';
     self._request = null;
 
-    self.containerID = 'applications-create';
-    self.modalContainerID = 'applications-create-modal-container';
+    self.containerID = 'server-apps-create';
+    self.modalContainerID = 'server-apps-create-modal-container';
     self.typeModal = new ApplicationTypesModal();
+    self.projectModal = new ProjectsListModal();
 
     //fields
-    self.fieldNameID           = 'applications-create-name';
-    self.fieldTypeID           = 'applications-create-type';
-    self.fieldAccessibilityID  = 'applications-create-accessibility';
-    self.fieldRepositoryID     = 'applications-create-repository';
-    self.fieldDescriptionID    = 'applications-create-description';
-    self.fieldInstructionsID   = 'applications-create-instructions';
-    self.fieldPointPersonID    = 'applications-create-pointperson';
-    self.fieldProductionID     = 'applications-create-production';
-    self.fieldTerminationID    = 'applications-create-termination';
-    self.fieldPatternID        = 'applications-create-pattern';
-    self.csrfID                = 'applications-create-csrf';
+    self.fieldProjectID        = 'server-apps-create-project';
+    self.fieldNameID           = 'server-apps-create-name';
+    self.fieldTypeID           = 'server-apps-create-type';
+    self.fieldAccessibilityID  = 'server-apps-create-accessibility';
+    self.fieldRepositoryID     = 'server-apps-create-repository';
+    self.fieldDescriptionID    = 'server-apps-create-description';
+    self.fieldInstructionsID   = 'server-apps-create-instructions';
+    self.fieldPointPersonID    = 'server-apps-create-pointperson';
+    self.fieldProductionID     = 'server-apps-create-production';
+    self.fieldTerminationID    = 'server-apps-create-termination';
+    self.fieldPatternID        = 'server-apps-create-pattern';
+    self.fieldPathID           = 'server-apps-create-path';
+    self.fieldLogID            = 'server-apps-create-log';
+    self.csrfID                = 'server-apps-create-csrf';
+    self.project_id            = '';
 
     //dropdown class
-    self.pointPersonRowClass   = 'applications-create-pointperson-row';
+    self.pointPersonRowClass   = 'server-apps-create-pointperson-row';
     
     //error fields
-    self.errorNameID           = 'applications-create-name-error';
-    self.errorTypeID           = 'applications-create-type-error';
-    self.errorAccessibilityID  = 'applications-create-accessibility-error';
+    self.errorProjectID        = 'server-apps-create-project-error'
+    self.errorNameID           = 'server-apps-create-name-error';
+    self.errorTypeID           = 'server-apps-create-type-error';
+    self.errorAccessibilityID  = 'server-apps-create-accessibility-error';
 
     //buttons
-    self.createButtonID        = 'applications-create-save-button';
-    self.cancelButtonID        = 'applications-create-cancel-button';
+    self.createButtonID        = 'server-apps-create-save-button';
+    self.cancelButtonID        = 'server-apps-create-cancel-button';
 
     self.datePickerProd        = null;
     self.datePickerTerm        = null;
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'CREATE';
+        ServerAppsSite.activeView = 'CREATE';
 
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
@@ -269,13 +276,16 @@ var ApplicationsCreate = function(project_id)
 
         // close modals
         self.typeModal.closeModal();
+        self.projectModal.closeModal();
 
         // clear errors
+        $(self.errorProjectID).setStyle('display', 'none');
         $(self.errorNameID).setStyle('display', 'none');
         $(self.errorTypeID).setStyle('display', 'none');
         $(self.errorAccessibilityID).setStyle('display', 'none');
 
         // clear fields
+        $(self.fieldProjectID).value = '';
         $(self.fieldNameID).value = '';
         $(self.fieldTypeID).value = '';
         $(self.fieldAccessibilityID).value = 'PUBLIC';
@@ -287,6 +297,8 @@ var ApplicationsCreate = function(project_id)
         $(self.fieldTerminationID).value = '';
         $(self.fieldProductionID).getNext().value = '';
         $(self.fieldTerminationID).getNext().value = '';
+        $(self.fieldPathID).value = '';
+        $(self.fieldLogID).value = '';
     }
 
     self.postAjaxData = function()
@@ -295,7 +307,8 @@ var ApplicationsCreate = function(project_id)
         {
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
-                'project_id':           project_id,
+                'server_id':            server_id,
+                'project_id':           self.project_id,
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -305,7 +318,9 @@ var ApplicationsCreate = function(project_id)
                 'instructions':         $(self.fieldInstructionsID).value.trim(),
                 'rd_point_person':      $(self.fieldPointPersonID).value.trim(),
                 'production_date':      $(self.fieldProductionID).value.trim(),
-                'termination_date':     $(self.fieldTerminationID).value.trim()
+                'termination_date':     $(self.fieldTerminationID).value.trim(),
+                'application_path':     $(self.fieldPathID).value.trim(), 
+                'application_log':      $(self.fieldLogID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -320,7 +335,10 @@ var ApplicationsCreate = function(project_id)
                         Array.each(response['data'].split(','), function(error, idx)
                         {
                             var msg = error.split(': ');
-                            if (msg[0] == 'NAME_ERROR') {
+                            if (msg[0] == 'PROJECT_ERROR') {
+                                $(self.errorProjectID).set('html', msg[1]);
+                                $(self.errorProjectID).setStyle('display', 'block');
+                            } else if (msg[0] == 'NAME_ERROR') {
                                 $(self.errorNameID).set('html', msg[1]);
                                 $(self.errorNameID).setStyle('display', 'block');
                             } else if (msg[0] == 'TYPE_ERROR') {
@@ -348,7 +366,7 @@ var ApplicationsCreate = function(project_id)
 
     self.addEvents = function()
     {
-        // prevent focus on type field
+        // event for application type
         $(self.fieldTypeID).removeEvents();
         $(self.fieldTypeID).addEvent('focus', function(e)
         {
@@ -358,9 +376,27 @@ var ApplicationsCreate = function(project_id)
             self.typeModal = new ApplicationTypesModal(
                 function(app_type) {
                     $(self.fieldTypeID).value = app_type;
+                    $(self.errorTypeID).setStyle('display', 'none');
                 }
             );
             self.typeModal.show();
+        });
+
+        // event for project id
+        $(self.fieldProjectID).removeEvents();
+        $(self.fieldProjectID).addEvent('focus', function(e)
+        {
+            e.preventDefault();
+            $(this).blur();
+
+            self.projectModal = new ProjectsListModal(
+                function(project) {
+                    self.project_id = project['project_id']
+                    $(self.fieldProjectID).value = project['name'];
+                    $(self.errorProjectID).setStyle('display', 'none');
+                }
+            );
+            self.projectModal.show();
         });
 
         // event for create button
@@ -368,6 +404,7 @@ var ApplicationsCreate = function(project_id)
         $(self.createButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorProjectID).setStyle('display', 'none');
             $(self.errorNameID).setStyle('display', 'none');
             $(self.errorTypeID).setStyle('display', 'none');
             $(self.errorAccessibilityID).setStyle('display', 'none');
@@ -379,7 +416,7 @@ var ApplicationsCreate = function(project_id)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initObj(project_id);
+            ServerAppsSite.initObj(server_id);
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
@@ -426,40 +463,42 @@ var ApplicationsCreate = function(project_id)
     }
 }
 
-var ApplicationsView = function(data)
+var ServerAppsView = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/delete';
     self._request = null;
 
     //display
-    self.containerID            = 'applications-view';
+    self.containerID            = 'server-apps-view';
 
     //fields
-    self.fieldNameID            = 'applications-view-name';
-    self.fieldTypeID            = 'applications-view-type';
-    self.fieldAccessibilityID   = 'applications-view-accessibility';
-    self.fieldRepositoryID      = 'applications-view-repository';
-    self.fieldPatternID         = 'applications-view-pattern';
-    self.fieldDescriptionID     = 'applications-view-description';
-    self.fieldInstructionsID    = 'applications-view-instructions';
-    self.fieldPointPersonID     = 'applications-view-pointperson';
-    self.fieldProductionID      = 'applications-view-production';
-    self.fieldTerminationID     = 'applications-view-termination';
-    self.fieldCreatedID         = 'applications-view-created';
-    self.fieldCreatedbyID       = 'applications-view-createdby';
-    self.fieldUpdatedID         = 'applications-view-updated';
-    self.fieldUpdatedbyID       = 'applications-view-updatedby';
-    self.csrfID                 = 'applications-view-csrf';
+    self.fieldNameID            = 'server-apps-view-name';
+    self.fieldTypeID            = 'server-apps-view-type';
+    self.fieldAccessibilityID   = 'server-apps-view-accessibility';
+    self.fieldRepositoryID      = 'server-apps-view-repository';
+    self.fieldPatternID         = 'server-apps-view-pattern';
+    self.fieldDescriptionID     = 'server-apps-view-description';
+    self.fieldInstructionsID    = 'server-apps-view-instructions';
+    self.fieldPointPersonID     = 'server-apps-view-pointperson';
+    self.fieldProductionID      = 'server-apps-view-production';
+    self.fieldTerminationID     = 'server-apps-view-termination';
+    self.fieldCreatedID         = 'server-apps-view-created';
+    self.fieldCreatedbyID       = 'server-apps-view-createdby';
+    self.fieldUpdatedID         = 'server-apps-view-updated';
+    self.fieldUpdatedbyID       = 'server-apps-view-updatedby';
+    self.fieldPathID            = 'server-apps-view-path';
+    self.fieldLogID             = 'server-apps-view-log';
+    self.csrfID                 = 'server-apps-view-csrf';
     
     //buttons
-    self.editButtonID           = 'applications-view-edit-button';
-    self.deleteButtonID         = 'applications-view-delete-button';
-    self.backButtonID           = 'applications-view-back-button';
+    self.editButtonID           = 'server-apps-view-edit-button';
+    self.deleteButtonID         = 'server-apps-view-delete-button';
+    self.backButtonID           = 'server-apps-view-back-button';
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'VIEW';
+        ServerAppsSite.activeView = 'VIEW';
         $(self.containerID).setStyle('display', 'block');
         
         ApplicationNotesSite.init(data['application_id']);
@@ -534,6 +573,8 @@ var ApplicationsView = function(data)
         $(self.fieldUpdatedID).set('html', updated);
         $(self.fieldCreatedbyID).set('html', (createdby == null)? data['created_by'] : createdby);
         $(self.fieldUpdatedbyID).set('html', (updatedby == null)? data['updated_by'] : updatedby);
+        $(self.fieldPathID).set('html', data['application_path']);
+        $(self.fieldLogID).set('html', data['application_log']);
     }
 
     self.addEvents = function()
@@ -543,7 +584,7 @@ var ApplicationsView = function(data)
         $(self.editButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initEdit(data);
+            ServerAppsSite.initEdit(data);
         });
 
         //DELETE CONTACT PERSON
@@ -564,52 +605,58 @@ var ApplicationsView = function(data)
         $(self.backButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initObj(data['project_id']);
+            ServerAppsSite.initObj(data['server_id']);
         });
     }
 }
 
-var ApplicationsEdit = function(data)
+var ServerAppsEdit = function(data)
 {
     var self = this;
     self.postDataURL = baseURL + '/applications/update';
     self._request = null;
 
-    self.containerID            = 'applications-edit';
-    self.modalContainerID       = 'applications-edit-modal-container';
-    self.typeModal              = new ApplicationTypesModal();
+    self.containerID           = 'server-apps-edit';
+    self.modalContainerID      = 'server-apps-create-modal-container';
+    self.typeModal             = new ApplicationTypesModal();
+    self.projectModal          = new ProjectsListModal();
 
     //fields
-    self.fieldNameID            = 'applications-edit-name';
-    self.fieldTypeID            = 'applications-edit-type';
-    self.fieldAccessibilityID   = 'applications-edit-accessibility';
-    self.fieldRepositoryID      = 'applications-edit-repository';
-    self.fieldDescriptionID     = 'applications-edit-description';
-    self.fieldInstructionsID    = 'applications-edit-instructions';
-    self.fieldPointPersonID     = 'applications-edit-pointperson';
-    self.fieldProductionID      = 'applications-edit-production';
-    self.fieldTerminationID     = 'applications-edit-termination';
-    self.fieldPatternID         = 'applications-edit-pattern';
-    self.csrfID                 = 'applications-edit-csrf';
+    self.fieldProjectID        = 'server-apps-edit-project';
+    self.fieldNameID           = 'server-apps-edit-name';
+    self.fieldTypeID           = 'server-apps-edit-type';
+    self.fieldAccessibilityID  = 'server-apps-edit-accessibility';
+    self.fieldRepositoryID     = 'server-apps-edit-repository';
+    self.fieldDescriptionID    = 'server-apps-edit-description';
+    self.fieldInstructionsID   = 'server-apps-edit-instructions';
+    self.fieldPointPersonID    = 'server-apps-edit-pointperson';
+    self.fieldProductionID     = 'server-apps-edit-production';
+    self.fieldTerminationID    = 'server-apps-edit-termination';
+    self.fieldPatternID        = 'server-apps-edit-pattern';
+    self.fieldPathID           = 'server-apps-edit-path';
+    self.fieldLogID            = 'server-apps-edit-log';
+    self.csrfID                = 'server-apps-edit-csrf';
+    self.project_id            = '';
 
     //dropdown class
-    self.pointPersonRowClass    = 'applications-edit-pointperson-row';
-
+    self.pointPersonRowClass   = 'server-apps-edit-pointperson-row';
+    
     //error fields
-    self.errorNameID            = 'applications-edit-name-error';
-    self.errorTypeID            = 'applications-edit-type-error';
-    self.errorAccessibilityID   = 'applications-edit-accessibility-error';
+    self.errorProjectID        = 'server-apps-edit-project-error'
+    self.errorNameID           = 'server-apps-edit-name-error';
+    self.errorTypeID           = 'server-apps-edit-type-error';
+    self.errorAccessibilityID  = 'server-apps-edit-accessibility-error';
 
     //buttons
-    self.saveButtonID           = 'applications-edit-save-button';
-    self.cancelButtonID         = 'applications-edit-cancel-button';
+    self.saveButtonID          = 'server-apps-edit-save-button';
+    self.cancelButtonID        = 'server-apps-edit-cancel-button';
 
-    self.datePickerProd         = null;
-    self.datePickerTerm         = null;
+    self.datePickerProd        = null;
+    self.datePickerTerm        = null;
 
     self.init = function()
     {
-        ApplicationsSite.activeView = 'EDIT';
+        ServerAppsSite.activeView = 'EDIT';
 
         self.datePickerProd = new DatePicker($(self.fieldProductionID), {
             allowEmpty: true,
@@ -640,15 +687,18 @@ var ApplicationsEdit = function(data)
     {
         $(self.containerID).setStyle('display', 'none');
 
-        // close modal
+        // close modals
         self.typeModal.closeModal();
-        
+        self.projectModal.closeModal();
+
         // clear errors
+        $(self.errorProjectID).setStyle('display', 'none');
         $(self.errorNameID).setStyle('display', 'none');
         $(self.errorTypeID).setStyle('display', 'none');
         $(self.errorAccessibilityID).setStyle('display', 'none');
 
         // clear fields
+        $(self.fieldProjectID).value = '';
         $(self.fieldNameID).value = '';
         $(self.fieldTypeID).value = '';
         $(self.fieldAccessibilityID).value = 'PUBLIC';
@@ -658,6 +708,10 @@ var ApplicationsEdit = function(data)
         $(self.fieldPointPersonID).set('html', '');
         $(self.fieldProductionID).value = '';
         $(self.fieldTerminationID).value = '';
+        $(self.fieldProductionID).getNext().value = '';
+        $(self.fieldTerminationID).getNext().value = '';
+        $(self.fieldPathID).value = '';
+        $(self.fieldLogID).value = '';
     }
 
     self.postAjaxData = function()
@@ -667,7 +721,8 @@ var ApplicationsEdit = function(data)
             var params = {
                 'YII_CSRF_TOKEN':       $(self.csrfID).value,
                 'application_id':       data['application_id'],
-                'project_id':           data['project_id'],
+                'server_id':            data['server_id'],
+                'project_id':           self.project_id,
                 'name':                 $(self.fieldNameID).value.trim(),
                 'type_name':            $(self.fieldTypeID).value.trim(),
                 'accessibility':        $(self.fieldAccessibilityID).value.trim(),
@@ -676,8 +731,10 @@ var ApplicationsEdit = function(data)
                 'description':          $(self.fieldDescriptionID).value.trim(),
                 'instructions':         $(self.fieldInstructionsID).value.trim(),
                 'rd_point_person':      $(self.fieldPointPersonID).value.trim(),
-                'production_date':      $(self.fieldProductionID).value,
-                'termination_date':     $(self.fieldTerminationID).value
+                'production_date':      $(self.fieldProductionID).value.trim(),
+                'termination_date':     $(self.fieldTerminationID).value.trim(),
+                'application_path':     $(self.fieldPathID).value.trim(), 
+                'application_log':      $(self.fieldLogID).value.trim(),
             };
 
             self._request = new Request.JSON(
@@ -718,6 +775,8 @@ var ApplicationsEdit = function(data)
                         data['termination_date']     = response['data']['termination_date'];
                         data['date_updated']         = response['data']['date_updated'];
                         data['updated_by']           = response['data']['updated_by'];
+                        data['application_path']     = response['data']['application_path'];
+                        data['application_log']      = response['data']['application_log'];
 
                         $(self.cancelButtonID).click();
                     }
@@ -733,15 +792,19 @@ var ApplicationsEdit = function(data)
 
     self.renderData = function()
     {
-        $(self.fieldNameID).value            = data['name'].replace(/&lt/g, '<');;
+        self.project_id                      = data['project_id'];
+        $(self.fieldProjectID).value         = data['project_name'];
+        $(self.fieldNameID).value            = data['name'].replace(/&lt/g, '<');
         $(self.fieldTypeID).value            = AppTypesData.get(data['type_id']);
         $(self.fieldAccessibilityID).value   = data['accessibility'];
-        $(self.fieldRepositoryID).value      = data['repository_url'].replace(/&lt/g, '<');;
+        $(self.fieldRepositoryID).value      = data['repository_url'].replace(/&lt/g, '<');
         $(self.fieldPatternID).checked       = (data['uses_mobile_patterns'] == 1)? true : false;
         $(self.fieldDescriptionID).value     = data['description'].replace(/&lt/g, '<');;
-        $(self.fieldInstructionsID).value    = data['instructions'].replace(/&lt/g, '<');;
+        $(self.fieldInstructionsID).value    = data['instructions'].replace(/&lt/g, '<');
         $(self.fieldPointPersonID).value     = data['rd_point_person'];
-
+        $(self.fieldPathID).value            = data['application_path'].replace(/&lt/g, '<');
+        $(self.fieldLogID).value             = data['application_log'].replace(/&lt/g, '<');
+  
         if ([null, '0000-00-00', ''].contains(data['production_date'])) {
             $(self.fieldProductionID).value = '';
             $(self.fieldProductionID).getNext().value = '';
@@ -776,11 +839,29 @@ var ApplicationsEdit = function(data)
             self.typeModal.show();
         });
 
+        // event for project id
+        $(self.fieldProjectID).removeEvents();
+        $(self.fieldProjectID).addEvent('focus', function(e)
+        {
+            e.preventDefault();
+            $(this).blur();
+
+            self.projectModal = new ProjectsListModal(
+                function(project) {
+                    self.project_id = project['project_id']
+                    $(self.fieldProjectID).value = project['name'];
+                    $(self.errorProjectID).setStyle('display', 'none');
+                }
+            );
+            self.projectModal.show();
+        });
+
         // event for edit button
         $(self.saveButtonID).removeEvents();
         $(self.saveButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
+            $(self.errorProjectID).setStyle('display', 'none');
             $(self.errorNameID).setStyle('display', 'none');
             $(self.errorTypeID).setStyle('display', 'none');
             $(self.errorAccessibilityID).setStyle('display', 'none');
@@ -792,7 +873,7 @@ var ApplicationsEdit = function(data)
         $(self.cancelButtonID).addEvent('click', function(e)
         {
             e.preventDefault();
-            ApplicationsSite.initView(data);
+            ServerAppsSite.initView(data);
         });
 
         //EVENT FOR CHOOSE PRODUCTION DATE
@@ -839,7 +920,7 @@ var ApplicationsEdit = function(data)
     }
 }
 
-var ApplicationsSite = {
+var ServerAppsSite = {
     mainObj     : null,
     createObj   : null,
     editObj     : null,
@@ -847,25 +928,25 @@ var ApplicationsSite = {
 
     activeView  : '',
 
-    init: function(project_id)
+    init: function(server_id)
     {
         var self = this;
-        self.initObj(project_id);
+        self.initObj(server_id);
     },
 
-    initObj: function(project_id)
+    initObj: function(server_id)
     {
         var self = this;
         self.closeActive();
-        self.mainObj = new ApplicationsList(project_id);
+        self.mainObj = new ServerAppsList(server_id);
         self.mainObj.init();
     },
 
-    initCreate: function(project_id)
+    initCreate: function(server_id)
     {
         var self = this;
         self.closeActive();
-        self.createObj = new ApplicationsCreate(project_id);
+        self.createObj = new ServerAppsCreate(server_id);
         self.createObj.init();
     },
 
@@ -873,7 +954,7 @@ var ApplicationsSite = {
     {
         var self = this;
         self.closeActive();
-        self.editObj = new ApplicationsEdit(data);
+        self.editObj = new ServerAppsEdit(data);
         self.editObj.init();
     },
 
@@ -881,7 +962,7 @@ var ApplicationsSite = {
     {
         var self = this;
         self.closeActive();
-        self.viewObj = new ApplicationsView(data);
+        self.viewObj = new ServerAppsView(data);
         self.viewObj.init();
     },
 
