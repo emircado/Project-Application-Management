@@ -103,7 +103,7 @@
             </form>
         </div>
 
-        <div id="content-div">
+        <div id="content-div" class="main height-limiter">
             <form>
                 <table id="test">
                     <thead>

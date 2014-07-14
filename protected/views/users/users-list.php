@@ -17,7 +17,7 @@
             </div><!-- End Header Block Side -->
         </div><!-- End Table Header Block -->
         
-        <div id="content-div">
+        <div id="content-div" class="main height-limiter">
             <table>
                 <thead>
                     <tr>                      

@@ -84,7 +84,7 @@ class adLDAP {
     * 
     * @var string
     */   
-	protected $accountSuffix = "@chikka.org";
+    protected $accountSuffix = "@chikka.org";
     
     /**
     * The base dn for your domain
@@ -93,7 +93,7 @@ class adLDAP {
     * 
     * @var string
     */
-	protected $baseDn = "DC=chikka,DC=org"; 
+    protected $baseDn = "DC=chikka,DC=org"; 
     
     /** 
     * Port used to talk to the domain controllers. 
@@ -101,7 +101,7 @@ class adLDAP {
     * @var int 
     */ 
     protected $adPort = self::ADLDAP_LDAP_PORT; 
-	
+    
     /**
     * Array of domain controllers. Specifiy multiple controllers if you
     * would like the class to balance the LDAP queries amongst multiple servers
@@ -109,7 +109,7 @@ class adLDAP {
     * @var array
     */
     protected $domainControllers = array("10.11.6.200");
-	
+    
     /**
     * Optional account with higher privileges for searching
     * This should be set to a domain admin account
@@ -117,7 +117,7 @@ class adLDAP {
     * @var string
     * @var string
     */
-	protected $adminUsername = NULL;
+    protected $adminUsername = NULL;
     protected $adminPassword = NULL;
     
     /**
@@ -128,15 +128,15 @@ class adLDAP {
     * 
     * @var bool
     */
-	protected $realPrimaryGroup = true;
-	
+    protected $realPrimaryGroup = true;
+    
     /**
     * Use SSL (LDAPS), your server needs to be setup, please see
     * http://adldap.sourceforge.net/wiki/doku.php?id=ldap_over_ssl
     * 
     * @var bool
     */
-	protected $useSSL = false;
+    protected $useSSL = false;
     
     /**
     * Use TLS
@@ -161,19 +161,19 @@ class adLDAP {
     * 
     * @var bool
     */
-	protected $recursiveGroups = true;
-	
-	// You should not need to edit anything below this line
-	//******************************************************************************************
-	
-	/**
+    protected $recursiveGroups = true;
+    
+    // You should not need to edit anything below this line
+    //******************************************************************************************
+    
+    /**
     * Connection and bind default variables
     * 
     * @var mixed
     * @var mixed
     */
-	protected $ldapConnection;
-	protected $ldapBind;
+    protected $ldapConnection;
+    protected $ldapBind;
     
     /**
     * Get the active LDAP Connection

@@ -77,6 +77,8 @@ return array(
                 array(
                     'class'=>'CFileLogRoute',
                     'levels'=>'error, warning',
+                    // 'logPath'=>'/var/log',
+                    // 'logFile'=>'pamgmt.log',
                 ),
                 // uncomment the following to show log messages on web pages
                 /*

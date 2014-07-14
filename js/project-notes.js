@@ -232,7 +232,6 @@ var ProjectNotesCreate = function(project_id)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data'])
                     } else if (response['type'] == 'success') {
                         $(self.cancelButtonID).click();
                     }
@@ -473,7 +472,6 @@ var ProjectNotesEdit = function(data, caller)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data']);
                     } else if (response['type'] == 'success') {
                         caller.updateData(new Hash(response['data']));
                         $(self.cancelButtonID).click();

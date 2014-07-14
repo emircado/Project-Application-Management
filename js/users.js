@@ -114,7 +114,6 @@ var UsersList = function()
     self.makeView = function(aid)
     {
         if (typeof aid==='number' && (aid%1)===0 && self.lookupData.has(aid)) {
-            console.log('data is from list');
             UsersSite.initView(self.resultData[self.lookupData.get(aid)]);
             return true;
         } else {
@@ -700,7 +699,6 @@ var UsersSite = {
 
         hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
         if (hash == null || Object.keys(hash).length == 0) {
-            console.log('no hash');
             self.historyMngr.set('search', {
                 'page'          : self.searchParams['page'],
                 'name'          : self.searchParams['name'],
@@ -740,8 +738,6 @@ var UsersSite = {
             var aid = parseInt(new_value);
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(aid)) {
-                console.log('retrieve new');
-                
                 UsersData.getAjaxData({
                     'application_id': aid,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
@@ -781,8 +777,6 @@ var UsersSite = {
                 } else {
                     if (!('id' in hash)) {
                         self.initObj();
-                    } else {
-                        console.log('search doing nothing');
                     }
                 }
             } else {

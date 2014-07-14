@@ -167,7 +167,6 @@ var ProjectsList = function()
     self.makeView = function(pid)
     {
         if (typeof pid==='number' && (pid%1)===0 && self.lookupData.has(pid)) {
-            console.log('data is from list');
             ProjectsSite.initView(self.resultData[self.lookupData.get(pid)]);
             return true;
         } else {
@@ -510,7 +509,16 @@ var ProjectsView = function(data)
                 'data' : params,
                 'onSuccess': function(response)
                 {
-                    $(self.backButtonID).click();
+                    if (response['type'] == 'success') {
+                        $(self.backButtonID).click();
+                    } else if (response['type'] == 'error') {
+                        new ConfirmModal(
+                            'Delete Project', 
+                            response['data'], 
+                            'OK', 
+                            function(){})
+                        .show();
+                    }
                 },
                 'onError' : function(errors)
                 {
@@ -803,7 +811,6 @@ var ProjectsSite = {
 
         hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
         if (hash == null || Object.keys(hash).length == 0) {
-            console.log('no hash');
             self.historyMngr.set('search', self.searchParams);
         }
     },
@@ -846,7 +853,6 @@ var ProjectsSite = {
             var pid = parseInt(new_value);
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(pid)) {
-                console.log('retrieve new');
                 ProjectsData.getAjaxData({
                     'project_id': pid,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
@@ -912,8 +918,6 @@ var ProjectsSite = {
                 } else {
                     if (!('pid' in hash)) {
                         self.initObj();
-                    } else {
-                        console.log('search doing nothing');
                     }
                 }
             } else {

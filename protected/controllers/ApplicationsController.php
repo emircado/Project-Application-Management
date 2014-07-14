@@ -304,9 +304,9 @@ class ApplicationsController extends Controller
                         'application_id' => (int) $data['application_id'],
                         'server_id' => (int) $data['server_id'],
                     ), $updates2);
+                    $updates['application_path'] = $updates2['application_path'];
+                    $updates['application_log'] = $updates2['application_log'];
                 }
-                $updates['application_path'] = $updates2['application_path'];
-                $updates['application_log'] = $updates2['application_log'];
 
                 echo CJSON::encode(array(
                     'type' => 'success',

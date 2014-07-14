@@ -611,7 +611,6 @@ var AppServersEdit = function(data)
                 {
                     if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data']);
                     } else if (response['type'] == 'success') {
                         data['application_path']    = response['data']['application_path'];
                         data['application_log']     = response['data']['application_log'];

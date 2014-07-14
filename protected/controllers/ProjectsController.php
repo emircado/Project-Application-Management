@@ -346,118 +346,118 @@ class ProjectsController extends Controller
         if (Yii::app()->user->name != $project['created_by']) {
             echo CJSON::encode(array(
                 'type' => 'error',
-                'data' => 'USER_ERROR: Only those who created the project can delete it',
+                'data' => 'Only those who created the project can delete it',
             ));
             return;
         }
 
         // SQL query for project data
-        $query = "\n"."INSERT INTO `projects` ";
-        $keys = "(";
-        $values = " VALUES\n(";
+        // $query = "\n"."INSERT INTO `projects` ";
+        // $keys = "(";
+        // $values = " VALUES\n(";
 
-        $col_num = count(Projects::model()->attributes);
-        foreach($project as $key => $value) {
-            $keys .= "`".$key."`";
-            $values .= ($value === null)? "NULL" : "'".$value."'";
+        // $col_num = count(Projects::model()->attributes);
+        // foreach($project as $key => $value) {
+        //     $keys .= "`".$key."`";
+        //     $values .= ($value === null)? "NULL" : "'".$value."'";
 
-            $col_num--;
-            if ($col_num > 0) {
-                $keys .= ', ';
-                $values .= ', ';
-            }
-        }
+        //     $col_num--;
+        //     if ($col_num > 0) {
+        //         $keys .= ', ';
+        //         $values .= ', ';
+        //     }
+        // }
 
-        $keys .= ")";
-        $values .= ")";
-        $query .= $keys.$values.";\n";
+        // $keys .= ")";
+        // $values .= ")";
+        // $query .= $keys.$values.";\n";
         
-        //SQL query for contact person data
-        $contact_persons = ProjectContactPersons::model()->findAll('project_id=:project_id', array(':project_id'=>$data['project_id']));
-        if (count($contact_persons) > 0) {
-            $query .=  "\n"."INSERT INTO `project_contact_persons` ";
-            $con_attr = ProjectContactPersons::model()->attributes;
+        // //SQL query for contact person data
+        // $contact_persons = ProjectContactPersons::model()->findAll('project_id=:project_id', array(':project_id'=>$data['project_id']));
+        // if (count($contact_persons) > 0) {
+        //     $query .=  "\n"."INSERT INTO `project_contact_persons` ";
+        //     $con_attr = ProjectContactPersons::model()->attributes;
 
-            // collect attributes
-            $keys = "(";
-            $col_num = count($con_attr);
-            foreach ($con_attr as $key => $values) {
-                $keys .= "`".$key."`";
-                $col_num--;
-                if ($col_num > 0) {
-                    $keys .= ', ';
-                }
-            }
-            $keys .= ")";
+        //     // collect attributes
+        //     $keys = "(";
+        //     $col_num = count($con_attr);
+        //     foreach ($con_attr as $key => $values) {
+        //         $keys .= "`".$key."`";
+        //         $col_num--;
+        //         if ($col_num > 0) {
+        //             $keys .= ', ';
+        //         }
+        //     }
+        //     $keys .= ")";
 
-            // collect rows
-            $values = " VALUES";
-            $con_count = count($contact_persons);
-            foreach($contact_persons as $contact) {
-                $values .= "\n(";
-                $col_num = count($con_attr);
-                foreach($contact as $key => $value) {
-                    $values .= ($value === null)? "NULL" : "'".$value."'";
-                    $col_num--;
-                    if ($col_num > 0) {
-                        $values .= ', ';
-                    }
-                }
-                $values .= ")";
-                $con_count--;
-                if ($con_count > 0) {
-                    $values .= ", ";
-                }
-            }
-            $query .= $keys.$values.";\n";
-        }
+        //     // collect rows
+        //     $values = " VALUES";
+        //     $con_count = count($contact_persons);
+        //     foreach($contact_persons as $contact) {
+        //         $values .= "\n(";
+        //         $col_num = count($con_attr);
+        //         foreach($contact as $key => $value) {
+        //             $values .= ($value === null)? "NULL" : "'".$value."'";
+        //             $col_num--;
+        //             if ($col_num > 0) {
+        //                 $values .= ', ';
+        //             }
+        //         }
+        //         $values .= ")";
+        //         $con_count--;
+        //         if ($con_count > 0) {
+        //             $values .= ", ";
+        //         }
+        //     }
+        //     $query .= $keys.$values.";\n";
+        // }
 
-        //SQL query for point person data
-        $point_persons = ProjectPointPersons::model()->findAll('project_id=:project_id', array(':project_id'=>$data['project_id']));
-        if (count($point_persons) > 0) {
-            $query .=  "\n"."INSERT INTO `project_point_persons` ";
-            $pnt_attr = ProjectPointPersons::model()->attributes;
+        // //SQL query for point person data
+        // $point_persons = ProjectPointPersons::model()->findAll('project_id=:project_id', array(':project_id'=>$data['project_id']));
+        // if (count($point_persons) > 0) {
+        //     $query .=  "\n"."INSERT INTO `project_point_persons` ";
+        //     $pnt_attr = ProjectPointPersons::model()->attributes;
 
-            // collect attributes
-            $keys = "(";
-            $col_num = count($pnt_attr);
-            foreach ($pnt_attr as $key => $values) {
-                $keys .= "`".$key."`";
-                $col_num--;
-                if ($col_num > 0) {
-                    $keys .= ', ';
-                }
-            }
-            $keys .= ")";
+        //     // collect attributes
+        //     $keys = "(";
+        //     $col_num = count($pnt_attr);
+        //     foreach ($pnt_attr as $key => $values) {
+        //         $keys .= "`".$key."`";
+        //         $col_num--;
+        //         if ($col_num > 0) {
+        //             $keys .= ', ';
+        //         }
+        //     }
+        //     $keys .= ")";
 
-            // collect rows
-            $values = " VALUES";
-            $pnt_count = count($point_persons);
-            foreach($point_persons as $point) {
-                $values .= "\n(";
-                $col_num = count($pnt_attr);
-                foreach($point as $key => $value) {
-                    $values .= ($value === null)? "NULL" : "'".$value."'";
-                    $col_num--;
-                    if ($col_num > 0) {
-                        $values .= ', ';
-                    }
-                }
-                $values .= ")";
-                $pnt_count--;
-                if ($pnt_count > 0) {
-                    $values .= ", ";
-                }
-            }
-            $query .= $keys.$values.";\n";
-        }
+        //     // collect rows
+        //     $values = " VALUES";
+        //     $pnt_count = count($point_persons);
+        //     foreach($point_persons as $point) {
+        //         $values .= "\n(";
+        //         $col_num = count($pnt_attr);
+        //         foreach($point as $key => $value) {
+        //             $values .= ($value === null)? "NULL" : "'".$value."'";
+        //             $col_num--;
+        //             if ($col_num > 0) {
+        //                 $values .= ', ';
+        //             }
+        //         }
+        //         $values .= ")";
+        //         $pnt_count--;
+        //         if ($pnt_count > 0) {
+        //             $values .= ", ";
+        //         }
+        //     }
+        //     $query .= $keys.$values.";\n";
+        // }
 
-        if (file_put_contents('db_files/deleted_projects.sql', $query, FILE_APPEND) === false) {
-            echo CJSON::encode(array(
-                'type' => 'error',
-                'data' => '',
-            ));
-        } else {
+        // if (file_put_contents('db_files/deleted_projects.sql', $query, FILE_APPEND) === false) {
+        //     echo CJSON::encode(array(
+        //         'type' => 'error',
+        //         'data' => '',
+        //     ));
+        // } else {
             // delete record here
             Projects::model()->deleteByPk($data['project_id']);
             ProjectContactPersons::model()->deleteAll('project_id=:project_id', array(':project_id' => $data['project_id']));
@@ -467,6 +467,6 @@ class ProjectsController extends Controller
                 'type' => 'success',
                 'data' => '',
             ));
-        }
+        // }
     }
 }

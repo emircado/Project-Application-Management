@@ -23,6 +23,7 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    // NOT USED - For checking LDAP content only
     public function get_users() {
         //will end up false if bind is fail
         $this->entries = false;
@@ -46,6 +47,7 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    // USED - returns list of username->name
     public function get_users_list() {
         $this->entries = false;
         $list = Yii::app()->ldap->user()->all();
@@ -60,6 +62,7 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    // USED - returns list of groups->members(name, username)
     public function get_selection() {
         $this->entries = array();
 
@@ -83,6 +86,7 @@ class LDAPModel extends CFormModel {
         ksort($this->entries);
     }
 
+    // NOT USED - For checking LDAP content only
     public function get_userinfo($username) {
         //will end up false if bind is fail or user is not in any group if interest
         $this->entries = false;
@@ -141,6 +145,7 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    // NOT USED - For checking LDAP content only
     public function get_groups() {
         //will end up false if bind is fail
         $this->entries = false;
@@ -163,6 +168,7 @@ class LDAPModel extends CFormModel {
         }
     }
 
+    // NOT USED - For checking LDAP content only
     public function get_groupinfo($groupname) {
         //will end up false if bind is fail or group is not of interest
         $this->entries = false;

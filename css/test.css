@@ -49,6 +49,11 @@ div.height-limiter {
     min-height: 210px;
 }
 
+.main.height-limiter {
+    min-height: 500px;
+    background: #FFFFFF;
+}
+
 .form-note {
     font-size: 12px;
     padding-top: 3px;

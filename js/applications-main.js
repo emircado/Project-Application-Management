@@ -148,7 +148,6 @@ var AppMainList = function()
     self.makeView = function(aid)
     {
         if (typeof aid==='number' && (aid%1)===0 && self.lookupData.has(aid)) {
-            console.log('data is from list');
             AppMainSite.initView(self.resultData[self.lookupData.get(aid)]);
             return true;
         } else {
@@ -1296,7 +1295,6 @@ var AppMainSite = {
 
         hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
         if (hash == null || Object.keys(hash).length == 0) {
-            console.log('no hash');
             self.historyMngr.set('search', {
                 'type'              : self.searchParams['type'],
                 'page'              : self.searchParams['page'],
@@ -1345,8 +1343,6 @@ var AppMainSite = {
             var aid = parseInt(new_value);
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(aid)) {
-                console.log('retrieve new');
-                
                 AppMainData.getAjaxData({
                     'application_id': aid,
                     'is_main'       : true,
@@ -1402,8 +1398,6 @@ var AppMainSite = {
                 } else {
                     if (!('id' in hash)) {
                         self.initObj();
-                    } else {
-                        console.log('search doing nothing');
                     }
                 }
             } else {

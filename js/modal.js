@@ -125,7 +125,6 @@ var ApplicationTypesModal = function(onConfirm)
                         AppTypesData.resultData.set(entry['type_id'], entry['name']);
                     } else if (response['type'] == 'error') {
                         self._request.stop;
-                        console.log(response['data']);
                     }
                 },
                 'onError' : function(errors)
@@ -177,17 +176,25 @@ var ApplicationTypesModal = function(onConfirm)
         }
 
         var sorted = self.choices.getValues().sort();
-
-        sorted.each(function(val, idx)
-        {
+        if (!sorted.empty()) {
+            sorted.each(function(val, idx)
+            {
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass,
+                    'html'  : '<td>'+val+'</td>',
+                    'id'    : 'type_'+self.choices.keyOf(val)
+                });
+                contentElem.inject($(self.tableID), 'bottom');
+            });
+        } else if (inputVal == '') {
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html'  : '<td>'+val+'</td>',
-                'id'    : 'type_'+self.choices.keyOf(val)
+                'html'  : '<td><i>(Empty)</i></td>',
             });
             contentElem.inject($(self.tableID), 'bottom');
-        });
+        }
 
         if (inputKey != null) {
             self.rowSelected = inputKey;
@@ -360,17 +367,25 @@ var AppServersSearchModal = function(server_type, onConfirm)
             self.rowSelected = 'create';
         }
 
-
-        self.choices.each(function(val, idx)
-        {
+        if (self.choices.length > 0) {
+            self.choices.each(function(val, idx)
+            {
+                contentElem = new Element('<tr />',
+                {
+                    'class' : self.tableRowClass,
+                    'html'  : '<td>'+val['name']+'</td>',
+                    'id'    : 'appserver_'+idx
+                });
+                contentElem.inject($(self.tableID), 'bottom');
+            });
+        } else if (inputVal == '') {
             contentElem = new Element('<tr />',
             {
                 'class' : self.tableRowClass,
-                'html'  : '<td>'+val['name']+'</td>',
-                'id'    : 'appserver_'+idx
+                'html'  : '<td><i>(Empty)</i></td>',
             });
             contentElem.inject($(self.tableID), 'bottom');
-        });
+        }
 
         if (inputKey != null) {
             self.rowSelected = inputKey;
@@ -464,14 +479,9 @@ var AppServersSearchModal = function(server_type, onConfirm)
     self.setNewServer = function(new_server)
     {
         $(self.inputID).value = '';
-        console.log('filter start');
         self.filterChoices();
-
-        console.log('filter end');
-        console.log(self.choices);
         self.choices.each(function(val, idx){
             if (val['server_id'] == new_server['server_id']) {
-                console.log('found');
                 $('appserver_'+idx).addClass('selected');
                 self.rowSelected = idx;
                 $(self.inputID).value = val['name'];

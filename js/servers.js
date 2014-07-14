@@ -31,7 +31,6 @@ var ServersList = function()
 
     self.init = function()
     {
-        console.log('list inited');
         ServersSite.activeView = 'LIST';
         ServersData.getAjaxData({
             'page'      : ServersSite.searchParams['page'],
@@ -169,7 +168,6 @@ var ServersList = function()
     self.makeView = function(sid)
     {
         if (typeof sid==='number' && (sid%1)===0 && self.lookupData.has(sid)) {
-            console.log('data is from list');
             ServersSite.initView(self.resultData[self.lookupData.get(sid)]);
             return true;
         } else {
@@ -878,7 +876,6 @@ var ServersSite = {
 
         hash = self.historyMngr.deserializeHash(self.historyMngr.getHash());
         if (hash == null || Object.keys(hash).length == 0) {
-            console.log('no hash');
             self.historyMngr.set('search', self.searchParams);
         }
     },
@@ -921,7 +918,6 @@ var ServersSite = {
             var sid = parseInt(new_value);
             // if project info is not yet retrieved
             if (!self.mainObj.makeView(sid)) {
-                console.log('retrieve new');
                 ServersData.getAjaxData({
                     'server_id': sid,
                     'YII_CSRF_TOKEN': $(self.csrfID).value,
@@ -986,8 +982,6 @@ var ServersSite = {
                 } else {
                     if (!('sid' in hash)) {
                         self.initObj();
-                    } else {
-                        console.log('search doing nothing');
                     }
                 }
             } else {

@@ -16,14 +16,11 @@ var ProjectsData = {
                 {
                     if (params['project_id'] != null) {
                         if (data.totalData == 0) {
-                            console.log('data not available');
                             onFail();
                         } else {
-                            console.log('displaying individual');
                             onRetrieve(data.resultData[0]);
                         }
                     } else {
-                        console.log('displaying list');
                         onRetrieve(data);
                     }
                 },
@@ -55,14 +52,11 @@ var AppMainData = {
                 {
                     if (params['application_id'] != null) {
                         if (data.totalData == 0) {
-                            console.log('data not available');
                             onFail();
                         } else {
-                            console.log('displaying individual');
                             onRetrieve(data.resultData[0]);
                         }
                     } else {
-                        console.log('displaying list');
                         onRetrieve(data);
                     }
                 },
@@ -94,14 +88,11 @@ var UsersData = {
                 {
                     if (params['application_id'] != null) {
                         if (data.totalData == 0) {
-                            console.log('data not available');
                             onFail();
                         } else {
-                            console.log('displaying individual');
                             onRetrieve(data.resultData[0]);
                         }
                     } else {
-                        console.log('displaying list');
                         onRetrieve(data);
                     }
                 },
@@ -133,14 +124,11 @@ var ServersData = {
                 {
                     if (params['server_id'] != null) {
                         if (data.totalData == 0) {
-                            console.log('data not available');
                             onFail();
                         } else {
-                            console.log('displaying individual');
                             onRetrieve(data.resultData[0]);
                         }
                     } else {
-                        console.log('displaying list');
                         onRetrieve(data);
                     }
                 },
@@ -150,8 +138,6 @@ var ServersData = {
                     console.log('Something went wrong!');
                 }
             }).send();
-        } else {
-            console.log('hehe');
         }
     }
 }
@@ -189,7 +175,6 @@ var LDAPGroupsData = {
                     {
                         self.resultData.set(idx, new Hash(val));
                     });
-                    // onRetrieve(self.resultData);
                 },
                 'onError' : function(errors)
                 {
@@ -197,8 +182,6 @@ var LDAPGroupsData = {
                     console.log('something went wrong');
                 }
             }).send();
-        } else {
-            console.log('is running');
         }
     },
 

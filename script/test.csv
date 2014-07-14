@@ -1,4 +1,0 @@
-name,server_type,hostname,public_ip,private_ip,network,location,description,production_date,termination_date,date_created,date_updated,created_by,updated_by
-server1,PRODUCTION,,255.255.255.255,255.255.255.255,"network 1","location 1","description 1","0000-00-00","0000-00-00","0000-00-00 00:00:00","0000-00-00 00:00:00",,
-server2,DEVELOPMENT,,255.255.255.254,255.255.255.255,"network 2","location 2","description 2","0000-00-00","0000-00-00","0000-00-00 00:00:00","0000-00-00 00:00:00",,
-server2,STAGING,,,255.255.255.254,"network 3","location 3","description 3","0000-00-00","0000-00-00","0000-00-00 00:00:00","0000-00-00 00:00:00",,
