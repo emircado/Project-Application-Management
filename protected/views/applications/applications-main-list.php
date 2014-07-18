@@ -109,14 +109,14 @@
                     <thead>
                         <tr>                      
                             <th width="200">Name</th>
-                            <th width="200">Project</th>
+                            <th width="230">Project</th>
                             <th width="200">R&D Point Person</th>
                             <th>Description</th>
                             <th width="50"></th>
                         </tr>
                         <tr id="app-main-list-basic" style="display:table-row;">
                             <th><input id="app-main-list-search-name" type="text" style="width:180px;"/></th>
-                            <th><input id="app-main-list-search-project" type="text" style="width:180px;"/></th>
+                            <th><input id="app-main-list-search-project" type="text" style="width:210px;"/></th>
                             <th><input id="app-main-list-search-point" type="text" style="width:180px;"/></th>
                             <th colspan="2">
                                 <div style="float:right">

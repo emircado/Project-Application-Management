@@ -84,7 +84,7 @@ class adLDAP {
     * 
     * @var string
     */   
-    protected $accountSuffix = "@chikka.org";
+    protected $accountSuffix = "@chikkaanson.org";
     
     /**
     * The base dn for your domain
@@ -93,7 +93,7 @@ class adLDAP {
     * 
     * @var string
     */
-    protected $baseDn = "DC=chikka,DC=org"; 
+    protected $baseDn = "DC=chikkaanson,DC=org"; 
     
     /** 
     * Port used to talk to the domain controllers. 
@@ -108,7 +108,7 @@ class adLDAP {
     * 
     * @var array
     */
-    protected $domainControllers = array("10.11.6.200");
+    protected $domainControllers = array("10.11.6.202");
     
     /**
     * Optional account with higher privileges for searching
@@ -695,7 +695,6 @@ class adLDAP {
         // Prevent null binding
         if ($username === NULL || $password === NULL) { return false; } 
         if (empty($username) || empty($password)) { return false; }
-        
         // Allow binding over SSO for Kerberos
         if ($this->useSSO && $_SERVER['REMOTE_USER'] && $_SERVER['REMOTE_USER'] == $username && $this->adminUsername === NULL && $_SERVER['KRB5CCNAME']) { 
             putenv("KRB5CCNAME=" . $_SERVER['KRB5CCNAME']);

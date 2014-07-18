@@ -36,10 +36,11 @@ return array(
         ),
         'user'=>array(
             // enable cookie-based authentication
-            'allowAutoLogin'=>false,
+            'allowAutoLogin'=>true,
             'loginUrl'=>'login',
         ),
         // uncomment the following to enable URLs in path-format
+        
         'urlManager'=>array(
             'urlFormat'=>'path',
             'showScriptName'=>false,
@@ -87,26 +88,21 @@ return array(
                 */
             ),
         ),
-        'session'=>array(
-            'class'=>'CDbHttpSession',
-            'connectionID'=>'db',
-            'autoCreateSessionTable'=>true,
-            'autoStart' => false,
-            'cookieMode' => 'only',
-            // 'timeout' => 300
+        'ldap'=> array(
+            'class'=>'application.extensions.adLDAP.YiiLDAP',
+            'options'=> array(
+                'ad_port' => 389,
+                'domain_controllers' => array('10.11.6.202'),
+                'account_suffix' => '@chikkaanson.org',
+                'base_dn' => "DC=chikkaanson,DC=org",
+                'admin_username' => NULL,
+                'admin_password' => NULL,
+            ),
         ),
-        // FOR ADLDAP EXTENSION
-        // 'ldap'=> array(
-        //     'class'=>'application.extensions.adLDAP.YiiLDAP',
-        //     'options'=> array(
-        //         'ad_port' => 389,
-        //         'domain_controllers' => array('10.11.6.202'),
-        //         'account_suffix' => '@chikkaanson.org',
-        //         'base_dn' => "dc=chikkaanson,dc=org",
-        //         'admin_username' => NULL,
-        //         'admin_password' => NULL,
-        //     ),
-        // ),
+        'securityManager'=>array(
+            'cryptAlgorithm' => 'rijndael-256',
+            'encryptionKey' => 'pamgmtsalt888',
+        ),
     ),
 
     // application-level parameters that can be accessed
@@ -138,12 +134,5 @@ return array(
         // do not change while a session is active
         'secret_key'=>'pamgmt_secret_key',
         'secret_iv'=>'pamgmt_secret_iv',        //must be 16 bytes
-
-        'ldap' => array(
-            'host' => '10.11.6.115',
-            'ou' => 'People',
-            'dc' => array('chikka','org'),
-            'base_dn' => 'dc=chikka,dc=org',
-        ),
     ),
 );

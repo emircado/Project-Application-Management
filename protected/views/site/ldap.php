@@ -21,7 +21,7 @@ $date = file_get_contents('ldap_sync.txt');
 				                <a id="ldap-sync-button" class="button round blue image-right ic-add text-upper" href="#">Sync w/ LDAP</a>
 				            </div><!-- End Header Block Button -->
 				            <div style="float:left;padding:8px;">
-					            <span><?= Yii::app()->log->routes[0]->logPath ?></span>
+					            <span>Last updated </span>
 					            <span><b id="ldap-updated"><?= htmlentities($date, ENT_QUOTES, "UTF-8") ?></b></span>
 				        	</div>
 				        </div><!-- End Table Header Block -->

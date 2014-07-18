@@ -176,7 +176,7 @@ var ApplicationTypesModal = function(onConfirm)
         }
 
         var sorted = self.choices.getValues().sort();
-        if (!sorted.empty()) {
+        if (sorted.length > 0) {
             sorted.each(function(val, idx)
             {
                 contentElem = new Element('<tr />',

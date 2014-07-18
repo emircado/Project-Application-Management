@@ -78,13 +78,16 @@ class SiteController extends Controller
     public function actionLogout()
     {
         //close LDAP connection here
-        Yii::app()->ldap->close();
+        // Yii::app()->ldap->close();
+        // @ldap_close($this->ldapConnection);
 
         //destroy session
-        if (isset($_SESSION['username'])) {
-            unset($_SESSION['username']);
-            unset($_SESSION['password']);
-        }
+        // if (isset(Yii::app()->session['username']) {
+        //     unset(Yii::app()->session['username']);
+        //     unset(Yii::app()->session['password']);
+        // }
+        Yii::app()->session->clear();
+        Yii::app()->session->destroy();
 
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);

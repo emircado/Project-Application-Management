@@ -15,15 +15,27 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
+        // CODE FOR LDAP
         try {
-            if (Yii::app()->ldap->authenticate($this->username, $this->password)) {
-                $this->errorCode = self::ERROR_NONE;
-            } else {
-                $this->errorCode = self::ERROR_PASSWORD_INVALID;
+            $ldap_check = new LDAPQuery($this->username, $this->password);
+            if ($ldap_check->get_connection()) {
+                if(!$ldap_check->get_bind()) $this->errorCode = self::ERROR_PASSWORD_INVALID;
+                else $this->errorCode = self::ERROR_NONE;    
             }
-        } catch (adLDAPException $e) {
+        } catch (LDAPQueryException $e) {
             $this->errorCode = self::ERROR_LDAP_BINDING;
         }
+    
+        // CODE FOR ADLDAP
+        // try {
+        //     if (Yii::app()->ldap->authenticate($this->username, $this->password)) {
+        //         $this->errorCode = self::ERROR_NONE;
+        //     } else {
+        //         $this->errorCode = self::ERROR_PASSWORD_INVALID;
+        //     }
+        // } catch (adLDAPException $e) {
+        //     $this->errorCode = self::ERROR_LDAP_BINDING;
+        // }
 
         // send login details
         $sender = new GraphiteSender('statsd');

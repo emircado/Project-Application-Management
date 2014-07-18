@@ -424,7 +424,7 @@ var PointPersonsView = function(data)
                         self._request.stop;
                         console.log('error type 2');
                     } else if (response['type'] == 'success') {
-                        $(self.viewToListID).click();
+                        $(self.backButtonID).click();
                     }
                 },
                 'onError' : function(errors)
