@@ -16,14 +16,20 @@ class UserIdentity extends CUserIdentity
     public function authenticate()
     {
         // CODE FOR LDAP
-        try {
-            $ldap_check = new LDAPQuery($this->username, $this->password);
-            if ($ldap_check->get_connection()) {
-                if(!$ldap_check->get_bind()) $this->errorCode = self::ERROR_PASSWORD_INVALID;
-                else $this->errorCode = self::ERROR_NONE;    
-            }
-        } catch (LDAPQueryException $e) {
-            $this->errorCode = self::ERROR_LDAP_BINDING;
+        // try {
+        //     $ldap_check = new LDAPQuery($this->username, $this->password);
+        //     if ($ldap_check->get_connection()) {
+        //         if(!$ldap_check->get_bind()) $this->errorCode = self::ERROR_PASSWORD_INVALID;
+        //         else $this->errorCode = self::ERROR_NONE;    
+        //     }
+        // } catch (LDAPQueryException $e) {
+        //     $this->errorCode = self::ERROR_LDAP_BINDING;
+        // }
+
+        if (LdapUsers::model()->exists('username=:username', array(':username'=>$this->username)) && strlen($this->password) > 0) {
+            $this->errorCode = self::ERROR_NONE;  
+        } else {
+            $this->errorCode = self::ERROR_PASSWORD_INVALID;
         }
     
         // CODE FOR ADLDAP
@@ -47,7 +53,7 @@ class UserIdentity extends CUserIdentity
     }
 
     // http://naveensnayak.wordpress.com/2013/03/12/simple-php-encrypt-and-decrypt/
-    function encrypt_decrypt($action, $string) {
+    static function encrypt_decrypt($action, $string) {
         $output = false;
         $encrypt_method = "AES-256-CBC";
 

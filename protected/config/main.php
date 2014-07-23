@@ -60,10 +60,15 @@ return array(
 
         // uncomment the following to use a MySQL database
         'db'=>array(
-            'connectionString' => 'mysql:host=10.11.7.10;dbname=projects',
+            // 'connectionString' => 'mysql:host=10.11.7.10;dbname=projects',
+            // 'emulatePrepare' => true,
+            // 'username' => 'projects',
+            // 'password' => 'projects',
+            // 'charset' => 'utf8',
+            'connectionString' => 'mysql:host=localhost;dbname=pamgmt',
             'emulatePrepare' => true,
-            'username' => 'projects',
-            'password' => 'projects',
+            'username' => 'root',
+            'password' => 'root',
             'charset' => 'utf8',
         ),
         'errorHandler'=>array(
@@ -76,7 +81,7 @@ return array(
                 array(
                     'class'=>'CFileLogRoute',
                     'levels'=>'error, warning',
-                    'logPath'=>'/var/log',
+                    // 'logPath'=>'/var/log',
                     'logFile'=>'pamgmt.log',
                 ),
                 // uncomment the following to show log messages on web pages
