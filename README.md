@@ -14,7 +14,9 @@ The system has been modified and disconnected from its LDAP functionality to sti
 -----------------------
 
 ### Requirements
+
 The following must be installed and ran to use the web app:
+
 1. Apache server
 2. PHP 5.1.0 or higher
 3. MySQL
